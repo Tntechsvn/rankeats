@@ -1,0 +1,331 @@
+
+/*********** Tuan Smile **************/
+
+.users-list.dt-border > li img {
+    height: 60px;
+    width: 60px;
+}
+.users-list > li {
+	padding: 5px;
+}
+
+.table > tbody + tbody {
+    border-top: 1px solid #ddd;
+}
+
+.mailbox-controls h4 {
+    font-size: 22px;
+}
+.mailbox-subject b,
+.table th {
+	font-weight: 600;
+}
+.btn-default:hover, .btn-default:active, .btn-default.hover {
+    background-color: #3c8dbc;
+	border: 1px solid #3c8dbc;
+	color: #fff;
+}
+.btn.btn-default.btn-file:hover {
+	color: #3c8dbc;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary.hover {
+    border-color: #367fa9;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 24px;
+	padding: 0;
+}
+.select2-container .select2-selection--single {
+	height: 30px;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+	vertical-align: middle;
+}
+.pull-right .btn-group {
+    margin-left: 5px;
+}
+.btn.btn-default.btn-sm.delete {
+    margin-left: 3px;
+}
+.datepicker, .form-control.datepicker {
+	padding: 6px 12px;
+}
+.dt-boxs.box-body {
+	padding: 0 10px;
+}
+.dtimg img {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+}
+.col-img:nth-child(2n+1) {
+	padding-right: 0;
+}
+
+.dt-padding, .box-footer {
+	padding-left: 0;
+	padding-right: 0;
+}
+.dt-padding {
+	padding-bottom: 20px;
+}
+.mailbox-attachment {
+    text-align: center;
+}
+.dt-btn:hover {
+	background: #367fa9;
+	color: #fff;
+}
+.dt-btn {
+	background: #fff;
+}
+.col-img {
+    border-top: 1px solid #999;
+    padding-top: 15px;
+}
+.dt-img-position {
+	position: relative;
+}
+.dt-img-position .delete {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+}
+.dt-img-position img {
+	width: 100%;
+}
+#address {
+    margin-bottom: 10px;
+}
+.btn.btn-default.btn-file {
+    margin-top: 10px;
+}
+.col-sm-12.control-label {
+    padding: 5px 10px;
+}
+input[type="checkbox"], input[type="radio"] {
+	margin-right: 6px;
+}
+.select2-container--default .section .select2-selection--single .select2-selection__rendered {
+	line-height: 22px;
+	padding-left: 0;
+}
+.box-img-user .thumb {
+    position:relative;
+	width: 50%;
+	padding: 10px;
+	float: left;
+} 
+.box-img-user .thumb:nth-child(2n-1) {
+	padding-left: 0;
+	padding-bottom: 0;
+} 
+.box-img-user.dt-padding .thumb:nth-child(2n-1) {
+	padding-left: 10px;
+}
+.box-img-user.dt-padding .thumb {
+	padding: 0 10px 10px;
+}
+.box-img-user .delete.tsm:before ,
+.box-img-user .deletethumb.tsm:before,
+.box-img-user .deletegallery.tsm:before 
+{
+	background: url("../img/iconx.png") no-repeat 0 0;
+    content: "";
+	//font-family: FontAwesome;
+	right: 10px;
+	position: absolute;
+	top: 10px;
+	font-size: 18px;
+	color: #fff;
+	z-index: 1;
+	cursor: pointer;
+	height: 24px;
+	width: 24px;
+}
+.box-img-user.dt-padding .delete.tsm:before,
+.box-img-user.dt-padding .deletethumb.tsm:before,
+.box-img-user.dt-padding .deletegallery.tsm:before
+ {
+	top: 0;
+}
+.dt-imgs .delete.tsm:before,
+.dt-imgs .deletethumb.tsm:before,
+.dt-imgs .deletegallery.tsm:before   {
+    background: url("../img/iconx.png") no-repeat 0 0;
+    content: "";
+	right: 4px;
+	position: absolute;
+	top: 4px;
+	font-size: 18px;
+	color: #fff;
+	z-index: 1;
+	cursor: pointer;
+	height: 24px;
+	width: 24px;
+}
+.dt-imgs .dt-close {
+	position: relative;
+	margin-bottom: 10px;
+}
+.thumb img {
+    width: 100%;
+}
+#fb {
+    clear: both;
+}
+.max {
+    position: relative;
+    top: 5px;
+}
+.dt-imgs {
+    padding: 0 25px;
+}
+.dt-avatar img, .dt-imgs img.thumb {
+	width: 100%;	position: relative;
+}
+.dt-avatar img#image_banner {
+	padding: 0 10px;
+}
+.dt-avatar.dt-no img#image_banner {
+	padding: 0 25px;
+}
+.dt-height img {
+    height: 100px;
+}
+.mailbox-subject p {
+	margin: 0;
+}
+.marginb {
+	margin-bottom: 5px;
+	display: block;
+}
+.dt-bb {
+    float: left;
+    margin-right: 20px;
+}
+.mailbox-controls.box-padding {
+    padding: 10px 0;
+}
+.dt-bb h3 {
+    margin: 4px 0;
+    font-size: 22px;
+}
+.dt-fullp {
+	padding-left: 0;
+	padding-right: 0;
+}
+.padding-top, .no-title {
+	padding-top: 20px;
+}
+.default-avt img {
+	width: auto;
+}
+
+.title-pay {
+    background-color: #3c8dbc;
+    color: #fff;
+    padding: 10px 15px;
+    font-weight: 600;
+	margin: 0;
+}
+.box-pay {
+	box-shadow: 0 4px 10px 0 rgba(0,0,0,0.05),0 4px 20px 0 rgba(0,0,0,0.1);
+	padding: 20px 0;
+}
+.box-pays {
+    margin-top: 20px;
+}
+.nav-tabs.dt-tabs {
+    border-bottom: none;
+}
+.dt-tabs.nav li {
+    width: 100%;
+}
+.nav.dt-tabs.nav-tabs a {
+	background-color: #fff;
+    display: block;
+    border: 1px solid #ddd;
+	color: #333;
+	font-size: 16px;
+    border-radius: 4px;
+    margin: 0;
+	font-weight: 600;
+}
+.nav.dt-tabs.nav-tabs li.active a,
+.nav.dt-tabs.nav-tabs a:hover {
+    background-color: #3c8dbc;
+	color: #fff;
+	cursor: pointer;
+	border: 1px solid #3c8dbc;
+	margin: 0;
+}
+.nav.dt-tabs.nav-tabs li.active a {
+	border-radius: 4px 4px 0 0;
+}
+.ads-rights {
+    box-shadow: 0 0 4px #bbb;
+	background-color: #fff;
+}
+.dtam {
+	background-color: #fff;
+    box-shadow: 0 0 4px #ccc;
+	padding: 15px 0;
+	margin-bottom: 15px;
+}
+.dtam h5 {
+    margin-top: 0;
+    padding: 0 15px;
+	font-weight: 600;
+}
+.pay-left {
+	padding-left: 0;
+}
+.btn.btn-primary.cofim {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+}
+.tab-pane p {
+	margin-top: 5px;
+}
+.table.table-bordered {
+    margin-top: 15px;
+}
+tbody td:nth-child(2),
+tbody td:nth-child(3),
+thead th:nth-child(2),
+thead th:nth-child(3) {
+    text-align: right;
+}
+.imgs img {
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+.table>thead>tr>th.text-left{
+	text-align: left;
+}
+.table>tbody>tr>td.text-left{
+	text-align: left;
+}
+.hidden-xs{
+	text-transform: capitalize;
+}
+
+
+
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: transparent;
+	
+}
+.user-panel>.image>img {
+    width: 100%;
+    max-width: 40px;
+    height: 40px;
+}
+
+
+
+

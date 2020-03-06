@@ -5,7 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Http\Controllers\ShareController;
+use Carbon\Carbon;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +37,46 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /*Knight */
+    public function role(){
+        return $this->belongsTo('App\Role','role_id', 'id');
+    }
+     public function update_user($request){
+        if($request -> image !=null){
+           $base64String = $request->image;
+           $ShareController = new ShareController;
+           $url_avatar = $ShareController->saveImgBase64($base64String, 'uploads');
+        }else{
+            $url_avatar = $this->url_avatar;
+        }
+
+        if($request -> name){
+            $this -> name = $request -> name;
+        }
+        $this -> email = $request -> email;
+        $this -> gender = $request -> gender;
+        $this -> user_title = $request -> user_title;
+        if($request ->password != null){
+            $this -> password = bcrypt($request ->password);
+        }
+        $this -> url_avatar = $url_avatar;
+        /*$birthday = new Carbon($request->birthday);*/
+        $this -> birthday =$request->birthday;
+      
+        if($this -> save()) {
+            /*sửa thành công*/
+            $response =  response()->json([
+                        'success' => true,
+                        'message' => 'success',
+                    ], 200);
+            return $response;
+        }else{
+             $response =  response()->json([
+                        'success' => false,
+                        'message' => 'error',
+                    ], 200);
+            return $response;
+        }
+    }
+    /*end Knight*/
 }
