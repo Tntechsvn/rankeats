@@ -4,8 +4,8 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="templates/origin/images/avatar.jpg" class="img-circle" width="200" height="200" alt="Hungpro Profile Avatar"></div>
-			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>Hungpro</h1> <p>0 Reviews</p></div></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'templates/origin/images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
+			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
 
@@ -33,7 +33,7 @@
 					</ul>
 				</div>
 				<div class="user-description">
-					<h1>About Hungpro</h1>
+					<h1>About {{Auth::user()->name}}</h1>
 					<p></p>
 				</div>
 			</div>
@@ -41,20 +41,20 @@
 			<div class="col-md-9">
 
 				<div class="page-title-small">
-					<h1>Recent Reviews by Hungpro</h1>
+					<h1>Recent Reviews by {{Auth::user()->name}}</h1>
 				</div>
 
 				<div class="col-white">
-					<div class="col-note">Hungpro haven’t wrote any reviews yet!</div>
+					<div class="col-note">{{Auth::user()->name}} haven’t wrote any reviews yet!</div>
 				</div>
 
 				<div class="col-profile-bottom">
 					<div class="page-title-small">
-						<h1>Recent Bookmarks by Hungpro</h1>
+						<h1>Recent Bookmarks by {{Auth::user()->name}}</h1>
 					</div>
 
 					<div class="col-desc row"> 
-						<div class="col-note">Hungpro haven’t bookmarked any business listings yet!.</div>
+						<div class="col-note">{{Auth::user()->name}} haven’t bookmarked any business listings yet!.</div>
 					</div>
 
 				</div>

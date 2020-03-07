@@ -11,11 +11,30 @@
 |
 */
 
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
+/*Knight*/
+Route::post('/login-user', [
+	'as' => 'postLogin',
+	'uses' => 'LoginController@postLogin'
+]);
+Route::get('/logout-user', [
+	'as' => 'getLogout',
+	'uses' => 'LoginController@getLogout'
+]);
 
+Route::post('/edit-infor-user', [
+	'as' => 'postEditUserFrondEnd',
+	'uses' => 'UserController@postEditUserFrondEnd'
+]);
+Route::post('/edit-user-pass', [
+	'as' => 'postEditUserPassFrondEnd',
+	'uses' => 'UserController@postEditUserPassFrondEnd'
+]);
+/*end Knight*/
 // hungpro
 	// Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/', [

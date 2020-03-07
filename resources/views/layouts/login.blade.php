@@ -10,12 +10,15 @@
 					<div class="form-group text-center">
 						<div class="user-logo"> <img src="images/avatar.jpg" class="img-circle" width="150" height="150" alt="user login"> </div>
 					</div>
-					<form id="formLogin" class="forms" action="submit_login.php" method="post">
+					<form id="formLogin" class="forms" action="{{route('postLogin')}}" method="post" enctype="multipart/form-data">
+						{{csrf_field()}}
 						<div class="form-group">
-							<input type="text" class="form-control input-lg" name="inputUsername" id="inputUsername" placeholder="Username">
+							<input type="text" class="form-control input-lg" name="email" id="inputUsername" placeholder="Username">
+							<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control input-lg" name="inputPassword" id="inputPassword" placeholder="Password">
+							<input type="password" class="form-control input-lg" name="password" id="inputPassword" placeholder="Password">
+							<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 						</div>
 
 						<div class="form-group last-row">
