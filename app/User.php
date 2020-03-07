@@ -7,7 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Http\Controllers\ShareController;
 use Carbon\Carbon;
-class User extends Authenticatable
+use App\Location;
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -41,7 +42,18 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role','role_id', 'id');
     }
-     public function update_user($request){
+    public function location(){
+        return $this -> belongsTo('App\Location', 'address', 'id');
+    }
+    public function update_user($request){
+        if($request -> address){
+            $Location = new Location;
+            $address = $Location->update_location($request)->id;
+        }else{
+            $address = null;
+        }
+        
+
         if($request -> image !=null){
            $base64String = $request->image;
            $ShareController = new ShareController;
@@ -49,19 +61,32 @@ class User extends Authenticatable
         }else{
             $url_avatar = $this->url_avatar;
         }
-
         if($request -> name){
             $this -> name = $request -> name;
         }
-        $this -> email = $request -> email;
-        $this -> gender = $request -> gender;
-        $this -> user_title = $request -> user_title;
-        if($request ->password != null){
+        if($request -> email){
+             $this -> email = $request -> email;
+        }
+       
+        if($request -> gender){
+            $this -> gender = $request -> gender;
+        }
+        if($request -> user_title){
+            $this -> user_title = $request -> user_title;
+        }       
+        
+        if($request -> password != null){
             $this -> password = bcrypt($request ->password);
         }
         $this -> url_avatar = $url_avatar;
         /*$birthday = new Carbon($request->birthday);*/
-        $this -> birthday =$request->birthday;
+        if($request -> birthday){
+            $this -> birthday =$request->birthday;
+        }
+        if($address){
+            $this -> address = $address;
+        }
+       
       
         if($this -> save()) {
             /*sửa thành công*/

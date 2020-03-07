@@ -7,6 +7,7 @@ use Auth;
 use Storage;
 use App\Myconst;
 use App\User;
+use Hash;
 use App\Http\Controllers\ShareController;
 
 use Validator;
@@ -104,6 +105,45 @@ class UserController extends Controller
 			session()->put('error',$data->message);
 			return redirect()->back();
 		}
+    }
+    /*====================================user frond-end=====================================================*/
+    public function postEditUserFrondEnd(Request $request){
+        $edit_info_user = Auth::user();
+        $this-> Validate($request,[
+            'email' => 'email|unique:users,email,'.$edit_info_user->id,
+            /*'password' => 'nullable|min:6|max:32',
+            're_password' => 'same:password',*/
+            'search' => 'required',
+           /* 'gender' => 'required',
+*/            
+        ]);
+        /*update user*/
+        $response = $edit_info_user->update_user($request);
+        $data = $response->getData();
+        if($data->success){
+            session()->put('success',$data->message);
+            return redirect()->back();
+        }else{
+            session()->put('error',$data->message);
+            return redirect()->back();
+        }
+
+    }
+    public function postEditUserPassFrondEnd(Request $request){        
+        $this-> Validate($request,[
+            'password' => 'required|min:6|max:32',
+            're_password' => 'same:password',
+        ]);
+        if (Hash::check($request -> old_password, Auth::user()->password)) {
+           
+            $user = User::findorfail(Auth::user()->id);
+            $user -> update_user($request);
+            return redirect()->back();
+        }else{
+            session()->put('err_old_password','The password is also incorrect');
+            return redirect()->back();
+        }
+
     }
    
    
