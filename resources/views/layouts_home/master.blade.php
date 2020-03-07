@@ -36,7 +36,6 @@
   @yield('content')
   @include('layouts_home.footer')
  
-<!--ad code -->
 
 </div>
 <!--wrap--> 
