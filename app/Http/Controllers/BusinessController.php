@@ -113,7 +113,7 @@ class BusinessController extends Controller
     }
     /*Approved Businesses*/
     /*public function approvedBusinesses(){
-
+return $request;
     }*/
 
 
