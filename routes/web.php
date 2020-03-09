@@ -73,5 +73,9 @@ Route::post('/edit-user-pass', [
 		'as' => 'privacy_policy',
 		'uses' => 'HomeController@privacy_policy'
 	]);
+	Route::get('/create-business', [
+		'as' => 'create_business',
+		'uses' => 'HomeController@create_business'
+	]);
 	
 // end hungpro

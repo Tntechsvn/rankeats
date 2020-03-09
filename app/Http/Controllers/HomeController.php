@@ -35,4 +35,7 @@ class HomeController extends Controller
     public function privacy_policy(){
         return view('layouts.privacy-policy');
     }
+    public function create_business(){
+        return view('layouts.create_business');
+    }
 }
