@@ -45,7 +45,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script src="js/bootstrap.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 {{-- <script src="js/wow.min.js"></script>  --}}
 {{-- <script src="js/jquery.raty.js"></script> --}}
 {{-- <script src="js/jquery.form.js"></script> --}}

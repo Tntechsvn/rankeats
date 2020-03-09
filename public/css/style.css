@@ -1603,7 +1603,7 @@ a.btn.btn-warning.vote_now {
 input#location_items,
 input#location_search {
     width: 310px;
-    padding-left: 50px;
+    padding-left: 60px;
 }
 .navbar-default{
 	background-color: #0d59b7;
@@ -1613,6 +1613,39 @@ input#location_search {
     color: #fff;
 }
 
+.input_dish,.input_state{
+	position: relative;
+	float: left;
+}
+.input_dish::after{
+	position: absolute;
+	content: "Find";
+	width: 50px;
+    top: 0;
+    left: 0;
+    height: 46px;
+    background-color: #0d59b7;
+    z-index: 9999;
+    text-align: center;
+    padding: 13px 0;
+    color: #fff;
+}
+.input_state::after{
+	position: absolute;
+	content: "In";
+    width: 50px;
+    top: 0;
+    left: 0;
+    height: 46px;
+    background-color: #0d59b7;
+    z-index: 9999;
+    text-align: center;
+    padding: 13px 0;
+    color: #fff;
+}
+.input-group-btn{
+	float: left;
+}
 
 /*responsive*/
 

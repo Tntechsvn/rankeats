@@ -7,16 +7,21 @@
   <div class="container">
     <div class="front-search">
       <h1>Find The Best, Eat The Best</h1>
-      <form method="get" action="search.php">
-        <div class="col-xs-8 col-xs-offset-2">
-          <div class="input-group syl-cus">
+      <form method="get" action="#">
+        <div class="">
+          <div class="">
             <!-- <input type="hidden"  name="city" value="all" id="city"> -->
+            <div class="input_dish">
+              <input type="text" class=" location_items" id="location_items" name="location_items" placeholder="Steak, Pizza, Salmon….">
+            </div>
             
-            <input type="text" class="form-control input-lg location_items" id="location_items" name="location_items" placeholder="Steak, Pizza, Salmon….">
-            <input type="text" class="form-control input-lg location_search" id="location_search" name="location_search" placeholder="City or State">
+            <div class="input_state">
+              <input type="text" class=" location_search" id="location_search" name="location_search" placeholder="City or State">   
+            </div>
             <span class="input-group-btn">
-              <button type="submit" class="btn btn-custom input-lg"><span class="glyphicon glyphicon-search"></span></button>
+              <button type="submit" class=""><span class="glyphicon glyphicon-search"></span></button>
             </span> 
+            <div style="clear: both;"></div>
           </div>
         </div>
       </form>
@@ -129,9 +134,9 @@
       <div class="modal-body">
         <form method="get" action="search.php" class="form-inline">
           <input type="hidden" class="location_items" name="location_items">
-          <input type="hidden" name="eat" id="searcheat_id" value="" />
+          <input type="hidden" name="eat"  value="" />
           <div class="form-group">
-            <input type="text" class="form-control location_search" id="" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
+            <input type="text" class="form-control location_search" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
             <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
             <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 0px;">Cancel</button>
           </div>
@@ -152,9 +157,9 @@
     <div class="modal-body">
       <form method="get" action="search.php" class="form-inline">
       <input type="hidden" class="location_items" name="location_items">
-      <input type="hidden" name="eat" id="searcheat_id" value="" />
+      <input type="hidden" name="eat"  value="" />
       <div class="form-group">
-        <input type="text" class="form-control location_search" id="" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
+        <input type="text" class="form-control location_search" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
         <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 0px;">Cancel</button>
       </div>
@@ -176,9 +181,9 @@
     <div class="modal-body">
       <form method="get" action="search.php" class="form-inline">
       <input type="hidden" class="location_items" name="location_items">
-      <input type="hidden" name="eat" id="searcheat_id" value="" />
+      <input type="hidden" name="eat"  value="" />
       <div class="form-group">
-        <input type="text" class="form-control location_search" id="" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
+        <input type="text" class="form-control location_search" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
         <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 0px;">Cancel</button>
       </div>
@@ -198,9 +203,9 @@
     <div class="modal-body">
       <form method="get" action="search.php" class="form-inline">
       <input type="hidden" class="location_items" name="location_items">
-      <input type="hidden" name="eat" id="searcheat_id" value="" />
+      <input type="hidden" name="eat"  value="" />
       <div class="form-group">
-        <input type="text" class="form-control location_search" id="" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
+        <input type="text" class="form-control location_search" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
         <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 0px;">Cancel</button>
       </div>
@@ -221,9 +226,9 @@
     <div class="modal-body">
       <form method="get" action="search.php" class="form-inline">
       <input type="hidden" class="location_items" name="location_items">
-      <input type="hidden" name="eat" id="searcheat_id" value="" />
+      <input type="hidden" name="eat"  value="" />
       <div class="form-group">
-        <input type="text" class="form-control location_search" id="" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
+        <input type="text" class="form-control location_search" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
         <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 0px;">Cancel</button>
       </div>
@@ -243,9 +248,9 @@
     <div class="modal-body">
       <form method="get" action="search.php" class="form-inline">
       <input type="hidden" class="location_items" name="location_items">
-      <input type="hidden" name="eat" id="searcheat_id" value="" />
+      <input type="hidden" name="eat" value="" />
       <div class="form-group">
-        <input type="text" class="form-control location_search" id="" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
+        <input type="text" class="form-control location_search" name="location_search" style="border-radius: 0px;" placeholder="City, County or State">
         <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 0px;">Cancel</button>
       </div>
