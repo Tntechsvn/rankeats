@@ -22,10 +22,6 @@ Route::prefix("admincp")->group(function(){
 });
 Route::prefix("/")->middleware(['verified'])->group(function(){
 	Route::prefix("admincp")->group(function(){
-		Route::get('/', [
-			'as' => 'getLogin',
-			'uses' => 'AdminController@getLogin'
-		]);
 		Route::prefix("eats")->group(function(){
 			Route::get('/', [
 				'as' => 'getListEats',
