@@ -136,6 +136,7 @@ p {
 	width: 100%;
 	margin: 100px auto;
 	padding: 40px 30px;
+	text-align: center;
 }
 .front-search h1 {
 	text-align: center;
@@ -1625,7 +1626,7 @@ input#location_search {
     left: 0;
     height: 46px;
     background-color: #0d59b7;
-    z-index: 9999;
+    z-index: 999;
     text-align: center;
     padding: 13px 0;
     color: #fff;
@@ -1638,13 +1639,16 @@ input#location_search {
     left: 0;
     height: 46px;
     background-color: #0d59b7;
-    z-index: 9999;
+    z-index: 999;
     text-align: center;
     padding: 13px 0;
     color: #fff;
 }
 .input-group-btn{
 	float: left;
+}
+.text-search {
+	display: none;
 }
 
 /*responsive*/
@@ -1689,5 +1693,60 @@ input#location_search {
 }
 
 @media(max-width: 767px){
+	.input-lg {
+	    font-size: 12px;
+	    height: 35px;
+	}
+	.input_dish, .input_state {
+	    width: 100%;
+	    margin-bottom: 10px;
+	}
+	input#location_items, input#location_search{
+		width: 100%;
+	}
+	.input_dish::after,.input_state::after{
+		height: 35px;
+		padding: 8px 0;
+	}
+	.front-search h1 {
+	    font-size: 24px;
+	}
+	.front-search {
+	    margin: 0;
+	}
+	span.input-group-btn {
+	    width: 100%;
+	    display: inline-block;
+	    clear: both;
+	}
+	.input-group-btn > .btn {
+	    position: relative;
+	    width: 100px;
+	}
+	.glyphicon-search{
+		display: none;
+	}
+	.text-search {
+	    display: block;
+	}
+	.promo {
+	    height: 260px;
+	}
+	.map-business h2 {
+		font-size: 15px;
+		margin: 0 !important;
+	}
+	.col-top {
+	    padding: 15px 0 0 0;
+	}
+	.howitwork h2 {
+		font-size: 26px;
+	}
+	.howitwork svg{
+		font-size: 40px;
+	}
+	#main {
+	    min-height: 450px;
+	}
 
 }

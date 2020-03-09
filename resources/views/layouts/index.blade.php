@@ -7,19 +7,19 @@
   <div class="container">
     <div class="front-search">
       <h1>Find The Best, Eat The Best</h1>
-      <form method="get" action="#">
+      <form method="get" action="#" style="display: inline-block;">
         <div class="">
-          <div class="">
+          <div class="input-group syl-cus">
             <!-- <input type="hidden"  name="city" value="all" id="city"> -->
             <div class="input_dish">
-              <input type="text" class=" location_items" id="location_items" name="location_items" placeholder="Steak, Pizza, Salmon….">
+              <input type="text" class="form-control input-lg location_items" id="location_items" name="location_items" placeholder="Steak, Pizza, Salmon….">
             </div>
             
             <div class="input_state">
-              <input type="text" class=" location_search" id="location_search" name="location_search" placeholder="City or State">   
+              <input type="text" class="form-control input-lg location_search" id="location_search" name="location_search" placeholder="City or State">   
             </div>
             <span class="input-group-btn">
-              <button type="submit" class=""><span class="glyphicon glyphicon-search"></span></button>
+              <button type="submit" class="btn btn-custom input-lg"><span class="glyphicon glyphicon-search"></span><span class="text-search">Search</span></button>
             </span> 
             <div style="clear: both;"></div>
           </div>
@@ -30,7 +30,7 @@
 </div>
 
 <!-- for map div -->
-<div class="container-fluid col-top">
+<div class="container-fluid col-top map-business">
   <div class="container">
     <div class="col-md-6 text-center">
       <h2 style="line-height: 2; margin: 44px;">Finding the top EATS in your area or an area you are visiting just got easier. People, such as yourself, vote on the best EATS anywhere in the country. Who has the best EATS in your area? </h2>
@@ -44,7 +44,7 @@
 </div>
 
 
-<div class="container-fluid col-top">
+<div class="container-fluid col-top map-business">
     <div class="container">
         <div class="col-md-6 text-center">
             <div class="map_img">
