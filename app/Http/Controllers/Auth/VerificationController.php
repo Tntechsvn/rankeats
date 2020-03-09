@@ -30,7 +30,7 @@ class VerificationController extends Controller
 
     protected function redirectTo() {
         if(Auth::user()->role_id == 2){
-            return route('myprofile');
+            return route('create_business');
         }else{
             return route('index');
         }

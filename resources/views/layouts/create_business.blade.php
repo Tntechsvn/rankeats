@@ -10,7 +10,8 @@
     </div>
 
     <div class="col-md-10 col-md-offset-1 col-submit">
-      <form id="formBusiness" class="forms" action="submit_business.php?id=4869321583725660" enctype="multipart/form-data" method="post">
+      <form id="formBusiness" class="forms" action="{{route('postCreateBusiness')}}" enctype="multipart/form-data" method="post">
+        @csrf
         <div class="site-tabs-bar">
           <div class="site-tabs">
             <ul class="nav nav-tabs">
@@ -26,66 +27,23 @@
           </ul>
 
           <div class="tab-pane active" id="tab-details"> 
+            
             <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="business_locations">Locations</label>
-                  <div class="input-group"> 
-                    <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                    <input type="number" class="form-control input-lg" name="business_locations" id="business_locations" min="1" placeholder="Locations" value="1">
-                  </div>
-                  <a href="#" class="btn btn-primary addplus" style="
-                  color: #fff;
-                  margin-right: 5px;
-                  font-size: 13px;
-                  font-weight: bold;
-                  ">+</a>
-                  <a href="#" class="btn btn-primary  addminus" style="
-                  color: #fff;
-                  margin-right: 5px;
-                  font-size: 13px;
-                  font-weight: bold;
-                  ">-</a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="State">State</label>
-                  <div class="input-group"> <span class="input-group-addon"><span class="fa fa-map-marker"></span></span>
-                    <select class="form-control select2 input-lg" id="business_state" name="business_state">
-                      <option value="">Select State</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputCity">City</label>
-                  <div class="input-group"> <span class="input-group-addon"><span class="fa fa-map-marker"></span></span>
-                    <select class="form-control input-lg" id="inputCity" name="inputCity">
-                      <option value="">Select City</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="inputLineOne">Address</label>
                   <div class="input-group"> 
                     <span class="input-group-addon"><span class="fa fa-address-card-o"></span></span>
-                    <input type="text" class="form-control input-lg" name="inputLineOne" id="inputLineOne" placeholder="Address">
+                    <input type="text" name="search" id="search" class="form-control"  />
+                    <input  type="hidden" id="longitude" name="longitude">
+                    <input  type="hidden" id="latitude" name="latitude" >
+                    <input  type="hidden" id="address" name="address" >
+                    <input  type="hidden" id="city" name="city" >
+                    <input  type="hidden" id="state" name="state">
+                    <input  type="hidden" id="country" name="country">
                   </div>
+                  <span class="text-danger"> * {!!$errors -> first('search')!!}</span>
                 </div>
-
-
-                <div class="form-group">
-                  <label for="zipCode">Zip Code</label>
-                  <div class="input-group"> 
-                    <span class="input-group-addon"><span class="fa fa-address-card-o"></span></span>
-                    <input type="text" class="form-control input-lg" name="zip_code" id="zipCode" placeholder="Zip Code">
-                  </div>
-                </div>
-              </div>
             </div>
 
 
@@ -111,7 +69,24 @@
                   <label for="inputBizname">Business Name</label>
                   <div class="input-group"> 
                     <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                    <input type="text" class="form-control input-lg" name="inputBizname" id="inputBizname" placeholder="Business Name">
+                    <input type="text" class="form-control input-lg" name="name"placeholder="Business Name">
+                     <span class="text-danger"> * {!!$errors -> first('name')!!}</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputBizname">Business Email</label>
+                  <div class="input-group"> 
+                    <span class="input-group-addon"><span class="fa fa-info"></span></span>
+                    <input type="email" class="form-control input-lg" name="email"placeholder="Business email">
+                     <span class="text-danger"> * {!!$errors -> first('email')!!}</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputBizname">Business phone</label>
+                  <div class="input-group"> 
+                    <span class="input-group-addon"><span class="fa fa-info"></span></span>
+                    <input type="text" class="form-control input-lg" name="phone"  placeholder="Business phone">
+                     <span class="text-danger"> * {!!$errors -> first('phone')!!}</span>
                   </div>
                 </div>
               </div>
@@ -123,7 +98,7 @@
         <div class="site-tabs-bar">
           <div class="site-tabs">
             <ul class="nav nav-tabs">
-              <li class="active"><a data-target="#tab-details" data-toggle="tab">Owner/Manager Details</a></li>
+              <li class="active"><a data-target="#tab-details" data-toggle="tab">Category Restaurant</a></li>
             </ul>
           </div>
         </div>
@@ -133,35 +108,13 @@
           <div class="tab-pane active" id="tab-details"> 
             <div class="row">
               <div class="col-md-6">
-
-              <div class="form-group">
-                <label for="firstName">First Name</label>
-                <div class="input-group"> 
-                  <span class="input-group-addon"><span class="fa fa-address-card-o"></span></span>
-                  <input type="text" class="form-control input-lg" name="firstname" id="firstName" placeholder="First Name">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <div class="input-group"> 
-                  <span class="input-group-addon"><span class="fa fa-address-card-o"></span></span>
-                  <input type="text" class="form-control input-lg" name="lastname" id="lastName" placeholder="Last Name">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="lastName"><input type="radio" name="personrole" value="owner" /> Owner</label>
-                <label for="lastName"><input type="radio" name="personrole" value="manager" /> Manager</label>
-                <label for="lastName"><input type="radio" name="personrole" value="other" /> Other</label>
-                <input type="hidden" name="otherrole" class="form-control input-sm" />
-              </div>
-              <div class="form-group">
-                <label for="inputPhone">Phone</label>
-                <div class="input-group"> 
-                  <span class="input-group-addon"><span class="fa fa-phone"></span></span>
-                 <input type="text" class="form-control input-lg" name="inputPhone" id="inputPhone" placeholder="Phone Number">
-                </div>
-              </div>
+                <select multiple name="category_id[]" id="">
+                  @foreach($category as $data_cate)
+                    <option value="{{$data_cate->id}}">{{$data_cate->category_name}}</option>
+                  @endforeach
+                </select>
+                 <span class="text-danger"> * {!!$errors -> first('category_id')!!}</span>
+              
               </div>
 
             </div>
@@ -177,4 +130,40 @@
 
   </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+  google.maps.event.addDomListener(window, 'load', initialize);
+  function initialize(){
+    var search = document.getElementById('search');
+    var autocomplete = new google.maps.places.Autocomplete(search);
+    google.maps.event.addListener(autocomplete, 'place_changed', function(){
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      document.getElementById('address').value = place.formatted_address;
+      document.getElementById('longitude').value = place.geometry.location.lng();
+      document.getElementById('latitude').value = place.geometry.location.lat();
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        switch (addressType) {
+          case 'locality':
+          var city = place.address_components[i].long_name;
+          break;
+          case 'administrative_area_level_1':
+          var state = place.address_components[i].long_name;
+          break;
+          case 'country':
+          var country = place.address_components[i].long_name;
+          break;
+        }
+      }
+      document.getElementById('city').value = city;
+      document.getElementById('state').value = state;
+      document.getElementById('country').value = country;     
+    });
+  };
+</script>
 @endsection

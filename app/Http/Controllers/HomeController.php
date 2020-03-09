@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Category;
 use View;
 
 class HomeController extends Controller
@@ -36,6 +36,7 @@ class HomeController extends Controller
         return view('layouts.privacy-policy');
     }
     public function create_business(){
-        return view('layouts.create_business');
+        $category = Category::All();
+        return view('layouts.create_business',compact('category'));
     }
 }

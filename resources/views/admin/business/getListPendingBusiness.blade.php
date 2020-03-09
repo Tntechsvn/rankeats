@@ -3,11 +3,11 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-    <h1>Business Owners</h1>
-    <p>Manage Business Owners</p>
+    <h1>Pending Businesses</h1>
+    <p>Manage pending businesses</p>
     <div class="card-header">    	
     	<div class="card-tools">
-    		<form action="{{route('getListBusinessOwners')}}" method="get">
+    		<form action="{{route('getListPendingBusiness')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
 	    			<input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 
@@ -19,7 +19,6 @@
     	</div>
     </div>
 @stop
-
 @section('content')
     <section class="content">
       <div class="container-fluid">
@@ -55,15 +54,16 @@
               			<tr>
               				<th></th>
               				<th>Profile Photo</th>              				
-              				<th>Username</th>
+              				<th>Business Name</th>
               				<th>Email</th>
+              				<th>Location</th>
               				<th>Created At</th>
               				<th>Manage</th>
               			</tr>
               		</thead>
               		<tbody>              			
-              			@if(count($list_business_owners) > 0)
-              			@foreach($list_business_owners as $data)
+              			@if(count($list_business) > 0)
+              			@foreach($list_business as $data)
               				    				
               			<tr>
               				<td>
@@ -72,7 +72,7 @@
               						<label for="check{{$data->id}}"></label>
               					</div>
               				</td>
-              				@if($data->url_avatar != null)	              				
+              				@if($data->url_img != null)	              				
               				<td class="mailbox-subject"><img src="{{'http://localhost/rankeats/public/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
               				@else
               				<td class="mailbox-subject">
@@ -81,6 +81,7 @@
               				@endif
               				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
               				<td>{{$data -> email}}</td>              				
+              				<td>{{$data -> location->address}}</td>  
               				<td>{{$data -> created_at}}</td>
               				<td>
               					<button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
@@ -102,7 +103,7 @@
             <!-- /.card-body -->
               <div class="card-header">
                 <div class="card-tools">                	
-                	{!!$list_business_owners -> appends(request()->except('page')) -> links()!!}
+                	{!!$list_business -> appends(request()->except('page')) -> links()!!}
                 </div>
               </div>
           </div>

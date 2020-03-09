@@ -45,6 +45,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function location(){
         return $this -> belongsTo('App\Location', 'address', 'id');
     }
+    public function business(){
+        return $this -> hasMany('App\Business', 'user_id', 'id');
+    }
     public function update_user($request){
         if($request -> address){
             $Location = new Location;

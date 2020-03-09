@@ -22,10 +22,7 @@ Route::prefix("admincp")->group(function(){
 });
 Route::prefix("/")->middleware(['verified'])->group(function(){
 	Route::prefix("admincp")->group(function(){
-		Route::get('/', [
-			'as' => 'getLogin',
-			'uses' => 'AdminController@getLogin'
-		]);
+		/*eat*/
 		Route::prefix("eats")->group(function(){
 			Route::get('/', [
 				'as' => 'getListEats',
@@ -44,6 +41,7 @@ Route::prefix("/")->middleware(['verified'])->group(function(){
 				'uses' => 'EatsController@postEditEats'
 			]);
 		});
+		/*users*/
 		Route::prefix("users")->group(function(){
 			Route::get('/reviewers', [
 				'as' => 'getListReviewers',
@@ -61,6 +59,19 @@ Route::prefix("/")->middleware(['verified'])->group(function(){
 				'as' => 'postEditUser',
 				'uses' => 'UserController@postEditUser'
 			]);
+		});
+		Route::prefix("business-listings")->group(function(){
+			Route::get('/list-approved-businesses', [
+				'as' => 'getListApprovedBusinesses',
+				'uses' => 'BusinessController@getListApprovedBusinesses'
+			]);
+			
+			Route::get('/list-pending-business', [
+				'as' => 'getListPendingBusiness',
+				'uses' => 'BusinessController@getListPendingBusiness'
+			]);
+			
+			
 		});
 
 	});
