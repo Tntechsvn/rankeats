@@ -34,6 +34,11 @@ Route::post('/edit-user-pass', [
 	'as' => 'postEditUserPassFrondEnd',
 	'uses' => 'UserController@postEditUserPassFrondEnd'
 ]);
+
+Route::post('/create-business', [
+	'as' => 'postCreateBusiness',
+	'uses' => 'BusinessController@postCreateBusiness'
+]);
 /*end Knight*/
 // hungpro
 	// Route::get('/home', 'HomeController@index')->name('home');

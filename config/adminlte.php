@@ -210,6 +210,20 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Business Listings',
+            'icon'    => 'fas fa-fw fa-list-alt',
+            'submenu' => [
+                [
+                    'text' => 'Approved Businesses',
+                    'route'  => 'getListApprovedBusinesses',
+                ],
+                [
+                    'text' => 'Pending Businesses',
+                    'route'  => 'getListPendingBusiness',
+                ],
+            ],
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
