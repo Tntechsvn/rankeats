@@ -11,26 +11,32 @@
 						<input type="radio" id="ranker" name="type" value="ranker" checked /> Ranker
 						<input type="radio" id="business" name="type" value="business" /> Business Owner/Manager
 					</div>
-					<form id="register_rank" class="forms active" action="#" method="post">
+					<form id="register_rank" class="forms active" action="{{route('postSignUp')}}" method="post">
+						@csrf
 						<h2>rank</h2>
+						<input type="hidden" name="type" value="1"/>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-								<input type="text" class="form-control input-lg" name="inputUsername"  placeholder="Username">
+								<input type="text" class="form-control input-lg" name="name"  placeholder="Username" value="{{old('name')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon">@</span>
-								<input type="email" class="form-control input-lg" name="inputEmail" placeholder="Email">
+								<input type="email" class="form-control input-lg" name="email" placeholder="Email" value="{{old('email')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-								<input type="password" class="form-control input-lg" name="inputPassword"  placeholder="Password">
+								<input type="password" class="form-control input-lg" name="password"  placeholder="Password">
+								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-								<input type="password" class="form-control input-lg" name="inputConfirmPassword" placeholder="Confirm Password">
+								<input type="password" class="form-control input-lg" name="re_password" placeholder="Confirm Password">
+								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -39,50 +45,43 @@
 					</form>
 
 
-					<form id="register_business" class="forms hidden" action="#" method="post">
+					<form id="register_business" class="forms hidden" action="{{route('postSignUp')}}" method="post">
+						@csrf
 						<h2>Location</h2>
+						<input type="hidden" name="type" value="2"/>
 						<div class="location">
-							<div class="form-group">
-								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-lg" name="state"  placeholder="State">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-lg" name="city"  placeholder="City">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-lg" name="address"  placeholder="Address">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-lg" name="zipcode"  placeholder="Zip code">
-								</div>
-							</div>
+							<input type="text" name="search_rs" id="search_rs" class="form-control"/>
+							<input  type="hidden" id="longitude" name="longitude">
+							<input  type="hidden" id="latitude" name="latitude">
+							<input  type="hidden" id="address" name="address">
+							<input  type="hidden" id="city" name="city">
+							<input  type="hidden" id="state" name="state">
+							<input  type="hidden" id="country" name="country">
 						</div>
 						<h2>Business Details</h2>
 						<div class="infomation">
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-lg" name="inputUsername"  placeholder="Username">
+									<input type="text" class="form-control input-lg" name="name"  placeholder="Username" value="{{old('name')}}">
+									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon">@</span>
-									<input type="email" class="form-control input-lg" name="inputEmail"  placeholder="Email">
+									<input type="email" class="form-control input-lg" name="email" placeholder="Email" value="{{old('email')}}">
+									<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control input-lg" name="inputPassword"  placeholder="Password">
+									<input type="password" class="form-control input-lg" name="password"  placeholder="Password">
+									<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control input-lg" name="inputConfirmPassword"  placeholder="Confirm Password">
+									<input type="password" class="form-control input-lg" name="re_password" placeholder="Confirm Password">
+									<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 								</div>
 							</div>
 						</div>
@@ -115,4 +114,38 @@
 
 	</script>
 
+<script type="text/javascript">
+  google.maps.event.addDomListener(window, 'load', initialize);
+  function initialize(){
+    var search = document.getElementById('search_rs');
+    var autocomplete = new google.maps.places.Autocomplete(search);
+    google.maps.event.addListener(autocomplete, 'place_changed', function(){
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      document.getElementById('address').value = place.formatted_address;
+      document.getElementById('longitude').value = place.geometry.location.lng();
+      document.getElementById('latitude').value = place.geometry.location.lat();
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        switch (addressType) {
+          case 'locality':
+          var city = place.address_components[i].long_name;
+          break;
+          case 'administrative_area_level_1':
+          var state = place.address_components[i].long_name;
+          break;
+          case 'country':
+          var country = place.address_components[i].long_name;
+          break;
+        }
+      }
+      document.getElementById('city').value = city;
+      document.getElementById('state').value = state;
+      document.getElementById('country').value = country;     
+    });
+  };
+</script>
 @endsection

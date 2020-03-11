@@ -224,6 +224,16 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Reviews',
+            'icon'    => 'fas fa-fw fa-comment',
+            'submenu' => [
+                [
+                    'text' => 'List Reviews',
+                    'route'  => 'getListReviews',
+                ],
+            ],
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

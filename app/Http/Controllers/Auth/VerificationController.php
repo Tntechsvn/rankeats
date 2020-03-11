@@ -29,7 +29,7 @@ class VerificationController extends Controller
     //protected $redirectTo = RouteServiceProvider::HOME;
 
     protected function redirectTo() {
-        if(Auth::user()->role_id == 2){
+        if(Auth::user()->role_id == 3){
             return route('create_business');
         }else{
             return route('index');

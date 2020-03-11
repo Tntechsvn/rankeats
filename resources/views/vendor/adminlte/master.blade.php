@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('vendor/css/style.css')}}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&libraries=places&language=EN&region=US"></script>
 </head>
 <body class="@yield('classes_body')" @yield('body_data')>
 

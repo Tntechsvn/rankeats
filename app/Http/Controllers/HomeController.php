@@ -20,10 +20,10 @@ class HomeController extends Controller
     public function mysetting(){
         return view('layouts_profile.setting');
     }
-    public function register(){
+    public function sign_up(){
         return view('layouts.register');
     }
-    public function login(){
+    public function sign_in(){
         return view('layouts.login');
     }
     public function forgot_password(){

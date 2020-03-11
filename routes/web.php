@@ -16,30 +16,7 @@
 //     return view('welcome');
 // });
 
-/*Knight*/
-Route::post('/login-user', [
-	'as' => 'postLogin',
-	'uses' => 'LoginController@postLogin'
-]);
-Route::get('/logout-user', [
-	'as' => 'getLogout',
-	'uses' => 'LoginController@getLogout'
-]);
 
-Route::post('/edit-infor-user', [
-	'as' => 'postEditUserFrondEnd',
-	'uses' => 'UserController@postEditUserFrondEnd'
-]);
-Route::post('/edit-user-pass', [
-	'as' => 'postEditUserPassFrondEnd',
-	'uses' => 'UserController@postEditUserPassFrondEnd'
-]);
-
-Route::post('/create-business', [
-	'as' => 'postCreateBusiness',
-	'uses' => 'BusinessController@postCreateBusiness'
-]);
-/*end Knight*/
 // hungpro
 	// Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/', [
@@ -58,13 +35,13 @@ Route::post('/create-business', [
 		'as' => 'mysetting',
 		'uses' => 'HomeController@mysetting'
 	]);
-	Route::get('/register', [
-		'as' => 'register',
-		'uses' => 'HomeController@register'
+	Route::get('/sign-up', [
+		'as' => 'sign_up',
+		'uses' => 'HomeController@sign_up'
 	]);
-	Route::get('/login', [
-		'as' => 'login',
-		'uses' => 'HomeController@login'
+	Route::get('/sign-in', [
+		'as' => 'sign_in',
+		'uses' => 'HomeController@sign_in'
 	]);
 	Route::get('/forgot-password', [
 		'as' => 'forgot_password',

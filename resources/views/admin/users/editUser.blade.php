@@ -64,7 +64,11 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 									</div>
-									<input type="text" name="birthday" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask value="{{$user->birthday}}">
+									@php
+										$date = date("d-m-Y",strtotime($user->birthday))
+										
+									@endphp
+									<input type="text" name="birthday" class="form-control" data-inputmask-alias="datetime"data-inputmask-inputformat="dd-mm-yyyy" data-mask value="{{$date}}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -74,7 +78,13 @@
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">Country</label>
-								<input type="text" class="form-control" name="address" placeholder="Enter Country" value="">
+								<input type="text" name="search" id="search" class="form-control" value="@if($user->address != null){{$user->location->address}}@endif" />
+								<input  type="hidden" id="longitude" name="longitude" value="@if($user->address != null){{$user->location->longitude}}@endif">
+								<input  type="hidden" id="latitude" name="latitude" value="@if($user->address != null){{$user->location->latitude}}@endif">
+								<input  type="hidden" id="address" name="address" value="@if($user->address != null){{$user->location->address}}@endif">
+								<input  type="hidden" id="city" name="city" value="@if($user->address != null){{$user->location->city}}@endif">
+								<input  type="hidden" id="state" name="state" value="@if($user->address != null){{$user->location->state}}@endif">
+								<input  type="hidden" id="country" name="country" value="@if($user->address != null){{$user->location->country}}@endif">
 								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 							</div>
 							<div class="form-group">
@@ -107,11 +117,46 @@
 </section>
 @stop
 @section('adminlte_js')
+<script type="text/javascript">
+  google.maps.event.addDomListener(window, 'load', initialize);
+  function initialize(){
+    var search = document.getElementById('search');
+    var autocomplete = new google.maps.places.Autocomplete(search);
+    google.maps.event.addListener(autocomplete, 'place_changed', function(){
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      document.getElementById('address').value = place.formatted_address;
+      document.getElementById('longitude').value = place.geometry.location.lng();
+      document.getElementById('latitude').value = place.geometry.location.lat();
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        switch (addressType) {
+          case 'locality':
+          var city = place.address_components[i].long_name;
+          break;
+          case 'administrative_area_level_1':
+          var state = place.address_components[i].long_name;
+          break;
+          case 'country':
+          var country = place.address_components[i].long_name;
+          break;
+        }
+      }
+      document.getElementById('city').value = city;
+      document.getElementById('state').value = state;
+      document.getElementById('country').value = country;     
+    });
+  };
+</script>
+
 <script>
   $(function () {
 	$('.select2').select2()
     //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    $('#datemask').inputmask('dd-mm-yyyy', { 'placeholder': 'dd-mm-yyyy' })
    
     //Money Euro
     $('[data-mask]').inputmask()

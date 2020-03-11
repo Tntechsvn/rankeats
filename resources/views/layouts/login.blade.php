@@ -4,6 +4,9 @@
 		<div class="container container-main">
 			<div class="small-header">
 				<h1>Log in to Rank Eats</h1>
+				@if (session()->has('message'))
+				<p class="alert alert-success">{{ session('message') }}</p>
+				@endif
 			</div>
 			<div class="row login">
 				<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 well">
