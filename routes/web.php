@@ -74,6 +74,10 @@ Route::post('/create-business', [
 		'as' => 'advertise',
 		'uses' => 'HomeController@advertise'
 	]);
+	Route::get('/contact-us', [
+		'as' => 'contact',
+		'uses' => 'HomeController@contact'
+	]);
 	Route::get('/privacy-policy', [
 		'as' => 'privacy_policy',
 		'uses' => 'HomeController@privacy_policy'
@@ -81,6 +85,10 @@ Route::post('/create-business', [
 	Route::get('/create-business', [
 		'as' => 'create_business',
 		'uses' => 'HomeController@create_business'
+	]);
+	Route::get('/add-business', [
+		'as' => 'add_business',
+		'uses' => 'HomeController@add_business'
 	]);
 	
 // end hungpro

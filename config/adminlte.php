@@ -20,28 +20,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Favicon
-    |--------------------------------------------------------------------------
-    |
-    | Here you can activate the favicon.
-    |
-    | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#62-favicon
-    |
-    */
-
-    'use_ico_only' => false,
-    'use_full_favicon' => false,
-
-    /*
-    |--------------------------------------------------------------------------
     | Logo
     |--------------------------------------------------------------------------
     |
     | Here you can change the logo of your admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#63-logo
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#62-logo
     |
     */
 
@@ -60,7 +45,7 @@ return [
     | Here we change the layout of your admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#64-layout
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#63-layout
     |
     */
 
@@ -78,7 +63,7 @@ return [
     | Here you can change the look and behavior of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#65-classes
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#64-classes
     |
     */
 
@@ -101,7 +86,7 @@ return [
     | Here we can modify the sidebar of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#66-sidebar
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#65-sidebar
     |
     */
 
@@ -123,7 +108,7 @@ return [
     | Here we can modify the right sidebar aka control sidebar of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#67-control-sidebar-right-sidebar
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#66-control-sidebar-right-sidebar
     |
     */
 
@@ -143,7 +128,7 @@ return [
     | Here we can modify the url settings of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#68-urls
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#67-urls
     |
     */
 
@@ -169,7 +154,7 @@ return [
     | Here we can enable the Laravel Mix option for the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#69-laravel-mix
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#68-laravel-mix
     |
     */
 
@@ -183,12 +168,12 @@ return [
     | Here we can modify the sidebar/top navigation of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#610-menu
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#69-menu
     |
     */
 
     'menu' => [
-        [
+        /*[
             'text' => 'search',
             'search' => true,
             'topnav' => true,
@@ -204,19 +189,42 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        ],*/
+        ['header' => 'MAIN NAVIGATION'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Eats',
+            'route'  => 'getListEats',
+            'icon' => 'fas fa-fw fa-list-ul',
         ],
         [
+            'text'    => 'Users',
+            'icon'    => 'fas fa-fw fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Reviewers',
+                    'route'  => 'getListReviewers',
+                ],
+                [
+                    'text' => 'Business Owners',
+                    'route'  => 'getListBusinessOwners',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Business Listings',
+            'icon'    => 'fas fa-fw fa-list-alt',
+            'submenu' => [
+                [
+                    'text' => 'Approved Businesses',
+                    'route'  => 'getListApprovedBusinesses',
+                ],
+                [
+                    'text' => 'Pending Businesses',
+                    'route'  => 'getListPendingBusiness',
+                ],
+            ],
+        ],
+        /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -253,20 +261,8 @@ return [
                     'url'  => '#',
                 ],
             ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'aqua',
-        ],
+        ],*/
+       
     ],
 
     /*
@@ -277,7 +273,7 @@ return [
     | Here we can modify the menu filters of the admin panel.
     |
     | For more detailed instructions you can look here:
-    | https://github.com/jeroennoten/Laravel-AdminLTE/#611-menu-filters
+    | https://github.com/jeroennoten/Laravel-AdminLTE/#610-menu-filters
     |
     */
 

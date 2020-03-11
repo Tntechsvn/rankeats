@@ -4,7 +4,7 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'templates/origin/images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
 			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
@@ -14,28 +14,12 @@
 			<div class="col-md-3">
 
 				<div class="profile-usermenu">
-					<ul class="nav">
-						<li>
-							<a href="reviewed-by-42-hungpro"><i class="fa fa-comments"></i>Bussiness Reviews (0) </a>
-						</li>
-						<li>
-							<a href="reviewed-by-42-hungpro"><i class="fa fa-comments"></i>EAT Reviews (0) </a>
-						</li>
-						<li>
-							<a href="reviewed-by-42-hungpro"><i class="fa fa-comments"></i>Business Ranks (0) </a>
-						</li>
-						<li>
-							<a href="reviewed-by-42-hungpro"><i class="fa fa-comments"></i>EAT Ranks (0) </a>
-						</li>
-						<li>
-							<a href="bookmarks-by-42-hungpro"><i class="fa fa-bookmark"></i>Bookmarks (0)</a>
-						</li>
-					</ul>
+					@include('layouts_profile.menu-sidebar')
 				</div>
-				<div class="user-description">
+{{-- 				<div class="user-description">
 					<h1>About {{Auth::user()->name}}</h1>
 					<p></p>
-				</div>
+				</div> --}}
 			</div>
 
 			<div class="col-md-9">
