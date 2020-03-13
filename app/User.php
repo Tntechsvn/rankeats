@@ -116,5 +116,20 @@ class User extends Authenticatable implements MustVerifyEmail
             return $response;
         }
     }
+    /*check role business*/
+    public function check_role_business(){
+        if($this -> role_id == 3){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function check_business(){
+        if($this -> business()->count() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /*end Knight*/
 }

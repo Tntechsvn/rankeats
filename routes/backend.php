@@ -123,6 +123,16 @@ Route::prefix("/")->middleware(['verified'])->group(function(){
 				'uses' => 'ReviewsController@getListReviews'
 			]);
 		});
+		Route::prefix("payments-plans")->group(function(){
+			Route::get('/plans-detail', [
+				'as' => 'getListPlanDetail',
+				'uses' => 'PlanController@getListPlanDetail'
+			]);
+			Route::post('/plans-detail', [
+				'as' => 'postPaymentPlan',
+				'uses' => 'PlanController@postPaymentPlan'
+			]);
+		});
 
 	});
 });

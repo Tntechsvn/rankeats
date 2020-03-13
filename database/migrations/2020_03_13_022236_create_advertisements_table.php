@@ -15,15 +15,16 @@ class CreateAdvertisementsTable extends Migration
     {
         Schema::create('advertisements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('advertisemen_1')->nullable();
-            $table->string('advertisemen_2')->nullable();
-            $table->string('advertisemen_3')->nullable();
-            if (Schema::hasTable('business')) {
+            if (Schema::hasTable('businesses')) {
                 $table->bigInteger('business_id')->unsigned()->nullable();
-                $table->foreign('business_id')->references('id')->on('business')->onDelete('set null');
+                $table->foreign('business_id')->references('id')->on('businesses')->onDelete('set null');
+            }
+            if (Schema::hasTable('plan_details')) {
+                $table->bigInteger('plan_detail_id')->unsigned()->nullable();
+                $table->foreign('plan_detail_id')->references('id')->on('plan_details')->onDelete('set null');
             }
             $table->timestamp('active_date')->nullable();
-            $table->tinyInteger('status')->default(0);            
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

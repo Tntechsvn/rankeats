@@ -157,7 +157,7 @@ class UserController extends Controller
         }
 
     }
-    public function postEditUserPassFrondEnd(Request $request){        
+    public function postEditUserPassFrondEnd(Request $request){
         $this-> Validate($request,[
             'password' => 'required|min:6|max:32',
             're_password' => 'same:password',

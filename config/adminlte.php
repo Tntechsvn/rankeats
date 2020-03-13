@@ -234,6 +234,16 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Payments & Plans',
+            'icon'    => 'fas fa-fw fa-credit-card',
+            'submenu' => [
+                [
+                    'text' => 'Payment Plans',
+                    'route'  => 'getListPlanDetail',
+                ],
+            ],
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

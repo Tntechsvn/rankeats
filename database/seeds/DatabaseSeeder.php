@@ -47,6 +47,39 @@ class DatabaseSeeder extends Seeder
             ]);
         }
         // $this->call(UsersTableSeeder::class);
+
+        /*payment_plans*/
+        $array_payment_plans = array('paytohome', 'searcheatscity','searcheatscounty','searcheatsstate','featureeatscity','featureeatscounty','featureeatsstate');
+        foreach ($array_payment_plans as $name)
+        {
+            DB::table('payment_plans')->insert([
+                'name'      => $name,
+            ]);
+        }
+        /*plan_details*/
+         $plans_ids = DB::table('payment_plans')->pluck('id');
+         foreach ($plans_ids as $plan_id)
+         {
+            DB::table('plan_details')->insert([
+                'pd_plan_id'      => $plan_id,
+                'pd_days' => 30,
+                'pd_cost' => 10.99,
+
+            ]);
+            DB::table('plan_details')->insert([
+                'pd_plan_id'      => $plan_id,
+                'pd_days' => 180,
+                'pd_cost' => 49.99,
+                
+            ]);
+            DB::table('plan_details')->insert([
+                'pd_plan_id'      => $plan_id,
+                'pd_days' => 364,
+                'pd_cost' => 199.99,
+                
+            ]);
+        }
+
     }
 }
 
