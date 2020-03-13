@@ -58,18 +58,26 @@
 
 					<div class="form-group">
 						<label>Category Business</label>
-						<select multiple name="category_id[]" id="">
-							@foreach($category as $data_cate)
-							<option value="{{$data_cate->id}}">{{$data_cate->category_name}}</option>
-							@endforeach
+						<select class="test" multiple="multiple"  name="category_id[]">
+							<optgroup>
+								@foreach($category as $data_cate)
+									<option value="{{$data_cate->id}}">{{$data_cate->category_name}}</option>
+								@endforeach
+							</optgroup>
 						</select>
-						
+						<span class="errors"></span>
 					</div>
-
 					<div class="form-group">
 						<label>Restaurant Image</label>
+						<div class="form-group"  style="text-align: center;">
+	                    	<div  class="dt-imgs">
+	                    		<div class="dt-close" >
+	                    			<div id="previews" class="preview-img" style="width: 250px;"></div>
+	                    		</div>
+	                    	</div>
+	                    </div>
 						<label for="image_restaurant" class="choose_img"><span><i class="fas fa-paperclip"></i> Choose image...</span>
-							<input id="image_restaurant" class="hidden" type="file" name="image" value="" accept="image/*">
+							<input id="image_restaurant" class="hidden" type="file"  value="" accept="image/*">
 						</label>
 						
 					</div>
@@ -123,5 +131,47 @@
       document.getElementById('country').value = country;     
     });
   };
+</script>
+
+<script type="text/javascript" src="js/fSelect.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.test').fSelect();
+		$('#image_restaurant').click(function(e) {
+
+			var previews = document.getElementById('previews');
+			if (previews.hasChildNodes()) {
+				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				e.preventDefault();
+			}			
+		});
+		var images = function(input, imgPreview) {
+			if (input.files) {
+				var arr = [];
+				var filesAmount = input.files.length;
+				for (i = 0; i < filesAmount; i++) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style='width:100%;'>").append('<div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);
+					}
+					reader.readAsDataURL(input.files[i]);
+				}
+			}
+		};
+
+		$('#image_restaurant').on('change', function() {
+			images(this, '#previews');
+		});
+		/*clear the file list when image is clicked*/
+		$(document).on('click','.deletetimg',function(){
+			if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+			{
+				$(this).parent().remove();
+				$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+			}
+			else
+				return false;
+		});
+	});	
 </script>
 @endsection
