@@ -10,7 +10,7 @@
 	      <input type="text" class="form-control input-lg location_search" id="location_search" name="location_search" placeholder="City or State">   
 	    </div>
 	    <span class="input-group-btn">
-	      <button type="submit" class="submit-search"><i class="fas fa-search"></i><span class="text-search">Search</span></button>
+	      <button type="submit" class="btn btn-custom input-lg"><span class="glyphicon glyphicon-search"></span><span class="text-search">Search</span></button>
 	    </span> 
 	    <div style="clear: both;"></div>
 	  </div>
