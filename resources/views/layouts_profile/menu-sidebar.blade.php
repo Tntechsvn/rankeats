@@ -17,4 +17,13 @@
 	<li>
 		<a href="javascript:;"><i class="fas fa-plus-circle"></i>Add Business</a>
 	</li>
+	<li>
+		<a href="javascript:;"><i class="fas fa-plus-circle"></i>Business Management</a>
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#infobusiness">Info Restaurant</a></li>
+			<li class=""><a data-toggle="tab" href="#menuforbusiness">Menu</a></li>
+			<li class=""><a data-toggle="tab" href="#reviewforbusiness">Reviews</a></li>
+		</ul>
+	</li>
+
 </ul>

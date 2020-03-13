@@ -90,5 +90,9 @@ Route::post('/create-business', [
 		'as' => 'add_business',
 		'uses' => 'HomeController@add_business'
 	]);
+	Route::get('/business-management', [
+		'as' => 'business_management',
+		'uses' => 'HomeController@business_management'
+	]);
 	
 // end hungpro

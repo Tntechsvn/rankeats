@@ -56,6 +56,9 @@ class HomeController extends Controller
     public function add_business(){
         return view('layouts_profile.add_business');
     }
+    public function business_management(){
+        return view('layouts_profile.business-management');
+    }
 
 
 
