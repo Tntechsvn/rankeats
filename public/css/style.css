@@ -1666,6 +1666,10 @@ input#location_search {
     border-radius: 5px;
     border: 1px solid #e2e2e3;
 }
+.form_addbusiness .fs-label {
+	height: 30px;
+}
+
 .form_addbusiness select {
 	width: 100%;
     padding: 5px 15px;
@@ -1765,18 +1769,38 @@ input#location_search {
 	color: #ffbc08;
 }
 .popup-star {
-	display: flex;
-    justify-content: center;
     margin: 0;
-    padding: 0;
+    padding: 10px 0 20px;
 }
 .reviewBox textarea {
 	resize: none;
 }
-
-
-
-
+.modal-backdrop.fade {
+	opacity: 0.5;
+}
+.modal-dialog {
+	width: 350px;
+}
+.starimg {
+	background-image: url('../images/star.png');
+	width: 30px;
+    height: 30px;
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.customstar {
+	position: relative;
+    margin: 0 27px;
+    cursor: pointer;
+}
+.customstar input {
+	width: 0;
+	height: 0;
+}
+.checkstar {
+	background-image: url('../images/full-star.png') !important;
+}
 
 
 

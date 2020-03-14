@@ -192,7 +192,66 @@
 						</form>
 					</div>
 					<div id="infobusiness" class="tab-pane active">
-						<h1>chua co</h1>
+						<form class="form_addbusiness" action="#" method="get" accept-charset="utf-8">
+					<div class="form-group">
+						<label>Name Business</label>
+						<input type="text" name="name" value="">
+						
+					</div>
+
+					<div class="form-group">
+						<label>Email</label>
+						<input type="text" name="email" value="">
+						
+					</div>
+
+					<div class="form-group">
+						<label>Phone Number</label>
+						<input type="text" name="phone" value="">
+						
+					</div>
+
+					<div class="form-group">
+						<label>Location</label>
+						<input type="text" name="location" value="">
+						
+					</div>
+
+					<div class="form-group">
+						<label>Restaurant Type</label>
+						<select class="test" multiple="multiple"  name="Category_type[]">
+							<optgroup>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</optgroup>
+						</select>
+						<span class="errors"></span>
+					</div>
+					<div class="form-group">
+						<label>Restaurant Image</label>
+						<div class="form-group"  style="text-align: center;">
+	                    	<div  class="dt-imgs">
+	                    		<div class="dt-close" >
+	                    			<div id="previews" class="preview-img" style="width: 250px;"></div>
+	                    		</div>
+	                    	</div>
+	                    </div>
+						<label for="image_restaurant" class="choose_img"><span><i class="fas fa-paperclip"></i> Choose image...</span>
+							<input id="image_restaurant" class="hidden" type="file" name="image" value="" accept="image/*">
+						</label>
+						
+					</div>
+
+					<div class="form-group">
+						<label>Descriptions</label>
+						<textarea></textarea>
+						
+					</div>
+					<input class="submit_addbusiness btn btn-primary" type="submit" style="width: 150px;" name="submit" value="Update">
+
+				</form>
 					</div>
 				</div>
 			</div>

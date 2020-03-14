@@ -7,11 +7,11 @@
         }
         else {
             var settings = $.extend({
-                placeholder: 'Chọn Loại Danh Mục',
+                placeholder: '',
                 numDisplayed: 3,
                 overflowText: '{n} selected',
-                searchText: 'Tìm Kiếm',
-                noResultsText: 'Không Có Kết Quả Nào Được Tìm Kiếm',
+                searchText: 'Search',
+                noResultsText: 'No Result!!!',
                 showSearch: true,
                 optionFormatter: false
             }, options);
