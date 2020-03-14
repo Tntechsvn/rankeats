@@ -106,6 +106,7 @@
 			<div class="modal-dialog">
 
 			<!-- Modal content-->
+			<form action="search_submit" method="get" accept-charset="utf-8">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
@@ -116,13 +117,28 @@
 					</div>
 					<div class="modal-body">
 						<p>Would you like to write a review for this EAT?</p>
-						<ul class="popup-star">
-								<li><i class="far fa-star"></i></li>
-								<li><i class="far fa-star"></i></li>
-								<li><i class="far fa-star"></i></li>
-								<li><i class="far fa-star"></i></li>
-								<li><i class="far fa-star"></i></li>
-							</ul>
+						<div class="popup-star">
+							<label class="customstar star-1">							
+								<input type="radio" name="rate_star" value="1">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-2">							
+								<input type="radio" name="rate_star" value="2">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-3">							
+								<input type="radio" name="rate_star" value="3">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-4">							
+								<input type="radio" name="rate_star" value="4">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-5">							
+								<input type="radio" name="rate_star" value="5">
+								<span class="starimg "></span>
+							</label>
+						</div>
 						<div class="form-group reviewBox">
 							<textarea class="form-control" placeholder="Write Your Review"></textarea>
 						</div>
@@ -133,6 +149,7 @@
 						</div>
 					</div>
 				</div>
+			</form>
 
 			</div>
 		</div>
@@ -204,3 +221,15 @@
 </div>
 
 @endsection
+
+@section('script')
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(document).on('click','.starimg',function(){
+				$(this).addClass('checkstar');
+				$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
+				$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
+			});
+		});
+	</script>
+@stop
