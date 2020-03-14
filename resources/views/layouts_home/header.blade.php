@@ -67,7 +67,7 @@
                         <div class="help-block text-right"><a href="{{route('forgot_password')}}">Forget Password ?</a></div>
                       </form>
                     </div>
-                    <div class="bottom text-center"> New here ? <a href="{{route('register')}}"><b>Join Us</b></a> </div>
+                    <div class="bottom text-center"> New here ? <a href="{{route('sign_up')}}"><b>Join Us</b></a> </div>
                   </div>
                 </li>
               </ul>

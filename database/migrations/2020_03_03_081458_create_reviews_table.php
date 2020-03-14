@@ -21,6 +21,10 @@ class CreateReviewsTable extends Migration
                 $table->bigInteger('user_id')->unsigned();
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             }
+            if (Schema::hasTable('businesses')) {
+                $table->bigInteger('business_id')->unsigned()->default(0);
+                $table->foreign('business_id')->references('id')->on('businesses');
+            }
             $table->bigInteger('total_like')->unsigned();
             $table->text('list_user_like')->nullable();
             $table->tinyInteger('status')->default(1);

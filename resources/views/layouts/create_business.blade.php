@@ -98,7 +98,7 @@
         <div class="site-tabs-bar">
           <div class="site-tabs">
             <ul class="nav nav-tabs">
-              <li class="active"><a data-target="#tab-details" data-toggle="tab">Category Restaurant</a></li>
+              <li class="active"><a data-target="#tab-details" data-toggle="tab">Category Business</a></li>
             </ul>
           </div>
         </div>

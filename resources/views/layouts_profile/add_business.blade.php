@@ -20,39 +20,49 @@
 
 			<div class="col-md-9">
 
-				<form class="form_addbusiness" action="#" method="get" accept-charset="utf-8">
+				<form class="form_addbusiness" action="{{route('postCreateBusiness')}}" method="post" accept-charset="utf-8">
+					@csrf
 					<div class="form-group">
 						<label>Name Business</label>
-						<input type="text" name="name" value="">
+						<input type="text" class="form-control input-lg" name="name"placeholder="Business Name">
+                     	<span class="text-danger"> * {!!$errors -> first('name')!!}</span>
 						
 					</div>
 
 					<div class="form-group">
 						<label>Email</label>
-						<input type="text" name="email" value="">
+						<input type="email" class="form-control input-lg" name="email"placeholder="Business email">
+                     	<span class="text-danger"> * {!!$errors -> first('email')!!}</span>
 						
 					</div>
 
 					<div class="form-group">
 						<label>Phone Number</label>
-						<input type="text" name="phone" value="">
+						<input type="text" class="form-control input-lg" name="phone"  placeholder="Business phone">
+                     	<span class="text-danger"> * {!!$errors -> first('phone')!!}</span>
 						
 					</div>
 
 					<div class="form-group">
 						<label>Location</label>
-						<input type="text" name="location" value="">
-						
+						<input type="text" name="search" id="location_res" class="form-control"  />
+						<input  type="hidden" id="longitude" name="longitude">
+						<input  type="hidden" id="latitude" name="latitude" >
+						<input  type="hidden" id="address" name="address" >
+						<input  type="hidden" id="city" name="city" >
+						<input  type="hidden" id="state" name="state">
+						<input  type="hidden" id="country" name="country">
+						<span class="text-danger"> * {!!$errors -> first('search')!!}</span>
+              
 					</div>
 
 					<div class="form-group">
-						<label>Restaurant Type</label>
-						<select class="test" multiple="multiple"  name="Category_type[]">
+						<label>Category Business</label>
+						<select class="test" multiple="multiple"  name="category_id[]">
 							<optgroup>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
+								@foreach($category as $data_cate)
+									<option value="{{$data_cate->id}}">{{$data_cate->category_name}}</option>
+								@endforeach
 							</optgroup>
 						</select>
 						<span class="errors"></span>
@@ -67,14 +77,14 @@
 	                    	</div>
 	                    </div>
 						<label for="image_restaurant" class="choose_img"><span><i class="fas fa-paperclip"></i> Choose image...</span>
-							<input id="image_restaurant" class="hidden" type="file" name="image" value="" accept="image/*">
+							<input id="image_restaurant" class="hidden" type="file"  value="" accept="image/*">
 						</label>
 						
 					</div>
 
 					<div class="form-group">
 						<label>Descriptions</label>
-						<textarea></textarea>
+						<textarea name="description"></textarea>
 						
 					</div>
 					<input class="submit_addbusiness btn btn-primary" type="submit" style="width: 150px;" name="submit" value="Add Business">
@@ -88,45 +98,80 @@
 </div>
 @endsection
 @section('script')
-	<script type="text/javascript" src="js/fSelect.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.test').fSelect();
-			$('#image_restaurant').click(function(e) {
+<script type="text/javascript">
+  google.maps.event.addDomListener(window, 'load', initialize);
+  function initialize(){
+    var search = document.getElementById('location_res');
+    var autocomplete = new google.maps.places.Autocomplete(search);
+    google.maps.event.addListener(autocomplete, 'place_changed', function(){
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      document.getElementById('address').value = place.formatted_address;
+      document.getElementById('longitude').value = place.geometry.location.lng();
+      document.getElementById('latitude').value = place.geometry.location.lat();
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        switch (addressType) {
+          case 'locality':
+          var city = place.address_components[i].long_name;
+          break;
+          case 'administrative_area_level_1':
+          var state = place.address_components[i].long_name;
+          break;
+          case 'country':
+          var country = place.address_components[i].long_name;
+          break;
+        }
+      }
+      document.getElementById('city').value = city;
+      document.getElementById('state').value = state;
+      document.getElementById('country').value = country;     
+    });
+  };
+</script>
 
-				var previews = document.getElementById('previews');
-				if (previews.hasChildNodes()) {
-					alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
-					e.preventDefault();
-				}			
-			});
-			var images = function(input, imgPreview) {
-				if (input.files) {
-					var arr = [];
-					var filesAmount = input.files.length;
-					for (i = 0; i < filesAmount; i++) {
-						var reader = new FileReader();
-						reader.onload = function(event) {
-							$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style='width:100%;'>").append('<div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);
-						}
-						reader.readAsDataURL(input.files[i]);
+<script type="text/javascript" src="js/fSelect.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.test').fSelect();
+		$('#image_restaurant').click(function(e) {
+
+			var previews = document.getElementById('previews');
+			if (previews.hasChildNodes()) {
+				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				e.preventDefault();
+			}			
+		});
+		var images = function(input, imgPreview) {
+			if (input.files) {
+				var arr = [];
+				var filesAmount = input.files.length;
+				for (i = 0; i < filesAmount; i++) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style='width:100%;'>").append('<div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);
 					}
+					reader.readAsDataURL(input.files[i]);
 				}
-			};
+			}
+		};
 
-			$('#image_restaurant').on('change', function() {
-				images(this, '#previews');
-			});
-	            /*clear the file list when image is clicked*/
-            $(document).on('click','.deletetimg',function(){
-            	if(confirm("Bạn Muốn Xóa Ảnh Này?"))
-            	{
-            		$(this).parent().remove();
-					$("#image_restaurant").val(null);/* xóa tên của file trong input*/
-				}
-				else
-					return false;
-			});
-		});	
-	</script>
-@stop
+		$('#image_restaurant').on('change', function() {
+			images(this, '#previews');
+		});
+		/*clear the file list when image is clicked*/
+		$(document).on('click','.deletetimg',function(){
+			if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+			{
+				$(this).parent().remove();
+				$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+			}
+			else
+				return false;
+		});
+	});	
+</script>
+@endsection

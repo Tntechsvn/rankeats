@@ -16,13 +16,14 @@ class CreateReviewRatingsTable extends Migration
         Schema::create('review_ratings', function (Blueprint $table) {
             $table->bigIncrements('id');
             if (Schema::hasTable('users')) {
-                $table->bigInteger('id_user')->unsigned();
-                $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+                $table->bigInteger('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             }
             if (Schema::hasTable('reviews')) {
                 $table->bigInteger('review_id')->unsigned();
                 $table->foreign('review_id')->references('id')->on('reviews')->onDelete('cascade');
             }
+            $table->bigInteger('id_rate_from')->unsigned();/*storage id order or id booking depends type rate*/
             $table->tinyInteger('type_rate');
             $table->tinyInteger('rate');
             $table->text('description')->nullable();

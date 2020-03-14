@@ -79,11 +79,12 @@
               					<img src="http://localhost/rankeats/public/vendor/adminlte/dist/img/AdminLTELogo.png" style="width: 100px;">
               				</td>
               				@endif
-              				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
+              				<td><a href="{{route('getEditBusiness',$data->id)}}">{{$data -> name}}</a></td>
               				<td>{{$data -> email}}</td>              				
               				<td>{{$data -> location->address}}</td>  
               				<td>{{$data -> created_at}}</td>
               				<td>
+                        <a href="{{route('approvedBusinesses',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this business?">A</button></a>
               					<button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
               					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
               				</td>

@@ -10,6 +10,7 @@ use App\Myconst;
 use App\Business;
 use App\Http\Controllers\ShareController;
 use Validator;
+use Carbon\Carbon;
 
 class BusinessController extends Controller
 {
@@ -111,10 +112,22 @@ class BusinessController extends Controller
         return view('admin.business.getListPendingBusiness', compact('start', 'record', 'total_record','list_business','keyword'));
 
     }
+
     /*Approved Businesses*/
-    /*public function approvedBusinesses(){
-return $request;
-    }*/
+    public function approvedBusinesses($id_business){
+    	$business = Business::findOrfail($id_business);
+    	$business -> activated_on = now();
+    	$business -> save();
+    	if($business -> save()){
+    		session()->put('success','success');
+    	}
+    	
+		return redirect()->back();
+    }
+    public function getEditBusiness($id_business){
+    	$business = Business::findOrfail($id_business);
+    	return $business;
+    }
 
 
 }

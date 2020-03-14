@@ -14,16 +14,18 @@
 	<li>
 		<a href="javascript:;"><i class="fa fa-bookmark"></i>Bookmarks (0)</a>
 	</li>
+	@if(!Auth::user()->check_business() && Auth::user()->check_role_business())
 	<li>
-		<a href="javascript:;"><i class="fas fa-plus-circle"></i>Add Business</a>
+		<a href="{{route('add_business')}}"><i class="fas fa-plus-circle"></i>Add Business</a>
 	</li>
+	@else
 	<li>
-		<a href="javascript:;"><i class="fas fa-plus-circle"></i>Business Management</a>
+		<a href="{{route('business_management')}}"><i class="fas fa-plus-circle"></i>Business Management</a>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#infobusiness">Info Restaurant</a></li>
 			<li class=""><a data-toggle="tab" href="#menuforbusiness">Menu</a></li>
 			<li class=""><a data-toggle="tab" href="#reviewforbusiness">Reviews</a></li>
 		</ul>
 	</li>
-
+	@endif
 </ul>
