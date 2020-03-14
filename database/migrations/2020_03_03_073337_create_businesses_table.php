@@ -22,6 +22,8 @@ class CreateBusinessesTable extends Migration
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             }
             $table->string('description')->nullable();
+            /*phân loại*/
+            $table->tinyInteger('classification')->default(0);
             $table->string('address')->nullable();
             if (Schema::hasTable('locations')) {
                 $table->bigInteger('location_id')->unsigned()->nullable();

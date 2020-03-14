@@ -14,6 +14,43 @@
 
 });*/
 Auth::routes(['verify' => true]);
+/*********************Front End***********************************/
+/*Knight*/
+Route::post('/sign-up', [
+	'as' => 'postSignUp',
+	'uses' => 'UserController@postSignUp'
+]);
+
+Route::post('/login-user', [
+	'as' => 'postLogin',
+	'uses' => 'LoginController@postLogin'
+]);
+
+Route::post('/login-user', [
+	'as' => 'postLogin',
+	'uses' => 'LoginController@postLogin'
+]);
+Route::get('/logout-user', [
+	'as' => 'getLogout',
+	'uses' => 'LoginController@getLogout'
+]);
+
+Route::post('/edit-infor-user', [
+	'as' => 'postEditUserFrondEnd',
+	'uses' => 'UserController@postEditUserFrondEnd'
+]);
+Route::post('/edit-user-pass', [
+	'as' => 'postEditUserPassFrondEnd',
+	'uses' => 'UserController@postEditUserPassFrondEnd'
+]);
+
+Route::post('/create-business', [
+	'as' => 'postCreateBusiness',
+	'uses' => 'BusinessController@postCreateBusiness'
+]);
+/*end Knight*/
+/***************end front end******************/
+
 Route::prefix("admincp")->group(function(){
 	Route::get('/', [
 		'as' => 'getLogin',
@@ -70,8 +107,31 @@ Route::prefix("/")->middleware(['verified'])->group(function(){
 				'as' => 'getListPendingBusiness',
 				'uses' => 'BusinessController@getListPendingBusiness'
 			]);
+			Route::get('/approve-business/{id_business}', [
+				'as' => 'approvedBusinesses',
+				'uses' => 'BusinessController@approvedBusinesses'
+			]);
+			Route::get('/edit-business/{id_business}', [
+				'as' => 'getEditBusiness',
+				'uses' => 'BusinessController@getEditBusiness'
+			]);
 			
-			
+		});
+		Route::prefix("reviews")->group(function(){
+			Route::get('/', [
+				'as' => 'getListReviews',
+				'uses' => 'ReviewsController@getListReviews'
+			]);
+		});
+		Route::prefix("payments-plans")->group(function(){
+			Route::get('/plans-detail', [
+				'as' => 'getListPlanDetail',
+				'uses' => 'PlanController@getListPlanDetail'
+			]);
+			Route::post('/plans-detail', [
+				'as' => 'postPaymentPlan',
+				'uses' => 'PlanController@postPaymentPlan'
+			]);
 		});
 
 	});

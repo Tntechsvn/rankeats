@@ -3,11 +3,11 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-    <h1>Approved Businesses</h1>
-    <p>Manage approved  businesses</p>
+    <h1>List Reviews</h1>
+    <p>Manage list  reviews</p>
     <div class="card-header">     
       <div class="card-tools">
-        <form action="{{route('getListApprovedBusinesses')}}" method="get">
+        <form action="{{route('getListReviews')}}" method="get">
           <div class="input-group input-group-sm" style="width: 150px;">
             <input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 
@@ -62,8 +62,8 @@
                     </tr>
                   </thead>
                   <tbody>                   
-                    @if(count($list_business) > 0)
-                    @foreach($list_business as $data)
+                    @if(count($list_reviews) > 0)
+                    @foreach($list_reviews as $data)
                                   
                     <tr>
                       <td>
@@ -103,7 +103,7 @@
             <!-- /.card-body -->
               <div class="card-header">
                 <div class="card-tools">                  
-                  {!!$list_business -> appends(request()->except('page')) -> links()!!}
+                  {!!$list_reviews -> appends(request()->except('page')) -> links()!!}
                 </div>
               </div>
           </div>

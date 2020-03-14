@@ -50,8 +50,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function update_user($request){
         if($request -> address){
-            $Location = new Location;
-            $address = $Location->update_location($request)->id;
+            if($this -> address != null){
+                $Location =  Location::findOrfail($this -> address);
+                $address = $Location->update_location($request)->id;               
+            }else{
+                $Location = new Location;
+                $address = $Location->update_location($request)->id;               
+            }
+           
         }else{
             $address = null;
         }
@@ -84,12 +90,16 @@ class User extends Authenticatable implements MustVerifyEmail
         $this -> url_avatar = $url_avatar;
         /*$birthday = new Carbon($request->birthday);*/
         if($request -> birthday){
-            $this -> birthday =$request->birthday;
+            $this -> birthday = date("Y-m-d H:i:s",strtotime($request -> birthday));
         }
         if($address){
             $this -> address = $address;
         }
-       
+        if(isset($request->type) && $request->type == 1){
+            $this -> role_id = 2;
+        }elseif(isset($request->type) && $request->type == 2){
+            $this -> role_id = 3;
+        }
       
         if($this -> save()) {
             /*sửa thành công*/
@@ -104,6 +114,21 @@ class User extends Authenticatable implements MustVerifyEmail
                         'message' => 'error',
                     ], 200);
             return $response;
+        }
+    }
+    /*check role business*/
+    public function check_role_business(){
+        if($this -> role_id == 3){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function check_business(){
+        if($this -> business()->count() > 0){
+            return true;
+        }else{
+            return false;
         }
     }
     /*end Knight*/

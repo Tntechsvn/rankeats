@@ -107,6 +107,34 @@ class UserController extends Controller
 		}
     }
     /*====================================user frond-end=====================================================*/
+    public function postSignUp(Request $request){
+        $this-> Validate($request,[
+            'name' => 'required',
+            'email' => 'email|unique:users,email',
+            'password' => 'required|min:6|max:32',
+            're_password' => 'same:password',/*
+            'address' => 'required',*/
+        ]);
+        if($request -> type == 2){
+           $this-> Validate($request,[
+            'address' => 'required',
+        ]);
+
+        }
+        $user = new User;
+        /*update user*/
+        $response = $user->update_user($request);
+        $data = $response->getData();
+        if($data->success){
+            $user ->sendEmailVerificationNotification();
+            //session()->put('success',$data->message);
+            return redirect()->route('sign_in')-> with('message','Vui lòng xác minh email của bạn trước khi đăng nhập');
+        }else{
+            session()->put('error',$data->message);
+            return redirect()->rback();
+        }
+    }
+
     public function postEditUserFrondEnd(Request $request){
         $edit_info_user = Auth::user();
         $this-> Validate($request,[
@@ -129,7 +157,7 @@ class UserController extends Controller
         }
 
     }
-    public function postEditUserPassFrondEnd(Request $request){        
+    public function postEditUserPassFrondEnd(Request $request){
         $this-> Validate($request,[
             'password' => 'required|min:6|max:32',
             're_password' => 'same:password',

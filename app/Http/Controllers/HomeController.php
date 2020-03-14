@@ -8,6 +8,11 @@ use View;
 
 class HomeController extends Controller
 {
+    public function __construct(){
+        $category = Category::All();
+        view()->share(['category'=>$category]);
+    }
+
     public function home(){
         return view('layouts.index');
     }
@@ -24,11 +29,11 @@ class HomeController extends Controller
         return view('layouts_profile.setting');
     }
 
-    public function register(){
+    public function sign_up(){
         return view('layouts.register');
     }
+    public function sign_in(){
 
-    public function login(){
         return view('layouts.login');
     }
 
