@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Business;
 use View;
 
 class HomeController extends Controller
@@ -17,8 +18,43 @@ class HomeController extends Controller
         return view('layouts.index');
     }
 
-    public function search(){
-        return view('layouts.search');
+    public function search(Request $request){
+        $keyword = $request -> keyword ? $request -> keyword : '';
+        $list_cate = Category::join('businesses_categories','cate_id','=','categories.id')
+        ->where(function($query) use ($keyword){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+        })
+        ->groupBy('businesses_categories.business_id')
+        ->paginate(1);       
+        $arr_business_id = $list_cate ->pluck('business_id');
+        $data_business = $this -> getbusinessCate($arr_business_id);
+       // return $data_business;
+        return view('layouts.search',compact('data_business','list_cate'));
+    }
+    public function getbusinessCate($arr_id){
+        $result = array();  
+        foreach($arr_id as $id){
+            $item = Business::findOrfail($id);
+            $data['id'] = $item->id;
+            $data['business_name'] = $item->name;
+            $data['business_phone'] = $item ->phone;
+            $data['description'] = $item ->description;
+            $data['location'] = $item ->location->address;
+            $data['url_img'] = $item ->url_img;
+            $data['category_business'] = $item ->business_category->pluck('category_name');
+            $data['classification'] = $item ->classification;
+            $data['total_review'] = $item ->classification;
+            $data['total_rate'] = $item ->total_rate;
+            $data['total_vote'] = $item ->total_rate;
+            if($item->total_vote > 0){
+                $rate = floor(($item->total_rate / $item->total_vote) * 2) / 2;
+            }else{
+                $rate = 0;
+            }
+            $data['rate'] = $rate;
+            $result[] = $data;
+        }
+        return $result;
     }
 
     public function myprofile(){

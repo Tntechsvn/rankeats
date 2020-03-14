@@ -14,75 +14,77 @@
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			<div class="results-sponsored">
 				<h3 class="title">Sponsored Results</h3>
+				@foreach($data_business as $data)
 				<div class="food-main">
 					<div class="imbx">
-						<img class="" src="images/map_main.png" alt="" style="width: 100%;">
-					</div>
+						<img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;">
+					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">
-							<h4>1.Neptune Oyster</h4>
+							<h4>{{$data['business_name']}}</h4>
 							<ul>
+								@for($i = 1;$i <= $data['rate'];$i++)
 								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
+								@endfor
 							</ul>
-							<p>4723 <i>reviews</i></p>
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
 							<div class="pr-dtail">
 								<ul class="p-t-15">
 									<li>$$$.</li>
-									<li>,Desserts</li>
-									<li>,Gelato</li>
+									@foreach($data['category_business'] as $cate)
+									<li>{{$cate}}</li>
+									@endforeach
 								</ul>
 							</div>
 						</div>
 						<div class="pr-dtlr">
-							<p>(617) 742-3474</p>
-							<p>63 salem St</p>
-							<p>North End</p>
+							<p>{{$data['business_phone']}}</p>
+							<p>{{$data['location']}}</p>
 						</div>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam <a href="javascript:;">read more</a></p>
+						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
 						<a href="#" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
-					</div>
+					</div>					
 				</div>
+				@endforeach
+				{!!$list_cate -> appends(request()->except('page')) -> links()!!}
 			</div>
 			<div class="results-all">
 				<h3 class="title">All Results</h3>
+				@foreach($data_business as $data)
 				<div class="food-main">
 					<div class="imbx">
-						<img class="" src="images/map_main.png" alt="" style="width: 100%;">
-					</div>
+						<img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;">
+					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">
-							<h4>1.Neptune Oyster</h4>
+							<h4>{{$data['business_name']}}</h4>
 							<ul>
+								@for($i = 1;$i <= $data['rate'];$i++)
 								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
+								@endfor
 							</ul>
-							<p>4723 <i>reviews</i></p>
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
 							<div class="pr-dtail">
-								<ul>
+								<ul class="p-t-15">
 									<li>$$$.</li>
-									<li>,Desserts</li>
-									<li>,Gelato</li>
+									@foreach($data['category_business'] as $cate)
+									<li>{{$cate}}</li>
+									@endforeach
 								</ul>
 							</div>
 						</div>
 						<div class="pr-dtlr">
-							<p>(617) 742-3474</p>
-							<p>63 salem St</p>
-							<p>North End</p>
+							<p>{{$data['business_phone']}}</p>
+							<p>{{$data['location']}}</p>
 						</div>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam <a href="javascript:;">read more</a></p>
-						<a href="javascript:;" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
-					</div>
+						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
+						<a href="#" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
+					</div>					
 				</div>
+				@endforeach
+				{!!$list_cate -> appends(request()->except('page')) -> links()!!}
 			</div>
 			
 

@@ -20,7 +20,7 @@
 	</li>
 	@else
 	<li>
-		<a href="javascript:;"><i class="fas fa-plus-circle"></i>Business Management</a>
+		<a href="{{route('business_management')}}"><i class="fas fa-plus-circle"></i>Business Management</a>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#infobusiness">Info Restaurant</a></li>
 			<li class=""><a data-toggle="tab" href="#menuforbusiness">Menu</a></li>
