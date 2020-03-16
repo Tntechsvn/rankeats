@@ -71,5 +71,25 @@
 		'as' => 'business_management',
 		'uses' => 'HomeController@business_management'
 	]);
+	Route::get('/bookmark', [
+		'as' => 'bookmark',
+		'uses' => 'HomeController@bookmark'
+	]);
+	Route::get('/create-advertise', [
+		'as' => 'create_advertise',
+		'uses' => 'HomeController@create_advertise'
+	]);
+	Route::get('/eat-reviews', [
+		'as' => 'eat_reviews',
+		'uses' => 'HomeController@eat_reviews'
+	]);
+	Route::get('/single-restaurent', [
+		'as' => 'single_restaurent',
+		'uses' => 'HomeController@single_restaurent'
+	]);
+	Route::post('/ajax-bookmark', [
+		'as' => 'ajax-bookmark',
+		'uses' => 'HomeController@ajax_bookmark'
+	]);
 	
 // end hungpro

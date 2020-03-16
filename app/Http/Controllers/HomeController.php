@@ -100,6 +100,31 @@ class HomeController extends Controller
     public function business_management(){
         return view('layouts_profile.business-management');
     }
+    public function bookmark(){
+        return view('layouts_profile.bookmark');
+    }
+    public function create_advertise(){
+        return view('layouts_profile.create-advertise');
+    }
+    public function eat_reviews(){
+        return view('layouts_profile.eat-review');
+    }
+    public function single_restaurent(){
+        return view('layouts.single-restaurent');
+    }
+    public function ajax_bookmark(Request $request){
+        $data = $request->toArray();
+        $check;
+        if($data['check'] == 0){
+            $check = 1;
+        }else{
+            $check = 0;
+        }
+        return response()->json([
+            'success' => true,
+            'book' => $check,
+        ]);
+    }
 
 
 
