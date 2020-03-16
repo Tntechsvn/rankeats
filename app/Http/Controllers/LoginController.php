@@ -19,7 +19,6 @@ class LoginController extends Controller
     }*/
 
     public function postLogin(Request $request){
-
 		$this-> Validate($request,[
 			'email' => 'required',
 			'password' => 'required',			
@@ -36,10 +35,17 @@ class LoginController extends Controller
 		}else if(Auth::attempt(['name' => $request->email, 'password' => $request->password])){
 			$user = Auth::user();
 		}
-		if(isset($user)){			
-			return view('layouts.index');
+		if(isset($user)){	
+			return response()->json([
+	            'success' => true
+	        ]);
+
+			// return view('layouts.index');
 
 		}else{
+			return response()->json([
+	            'success' => false
+	        ]);
 			return view('layouts.login');
 		}
 	}

@@ -36,8 +36,8 @@ class CreateBusinessesTable extends Migration
             $table->string('pinterest')->nullable();
             $table->string('url_img')->nullable();
             $table->string('tags')->nullable();
-            $table->bigInteger('total_rate')->unsigned();
-            $table->bigInteger('total_vote')->unsigned();
+            $table->bigInteger('total_rate')->unsigned()->default(0);
+            $table->bigInteger('total_vote')->unsigned()->default(0);
             $table->timestamp('activated_on')->nullable();
             $table->timestamps();
         });

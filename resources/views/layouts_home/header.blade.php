@@ -62,7 +62,7 @@
                           keep me logged-in </label>
                         </div>
                         <div class="form-group">
-                          <button type="submit" class="btn btn-custom btn-block">Sign in</button>
+                          <button type="submit" class="btn btn-custom btn-block signin-popup">Sign in</button>
                         </div>
                         <div class="help-block text-right"><a href="{{route('forgot_password')}}">Forget Password ?</a></div>
                       </form>
@@ -82,3 +82,4 @@
     </div>
     <!-- /.container-fluid --> 
   </nav>
+  
