@@ -18,4 +18,4 @@
   <!--container--> 
   
 </footer>
-<input type="hidden" name="login" value="{{route('postLogin')}}">
+<input type="hidden" name="login" value="{{route('postAjaxLogin')}}">

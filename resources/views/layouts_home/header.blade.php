@@ -44,16 +44,16 @@
                 <li>
                   <div class="row">
                     <div class="col-md-12">
-                      <form action="{{route('postLogin')}}" method="post" enctype="multipart/form-data">
+                      <form action="{{route('postLogin')}}" method="post" enctype="multipart/form-data" >
                         {{csrf_field()}}
                         <div class="form-group">
                           <label class="sr-only" for="exampleInputEmail2">username</label>
-                          <input type="text" class="form-control" name="email" placeholder="username">
+                          <input type="text" class="form-control" name="email" placeholder="username" data-parsley-required>
                           <span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
                         </div>
                         <div class="form-group">
                           <label class="sr-only" for="exampleInputPassword2">Password</label>
-                          <input type="password" class="form-control" name="password" placeholder="password">
+                          <input type="password" class="form-control" name="password" placeholder="password" data-parsley-required>
                           <span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
                         </div>
                         <div class="checkbox">

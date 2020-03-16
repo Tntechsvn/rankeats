@@ -91,5 +91,9 @@
 		'as' => 'ajax-bookmark',
 		'uses' => 'HomeController@ajax_bookmark'
 	]);
+	Route::post('/post-ajax-login', [
+		'as' => 'postAjaxLogin',
+		'uses' => 'LoginController@postAjaxLogin'
+	]);
 	
 // end hungpro

@@ -1,6 +1,27 @@
 h1,h2,h3,h4,h5,h6{
 	font-weight: bold;
 }
+.loading {
+    background-color: rgba(0,0,0,.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -25px;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+}
 
 .bold {
 	font-weight: bold;
