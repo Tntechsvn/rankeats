@@ -23,144 +23,30 @@
 					<div>
 						<h3 class="title m-b-20">My Reviews</h3>
 						
+						@foreach($list_reviews as $data)
 						<div class="row m-b-20">
 							<div class="col-lg-1">
 								<div class="avata">
-									<img src="images/avatar-default.png" alt="">
+									<img src="@if($data->user->url_avatar != null){{asset('').'storage/'.$data->user->url_avatar}}@else{{'images/avatar-default.png'}}@endif" alt="" style="width: 70px;">
 								</div>
 							</div>
 							<div class="col-lg-11">
 								<div class="content-right p-b-20">
-								<h4>name reviews</h4>
-								<span class="review-date">12 tháng 3 2020</span>
+								<h4>{{$data->user->name}}</h4>
+								<span class="review-date">{{$data -> created_at}}</span>
 								<div class="star-view clear p-b-10">
+									@for($i = 1;$i <= $data->review_rating->where('review_id','=',$data->id)->first()->rate;$i++)
 									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<span class="bold p-l-20">Review restaurent king bbq</span>
+									@endfor
+									<span class="bold p-l-20">Review business {{$data->business->name}}</span>
 								</div>
 								
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
+								<p>{{$data->description}}</p>
 							</div>
 							</div>
 						</div>
-						<div class="row m-b-20">
-							<div class="col-lg-1">
-								<div class="avata">
-									<img src="images/avatar-default.png" alt="">
-								</div>
-							</div>
-							<div class="col-lg-11">
-								<div class="content-right p-b-20">
-								<h4>name reviews</h4>
-								<span class="review-date">12 tháng 3 2020</span>
-								<div class="star-view clear p-b-10">
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<span class="bold p-l-20">Review restaurent king bbq</span>
-								</div>
-								
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-							</div>
-							</div>
-						</div>
-						<div class="row m-b-20">
-							<div class="col-lg-1">
-								<div class="avata">
-									<img src="images/avatar-default.png" alt="">
-								</div>
-							</div>
-							<div class="col-lg-11">
-								<div class="content-right p-b-20">
-								<h4>name reviews</h4>
-								<span class="review-date">12 tháng 3 2020</span>
-								<div class="star-view clear p-b-10">
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<span class="bold p-l-20">Review restaurent king bbq</span>
-								</div>
-								
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-							</div>
-							</div>
-						</div>
-						<div class="row m-b-20">
-							<div class="col-lg-1">
-								<div class="avata">
-									<img src="images/avatar-default.png" alt="">
-								</div>
-							</div>
-							<div class="col-lg-11">
-								<div class="content-right p-b-20">
-								<h4>name reviews</h4>
-								<span class="review-date">12 tháng 3 2020</span>
-								<div class="star-view clear p-b-10">
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<span class="bold p-l-20">Review restaurent king bbq</span>
-								</div>
-								
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-							</div>
-							</div>
-						</div>
-						<div class="row m-b-20">
-							<div class="col-lg-1">
-								<div class="avata">
-									<img src="images/avatar-default.png" alt="">
-								</div>
-							</div>
-							<div class="col-lg-11">
-								<div class="content-right p-b-20">
-								<h4>name reviews</h4>
-								<span class="review-date">12 tháng 3 2020</span>
-								<div class="star-view clear p-b-10">
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<span class="bold p-l-20">Review restaurent king bbq</span>
-								</div>
-								
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-							</div>
-							</div>
-						</div>
-						<div class="row m-b-20">
-							<div class="col-lg-1">
-								<div class="avata">
-									<img src="images/avatar-default.png" alt="">
-								</div>
-							</div>
-							<div class="col-lg-11">
-								<div class="content-right p-b-20">
-								<h4>name reviews</h4>
-								<span class="review-date">12 tháng 3 2020</span>
-								<div class="star-view clear p-b-10">
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<i class="fas fa-star star-rate"></i>
-									<span class="bold p-l-20">Review restaurent king bbq</span>
-								</div>
-								
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-							</div>
-							</div>
-						</div>
+						@endforeach
+						{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 					</div>
 				</div>
 			</div>
