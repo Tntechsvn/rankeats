@@ -27,7 +27,7 @@ class HomeController extends Controller
             $query->where('category_name', 'LIKE', '%'.$keyword.'%');
         })
         ->groupBy('businesses_categories.business_id')
-        ->paginate(2);       
+        ->paginate(Myconst::PAGINATE_ADMIN);       
         $arr_business_id = $list_cate ->pluck('business_id');
         $data_business = $this -> getbusinessCate($arr_business_id);
        // return $data_business;
@@ -114,6 +114,31 @@ class HomeController extends Controller
         /*category*/
         $category = Category::All();
         return view('layouts_profile.business-management',compact('list_reviews','info_business','category'));
+    }
+    public function bookmark(){
+        return view('layouts_profile.bookmark');
+    }
+    public function create_advertise(){
+        return view('layouts_profile.create-advertise');
+    }
+    public function eat_reviews(){
+        return view('layouts_profile.eat-review');
+    }
+    public function single_restaurent(){
+        return view('layouts.single-restaurent');
+    }
+    public function ajax_bookmark(Request $request){
+        $data = $request->toArray();
+        $check;
+        if($data['check'] == 0){
+            $check = 1;
+        }else{
+            $check = 0;
+        }
+        return response()->json([
+            'success' => true,
+            'book' => $check,
+        ]);
     }
 
 

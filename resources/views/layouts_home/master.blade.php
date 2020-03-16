@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Rank Eats</title>
 <base href="{{asset('/public/')}}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1">

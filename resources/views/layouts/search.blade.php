@@ -146,6 +146,7 @@
 						<!-- Modal content-->
 						<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
 							@csrf
+							<input type="hidden" name="business_id" value="{{$data['id']}}">
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
@@ -195,87 +196,19 @@
 				@endforeach
 				{!!$list_cate -> appends(request()->except('page')) -> links()!!}
 			</div>
-
-
-
 		</div>
 		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30">
 			<div class="map_img">
 				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3709.807695902279!2d105.83079121539541!3d21.59342827363624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1584071260154!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 			</div>
-
-
 			{{-- <div><h4>Is the EAT for a business you’re looking for missing?</h4>
 				<div class="underMap" style="margin-top:10px;"><a data-target="#loginModal" data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a></div>
 			</div> --}}
 		</div>
 		<!--container--> 
 
-		<nav id="page-nav"><a href="data_search.php?page=2&amp;term=&amp;city="></a></nav> 
-		<div id="eatModal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
-				<form action="submit_eat.php" method="POST">
-					<input type="hidden" name="item_id" value="" />
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Add EAT</h4>
-						</div>
-						<div class="modal-body">
-							<a href="#"  data-target="#loginModal" data-toggle="modal" style="color:#fff;" class="btn btn-primary rankerBtn">Ranker</a>&nbsp;<a href="http://rankeats.com/register"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a>
-							<div class="rankerShow" style="display:none;">
-								<div class="form-group">
-									<label for="eat_item">EAT</label>
-									<input type="text" class="form-control input-lg" name="eat_item" id="eat_item" placeholder="Item" value="" readonly />
-								</div>
-								<div class="form-group">
-									<label for="eat_location">Location</label>
-									<input type="text" class="form-control input-lg" name="eat_location" id="eat_location" placeholder="Location" value="" readonly />
-								</div>
-								<div class="form-group">
-									<label for="business_name">Business Name</label>
-									<input type="text" class="form-control input-lg" name="business_name" id="business_name" placeholder="Business Name" required />
-								</div>
-								<div class="form-group">
-									<label for="address">Address</label>
-									<input type="text" class="form-control input-lg" name="address" id="address" placeholder="Address" required  />
-								</div>
-								<div class="form-group">
-									<label for="zip_code">Zip Code</label>
-									<input type="text" class="form-control input-lg" name="zip_code" id="zip_code" placeholder="Zip Code" required  />
-								</div>
 
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-									<button type="submit" class="btn btn-primary">Submit</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-
-		<div id="loginModal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
-
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">&nbsp;</h4>
-					</div>
-					<div class="modal-body">
-						<p>Must be logged in to Add EAT, <a href="http://rankeats.com/login">Login Here</a></p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
+		
 	</div>
 </div>
 
@@ -288,6 +221,7 @@
 			$(this).addClass('checkstar');
 			$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
 			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
+
 		});
 	});
 </script>

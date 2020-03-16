@@ -3,7 +3,7 @@
 		<a href="javascript:;"><i class="fa fa-comments"></i>Bussiness Reviews (0) </a>
 	</li>
 	<li>
-		<a href="javascript:;"><i class="fa fa-comments"></i>EAT Reviews (0) </a>
+		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews (0) </a>
 	</li>
 	<li>
 		<a href="javascript:;"><i class="fa fa-comments"></i>Business Ranks (0) </a>

@@ -149,7 +149,6 @@
 
 							</div>
 							<input class="submit_addbusiness btn btn-primary" type="submit" style="width: 150px;" name="submit" value="Update">
-
 						</form>
 					</div>
 				</div>
