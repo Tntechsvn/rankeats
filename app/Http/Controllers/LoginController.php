@@ -19,6 +19,7 @@ class LoginController extends Controller
     }*/
 
     public function postLogin(Request $request){
+
 		$this-> Validate($request,[
 			'email' => 'required',
 			'password' => 'required',			
@@ -35,9 +36,8 @@ class LoginController extends Controller
 		}else if(Auth::attempt(['name' => $request->email, 'password' => $request->password])){
 			$user = Auth::user();
 		}
-
 		if(isset($user)){			
-			return redirect()->back();
+			return view('layouts.index');
 
 		}else{
 			return view('layouts.login');

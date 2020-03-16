@@ -48,6 +48,16 @@ Route::post('/create-business', [
 	'as' => 'postCreateBusiness',
 	'uses' => 'BusinessController@postCreateBusiness'
 ]);
+Route::post('/edit-business/{id_business}', [
+	'as' => 'postEditBusiness',
+	'uses' => 'BusinessController@postEditBusiness'
+]);
+/*postReviewFrontEnd*/
+Route::post('/post-review', [
+	'as' => 'postReviewFrontEnd',
+	'uses' => 'ReviewsController@postReviewFrontEnd'
+]);
+
 /*end Knight*/
 /***************end front end******************/
 

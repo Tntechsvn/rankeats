@@ -21,9 +21,14 @@ class Business extends Model
     }
 
     public function update_business($request,$user){
-    	if($request -> address){
-            $Location = new Location;
-            $location_id = $Location->update_location($request)->id;
+        if($request -> address){
+            if($this -> location_id != null){
+                $Location =  Location::findOrfail($this -> location_id);
+                $location_id = $Location->update_location($request)->id;               
+            }else{
+                $Location = new Location;
+                $location_id = $Location->update_location($request)->id;               
+            }
         }else{
             $location_id = null;
         }

@@ -79,9 +79,9 @@
                         <img src="http://localhost/rankeats/public/vendor/adminlte/dist/img/AdminLTELogo.png" style="width: 100px;">
                       </td>
                       @endif
-                      <td><a href="{{route('getEditBusiness',$data->id)}}">{{$data -> name}}</a></td>
-                      <td>{{$data -> email}}</td>                     
-                      <td>{{$data -> location->address}}</td>  
+                      <td><a href="">{{$data -> business->name}}</a></td>
+                      <td>{{$data -> business->email}}</td>                     
+                      <td>{{$data -> business->location->address}}</td>  
                       <td>{{$data -> created_at}}</td>
                       <td>
                         <button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
