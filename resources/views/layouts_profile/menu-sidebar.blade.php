@@ -3,7 +3,7 @@
 		<a href="javascript:;"><i class="fa fa-comments"></i>Bussiness Reviews (0) </a>
 	</li>
 	<li>
-		<a href="javascript:;"><i class="fa fa-comments"></i>EAT Reviews (0) </a>
+		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews (0) </a>
 	</li>
 	<li>
 		<a href="javascript:;"><i class="fa fa-comments"></i>Business Ranks (0) </a>
@@ -20,7 +20,7 @@
 	</li>
 	@else
 	<li>
-		<a href="javascript:;"><i class="fas fa-plus-circle"></i>Business Management</a>
+		<a href="{{route('business_management')}}"><i class="fas fa-plus-circle"></i>Business Management</a>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#infobusiness">Info Restaurant</a></li>
 			<li class=""><a data-toggle="tab" href="#menuforbusiness">Menu</a></li>

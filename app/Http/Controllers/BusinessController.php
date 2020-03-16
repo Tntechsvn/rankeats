@@ -128,6 +128,27 @@ class BusinessController extends Controller
     	$business = Business::findOrfail($id_business);
     	return $business;
     }
+    public function postEditBusiness(Request $request){
+        $user = Auth::user();
+        $business = Business::findOrfail($request->id_business);
+
+        $this-> Validate($request,[
+            'search' => 'required',
+            'email' => 'email|unique:businesses,email,'.$business->id,
+            'phone' =>'required',
+            'category_id' => 'required',
+        ]);
+
+        $response = $business -> update_business($request,$user);
+        $data = $response->getData();
+        if($data->success){
+            session()->put('success',$data->message);
+            return redirect()->back();
+        }else{
+            session()->put('error',$data->message);
+            return redirect()->back();
+        }
+    }
 
 
 }
