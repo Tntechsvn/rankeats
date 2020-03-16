@@ -27,14 +27,21 @@
 		'as' => 'search',
 		'uses' => 'HomeController@search'
 	]);
-	Route::get('/myprofile', [
-		'as' => 'myprofile',
-		'uses' => 'HomeController@myprofile'
-	]);
-	Route::get('/setting', [
-		'as' => 'mysetting',
-		'uses' => 'HomeController@mysetting'
-	]);
+	Route::prefix("/")->middleware(['frontendLogin','verified'])->group(function(){
+		Route::get('/myprofile', [
+			'as' => 'myprofile',
+			'uses' => 'HomeController@myprofile'
+		]);
+		Route::get('/setting', [
+			'as' => 'mysetting',
+			'uses' => 'HomeController@mysetting'
+		]);
+		Route::get('/bookmark', [
+			'as' => 'bookmark',
+			'uses' => 'HomeController@bookmark'
+		]);
+	});
+	
 	Route::get('/sign-up', [
 		'as' => 'sign_up',
 		'uses' => 'HomeController@sign_up'
@@ -71,10 +78,7 @@
 		'as' => 'business_management',
 		'uses' => 'HomeController@business_management'
 	]);
-	Route::get('/bookmark', [
-		'as' => 'bookmark',
-		'uses' => 'HomeController@bookmark'
-	]);
+	
 	Route::get('/create-advertise', [
 		'as' => 'create_advertise',
 		'uses' => 'HomeController@create_advertise'

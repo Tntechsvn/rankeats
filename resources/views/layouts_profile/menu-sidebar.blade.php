@@ -12,7 +12,7 @@
 		<a href="javascript:;"><i class="fa fa-comments"></i>EAT Ranks (0) </a>
 	</li>
 	<li>
-		<a href="javascript:;"><i class="fa fa-bookmark"></i>Bookmarks (0)</a>
+		<a href="{{route('bookmark')}}"><i class="fa fa-bookmark"></i>Bookmarks (0)</a>
 	</li>
 	@if(Auth::user()->check_role_business())
 		@if(!Auth::user()->check_business() && Auth::user()->check_role_business())

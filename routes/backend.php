@@ -26,37 +26,35 @@ Route::post('/login-user', [
 	'uses' => 'LoginController@postLogin'
 ]);
 
-Route::post('/login-user', [
-	'as' => 'postLogin',
-	'uses' => 'LoginController@postLogin'
-]);
 Route::get('/logout-user', [
 	'as' => 'getLogout',
 	'uses' => 'LoginController@getLogout'
 ]);
+Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
+	Route::post('/edit-infor-user', [
+		'as' => 'postEditUserFrondEnd',
+		'uses' => 'UserController@postEditUserFrondEnd'
+	]);
+	Route::post('/edit-user-pass', [
+		'as' => 'postEditUserPassFrondEnd',
+		'uses' => 'UserController@postEditUserPassFrondEnd'
+	]);
+	Route::post('/edit-business/{id_business}', [
+		'as' => 'postEditBusiness',
+		'uses' => 'BusinessController@postEditBusiness'
+	]);
+	/*postReviewFrontEnd*/
+	Route::post('/post-review', [
+		'as' => 'postReviewFrontEnd',
+		'uses' => 'ReviewsController@postReviewFrontEnd'
+	]);
 
-Route::post('/edit-infor-user', [
-	'as' => 'postEditUserFrondEnd',
-	'uses' => 'UserController@postEditUserFrondEnd'
-]);
-Route::post('/edit-user-pass', [
-	'as' => 'postEditUserPassFrondEnd',
-	'uses' => 'UserController@postEditUserPassFrondEnd'
-]);
-
+});
 Route::post('/create-business', [
 	'as' => 'postCreateBusiness',
 	'uses' => 'BusinessController@postCreateBusiness'
 ]);
-Route::post('/edit-business/{id_business}', [
-	'as' => 'postEditBusiness',
-	'uses' => 'BusinessController@postEditBusiness'
-]);
-/*postReviewFrontEnd*/
-Route::post('/post-review', [
-	'as' => 'postReviewFrontEnd',
-	'uses' => 'ReviewsController@postReviewFrontEnd'
-]);
+
 
 /*end Knight*/
 /***************end front end******************/
@@ -67,7 +65,7 @@ Route::prefix("admincp")->group(function(){
 		'uses' => 'AdminController@getLogin'
 	]);
 });
-Route::prefix("/")->middleware(['verified'])->group(function(){
+Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 	Route::prefix("admincp")->group(function(){
 		/*eat*/
 		Route::prefix("eats")->group(function(){
