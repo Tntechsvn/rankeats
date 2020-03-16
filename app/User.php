@@ -39,6 +39,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     /*Knight */
+    public function bookmark(){
+        return $this->hasMany('App\bookmark', 'user_id', 'id');
+    }
+
     public function role(){
         return $this->belongsTo('App\Role','role_id', 'id');
     }

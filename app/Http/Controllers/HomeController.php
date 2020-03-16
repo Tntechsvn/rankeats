@@ -126,7 +126,9 @@ class HomeController extends Controller
         return view('layouts_profile.business-management',compact('list_reviews','info_business','category'));
     }
     public function bookmark(){
-        return view('layouts_profile.bookmark');
+        $arr_business_id = Auth::user()->bookmark->pluck('business_id');
+        $data_business = $this -> getbusinessCate($arr_business_id);
+        return view('layouts_profile.bookmark',compact('data_business'));
     }
     public function create_advertise(){
         return view('layouts_profile.create-advertise');
