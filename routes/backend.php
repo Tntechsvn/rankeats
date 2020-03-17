@@ -48,6 +48,11 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 		'as' => 'postReviewFrontEnd',
 		'uses' => 'ReviewsController@postReviewFrontEnd'
 	]);
+	/*payment_plan_advertisement*/
+	Route::post('/payment-plan-advertisement', [
+		'as' => 'payment_plan_advertisement',
+		'uses' => 'PaymentController@payment_plan_advertisement'
+	]);
 
 });
 Route::post('/create-business', [

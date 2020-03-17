@@ -7,6 +7,8 @@ use App\Category;
 use App\Business;
 use App\Review;
 use App\Myconst;
+use App\PlanDetail;
+use App\Advertisement;
 use View;
 use Auth;
 class HomeController extends Controller
@@ -94,86 +96,85 @@ class HomeController extends Controller
     }
 
     public function review_management(){
-        return view('layouts_profile.review-management');
-    }
-
-    public function info_management(){
-        return view('layouts_profile.info-management');
-    }
-
-    public function advertise(){
-        return view('layouts.advertise');
-    }
-
-    public function privacy_policy(){
-        return view('layouts.privacy-policy');
-    }
-
-    public function contact(){
-        return view('layouts.contact');
-    }
-
-    public function create_business(){
-        $category = Category::All();
-        return view('layouts.create_business',compact('category'));
-    }
-
-    public function add_business(){
-        return view('layouts_profile.add_business');
-    }
-    public function business_management(){
         $business_id = Auth::user()->business()->first()->id;
-        /*list reviews for business*/
-        $list_reviews = Review::select('reviews.*')
-        /*->where(function($query) use ($keyword){            
-            $query->where('name', 'LIKE', '%'.$keyword.'%')->orwhere('name', 'LIKE', '%'.$keyword.'%');
-        })*/
-        ->where('business_id','=',$business_id)
-        ->orderBy('created_at', 'desc')
-        ->paginate(Myconst::PAGINATE_ADMIN);
-        /*info restaurant*/
-        $info_business = Auth::user()->business()->first();
-        /*category*/
-        $category = Category::All();
-        return view('layouts_profile.business-management',compact('list_reviews','info_business','category'));
-    }
-    public function bookmark(){
-        $arr_business_id = Auth::user()->bookmark->pluck('business_id');
-        $data_business = $this -> getbusinessCate($arr_business_id);
-        return view('layouts_profile.bookmark',compact('data_business'));
-    }
-    public function create_advertise(){
-        return view('layouts_profile.create-advertise');
-    }
-    public function eat_reviews(){
-        $user_id = Auth::user()->id;
-        /*list reviews for business*/
-        $list_reviews = Review::select('reviews.*')
-        /*->where(function($query) use ($keyword){            
-            $query->where('name', 'LIKE', '%'.$keyword.'%')->orwhere('name', 'LIKE', '%'.$keyword.'%');
-        })*/
-        ->where('user_id','=',$user_id)
-        ->orderBy('created_at', 'desc')
-        ->paginate(Myconst::PAGINATE_ADMIN);
+       /*list reviews for business*/
+       $list_reviews = Review::select('reviews.*')
+       ->where('business_id','=',$business_id)
+       ->orderBy('created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
+       return view('layouts_profile.review-management',compact('list_reviews'));
+   }
 
-        return view('layouts_profile.eat-review',compact('list_reviews'));
+   public function info_management(){
+     /*info restaurant*/
+    $info_business = Auth::user()->business()->first();
+    /*category*/
+    $category = Category::All();
+
+    return view('layouts_profile.info-management',compact('info_business','category'));
+}
+
+public function advertise(){
+    return view('layouts.advertise');
+}
+
+public function privacy_policy(){
+    return view('layouts.privacy-policy');
+}
+
+public function contact(){
+    return view('layouts.contact');
+}
+
+public function create_business(){
+    $category = Category::All();
+    return view('layouts.create_business',compact('category'));
+}
+
+public function add_business(){
+    return view('layouts_profile.add_business');
+}
+public function business_management(){
+    return view('layouts_profile.business-management');
+}
+public function bookmark(){
+    $arr_business_id = Auth::user()->bookmark->pluck('business_id');
+    $data_business = $this -> getbusinessCate($arr_business_id);
+    return view('layouts_profile.bookmark',compact('data_business'));
+}
+/*create_advertise*/
+public function create_advertise(){
+    $business_id = Auth::user()->business()->first()->id;
+    $plan_details = new PlanDetail;
+    $advertisement = Advertisement::where('business_id','=',$business_id)->get();
+    return view('layouts_profile.create-advertise',compact('plan_details','advertisement'));
+}
+public function eat_reviews(){
+    $user_id = Auth::user()->id;
+    /*list reviews for business*/
+    $list_reviews = Review::select('reviews.*')
+    ->where('user_id','=',$user_id)
+    ->orderBy('created_at', 'desc')
+    ->paginate(Myconst::PAGINATE_ADMIN);
+
+    return view('layouts_profile.eat-review',compact('list_reviews'));
+}
+public function single_restaurent(){
+    return view('layouts.single-restaurent');
+}
+public function ajax_bookmark(Request $request){
+    $data = $request->toArray();
+    $check;
+    if($data['check'] == 0){
+        $check = 1;
+    }else{
+        $check = 0;
     }
-    public function single_restaurent(){
-        return view('layouts.single-restaurent');
-    }
-    public function ajax_bookmark(Request $request){
-        $data = $request->toArray();
-        $check;
-        if($data['check'] == 0){
-            $check = 1;
-        }else{
-            $check = 0;
-        }
-        return response()->json([
-            'success' => true,
-            'book' => $check,
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'book' => $check,
+    ]);
+}
 
 
 

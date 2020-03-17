@@ -24,6 +24,7 @@ class CreateAdvertisementsTable extends Migration
                 $table->foreign('plan_detail_id')->references('id')->on('plan_details')->onDelete('set null');
             }
             $table->timestamp('active_date')->nullable();
+            $table->timestamp('expiration_date')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
