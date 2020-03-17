@@ -41,5 +41,8 @@ class PlanController extends Controller
     		return redirect()->back();
     	}
     }
+    public function payment_plan_advertisement(Request $request){
+        return $req;
+    }
     
 }

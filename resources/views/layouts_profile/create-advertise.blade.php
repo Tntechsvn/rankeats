@@ -30,7 +30,9 @@
 									</div>
 									<div class="panel-body">
 										<p>At the top of the home page you can add a pic of your business to a 3 pic rotation which will be seen by everyone when they visit us. The name of your business, along with the City and State, will also appear in the lower right of the pic which will link to your business home page. </p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
+
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',1)->get();
 											@endphp
@@ -42,7 +44,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Pay to Home" data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -59,7 +61,8 @@
 									</div>
 									<div class="panel-body">
 										<p>At the top of the search results page for the City and EATS you choose you can add a pic of your business. The name of your business along with the City and State will also appear in the lower right of the pic which will link to your business.</p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',2)->get();
 											@endphp
@@ -71,7 +74,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search EATS – City" data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan">Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -91,7 +94,8 @@
 									</div>
 									<div class="panel-body">
 										<p>At the top of the search results page for the County and EATS you choose you can add a pic of your business. The name of your business along with the City and State will also appear in the lower right of the pic which will link to your business home page if clicked on. </p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',3)->get();
 											@endphp
@@ -103,7 +107,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search EATS – County " data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -120,7 +124,8 @@
 									</div>
 									<div class="panel-body">
 										<p>At the top of the search results page for the State and EATS you choose you can add a pic of your business. The name of your business along with the City and State will also appear in the lower right of the pic which will link to your business home page if clicked on. </p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',4)->get();
 											@endphp
@@ -132,7 +137,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search EATS – State " data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -152,7 +157,8 @@
 									</div>
 									<div class="panel-body">
 										<p>Add your business to the top of the search results under the “Featured Listings” and be the first to be seen in your City for the EATS you choose!</p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',5)->get();
 											@endphp
@@ -164,7 +170,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search Feature EATS – City " data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -181,7 +187,8 @@
 									</div>
 									<div class="panel-body">
 										<p>a.	Add your business to the top of the search results under the “Featured Listings” and be the first to be seen in your County for the EATS you choose!</p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',6)->get();
 											@endphp
@@ -193,7 +200,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search Feature EATS – County" data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -213,7 +220,8 @@
 									</div>
 									<div class="panel-body">
 										<p>Add your business to the top of the search results under the “Featured Listings” and be the first to be seen in your State for the EATS you choose! </p>
-										<form action="update_payment_active.php" method="post">
+										<form action="{{route('payment_plan_advertisement')}}" method="post">
+											@csrf
 											@php
 											$pay_to_home = $plan_details->where('pd_plan_id',7)->get();
 											@endphp
@@ -225,7 +233,7 @@
 												</select>
 											</div>
 											<div class="col-md-6">
-												<button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search Feature EATS – State" data-target="#loginModal">Advertise</button>
+												<button type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</button>
 											</div>
 										</form>
 									</div>
@@ -239,6 +247,7 @@
 				</div>
 				<h3 class="title">Business Advertisement</h3>
 				<div class="business-advertise">
+					@foreach($advertisement as $data)
 					<div class="col-lg-12 m-b-20">
 						<div class="col-lg-3">
 							<div class="img">
@@ -247,31 +256,15 @@
 						</div>
 						<div class="col-lg-9">
 							<div class="in4">
-								<h4>Pay to home eat</h4>
+								<h4>{{$data->plan_detail->plan_detail->name}}</h4>
 								<p class="name-city "><i class="fas fa-info-circle"></i>title</p>
-								<p class="day-city"><i class="fas fa-calendar-alt"></i>30 day</p>
-								<p class="expiration-city"><i class="fas fa-calendar-times"></i> expiration-date: 12/04/2020</p>
-								<p class="price-city"><i class="fas fa-dollar-sign"></i>Price: $3.99</p>
+								<p class="day-city"><i class="fas fa-calendar-alt"></i>{{$data->plan_detail->pd_days}} day</p>
+								<p class="expiration-city"><i class="fas fa-calendar-times"></i> expiration-date: {{$data->expiration_date}}</p>
+								<p class="price-city"><i class="fas fa-dollar-sign"></i>Price: ${{$data->plan_detail->pd_cost}}</p>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-lg-12 m-b-20">
-						<div class="col-lg-3">
-							<div class="img">
-								<img src="images/pizza.jpg" alt="" style="width: 100%">
-							</div>
-						</div>
-						<div class="col-lg-9">
-							<div class="in4">
-								<h4>Pay to home eat</h4>
-								<p class="name-city "><i class="fas fa-info-circle"></i>title</p>
-								<p class="day-city "><i class="fas fa-calendar-alt"></i>30 day</p>
-								<p class="expiration-city "><i class="fas fa-calendar-times"></i> expiration-date: 12/04/2020</p>
-								<p class="price-city "><i class="fas fa-dollar-sign"></i>Price: $3.99</p>
-							</div>
-						</div>
-					</div>
+					@endforeach
 				</div>
 			</div>
 		</div>
