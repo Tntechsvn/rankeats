@@ -40,6 +40,19 @@
 			'as' => 'bookmark',
 			'uses' => 'HomeController@bookmark'
 		]);
+		Route::get('/business-management', [
+			'as' => 'business_management',
+			'uses' => 'HomeController@business_management'
+		]);
+		
+		Route::get('/create-advertise', [
+			'as' => 'create_advertise',
+			'uses' => 'HomeController@create_advertise'
+		]);
+		Route::get('/eat-reviews', [
+			'as' => 'eat_reviews',
+			'uses' => 'HomeController@eat_reviews'
+		]);
 	});
 	
 	Route::get('/sign-up', [
@@ -74,19 +87,7 @@
 		'as' => 'add_business',
 		'uses' => 'HomeController@add_business'
 	]);
-	Route::get('/business-management', [
-		'as' => 'business_management',
-		'uses' => 'HomeController@business_management'
-	]);
 	
-	Route::get('/create-advertise', [
-		'as' => 'create_advertise',
-		'uses' => 'HomeController@create_advertise'
-	]);
-	Route::get('/eat-reviews', [
-		'as' => 'eat_reviews',
-		'uses' => 'HomeController@eat_reviews'
-	]);
 	Route::get('/single-restaurent', [
 		'as' => 'single_restaurent',
 		'uses' => 'HomeController@single_restaurent'

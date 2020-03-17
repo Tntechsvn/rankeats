@@ -7,6 +7,7 @@ use App\Category;
 use App\Business;
 use App\Review;
 use App\Myconst;
+use App\PlanDetail;
 use View;
 use Auth;
 class HomeController extends Controller
@@ -131,7 +132,8 @@ class HomeController extends Controller
         return view('layouts_profile.bookmark',compact('data_business'));
     }
     public function create_advertise(){
-        return view('layouts_profile.create-advertise');
+        $plan_details = new PlanDetail;
+        return view('layouts_profile.create-advertise',compact('plan_details'));
     }
     public function eat_reviews(){
         $user_id = Auth::user()->id;
