@@ -904,7 +904,6 @@ Profile
 .profile-usermenu ul li.active a {
 	color: #5b9bd1;
 	background-color: #f6f9fb;
-	border-left: 2px solid #5b9bd1;
 	margin-left: -2px;
 }
 .show-subcat {
@@ -1870,6 +1869,15 @@ input#location_search {
     width: 100%;
     padding-left: 30px;
 }
+.menudropdown {
+	display: none;
+}
+li.active {
+	background-color: #f6f6f6;
+}
+li.active a {
+	color: #1e62ba;
+}
 
 
 
@@ -1943,8 +1951,8 @@ input#location_search {
 		width: 100%;
 	}
 	.input_dish::after,.input_state::after{
-		height: 35px;
-		padding: 8px 0;
+		height: auto;
+    padding: 13px 0;
 	}
 	.front-search h1 {
 	    font-size: 24px;
