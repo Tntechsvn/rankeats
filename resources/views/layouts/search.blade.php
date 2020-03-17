@@ -14,7 +14,7 @@
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			<div class="results-sponsored">
 				<h3 class="title">Sponsored Results</h3>
-				@foreach($data_business as $data)
+				@foreach($data_business_sponsored as $data)
 				<div class="food-main">
 					<div class="imbx">
 						<img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;">
@@ -44,6 +44,7 @@
 
 						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
 						<a href="#" data-target="#voteModalSponsored{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
+						@if(Auth::check())
 						<!-- Knight-->
 						<div id="voteModalSponsored{{$data['id']}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
 							<div class="modal-dialog">
@@ -99,11 +100,11 @@
 
 							</div>
 						</div>
+						@endif
 
 					</div>					
 				</div>
 				@endforeach
-				{!!$list_cate -> appends(request()->except('page')) -> links()!!}
 			</div>
 			<div class="results-all">
 				<h3 class="title">All Results</h3>
@@ -139,6 +140,7 @@
 						<a href="#" data-target="#voteModal{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
 					</div>					
 				</div>
+				@if(Auth::check())
 				<!-- Knight-->
 				<div id="voteModal{{$data['id']}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
 					<div class="modal-dialog">
@@ -193,6 +195,7 @@
 
 					</div>
 				</div>
+				@endif
 				@endforeach
 				{!!$list_cate -> appends(request()->except('page')) -> links()!!}
 			</div>
@@ -211,7 +214,7 @@
 		
 	</div>
 </div>
-
+<input type="hidden" name="user" value="{{Auth::user()->id ?? ""}}">
 @endsection
 
 @section('script')
@@ -222,6 +225,11 @@
 			$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
 			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 
+		});
+
+		$(document).on('click','.vote_now', function(){
+			var user = $('input[name=user]').val();
+			console.log(user);
 		});
 	});
 </script>

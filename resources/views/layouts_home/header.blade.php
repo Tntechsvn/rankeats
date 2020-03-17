@@ -44,16 +44,16 @@
                 <li>
                   <div class="row">
                     <div class="col-md-12">
-                      <form action="{{route('postLogin')}}" method="post" enctype="multipart/form-data">
+                      <form action="{{route('postLogin')}}" method="post" enctype="multipart/form-data" >
                         {{csrf_field()}}
                         <div class="form-group">
                           <label class="sr-only" for="exampleInputEmail2">username</label>
-                          <input type="text" class="form-control" name="email" placeholder="username">
+                          <input type="text" class="form-control" name="email" placeholder="username" data-parsley-required>
                           <span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
                         </div>
                         <div class="form-group">
                           <label class="sr-only" for="exampleInputPassword2">Password</label>
-                          <input type="password" class="form-control" name="password" placeholder="password">
+                          <input type="password" class="form-control" name="password" placeholder="password" data-parsley-required>
                           <span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
                         </div>
                         <div class="checkbox">
@@ -62,7 +62,7 @@
                           keep me logged-in </label>
                         </div>
                         <div class="form-group">
-                          <button type="submit" class="btn btn-custom btn-block">Sign in</button>
+                          <button type="submit" class="btn btn-custom btn-block signin-popup">Sign in</button>
                         </div>
                         <div class="help-block text-right"><a href="{{route('forgot_password')}}">Forget Password ?</a></div>
                       </form>
@@ -82,3 +82,4 @@
     </div>
     <!-- /.container-fluid --> 
   </nav>
+  

@@ -77,6 +77,7 @@ class DatabaseSeeder extends Seeder
                 'state' => 'Thái Nguyên',
                 'country' => 'Việt Nam',
                 'city' => 'Thành phố Thái Nguyên',
+                'code' => 01,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

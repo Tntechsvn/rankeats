@@ -18,8 +18,7 @@ class LoginController extends Controller
         $this->middleware('auth');
     }*/
 
-    public function postLogin(Request $request){
-
+    public function postAjaxLogin(Request $request){
 		$this-> Validate($request,[
 			'email' => 'required',
 			'password' => 'required',			
@@ -36,7 +35,43 @@ class LoginController extends Controller
 		}else if(Auth::attempt(['name' => $request->email, 'password' => $request->password])){
 			$user = Auth::user();
 		}
-		if(isset($user)){			
+		if(isset($user)){	
+			$message = "Successful Login";
+			return response()->json([
+	            'success' => true,
+	            'message' => $message
+	        ]);
+
+			// return view('layouts.index');
+
+		}else{
+			$message = "Email or password is incorrect";
+			return response()->json([
+	            'success' => false,
+	            'message' => $message
+	        ]);
+			// return view('layouts.login');
+		}
+	}
+	    public function postLogin(Request $request){
+		$this-> Validate($request,[
+			'email' => 'required',
+			'password' => 'required',			
+		],
+		[
+			'email.required'=>'The email field is required',
+			'password.required'=>'The password field is required',
+			
+		]);
+
+		if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+			$user = Auth::user();
+
+		}else if(Auth::attempt(['name' => $request->email, 'password' => $request->password])){
+			$user = Auth::user();
+		}
+		if(isset($user)){
+
 			return view('layouts.index');
 
 		}else{

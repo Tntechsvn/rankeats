@@ -22,6 +22,16 @@ class HomeController extends Controller
 
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
+
+        $list_cate_sponsored = Category::join('businesses_categories','cate_id','=','categories.id')
+        ->where(function($query) use ($keyword){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+        })
+        ->groupBy('businesses_categories.business_id')
+        ->take(2)->pluck('business_id');
+        $data_business_sponsored = $this -> getbusinessCate($list_cate_sponsored);
+        
+        /*list all Results*/
         $list_cate = Category::join('businesses_categories','cate_id','=','categories.id')
         ->where(function($query) use ($keyword){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%');
@@ -31,7 +41,7 @@ class HomeController extends Controller
         $arr_business_id = $list_cate ->pluck('business_id');
         $data_business = $this -> getbusinessCate($arr_business_id);
        // return $data_business;
-        return view('layouts.search',compact('data_business','list_cate'));
+        return view('layouts.search',compact('data_business','list_cate','data_business_sponsored'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  
@@ -79,6 +89,18 @@ class HomeController extends Controller
         return view('layouts.forgot_password');
     }
 
+    public function menu_management(){
+        return view('layouts_profile.menu-management');
+    }
+
+    public function review_management(){
+        return view('layouts_profile.review-management');
+    }
+
+    public function info_management(){
+        return view('layouts_profile.info-management');
+    }
+
     public function advertise(){
         return view('layouts.advertise');
     }
@@ -116,13 +138,25 @@ class HomeController extends Controller
         return view('layouts_profile.business-management',compact('list_reviews','info_business','category'));
     }
     public function bookmark(){
-        return view('layouts_profile.bookmark');
+        $arr_business_id = Auth::user()->bookmark->pluck('business_id');
+        $data_business = $this -> getbusinessCate($arr_business_id);
+        return view('layouts_profile.bookmark',compact('data_business'));
     }
     public function create_advertise(){
         return view('layouts_profile.create-advertise');
     }
     public function eat_reviews(){
-        return view('layouts_profile.eat-review');
+        $user_id = Auth::user()->id;
+        /*list reviews for business*/
+        $list_reviews = Review::select('reviews.*')
+        /*->where(function($query) use ($keyword){            
+            $query->where('name', 'LIKE', '%'.$keyword.'%')->orwhere('name', 'LIKE', '%'.$keyword.'%');
+        })*/
+        ->where('user_id','=',$user_id)
+        ->orderBy('created_at', 'desc')
+        ->paginate(Myconst::PAGINATE_ADMIN);
+
+        return view('layouts_profile.eat-review',compact('list_reviews'));
     }
     public function single_restaurent(){
         return view('layouts.single-restaurent');

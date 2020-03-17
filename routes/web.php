@@ -27,14 +27,21 @@
 		'as' => 'search',
 		'uses' => 'HomeController@search'
 	]);
-	Route::get('/myprofile', [
-		'as' => 'myprofile',
-		'uses' => 'HomeController@myprofile'
-	]);
-	Route::get('/setting', [
-		'as' => 'mysetting',
-		'uses' => 'HomeController@mysetting'
-	]);
+	Route::prefix("/")->middleware(['frontendLogin','verified'])->group(function(){
+		Route::get('/myprofile', [
+			'as' => 'myprofile',
+			'uses' => 'HomeController@myprofile'
+		]);
+		Route::get('/setting', [
+			'as' => 'mysetting',
+			'uses' => 'HomeController@mysetting'
+		]);
+		Route::get('/bookmark', [
+			'as' => 'bookmark',
+			'uses' => 'HomeController@bookmark'
+		]);
+	});
+	
 	Route::get('/sign-up', [
 		'as' => 'sign_up',
 		'uses' => 'HomeController@sign_up'
@@ -71,10 +78,7 @@
 		'as' => 'business_management',
 		'uses' => 'HomeController@business_management'
 	]);
-	Route::get('/bookmark', [
-		'as' => 'bookmark',
-		'uses' => 'HomeController@bookmark'
-	]);
+	
 	Route::get('/create-advertise', [
 		'as' => 'create_advertise',
 		'uses' => 'HomeController@create_advertise'
@@ -83,6 +87,18 @@
 		'as' => 'eat_reviews',
 		'uses' => 'HomeController@eat_reviews'
 	]);
+	Route::get('/menu-management', [
+		'as' => 'menu-management',
+		'uses' => 'HomeController@menu_management'
+	]);
+	Route::get('/review-management', [
+		'as' => 'review-management',
+		'uses' => 'HomeController@review_management'
+	]);
+	Route::get('/info-management', [
+		'as' => 'info-management',
+		'uses' => 'HomeController@info_management'
+	]);
 	Route::get('/single-restaurent', [
 		'as' => 'single_restaurent',
 		'uses' => 'HomeController@single_restaurent'
@@ -90,6 +106,10 @@
 	Route::post('/ajax-bookmark', [
 		'as' => 'ajax-bookmark',
 		'uses' => 'HomeController@ajax_bookmark'
+	]);
+	Route::post('/post-ajax-login', [
+		'as' => 'postAjaxLogin',
+		'uses' => 'LoginController@postAjaxLogin'
 	]);
 	
 // end hungpro

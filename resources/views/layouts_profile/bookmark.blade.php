@@ -19,116 +19,39 @@
 			</div>
 
 			<div class="col-md-9 content-search">
-				<h3 class="title">My Bookmarks</h3>
-				
+				<h3 class="title">My Bookmarks</h3>	
+				@foreach($data_business as $data)			
 				<div class="food-main">
 					<div class="imbx">
-						<img class="" src="images/map_main.png" alt="" style="width: 100%;">
+						<img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;">
 					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">
-							<h4>name</h4>
+							<h4>{{$data['business_name']}}</h4>
 							<ul>
+								@for($i = 1;$i <= $data['rate'];$i++)
 								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
+								@endfor
 							</ul>
-							<p>10k <i>reviews</i></p>
-							<div class="">
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
+							<div class="pr-dtail">
 								<ul class="p-t-15">
 									<li>$$$.</li>
-									<li>category</li>
+									@foreach($data['category_business'] as $cate)
+									<li>{{$cate}}</li>
+									@endforeach
 								</ul>
 							</div>
 						</div>
 						<div class="pr-dtlr">
-							<p>phone</p>
-							<p>location</p>
+							<p>{{$data['business_phone']}}</p>
+							<p>{{$data['location']}}</p>
 						</div>
 
-						<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.<a href="javascript:;">read more</a></p>
-						{{-- <a href="#" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a> --}}
+						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
 					</div>					
 				</div>
-				<div class="food-main">
-					<div class="imbx">
-						<img class="" src="images/map_main.png" alt="" style="width: 100%;">
-					</div>					
-					<div class="imbx-detail">
-						<div class="pr-dtl">
-							<h4>name</h4>
-							<ul>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-							</ul>
-							<p>10k <i>reviews</i></p>
-							<div class="">
-								<ul class="p-t-15">
-									<li>$$$.</li>
-									<li>category</li>
-								</ul>
-							</div>
-						</div>
-						<div class="pr-dtlr">
-							<p>phone</p>
-							<p>location</p>
-						</div>
-
-						<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.<a href="javascript:;">read more</a></p>
-						{{-- <a href="#" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a> --}}
-					</div>					
-				</div>
-				<div class="food-main">
-					<div class="imbx">
-						<img class="" src="images/map_main.png" alt="" style="width: 100%;">
-					</div>					
-					<div class="imbx-detail">
-						<div class="pr-dtl">
-							<h4>name</h4>
-							<ul>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-							</ul>
-							<p>10k <i>reviews</i></p>
-							<div class="">
-								<ul class="p-t-15">
-									<li>$$$.</li>
-									<li>category</li>
-								</ul>
-							</div>
-						</div>
-						<div class="pr-dtlr">
-							<p>phone</p>
-							<p>location</p>
-						</div>
-
-						<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.<a href="javascript:;">read more</a></p>
-						{{-- <a href="#" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a> --}}
-					</div>					
-				</div>
-				<div class="food-main">
-					<div class="imbx">
-						<img class="" src="images/map_main.png" alt="" style="width: 100%;">
-					</div>					
-					<div class="imbx-detail">
-						<div class="pr-dtl">
-							<h4>name</h4>
-							<ul>
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-							</ul>
-							<p>10k <i>reviews</i></p>
-							<div class="">
-								<ul class="p-t-15">
-									<li>$$$.</li>
-									<li>category</li>
-								</ul>
-							</div>
-						</div>
-						<div class="pr-dtlr">
-							<p>phone</p>
-							<p>location</p>
-						</div>
-
-						<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.<a href="javascript:;">read more</a></p>
-						{{-- <a href="#" data-target="#voteModal" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a> --}}
-					</div>					
-				</div>
+				@endforeach				
 			</div>
 		</div>
 	</div>
