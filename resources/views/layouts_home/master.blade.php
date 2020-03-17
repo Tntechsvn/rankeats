@@ -24,6 +24,7 @@
 {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
 
 <!-- jQuery library -->
+
 <script src="js/jquery.min.js"></script>
 
 <!-- jQuery UI library -->
@@ -44,12 +45,14 @@
 
 </div>
 <!--wrap--> 
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 
 {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>  --}}
 {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
 <script src="js/parsley.min.js"></script> 
 <script type="text/javascript" src="js/sweetalert.min.js"></script>   
 {{-- <script src="js/wow.min.js"></script>  --}}
@@ -97,7 +100,15 @@
     });
   };
 </script>
-
+<script type="text/javascript">
+  
+  $(document).on('click','.dropdown',function(){
+    $(this).closest('li').find('.menudropdown').slideToggle();
+  });
+  $(document).ready(function(){
+    $('li.active').closest('.menudropdown').attr('style','display:block;')
+  });
+</script>
 
 </body>
 </html> 

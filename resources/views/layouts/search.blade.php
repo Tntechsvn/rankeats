@@ -230,6 +230,9 @@
 		$(document).on('click','.vote_now', function(){
 			var user = $('input[name=user]').val();
 			console.log(user);
+			if(user == ""){
+				$(this).closest('body').find('#login-dp').addClass('show');
+			}
 		});
 	});
 </script>
