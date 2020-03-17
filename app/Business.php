@@ -19,6 +19,9 @@ class Business extends Model
     public function location(){
         return $this -> belongsTo('App\Location', 'location_id', 'id');
     }
+    public function review(){
+        return $this -> hasMany('App\Review', 'business_id', 'id');
+    }
 
     public function update_business($request,$user){
         if($request -> address){
@@ -101,6 +104,17 @@ class Business extends Model
             return $response;
         }
 
+    }
+    public function permalink() {
+        return route('single_business',[$this->id]);
+    }
+    public function rate_business(){
+        if($this->total_vote > 0){
+            $rate = floor(($this->total_rate / $this->total_vote) * 1) / 1;
+        }else{
+            $rate = 0;
+        }
+        return $rate;
     }
     /*end knight*/
 }

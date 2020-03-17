@@ -21,7 +21,7 @@
 					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">
-							<h4>{{$data['business_name']}}</h4>
+							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
 							<ul>
 								@for($i = 1;$i <= $data['rate'];$i++)
 								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
@@ -115,7 +115,7 @@
 					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">
-							<h4>{{$data['business_name']}}</h4>
+							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
 							<ul>
 								@for($i = 1;$i <= $data['rate'];$i++)
 								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>

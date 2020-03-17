@@ -11,8 +11,7 @@ use App\PlanDetail;
 use App\Advertisement;
 use View;
 use Auth;
-class HomeController extends Controller
-{
+class HomeController extends Controller{
     public function __construct(){
         $category = Category::All();
         view()->share(['category'=>$category]);
@@ -42,7 +41,6 @@ class HomeController extends Controller
         ->paginate(Myconst::PAGINATE_ADMIN);       
         $arr_business_id = $list_cate ->pluck('business_id');
         $data_business = $this -> getbusinessCate($arr_business_id);
-       // return $data_business;
         return view('layouts.search',compact('data_business','list_cate','data_business_sponsored'));
     }
     public function getbusinessCate($arr_id){
@@ -60,6 +58,8 @@ class HomeController extends Controller
             $data['total_review'] = $item ->classification;
             $data['total_rate'] = $item ->total_rate;
             $data['total_vote'] = $item ->total_vote;
+            $data['permalink'] = $item ->permalink();
+
             if($item->total_vote > 0){
                 $rate = floor(($item->total_rate / $item->total_vote) * 2) / 2;
             }else{
@@ -97,24 +97,23 @@ class HomeController extends Controller
 
     public function review_management(){
         $business_id = Auth::user()->business()->first()->id;
-       /*list reviews for business*/
-       $list_reviews = Review::select('reviews.*')
-       ->where('business_id','=',$business_id)
-       ->orderBy('created_at', 'desc')
-       ->paginate(Myconst::PAGINATE_ADMIN);
-       return view('layouts_profile.review-management',compact('list_reviews'));
+        /*list reviews for business*/
+        $list_reviews = Review::select('reviews.*')
+        ->where('business_id','=',$business_id)
+        ->orderBy('created_at', 'desc')
+        ->paginate(Myconst::PAGINATE_ADMIN);
+        return view('layouts_profile.review-management',compact('list_reviews'));
+    }
+
+    public function info_management(){
+       /*info restaurant*/
+       $info_business = Auth::user()->business()->first();
+       /*category*/
+       $category = Category::All();
+
+       return view('layouts_profile.info-management',compact('info_business','category'));
    }
-
-   public function info_management(){
-     /*info restaurant*/
-    $info_business = Auth::user()->business()->first();
-    /*category*/
-    $category = Category::All();
-
-    return view('layouts_profile.info-management',compact('info_business','category'));
-}
-
-public function advertise(){
+   public function advertise(){
     return view('layouts.advertise');
 }
 
@@ -159,8 +158,11 @@ public function eat_reviews(){
 
     return view('layouts_profile.eat-review',compact('list_reviews'));
 }
-public function single_restaurent(){
-    return view('layouts.single-restaurent');
+/*single_restaurent*/
+public function single_business(Request $request){
+    $info_business = Business::findOrfail($request -> id_business);
+    $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
+    return view('layouts.single-restaurent',compact('info_business','list_reviews'));
 }
 public function ajax_bookmark(Request $request){
     $data = $request->toArray();
