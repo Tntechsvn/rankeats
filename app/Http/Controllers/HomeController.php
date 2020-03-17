@@ -89,6 +89,18 @@ class HomeController extends Controller
         return view('layouts.forgot_password');
     }
 
+    public function menu_management(){
+        return view('layouts_profile.menu-management');
+    }
+
+    public function review_management(){
+        return view('layouts_profile.review-management');
+    }
+
+    public function info_management(){
+        return view('layouts_profile.info-management');
+    }
+
     public function advertise(){
         return view('layouts.advertise');
     }

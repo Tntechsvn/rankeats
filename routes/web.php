@@ -87,6 +87,18 @@
 		'as' => 'eat_reviews',
 		'uses' => 'HomeController@eat_reviews'
 	]);
+	Route::get('/menu-management', [
+		'as' => 'menu-management',
+		'uses' => 'HomeController@menu_management'
+	]);
+	Route::get('/review-management', [
+		'as' => 'review-management',
+		'uses' => 'HomeController@review_management'
+	]);
+	Route::get('/info-management', [
+		'as' => 'info-management',
+		'uses' => 'HomeController@info_management'
+	]);
 	Route::get('/single-restaurent', [
 		'as' => 'single_restaurent',
 		'uses' => 'HomeController@single_restaurent'

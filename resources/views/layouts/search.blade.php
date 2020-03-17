@@ -214,7 +214,7 @@
 		
 	</div>
 </div>
-
+<input type="hidden" name="user" value="{{Auth::user()->id ?? ""}}">
 @endsection
 
 @section('script')
@@ -225,6 +225,11 @@
 			$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
 			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 
+		});
+
+		$(document).on('click','.vote_now', function(){
+			var user = $('input[name=user]').val();
+			console.log(user);
 		});
 	});
 </script>

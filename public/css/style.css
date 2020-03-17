@@ -1593,7 +1593,7 @@ a.btn.btn-warning.vote_now {
 #bs-example-navbar-collapse-1 .navbar-right {
 	position: absolute;
     right: 0;
-    top: -70px;
+    top: -60px;
 }
 .img-responsive{
 	object-fit: cover;
@@ -1862,7 +1862,14 @@ input#location_search {
 .right-sidebar > div {
 	border-bottom: 1px solid #ecf0f5;
 }
-
+.navbar-right .dropdown-menu {
+	top: 60px;
+}
+.profile-usermenu ul ul li {
+	display: block;
+    width: 100%;
+    padding-left: 30px;
+}
 
 
 
