@@ -107,5 +107,77 @@
 			$('.test').fSelect();
 		});
 	</script>
-	
+<script type="text/javascript">
+  google.maps.event.addDomListener(window, 'load', initialize);
+  function initialize(){
+    var search = document.getElementById('location_res_edit');
+    var autocomplete = new google.maps.places.Autocomplete(search);
+    google.maps.event.addListener(autocomplete, 'place_changed', function(){
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      document.getElementById('address_edit').value = place.formatted_address;
+      document.getElementById('longitude_edit').value = place.geometry.location.lng();
+      document.getElementById('latitude_edit').value = place.geometry.location.lat();
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        switch (addressType) {
+          case 'locality':
+          var city = place.address_components[i].long_name;
+          break;
+          case 'administrative_area_level_1':
+          var state = place.address_components[i].long_name;
+          break;
+          case 'country':
+          var country = place.address_components[i].long_name;
+          break;
+        }
+      }
+      document.getElementById('city_edit').value = city;
+      document.getElementById('state_edit').value = state;
+      document.getElementById('country_edit').value = country;     
+    });
+  };
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#image_restaurant').click(function(e) {
+
+			var previews = document.getElementById('previews');
+			if (previews.hasChildNodes()) {
+				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				e.preventDefault();
+			}			
+		});
+		var images = function(input, imgPreview) {
+			if (input.files) {
+				var arr = [];
+				var filesAmount = input.files.length;
+				for (i = 0; i < filesAmount; i++) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style='width:100%;'>").append('<div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);
+					}
+					reader.readAsDataURL(input.files[i]);
+				}
+			}
+		};
+
+		$('#image_restaurant').on('change', function() {
+			images(this, '#previews');
+		});
+		/*clear the file list when image is clicked*/
+		$(document).on('click','.deletetimg',function(){
+			if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+			{
+				$(this).closest('#previews').html('');
+				$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+			}
+			else
+				return false;
+		});
+	});	
+</script>
 @stop
