@@ -100,9 +100,9 @@
 		'as' => 'info-management',
 		'uses' => 'HomeController@info_management'
 	]);
-	Route::get('/single-restaurent', [
-		'as' => 'single_restaurent',
-		'uses' => 'HomeController@single_restaurent'
+	Route::get('/single-business/{id_business}', [
+		'as' => 'single_business',
+		'uses' => 'HomeController@single_business'
 	]);
 	Route::post('/ajax-bookmark', [
 		'as' => 'ajax-bookmark',
