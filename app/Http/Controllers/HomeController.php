@@ -48,7 +48,7 @@ class HomeController extends Controller{
         ->paginate(Myconst::PAGINATE_ADMIN);
         $arr_business_id = $list_cate ->pluck('business_id');
         $data_business = $this -> getbusinessCate($arr_business_id);
-        return view('layouts.search',compact('data_business','list_cate','data_business_sponsored'));
+        return view('layouts.search',compact('data_business','list_cate','data_business_sponsored','keyword','city','state'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  

@@ -69,20 +69,23 @@ class DatabaseSeeder extends Seeder
         }
         $arr_id_cate = [1,2,3,4,5,6,7,8];
         /*location*/
-        DB::table('locations')->insert([
-            [
-                'address' => 'SN99, Phố, Nguyễn Công Hoan, Đồng Quang, Thành phố Thái Nguyên, Thái Nguyên, Việt Nam',
-                'latitude' => 21.581045,
-                'longitude' => 105.832940,
-                'state' => 'Thái Nguyên',
-                'country' => 'Việt Nam',
-                'city' => 'Thành phố Thái Nguyên',
-                'code' => 01,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        for ($i=1; $i < 20 ; $i++) {
+            DB::table('locations')->insert([
+                [
+                    'address' => 'SN99, Phố, Nguyễn Công Hoan, Đồng Quang, Thành phố Thái Nguyên, Thái Nguyên, Việt Nam',
+                    'latitude' => 21.581045,
+                    'longitude' => 105.832940,
+                    'state' => 'Thái Nguyên',
+                    'country' => 'Việt Nam',
+                    'city' => 'Thành phố Thái Nguyên',
+                    'code' => 01,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
         /*businesses*/
+        $location_business = 1;
          foreach ($arr_user_business as $user_business)
         {
             DB::table('businesses')->insert([
@@ -90,9 +93,10 @@ class DatabaseSeeder extends Seeder
                 'email'   => 'business'.$user_business.'@gmail.com',
                 'user_id' => $user_business,
                 'description' => 'business'.$user_business,
-                'location_id' => 1,
+                'location_id' => $location_business,
                 'address' => 'SN99, Phố, Nguyễn Công Hoan, Đồng Quang, Thành phố Thái Nguyên, Thái Nguyên, Việt Nam',
             ]);
+            $location_business ++;
         }
         $arr_business_id = DB::table('businesses')->pluck('id');
         /*businesses_categories*/
