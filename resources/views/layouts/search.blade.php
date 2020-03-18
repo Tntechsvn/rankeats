@@ -23,9 +23,20 @@
 						<div class="pr-dtl">
 							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
 							<ul>
-								@for($i = 1;$i <= $data['rate'];$i++)
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								@endfor
+								@php
+									$val =  (int) substr(strrchr($data['rate'],'.'),1);
+							      	for($x=1;$x<=$data['rate'];$x++) {
+							          	echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+							      	}
+							      	if (strpos($data['rate'],'.') && $val != 0) {
+							          	echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+							      	while ($x<=5) {
+							          	echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+								@endphp
 							</ul>
 							<p>{{$data['total_vote']}} <i>reviews</i></p>
 							<div class="pr-dtail">
@@ -42,7 +53,7 @@
 							<p>{{$data['location']}}</p>
 						</div>
 
-						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
+						<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
 						<a href="#" data-target="#voteModalSponsored{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
 						@if(Auth::check())
 						<!-- Knight-->
@@ -117,9 +128,20 @@
 						<div class="pr-dtl">
 							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
 							<ul>
-								@for($i = 1;$i <= $data['rate'];$i++)
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								@endfor
+								@php
+									$val =  (int) substr(strrchr($data['rate'],'.'),1);
+							      	for($x=1;$x<=$data['rate'];$x++) {
+							          	echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+							      	}
+							      	if (strpos($data['rate'],'.') && $val != 0) {
+							          	echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+							      	while ($x<=5) {
+							          	echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+								@endphp
 							</ul>
 							<p>{{$data['total_vote']}} <i>reviews</i></p>
 							<div class="pr-dtail">
@@ -136,7 +158,7 @@
 							<p>{{$data['location']}}</p>
 						</div>
 
-						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
+						<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
 						<a href="#" data-target="#voteModal{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
 					</div>					
 				</div>

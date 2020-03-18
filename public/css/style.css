@@ -1919,7 +1919,9 @@ li.active a {
 	width: 15px;
 	color: steelblue;
 }
-
+.fa-star,.fa-star-half-alt {
+	color: #ffbc05;
+}
 
 
 
