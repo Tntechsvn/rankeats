@@ -1547,11 +1547,11 @@ span.select2{
 .pr-dtl p {display: inline-block;font-size: 14px;margin: 0 0 0 0;position: relative;top: 7px;left: 15px;}
 .pr-dtl p i {font-style: normal;}
 .pr-dtl {margin: 0 0 0 15px; display: inline-block;}
-.pr-dtlr {float: right;margin: 10px 0 0 0;}
+.pr-dtlr {float: right;margin: 10px 0 0 15px;}
 .pr-dtlr p {color: #000;font-size: 14px;/* margin: 3px 0 5px 0; */min-height: auto !important;}
 .pr-dtail ul li {color: #777;font-size: 14px;margin: 5px 9px 0 0;}
 .pr-dtail ul li:first-child {color: #000;}
-.imbx-detail > p {font-size: 15px;color: #000;margin: 5px 0 15px 8px;}
+.imbx-detail > p {font-size: 15px;color: #000;margin: 5px 0 15px 15px;}
 .imbx-detail > a {color: #0073bb;}
 .pr-dtl ul li i {font-size: 24px; margin: 5px 0 0 0; color: #ffbc05;}
 .pr-dtail {margin: -20px 0 0 0;}
@@ -1922,7 +1922,9 @@ li.active a {
 .fa-star,.fa-star-half-alt {
 	color: #ffbc05;
 }
-
+.star-rate li {
+	font-size: 20px;
+}
 
 
 

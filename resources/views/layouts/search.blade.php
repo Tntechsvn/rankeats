@@ -22,7 +22,7 @@
 					<div class="imbx-detail">
 						<div class="pr-dtl">
 							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
-							<ul>
+							<ul class="star-rate">
 								@php
 									$val =  (int) substr(strrchr($data['rate'],'.'),1);
 							      	for($x=1;$x<=$data['rate'];$x++) {
@@ -38,7 +38,7 @@
 							      	}
 								@endphp
 							</ul>
-							<p>{{$data['total_vote']}} <i>reviews</i></p>
+							
 							<div class="pr-dtail">
 								<ul class="p-t-15">
 									<li>$$$.</li>
@@ -50,8 +50,9 @@
 						</div>
 						<div class="pr-dtlr">
 							<p>{{$data['business_phone']}}</p>
-							<p>{{$data['location']}}</p>
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
 						</div>
+						<p>{{$data['location']}}</p>
 
 						<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
 						<a href="#" data-target="#voteModalSponsored{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
@@ -127,7 +128,7 @@
 					<div class="imbx-detail">
 						<div class="pr-dtl">
 							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
-							<ul>
+							<ul class="star-rate">
 								@php
 									$val =  (int) substr(strrchr($data['rate'],'.'),1);
 							      	for($x=1;$x<=$data['rate'];$x++) {
@@ -143,7 +144,6 @@
 							      	}
 								@endphp
 							</ul>
-							<p>{{$data['total_vote']}} <i>reviews</i></p>
 							<div class="pr-dtail">
 								<ul class="p-t-15">
 									<li>$$$.</li>
@@ -155,9 +155,9 @@
 						</div>
 						<div class="pr-dtlr">
 							<p>{{$data['business_phone']}}</p>
-							<p>{{$data['location']}}</p>
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
 						</div>
-
+						<p>{{$data['location']}}</p>
 						<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
 						<a href="#" data-target="#voteModal{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
 					</div>					
