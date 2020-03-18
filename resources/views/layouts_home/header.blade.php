@@ -56,6 +56,10 @@
                           <input type="password" class="form-control" name="password" placeholder="password" data-parsley-required>
                           <span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
                         </div>
+                        <div class="form-group">
+                          <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                          <span class="bg-danger color-palette">{{$errors -> first('g-recaptcha-response')}}</span>
+                        </div>
                         <div class="checkbox">
                           <label>
                             <input type="checkbox" name="logged">

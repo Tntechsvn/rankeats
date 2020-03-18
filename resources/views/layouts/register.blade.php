@@ -39,6 +39,10 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+							<span class="bg-danger color-palette">{{$errors -> first('g-recaptcha-response')}}</span>
+						</div>
+						<div class="form-group">
 							<button type="submit" class="btn btn-custom btn-lg btn-block">Join</button>
 						</div>
 					</form>
@@ -49,14 +53,15 @@
 						<input type="hidden" name="type" value="2"/>
 						<div class="location form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
-							<input type="text" name="search_rs" id="search_rs" class="form-control input-lg"/>
-							<input  type="hidden" id="longitude" name="longitude">
-							<input  type="hidden" id="latitude" name="latitude">
-							<input  type="hidden" id="address" name="address">
-							<input  type="hidden" id="city" name="city">
-							<input  type="hidden" id="state" name="state">
-							<input  type="hidden" id="country" name="country">
-						</div>
+								<input type="text" name="search_rs" id="search_rs" class="form-control input-lg"/>
+								<input  type="hidden" id="longitude" name="longitude">
+								<input  type="hidden" id="latitude" name="latitude">
+								<input  type="hidden" id="address" name="address">
+								<input  type="hidden" id="city" name="city">
+								<input  type="hidden" id="state" name="state">
+								<input  type="hidden" id="country" name="country">
+							</div>
+							<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 						</div>
 						<div class="infomation">
 							<div class="form-group">
@@ -82,6 +87,10 @@
 									<input type="password" class="form-control input-lg" name="re_password" placeholder="Confirm Password">
 									<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 								</div>
+							</div>
+							<div class="form-group">
+								<div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+								<span class="bg-danger color-palette">{{$errors -> first('g-recaptcha-response')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
