@@ -31,7 +31,7 @@ class HomeController extends Controller{
         ->join('businesses','businesses_categories.business_id','=','businesses.id')
         ->join('locations','businesses.location_id','=','locations.id')
         ->where(function($query) use ($keyword,$city,$state){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orWhere('state','LIKE', '%'.$state.'%');
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
         ->groupBy('businesses_categories.business_id')
         ->take(2)->pluck('business_id');
@@ -42,7 +42,7 @@ class HomeController extends Controller{
         ->join('businesses','businesses_categories.business_id','=','businesses.id')
         ->join('locations','businesses.location_id','=','locations.id')
         ->where(function($query) use ($keyword,$city,$state){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orWhere('state','LIKE', '%'.$state.'%');
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
