@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Session;
-
+use App\Rules\Captcha;
 class LoginController extends Controller
 {
     /**
@@ -56,7 +56,8 @@ class LoginController extends Controller
 	    public function postLogin(Request $request){
 		$this-> Validate($request,[
 			'email' => 'required',
-			'password' => 'required',			
+			'password' => 'required',
+			'g-recaptcha-response' => new Captcha(),
 		],
 		[
 			'email.required'=>'The email field is required',
