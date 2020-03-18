@@ -25,6 +25,17 @@ $(document).on('click','.signin-popup',function(e){
         parsley.validate();
         return false;
     }
+  if (grecaptcha === undefined) {
+    swal('Recaptcha not defined');
+    return; 
+  }
+
+  var response = grecaptcha.getResponse();
+
+  if (!response) {
+    swal('Coud not get recaptcha response'); 
+    return; 
+  }
 	var email = $(this).closest('form').find('input[name=email]').val();
 	var password = $(this).closest('form').find('input[name=password]').val();
 	var url = $('input[name=login]').val();
@@ -36,7 +47,8 @@ $(document).on('click','.signin-popup',function(e){
         url: url,
         data: {
         	email: email,
-        	password: password
+        	password: password,
+          recaptcha: response
         },
         success:function(res){
         	if(res.success == true){
