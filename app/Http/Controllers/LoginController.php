@@ -19,10 +19,11 @@ class LoginController extends Controller
     }*/
 
     public function postAjaxLogin(Request $request){
+    	// dd($request->toArray());
 		$this-> Validate($request,[
 			'email' => 'required',
 			'password' => 'required',
-			'g-recaptcha-response' => new Captcha(),
+			'recaptcha' => new Captcha(),
 		],
 		[
 			'email.required'=>'The email field is required',
