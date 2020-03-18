@@ -23,22 +23,30 @@ class HomeController extends Controller{
 
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
+        $city = $request -> city ? $request -> city : '';
+        $state = $request -> state ? $request -> state : '';
 
-        $list_cate_sponsored = Category::join('businesses_categories','cate_id','=','categories.id')
-        ->where(function($query) use ($keyword){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+
+        $list_cate_sponsored = Category::select('categories.*','businesses_categories.business_id','businesses.id','businesses.location_id','locations.city','locations.state')->join('businesses_categories','cate_id','=','categories.id')
+        ->join('businesses','businesses_categories.business_id','=','businesses.id')
+        ->join('locations','businesses.location_id','=','locations.id')
+        ->where(function($query) use ($keyword,$city,$state){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orWhere('state','LIKE', '%'.$state.'%');
         })
         ->groupBy('businesses_categories.business_id')
         ->take(2)->pluck('business_id');
         $data_business_sponsored = $this -> getbusinessCate($list_cate_sponsored);
         
         /*list all Results*/
-        $list_cate = Category::join('businesses_categories','cate_id','=','categories.id')
-        ->where(function($query) use ($keyword){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+        $list_cate = Category::select('categories.*','businesses_categories.business_id','businesses.id','businesses.location_id','locations.city','locations.state')->join('businesses_categories','cate_id','=','categories.id')
+        ->join('businesses','businesses_categories.business_id','=','businesses.id')
+        ->join('locations','businesses.location_id','=','locations.id')
+        ->where(function($query) use ($keyword,$city,$state){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orWhere('state','LIKE', '%'.$state.'%');
         })
         ->groupBy('businesses_categories.business_id')
-        ->paginate(Myconst::PAGINATE_ADMIN);       
+        ->paginate(Myconst::PAGINATE_ADMIN);
+
         $arr_business_id = $list_cate ->pluck('business_id');
         $data_business = $this -> getbusinessCate($arr_business_id);
         return view('layouts.search',compact('data_business','list_cate','data_business_sponsored'));

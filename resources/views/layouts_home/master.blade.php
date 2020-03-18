@@ -80,7 +80,7 @@
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
-      document.getElementById('address_search').value = place.formatted_address;
+      //document.getElementById('address_search').value = place.formatted_address;
       for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
         switch (addressType) {
@@ -97,7 +97,7 @@
       }
       document.getElementById('city_search').value = city;
       document.getElementById('state_search').value = state;
-      document.getElementById('country_search').value = country;     
+     // document.getElementById('country_search').value = country;     
     });
   };
 </script>
