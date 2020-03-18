@@ -53,6 +53,14 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 		'as' => 'payment_plan_advertisement',
 		'uses' => 'PaymentController@payment_plan_advertisement'
 	]);
+	Route::post('/submit-payment-advertisement', [
+		'as' => 'submit.payment',
+		'uses' => 'PaymentController@submitPayment'
+	]);
+	Route::get('/process-payment', [
+		'as' => 'process.payment',
+		'uses' => 'PaymentController@processPayment'
+	]);
 
 });
 Route::post('/create-business', [
