@@ -9,7 +9,7 @@ use App\Myconst;
 use App\User;
 use Hash;
 use App\Http\Controllers\ShareController;
-
+use App\Rules\Captcha;
 use Validator;
 class UserController extends Controller
 {
@@ -114,13 +114,14 @@ class UserController extends Controller
             'password' => 'required|min:6|max:32',
             're_password' => 'same:password',/*
             'address' => 'required',*/
+            'g-recaptcha-response' => new Captcha(),
         ]);
         if($request -> type == 2){
-           $this-> Validate($request,[
-            'address' => 'required',
-        ]);
+             $this-> Validate($request,[
+                'address' => 'required',
+            ]);
 
-        }
+         }
         $user = new User;
         /*update user*/
         $response = $user->update_user($request);
