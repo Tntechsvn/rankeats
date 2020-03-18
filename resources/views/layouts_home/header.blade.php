@@ -24,16 +24,16 @@
                 </li>
 
                 <li>
-                  <a href="{{route('myprofile')}}" class="btn btn-default btn-flat" >My Profile</a>
+                  <a href="{{route('myprofile')}}" class="btn btn-default btn-flat" ><i class="far fa-user-circle"></i> My Profile</a>
                 </li>
                 <li >
-                  <a href="{{route('mysetting')}}" class="btn btn-default btn-flat" >My Setting</a>
+                  <a href="{{route('mysetting')}}" class="btn btn-default btn-flat" ><i class="fas fa-tools"></i> My Setting</a>
                 </li>
                 <li>
-                  <a href="#" class="btn btn-default btn-flat" >My Payments</a>
+                  <a href="#" class="btn btn-default btn-flat" ><i class="fas fa-money-check-alt"></i> My Payments</a>
                 </li>
                 <li class="user-footer">
-                  <a href="{{route('getLogout')}}" class="btn btn-default btn-flat" onclick="return confirm('Do you want to logout?');">logout</a>
+                  <a href="{{route('getLogout')}}" class="btn btn-default btn-flat" onclick="return confirm('Do you want to logout?');"><i class="fas fa-sign-out-alt"></i> logout</a>
                 </li>
               </ul>
             </li>

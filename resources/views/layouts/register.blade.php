@@ -2,7 +2,7 @@
 @section('content')
   	<div id="main">
 		<div class="container container-main">
-			<div class="small-header">
+			<div class="small-header p-t-30">
 				<h1>Join Us</h1>
 			</div>
 			<div class="row login">
@@ -13,7 +13,6 @@
 					</div>
 					<form id="register_rank" class="forms active" action="{{route('postSignUp')}}" method="post">
 						@csrf
-						<h2>rank</h2>
 						<input type="hidden" name="type" value="1"/>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
@@ -47,10 +46,10 @@
 
 					<form id="register_business" class="forms hidden" action="{{route('postSignUp')}}" method="post">
 						@csrf
-						<h2>Location</h2>
 						<input type="hidden" name="type" value="2"/>
-						<div class="location">
-							<input type="text" name="search_rs" id="search_rs" class="form-control"/>
+						<div class="location form-group">
+							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
+							<input type="text" name="search_rs" id="search_rs" class="form-control input-lg"/>
 							<input  type="hidden" id="longitude" name="longitude">
 							<input  type="hidden" id="latitude" name="latitude">
 							<input  type="hidden" id="address" name="address">
@@ -58,7 +57,7 @@
 							<input  type="hidden" id="state" name="state">
 							<input  type="hidden" id="country" name="country">
 						</div>
-						<h2>Business Details</h2>
+						</div>
 						<div class="infomation">
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>

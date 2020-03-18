@@ -21,11 +21,11 @@
 			<div class="col-md-9 content-search">
 				<h3 class="title">Create Advertisement</h3>
 				<div class="create-advertise">
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
-									<div class="">
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
+									<div>
 										<h1 class="plan-title">Pay to Home EATS</h1>
 									</div>
 									<div class="plan-body">
@@ -45,15 +45,19 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
+								
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+						<!--pull-panels--> 
+					</div>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search EATS – City </h1>
 									</div>
@@ -73,18 +77,20 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+					<div class="clear"></div>
+					<span class="line"></span>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search EATS – County </h1>
 									</div>
@@ -104,15 +110,18 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+						<!--pull-panels--> 
+					</div>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search EATS – State </h1>
 									</div>
@@ -132,18 +141,20 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+					<div class="clear"></div>
+					<span class="line"></span>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search Feature EATS – City </h1>
 									</div>
@@ -163,15 +174,18 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+						<!--pull-panels--> 
+					</div>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search Feature EATS – County </h1>
 									</div>
@@ -191,18 +205,20 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+					<div class="clear"></div>
+					<span class="line"></span>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search Feature EATS – State </h1>
 									</div>
@@ -222,13 +238,13 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
 				</div>
 				<h3 class="title">Business Advertisement</h3>
