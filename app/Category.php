@@ -14,9 +14,6 @@ class Category extends Model
         }else{
             $url_img = $this->url_img;
         }
-
-    	
-
         $this->category_name = $request -> category_name;
         $this->url_img = $url_img;
         $this->description = $request->description;

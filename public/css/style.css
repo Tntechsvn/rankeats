@@ -1926,7 +1926,9 @@ li.active a {
 .star-rate li {
 	font-size: 20px;
 }
-
+.pac-container {
+	z-index: 9999;
+}
 
 
 
