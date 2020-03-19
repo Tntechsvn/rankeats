@@ -22,12 +22,23 @@
 					<div class="imbx-detail">
 						<div class="pr-dtl">
 							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
-							<ul>
-								@for($i = 1;$i <= $data['rate'];$i++)
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								@endfor
+							<ul class="star-rate">
+								@php
+									$val =  (int) substr(strrchr($data['rate'],'.'),1);
+							      	for($x=1;$x<=$data['rate'];$x++) {
+							          	echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+							      	}
+							      	if (strpos($data['rate'],'.') && $val != 0) {
+							          	echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+							      	while ($x<=5) {
+							          	echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+								@endphp
 							</ul>
-							<p>{{$data['total_vote']}} <i>reviews</i></p>
+							
 							<div class="pr-dtail">
 								<ul class="p-t-15">
 									<li>$$$.</li>
@@ -39,11 +50,12 @@
 						</div>
 						<div class="pr-dtlr">
 							<p>{{$data['business_phone']}}</p>
-							<p>{{$data['location']}}</p>
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
 						</div>
+						<p>{{$data['location']}}</p>
 
-						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
-						<a href="#" data-target="#voteModalSponsored{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
+						<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
+						<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
 						@if(Auth::check())
 						<!-- Knight-->
 						<div id="voteModalSponsored{{$data['id']}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
@@ -116,12 +128,22 @@
 					<div class="imbx-detail">
 						<div class="pr-dtl">
 							<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
-							<ul>
-								@for($i = 1;$i <= $data['rate'];$i++)
-								<li><i class="fa fa-star star-rate" aria-hidden="true"></i></li>
-								@endfor
+							<ul class="star-rate">
+								@php
+									$val =  (int) substr(strrchr($data['rate'],'.'),1);
+							      	for($x=1;$x<=$data['rate'];$x++) {
+							          	echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+							      	}
+							      	if (strpos($data['rate'],'.') && $val != 0) {
+							          	echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+							      	while ($x<=5) {
+							          	echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+							          	$x++;
+							      	}
+								@endphp
 							</ul>
-							<p>{{$data['total_vote']}} <i>reviews</i></p>
 							<div class="pr-dtail">
 								<ul class="p-t-15">
 									<li>$$$.</li>
@@ -133,10 +155,10 @@
 						</div>
 						<div class="pr-dtlr">
 							<p>{{$data['business_phone']}}</p>
-							<p>{{$data['location']}}</p>
+							<p>{{$data['total_vote']}} <i>reviews</i></p>
 						</div>
-
-						<p>{{$data['description']}}<a href="javascript:;">read more</a></p>
+						<p>{{$data['location']}}</p>
+						<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
 						<a href="#" data-target="#voteModal{{$data['id']}}" class="btn btn-warning vote_now" data-toggle="modal" >Vote</a>
 					</div>					
 				</div>
@@ -204,9 +226,10 @@
 			<div class="map_img">
 				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3709.807695902279!2d105.83079121539541!3d21.59342827363624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1584071260154!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 			</div>
-			{{-- <div><h4>Is the EAT for a business you’re looking for missing?</h4>
-				<div class="underMap" style="margin-top:10px;"><a data-target="#loginModal" data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a></div>
-			</div> --}}
+			<div><h4>Is the EAT for a business you’re looking for missing?</h4>
+				<div class="underMap" style="margin-top:10px;">
+					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a></div>
+			</div>
 		</div>
 		<!--container--> 
 
@@ -214,6 +237,75 @@
 		
 	</div>
 </div>
+
+
+<div id="eatModal" class="modal fade in" role="dialog">
+  <div class="modal-dialog">
+	<form action="" method="POST" data-parsley-validate>
+	<input type="hidden" name="item_id" value="" />
+    <!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title">Add EAT</h4>
+	  </div>
+	  <div class="modal-body">
+	  <a href="javascript:;"  style="color:#fff;" class="btn btn-primary rankerBtn">Ranker</a>
+	  &nbsp;
+	  <a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a>
+	  <div class="rankerShow" style="display:none;">
+		<div class="form-group">
+			<label for="eat_item">EAT</label>
+			<input type="text" class="form-control input-lg" name="eat_item" id="eat_item" placeholder="Item" value="" data-parsley-required />
+		</div>
+		<div class="form-group">
+			<label for="eat_location">Location</label>
+			<input type="text" class="form-control input-lg" name="eat_location" id="eat_location" placeholder="Location" value="" data-parsley-required />
+		</div>
+		<div class="form-group">
+			<label for="business_name">Business Name</label>
+			<input type="text" class="form-control input-lg" name="business_name" id="business_name" placeholder="Business Name" data-parsley-required />
+		</div>
+		<div class="form-group">
+			<label for="address">Address</label>
+			<input type="text" class="form-control input-lg" name="address" id="address" placeholder="Address" data-parsley-required  />
+		</div>
+		<div class="form-group">
+			<label for="zip_code">Zip Code</label>
+			<input type="text" class="form-control input-lg" name="zip_code" id="zip_code" placeholder="Zip Code" data-parsley-required  />
+		</div>
+	  
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	  </div>
+	  </div>
+	</div>
+	</div>
+    </form>
+  </div>
+</div>
+
+<div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title">&nbsp;</h4>
+	  </div>
+	  <div class="modal-body">
+		<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	  </div>
+	</div>
+    
+  </div>
+</div>
+
 <input type="hidden" name="user" value="{{Auth::user()->id ?? ""}}">
 @endsection
 
@@ -227,13 +319,22 @@
 
 		});
 
-		$(document).on('click','.vote_now', function(){
-			var user = $('input[name=user]').val();
-			console.log(user);
-			if(user == ""){
-				$(this).closest('body').find('#login-dp').addClass('show');
-			}
-		});
+		// $(document).on('click','.vote_now', function(){
+		// 	var user = $('input[name=user]').val();
+		// 	var modal_login = $('#loginModal');
+		// 	console.log(user);
+		// 	if(user == ""){
+		// 		modal_login.show();
+		// 	}
+		// });
 	});
+
+	// show form add eat
+
+	$(document).on('click','.rankerBtn',function(){
+		var modal = $('#eatModal');
+		modal.find('.rankerShow').addClass('show');
+	});
+
 </script>
 @stop

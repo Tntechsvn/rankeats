@@ -24,16 +24,16 @@
                 </li>
 
                 <li>
-                  <a href="{{route('myprofile')}}" class="btn btn-default btn-flat" >My Profile</a>
+                  <a href="{{route('myprofile')}}" class="btn btn-default btn-flat" ><i class="far fa-user-circle"></i> My Profile</a>
                 </li>
                 <li >
-                  <a href="{{route('mysetting')}}" class="btn btn-default btn-flat" >My Setting</a>
+                  <a href="{{route('mysetting')}}" class="btn btn-default btn-flat" ><i class="fas fa-tools"></i> My Setting</a>
                 </li>
                 <li>
-                  <a href="#" class="btn btn-default btn-flat" >My Payments</a>
+                  <a href="#" class="btn btn-default btn-flat" ><i class="fas fa-money-check-alt"></i> My Payments</a>
                 </li>
                 <li class="user-footer">
-                  <a href="{{route('getLogout')}}" class="btn btn-default btn-flat" onclick="return confirm('Do you want to logout?');">logout</a>
+                  <a href="{{route('getLogout')}}" class="btn btn-default btn-flat" onclick="return confirm('Do you want to logout?');"><i class="fas fa-sign-out-alt"></i> logout</a>
                 </li>
               </ul>
             </li>
@@ -55,6 +55,10 @@
                           <label class="sr-only" for="exampleInputPassword2">Password</label>
                           <input type="password" class="form-control" name="password" placeholder="password" data-parsley-required>
                           <span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
+                        </div>
+                        <div class="form-group">
+                          <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                          <span class="bg-danger color-palette">{{$errors -> first('g-recaptcha-response')}}</span>
                         </div>
                         <div class="checkbox">
                           <label>

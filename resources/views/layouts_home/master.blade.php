@@ -33,6 +33,7 @@
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&libraries=places&language=EN&region=US"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 
 <body>
@@ -79,7 +80,7 @@
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
-      document.getElementById('address_search').value = place.formatted_address;
+      //document.getElementById('address_search').value = place.formatted_address;
       for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
         switch (addressType) {
@@ -96,7 +97,7 @@
       }
       document.getElementById('city_search').value = city;
       document.getElementById('state_search').value = state;
-      document.getElementById('country_search').value = country;     
+     // document.getElementById('country_search').value = country;     
     });
   };
 </script>

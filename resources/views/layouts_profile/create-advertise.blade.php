@@ -21,17 +21,15 @@
 			<div class="col-md-9 content-search">
 				<h3 class="title">Create Advertisement</h3>
 				<div class="create-advertise">
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
-									<div class="">
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
+									<div>
 										<h1 class="plan-title">Pay to Home EATS</h1>
 									</div>
 									<div class="plan-body">
 										<p>At the top of the home page you can add a pic of your business to a 3 pic rotation which will be seen by everyone when they visit us. The name of your business, along with the City and State, will also appear in the lower right of the pic which will link to your business home page. </p>
-										
-
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',1)->get();
 										@endphp
@@ -45,15 +43,19 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
+								
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+						<!--pull-panels--> 
+					</div>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search EATS – City </h1>
 									</div>
@@ -73,18 +75,20 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+					<div class="clear"></div>
+					<span class="line"></span>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search EATS – County </h1>
 									</div>
@@ -104,15 +108,18 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+						<!--pull-panels--> 
+					</div>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search EATS – State </h1>
 									</div>
@@ -132,18 +139,20 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+					<div class="clear"></div>
+					<span class="line"></span>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search Feature EATS – City </h1>
 									</div>
@@ -163,15 +172,18 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+						<!--pull-panels--> 
+					</div>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search Feature EATS – County </h1>
 									</div>
@@ -191,18 +203,20 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-6">
-							<div class="row ">
-								<div class="parent-plan">
+					<div class="clear"></div>
+					<span class="line"></span>
+					<div class="col-md-6">
+						<div class="row ">
+							<div class="parent-plan">
+								<div style="border: 1px solid #dedede;">
 									<div class="">
 										<h1 class="plan-title">Search Feature EATS – State </h1>
 									</div>
@@ -222,13 +236,13 @@
 										<div class="col-md-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
+										<div class="clear"></div>
 									</div>
 								</div>
-								<!--/.Panel --> 
 							</div>
-							<!--pull-panels--> 
+							<!--/.Panel --> 
 						</div>
-
+						<!--pull-panels--> 
 					</div>
 				</div>
 				<h3 class="title">Business Advertisement</h3>
@@ -262,7 +276,7 @@
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<form action="#" method="post" accept-charset="utf-8">
+		<form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8">
 			@csrf
 			<input type="hidden" name="title" value="">
 			<div class="modal-content">
@@ -276,7 +290,7 @@
 					</div>
 					<div class="form-group">
 						<input class="form-control" type="text" name="show-val" value="" readonly>
-						<input class="form-control" type="hidden" name="price" value="">
+						<input class="form-control" type="hidden" name="pd_id" value="">
 					</div>
 					<div class="form-group">
 						<p>Please provide a picture of your EATS a your business</p>
@@ -305,6 +319,11 @@
 
 @endsection
 @section('script')
+	@if(session('SweetAlert'))
+	<script type="text/javascript">
+	   swal("{{session('SweetAlert')}}");
+	</script>
+	@endif
 	<script type="text/javascript">
 		
 		$(document).on('click','.seletedplan',function(){
@@ -314,7 +333,7 @@
 			var text_val = $(this).closest('.plan-body').find('.planvalue option:selected').text();
 			modal.find('.modal-header h2').html(title); 
 			modal.find('input[name=title]').val(title);
-			modal.find('input[name=price]').val(value);
+			modal.find('input[name=pd_id]').val(value);
 			modal.find('input[name=show-val]').val(text_val);
 		});
 
@@ -322,3 +341,4 @@
 	</script>
 
 @stop
+@php session()->forget('SweetAlert'); @endphp
