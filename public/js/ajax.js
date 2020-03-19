@@ -60,3 +60,8 @@ $(document).on('click','.signin-popup',function(e){
         }
 	});
 });
+
+
+$(document).on('click','.vote_now',function(){
+  alert('sadsadas');
+});

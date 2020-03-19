@@ -19,7 +19,8 @@
 			</div>
 
 			<div class="col-md-9 content-search">
-				<h3 class="title">My Bookmarks</h3>	
+				<h3 class="title">My Bookmarks</h3>
+				<div class="clear"></div>	
 				@foreach($data_business as $data)			
 				<div class="food-main">
 					<div class="imbx">

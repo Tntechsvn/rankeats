@@ -21,6 +21,7 @@
 			<div class="col-md-9 content-search">
 				<div id="reviewforbusiness" class="tab-pane">
 					<h3 class="title m-b-20">Review business</h3>
+					<div class="clear"></div>
 					@foreach($list_reviews as $data)
 					<div class="row m-b-20">
 						<div class="col-lg-1">

@@ -20,6 +20,7 @@
 
 			<div class="col-md-9 content-search">
 				<h3 class="title">Create Advertisement</h3>
+				<div class="clear"></div>
 				<div class="create-advertise">
 					<div class="col-md-6">
 						<div class="row ">
@@ -248,6 +249,7 @@
 					</div>
 				</div>
 				<h3 class="title">Business Advertisement</h3>
+				<div class="clear"></div>
 				<div class="business-advertise">
 					@foreach($advertisement as $data)
 					<div class="col-lg-12 m-b-20">

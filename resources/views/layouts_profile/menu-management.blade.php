@@ -19,7 +19,7 @@
 			</div>
 
 			<div class="col-md-9 content-search">
-					<div id="menuforbusiness">
+					<div id="menuforbusiness" style="padding: 20px 0;">
 						<form class="form_addbusiness" action="#" method="get" accept-charset="utf-8">
 							<div class="form-group">
 								<label>Name Food</label>

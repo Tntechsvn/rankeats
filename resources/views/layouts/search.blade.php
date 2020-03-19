@@ -14,10 +14,11 @@
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			<div class="results-sponsored">
 				<h3 class="title">Sponsored Results</h3>
+				<div class="clear"></div>
 				@foreach($data_business_sponsored as $data)
 				<div class="food-main">
 					<div class="imbx">
-						<img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;">
+						<a href="{{$data['permalink']}}"><img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;"></a>
 					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">
@@ -120,10 +121,11 @@
 			</div>
 			<div class="results-all">
 				<h3 class="title">All Results</h3>
+				<div class="clear"></div>
 				@foreach($data_business as $data)
 				<div class="food-main">
 					<div class="imbx">
-						<img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;">
+						<a href="{{$data['permalink']}}"><img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;"></a>
 					</div>					
 					<div class="imbx-detail">
 						<div class="pr-dtl">

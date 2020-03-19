@@ -12,8 +12,12 @@
 					<h1 class="big-title">{{$info_business->name}}</h1>
 					@if($info_business->activated_on)<button>Verified<i class="far fa-check-square"></i></button> @endif
 					<div>
-						<a class="check-bookmark" href="javascript:;" data-book="0">
+						<a class="check-bookmark" href="javascript:;" data-id="{{$info_business->id}}" data-user="{{Auth::id()}}">
+							@if($bookmark)
+							<i class="fas fa-bookmark"></i> bookmark
+							@else
 							<i class="far fa-bookmark"></i> bookmark
+							@endif
 						</a>
 						
 					</div>
@@ -40,6 +44,7 @@
 				</div>
 				<div class="res-menu">
 					<h3 class="title m-b-20 m-t-30">Menu</h3>
+					<div class="clear"></div>	
 					<div class="row m-b-30">
 						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-b-10">
 							<h4 class="p-b-10"><i class="fas fa-caret-right"></i> com xa xiu </h4>
@@ -65,6 +70,7 @@
 				
 				<div class="reiview">
 					<h3 class="title m-b-20 m-t-30">Reviews</h3>
+					<div class="clear"></div>	
 					@foreach($list_reviews as $data)
 						<div class="row m-b-20">
 							<div class="col-lg-1">
@@ -98,7 +104,8 @@
 		<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 inner-sidebar">
 			<div class="right-sidebar" style="background-color: #fff;padding: 30px 15px 0px;">
 				<h3 class="title m-b-20">List Restaurent Featured</h3>
-				<div class="row m-b-20">
+				<div class="clear"></div>	
+				<div class="row m-b-20 p-t-20">
 					<div class="col-lg-4">
 						<div class="avata" >
 							<img src="images/avatar-default.png" alt="" style="width: 100%;">
@@ -164,7 +171,9 @@
 
 			$(document).on('click','.check-bookmark',function(){
 				var $this = $(this);
-				var check = $(this).data('book');
+				var user = $(this).data('user');
+				var id_business = $(this).data('id');
+
 				var url = "{{route('ajax-bookmark')}}";
 
 				$.ajax({
@@ -174,16 +183,16 @@
 			        type:'POST',
 			        url: url,
 			        data: {
-			        	check: check
+			        	business: id_business,
+			        	user: user
 			        },
 
 			        success:function(res){
 			        	if(res.success == true){
-			        		$this.data('book',res.book);
-			        		if(res.book==1){
-			        			$this.find('.fa-bookmark').removeClass('far').addClass('fas');
+			        		if(res.book==true){
+			        			$this.find('.fa-bookmark').attr('data-prefix','fas');
 			        		}else{
-			        			$this.find('.fa-bookmark').removeClass('fas').addClass('far');
+			        			$this.find('.fa-bookmark').attr('data-prefix','far');
 			        		}
 			        	}else{
 			        		alert('error');
