@@ -23,6 +23,10 @@ class Business extends Model
         return $this -> hasMany('App\Review', 'business_id', 'id');
     }
 
+    public function users(){
+        return $this->belongsToMany('App\User', 'bookmarks', 'business_id', 'user_id', 'id');
+    }
+
     public function update_business($request,$user){
         if($request -> address){
             if($this -> location_id != null){

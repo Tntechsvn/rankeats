@@ -11,9 +11,11 @@ use App\PlanDetail;
 use App\Advertisement;
 use View;
 use Auth;
+use App\Bookmark;
+use App\Vote;
 class HomeController extends Controller{
     public function __construct(){
-        $category = Category::All();
+        $category = Category::where('status','=',1)->get();
         view()->share(['category'=>$category]);
     }
 
@@ -33,6 +35,7 @@ class HomeController extends Controller{
         ->where(function($query) use ($keyword,$city,$state){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
+        ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->take(2)->pluck('business_id');
         $data_business_sponsored = $this -> getbusinessCate($list_cate_sponsored);
@@ -44,11 +47,12 @@ class HomeController extends Controller{
         ->where(function($query) use ($keyword,$city,$state){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
+        ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
         $arr_business_id = $list_cate ->pluck('business_id');
         $data_business = $this -> getbusinessCate($arr_business_id);
-        return view('layouts.search',compact('data_business','list_cate','data_business_sponsored'));
+        return view('layouts.search',compact('data_business','list_cate','data_business_sponsored','keyword','city','state'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  
@@ -116,7 +120,7 @@ class HomeController extends Controller{
        /*info restaurant*/
        $info_business = Auth::user()->business()->first();
        /*category*/
-       $category = Category::All();
+       $category = Category::where('status','=',1)->get();
 
        return view('layouts_profile.info-management',compact('info_business','category'));
    }
@@ -133,7 +137,7 @@ public function contact(){
 }
 
 public function create_business(){
-    $category = Category::All();
+    $category = Category::where('status','=',1)->get();
     return view('layouts.create_business',compact('category'));
 }
 
@@ -146,6 +150,7 @@ public function business_management(){
 public function bookmark(){
     $arr_business_id = Auth::user()->bookmark->pluck('business_id');
     $data_business = $this -> getbusinessCate($arr_business_id);
+    // dd($data_business);
     return view('layouts_profile.bookmark',compact('data_business'));
 }
 /*create_advertise*/
@@ -169,15 +174,28 @@ public function eat_reviews(){
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
     $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
-    return view('layouts.single-restaurent',compact('info_business','list_reviews'));
+    $bookmark = Bookmark::select('*')
+                ->where('user_id','=',Auth::user()->id)
+                ->where('business_id','=',$request -> id_business)
+                ->first();
+    return view('layouts.single-business',compact('info_business','list_reviews','bookmark'));
 }
 public function ajax_bookmark(Request $request){
     $data = $request->toArray();
     $check;
-    if($data['check'] == 0){
-        $check = 1;
+    $user = Auth::user();
+    $bookmark = Bookmark::select('*')
+                ->where('user_id','=',$user->id)
+                ->where('business_id','=',$request -> business)
+                ->first();
+    if($bookmark){
+        $user->businesses()->detach([$data['business']]);
+        $check = false;
     }else{
-        $check = 0;
+        $arr = $user->businesses()->pluck('business_id');
+        $arr[] = $data['business'];
+        $user->businesses()->sync($arr);
+        $check = true;
     }
     return response()->json([
         'success' => true,
@@ -185,6 +203,26 @@ public function ajax_bookmark(Request $request){
     ]);
 }
 
+public function vote_ajax(Request $request){
+    $user = Auth::user();
+    $vote = Vote::select('*')
+                ->where('user_id','=',$user->id)
+                ->where('business_id','=',$request->business)
+                ->first();
+    if($vote){
+        return response()->json([
+            'success' => false
+        ]);
+    }else{
+        $arr = $user->vote()->pluck('business_id');
+        $arr[] = $request->business;
+        $user->vote()->sync($arr);
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+}
 
 
 }

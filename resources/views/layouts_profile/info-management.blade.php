@@ -20,7 +20,7 @@
 
 			<div class="col-md-9 content-search">
 				
-					<div id="infobusiness" class="tab-pane active">
+					<div id="infobusiness" class="tab-pane active" style="padding: 20px 0;">
 						<form class="form_addbusiness" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8">
 							@csrf
 							<div class="form-group">

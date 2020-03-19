@@ -61,6 +61,11 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 		'as' => 'process.payment',
 		'uses' => 'PaymentController@processPayment'
 	]);
+	/*postCreateEatsFrontEnd*/
+	Route::post('/creat-eat', [
+		'as' => 'postCreateEatsFrontEnd',
+		'uses' => 'EatsController@postCreateEatsFrontEnd'
+	]);
 
 });
 Route::post('/create-business', [
@@ -97,6 +102,14 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			Route::post('/edit/{id_eat}', [
 				'as' => 'postEditEats',
 				'uses' => 'EatsController@postEditEats'
+			]);
+			Route::get('list-pending-eats', [
+				'as' => 'getListPendingEats',
+				'uses' => 'EatsController@getListPendingEats'
+			]);
+			Route::get('approve-eat/{eat_id}', [
+				'as' => 'approvedEat',
+				'uses' => 'EatsController@approvedEat'
 			]);
 		});
 		/*users*/

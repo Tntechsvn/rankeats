@@ -4,8 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\ShareController;
+
 class Category extends Model
 {
+    public function business_category(){
+      return $this -> belongsToMany('App\Business','businesses_categories','cate_id','business_id');
+    }
+
     public function update_category($request){   
         if($request -> image !=null){
            $base64String = $request->image;
@@ -14,9 +19,6 @@ class Category extends Model
         }else{
             $url_img = $this->url_img;
         }
-
-    	
-
         $this->category_name = $request -> category_name;
         $this->url_img = $url_img;
         $this->description = $request->description;

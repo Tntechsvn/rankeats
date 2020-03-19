@@ -22,7 +22,7 @@
 				<div class="tab-content">
 					<div>
 						<h3 class="title m-b-20">My Reviews</h3>
-						
+						<div class="clear"></div>
 						@foreach($list_reviews as $data)
 						<div class="row m-b-20">
 							<div class="col-lg-1">
