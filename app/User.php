@@ -47,6 +47,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Business', 'bookmarks', 'user_id', 'business_id', 'id');
     }
 
+    public function vote(){
+        return $this->belongsToMany('App\Business', 'votes', 'user_id', 'business_id', 'id');
+    }
+
     public function role(){
         return $this->belongsTo('App\Role','role_id', 'id');
     }

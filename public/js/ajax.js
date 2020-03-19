@@ -63,5 +63,26 @@ $(document).on('click','.signin-popup',function(e){
 
 
 $(document).on('click','.vote_now',function(){
-  alert('sadsadas');
+  
+  var url = $('input[name=vote-ajax]').val();
+  var business = $(this).data('id');
+  var modal_target = $('#voteModal');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      business: business
+    },
+    success:function(res){
+      if(res.success == true){
+          modal_target.find('input[name=business_id]').val(business);
+          modal_target.show();
+      }else{
+        
+      }
+    }
+  });
 });

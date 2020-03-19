@@ -12,6 +12,7 @@ use App\Advertisement;
 use View;
 use Auth;
 use App\Bookmark;
+use App\Vote;
 class HomeController extends Controller{
     public function __construct(){
         $category = Category::All();
@@ -200,6 +201,26 @@ public function ajax_bookmark(Request $request){
     ]);
 }
 
+public function vote_ajax(Request $request){
+    $user = Auth::user();
+    $vote = Vote::select('*')
+                ->where('user_id','=',$user->id)
+                ->where('business_id','=',$request->business)
+                ->first();
+    if($vote){
+        return response()->json([
+            'success' => false
+        ]);
+    }else{
+        $arr = $user->vote()->pluck('business_id');
+        $arr[] = $request->business;
+        $user->vote()->sync($arr);
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+}
 
 
 }
