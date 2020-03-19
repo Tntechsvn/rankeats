@@ -11,6 +11,8 @@ use App\PlanDetail;
 use App\Advertisement;
 use View;
 use Auth;
+use App\Bookmark;
+use App\Vote;
 class HomeController extends Controller{
     public function __construct(){
         $category = Category::where('status','=',1)->get();
@@ -148,6 +150,7 @@ public function business_management(){
 public function bookmark(){
     $arr_business_id = Auth::user()->bookmark->pluck('business_id');
     $data_business = $this -> getbusinessCate($arr_business_id);
+    // dd($data_business);
     return view('layouts_profile.bookmark',compact('data_business'));
 }
 /*create_advertise*/
@@ -171,15 +174,28 @@ public function eat_reviews(){
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
     $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
-    return view('layouts.single-restaurent',compact('info_business','list_reviews'));
+    $bookmark = Bookmark::select('*')
+                ->where('user_id','=',Auth::user()->id)
+                ->where('business_id','=',$request -> id_business)
+                ->first();
+    return view('layouts.single-business',compact('info_business','list_reviews','bookmark'));
 }
 public function ajax_bookmark(Request $request){
     $data = $request->toArray();
     $check;
-    if($data['check'] == 0){
-        $check = 1;
+    $user = Auth::user();
+    $bookmark = Bookmark::select('*')
+                ->where('user_id','=',$user->id)
+                ->where('business_id','=',$request -> business)
+                ->first();
+    if($bookmark){
+        $user->businesses()->detach([$data['business']]);
+        $check = false;
     }else{
-        $check = 0;
+        $arr = $user->businesses()->pluck('business_id');
+        $arr[] = $data['business'];
+        $user->businesses()->sync($arr);
+        $check = true;
     }
     return response()->json([
         'success' => true,
@@ -187,6 +203,26 @@ public function ajax_bookmark(Request $request){
     ]);
 }
 
+public function vote_ajax(Request $request){
+    $user = Auth::user();
+    $vote = Vote::select('*')
+                ->where('user_id','=',$user->id)
+                ->where('business_id','=',$request->business)
+                ->first();
+    if($vote){
+        return response()->json([
+            'success' => false
+        ]);
+    }else{
+        $arr = $user->vote()->pluck('business_id');
+        $arr[] = $request->business;
+        $user->vote()->sync($arr);
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+}
 
 
 }

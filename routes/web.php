@@ -112,5 +112,9 @@
 		'as' => 'postAjaxLogin',
 		'uses' => 'LoginController@postAjaxLogin'
 	]);
+	Route::post('/post-ajax-vote', [
+		'as' => 'vote_ajax',
+		'uses' => 'HomeController@vote_ajax'
+	]);
 	
 // end hungpro

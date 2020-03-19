@@ -1711,14 +1711,16 @@ input#location_search {
 	font-weight: bold;
     padding-bottom: 5px;
     position: relative;
+    float: left;
+    clear: both;
 }
 .title::after {
 	position: absolute;
 	content: "";
-	width: 50px;
 	height: 2px;
 	bottom: 0;
 	left: 0;
+	right: 0;
 	background-color: #1660ba;
 }
 .content-right h4 {
@@ -1745,7 +1747,6 @@ input#location_search {
 .content-search .title {
 	margin: 20px 0;
 	float: left;
-	width: 100%;
 }
 .content-search .pr-dtail ul {
 	padding-top: 15px;
@@ -1925,7 +1926,9 @@ li.active a {
 .star-rate li {
 	font-size: 20px;
 }
-
+.pac-container {
+	z-index: 9999;
+}
 
 
 
