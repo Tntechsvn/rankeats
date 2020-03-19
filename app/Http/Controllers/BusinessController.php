@@ -85,6 +85,7 @@ class BusinessController extends Controller
 
     	$keyword = $request -> keyword ? $request -> keyword : '';
         $list_business = Business::select('businesses.*')
+        ->whereNotNull('user_id')
         ->whereNull('activated_on')
         ->where(function($query) use ($keyword){            
             $query->where('name', 'LIKE', '%'.$keyword.'%')->orwhere('name', 'LIKE', '%'.$keyword.'%');

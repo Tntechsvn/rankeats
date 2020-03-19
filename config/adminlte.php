@@ -193,8 +193,17 @@ return [
         ['header' => 'MAIN NAVIGATION'],
         [
             'text' => 'Eats',
-            'route'  => 'getListEats',
             'icon' => 'fas fa-fw fa-list-ul',
+            'submenu' => [
+                [
+                    'text' => 'List Eats',                    
+                    'route'  => 'getListEats',
+                ],
+                [
+                    'text' => 'Pending Eats',
+                    'route'  => 'getListPendingEats',
+                ]
+            ],
         ],
         [
             'text'    => 'Users',
