@@ -70,7 +70,7 @@
               						<input type="checkbox" value="" class="check" id="check{{$data->id}}" data-row-id="{{$data->id}}">
               						<label for="check{{$data->id}}"></label>
               					</div>
-              				</td>                      
+              				</td>
               				<td>{{$data -> category_name}}</td>
                       <td>{{$data->business_category()->first()->name}}</td>
                       <td>{{$data->business_category()->first()->location->address}}</td>
