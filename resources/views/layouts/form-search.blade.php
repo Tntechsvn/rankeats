@@ -7,7 +7,7 @@
 	    </div>
 	    
 	    <div class="input_state">
-	      <input type="text" class="form-control input-lg location_search" id="location_search" placeholder="@if(isset($city)){{$city.','.$state}}@else{{'City or State'}}@endif">
+	      <input type="text" class="form-control input-lg location_search" id="location_search" placeholder="@if(isset($city) && $city !=''){{$city.','.$state}}@else{{'City or State'}}@endif">
 	      <input  type="hidden" id="city_search" name="city" value="@if(isset($city)){{$city}}@endif">
 	      <input  type="hidden" id="state_search" name="state" value="@if(isset($state)){{$state}}@endif">
 	    </div>

@@ -7,7 +7,10 @@ use Auth;
 use Storage;
 use App\Category;
 use App\Myconst;
+use App\Business;
+use App\Location;
 use App\Http\Controllers\ShareController;
+use Validator;
 class EatsController extends Controller
 {
     /**
@@ -58,6 +61,39 @@ class EatsController extends Controller
     public function postEditEats(Request $request){
         $data_eat = Category::findorfail($request->id_eat);
         $data_eat -> update_category($request);
+        return redirect()->back();
+    }
+    /**************************Front-end*****************************************/
+    public function postCreateEatsFrontEnd(Request $request){
+        $this-> Validate($request,[
+            'category_name' => 'required|unique:categories,category_name',
+            'address' => 'required',
+            'business_name' => 'required',
+        ]);
+        /*create category*/
+        $update_category = new Category;
+        $id_category = $update_category -> update_category($request)->id;
+        /*check business*/
+        $check_business = Business::where('name','=',$request -> business_name)->count();
+        if($check_business > 0){
+            $update_business = Business::where('name','=',$request -> business_name)->first();
+            $update_business -> business_category()->sync($id_category);
+        }else{
+            /*create business*/
+            if($request -> address){               
+                $Location = new Location;
+                $location_id = $Location->update_location($request)->id;
+            }else{
+                $location_id = null;
+            }
+            $business = new Business;
+            $business -> name = $request -> business_name;
+            $business -> address = $request -> address;
+            $business -> location_id = $location_id;
+            $business -> save();
+            // business_category
+            $business->business_category()->sync($id_category);
+        }
         return redirect()->back();
     }
    

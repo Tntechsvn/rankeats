@@ -63,8 +63,9 @@ class DatabaseSeeder extends Seeder
         foreach ($array_category as $cate)
         {
             DB::table('categories')->insert([
-                'category_name'      => $cate,
-                'description'   => $cate,
+                'category_name' => $cate,
+                'description' => $cate,
+                'status' => 1,
             ]);
         }
         $arr_id_cate = [1,2,3,4,5,6,7,8];

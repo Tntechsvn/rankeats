@@ -61,6 +61,11 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 		'as' => 'process.payment',
 		'uses' => 'PaymentController@processPayment'
 	]);
+	/*postCreateEatsFrontEnd*/
+	Route::post('/creat-eat', [
+		'as' => 'postCreateEatsFrontEnd',
+		'uses' => 'EatsController@postCreateEatsFrontEnd'
+	]);
 
 });
 Route::post('/create-business', [
