@@ -20,7 +20,8 @@ class HomeController extends Controller{
     }
 
     public function home(){
-        return view('layouts.index');
+        $category = Category::where('status','=',1)->take(16)->get();
+        return view('layouts.index',compact('category'));
     }
 
     public function search(Request $request){
@@ -211,7 +212,8 @@ public function vote_ajax(Request $request){
                 ->first();
     if($vote){
         return response()->json([
-            'success' => false
+            'success' => false,
+            'message' => "You have already voted"
         ]);
     }else{
         $arr = $user->vote()->pluck('business_id');

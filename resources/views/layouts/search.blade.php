@@ -10,6 +10,12 @@
 		<div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
 			@include('layouts.form-search')
 		</div>
+		<div class="col-lg-12 inform-results">
+			<h1>You are searching for with the keyword of "@if(isset($keyword)){{$keyword}}@else{{'All Eats'}}@endif"</h1>
+			<div class="img">
+				<img src="@if($list_cate->first()->url_img != null){{asset('').'storage/'.$list_cate->first()->url_img}}@else{{'images/map_main.png'}}@endif">
+			</div>
+		</div>
 
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			<div class="results-sponsored">
@@ -139,7 +145,6 @@
 				<input type="hidden" name="business_id" value="">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
 						<div class="avata-popup " style="width: 100%;text-align: center;">
 							<img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
 							<p class="bold">{{Auth::user()->name}}</p>
@@ -147,34 +152,41 @@
 					</div>
 					<div class="modal-body">
 						<p>Would you like to write a review for this EAT?</p>
-						<div class="popup-star">
-							<label class="customstar star-1">							
-								<input type="radio" name="rate" value="1" checked="checked">
-								<span class="starimg checkstar" ></span>
-							</label>
-							<label class="customstar star-2">							
-								<input type="radio" name="rate" value="2">
-								<span class="starimg" ></span>
-							</label>
-							<label class="customstar star-3">							
-								<input type="radio" name="rate" value="3">
-								<span class="starimg" ></span>
-							</label>
-							<label class="customstar star-4">							
-								<input type="radio" name="rate" value="4">
-								<span class="starimg" ></span>
-							</label>
-							<label class="customstar star-5">							
-								<input type="radio" name="rate" value="5">
-								<span class="starimg "></span>
-							</label>
+						<div class="okverify hidden">
+							<div class="popup-star">
+								<label class="customstar star-1">							
+									<input type="radio" name="rate" value="1" checked="checked">
+									<span class="starimg checkstar" ></span>
+								</label>
+								<label class="customstar star-2">							
+									<input type="radio" name="rate" value="2">
+									<span class="starimg" ></span>
+								</label>
+								<label class="customstar star-3">							
+									<input type="radio" name="rate" value="3">
+									<span class="starimg" ></span>
+								</label>
+								<label class="customstar star-4">							
+									<input type="radio" name="rate" value="4">
+									<span class="starimg" ></span>
+								</label>
+								<label class="customstar star-5">							
+									<input type="radio" name="rate" value="5">
+									<span class="starimg "></span>
+								</label>
+							</div>
+							<div class="form-group reviewBox">
+								<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
+							</div>
 						</div>
-						<div class="form-group reviewBox">
-							<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
-						</div>
+						
 					</div>
-					<div class="modal-footer">
-						<div class="firstWindow" style="width: 100%">
+					<div class="modal-footer" style="text-align: center;">
+						<div class="verify">
+							<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">CANCEL</a>
+							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">OK</a>
+						</div>
+						<div class="firstWindow hidden" style="width: 100%">
 							<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
 						</div>
 					</div>
@@ -315,6 +327,15 @@
 	$(document).on('click','.rankerBtn',function(){
 		var modal = $('#eatModal');
 		modal.find('.rankerShow').addClass('show');
+	});
+
+	$(document).on('click','.noverify',function(){
+		$('#voteModal').hide();
+	});
+	$(document).on('click','.yesverify',function(){
+		$(this).closest('form').find('.okverify').removeClass('hidden');
+		$(this).closest('.modal-footer').find('.verify').addClass('hidden');
+		$(this).closest('.modal-footer').find('.firstWindow').removeClass('hidden');
 	});
 
 </script>
