@@ -1941,7 +1941,17 @@ li.active a {
 .verify a {
 	color: #fff;
 }
+.inform-results {
+	text-align: center;
+}
 
+.inform-results .img {
+	width: 150px;
+	margin: 30px auto;
+}
+.inform-results .img img {
+	width: 100%;
+}
 
 
 
@@ -2027,6 +2037,15 @@ li.active a {
 	}
 	#main {
 	    min-height: 450px;
+	}
+	.navbar-header {
+		width: 100%;
+	}
+	.button-menu {
+		margin-top: 20px;
+	}
+	.map_img img{
+		width: 100%;
 	}
 
 }
