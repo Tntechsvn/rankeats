@@ -74,7 +74,7 @@
     <h3 class="wow bounceIn">Feature Eats</h3>
     @foreach($category as $data)
     <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4 col-box wow fadeInUp animated featuredeats" style="visibility: visible; animation-name: fadeInUp;" >
-      <div class="grid" data-toggle="modal" data-target="#myModal"> <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'/storage/'.$data->url_img}}@else{{'images/Spaghetti.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
+      <div class="grid" data-toggle="modal"> <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'/storage/'.$data->url_img}}@else{{'images/Spaghetti.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
         <input type="hidden" name="category_name"  value="{{$data->category_name}}" />
 
       </div>
@@ -85,8 +85,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Enter the area you want to search for the best {{$data->category_name}}</h4>
+            <a class="close" data-dismiss="modal" aria-label="close">&times;</a>
+            <h4 class="modal-title">Enter the area you want to search for the best <span class="search-name"></span></h4>
           </div>
           <div class="modal-body">
             <form method="get" action="{{route('search')}}" class="form-inline">
@@ -107,3 +107,15 @@
   </div>
 </div>
 @endsection
+
+@section('script')
+  <script type="text/javascript">
+    $(document).on('click','.featuredeats',function(){
+      var search_name = $(this).find('input[name=category_name]').val();
+      var modal = $('#myModal');
+      modal.find('input[name=keyword]').val(search_name);
+      modal.find('.search-name').html(search_name);
+      modal.show();
+    });
+  </script>
+@stop
