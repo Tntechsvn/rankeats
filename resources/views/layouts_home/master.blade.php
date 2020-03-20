@@ -140,6 +140,11 @@
   });
   $(document).ready(function(){
     $('li.active').closest('.menudropdown').attr('style','display:block;')
+
+  
+    $(document).on('click','.close',function(){
+      $(this).closest('.modal').hide();
+    });
   });
 </script>
 

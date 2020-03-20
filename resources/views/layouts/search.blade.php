@@ -10,6 +10,12 @@
 		<div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
 			@include('layouts.form-search')
 		</div>
+		<div class="col-lg-12 inform-results">
+			<h1>bạn đang tìm kiếm với từ khóa là Pizza</h1>
+			<div class="img">
+				<img src="images/map_main.png">
+			</div>
+		</div>
 
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			<div class="results-sponsored">
