@@ -15,12 +15,13 @@ use App\Bookmark;
 use App\Vote;
 class HomeController extends Controller{
     public function __construct(){
-        $category = Category::All();
+        $category = Category::where('status','=',1)->get();
         view()->share(['category'=>$category]);
     }
 
     public function home(){
-        return view('layouts.index');
+        $category = Category::where('status','=',1)->take(16)->get();
+        return view('layouts.index',compact('category'));
     }
 
     public function search(Request $request){
@@ -35,6 +36,7 @@ class HomeController extends Controller{
         ->where(function($query) use ($keyword,$city,$state){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
+        ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->take(2)->pluck('business_id');
         $data_business_sponsored = $this -> getbusinessCate($list_cate_sponsored);
@@ -46,6 +48,7 @@ class HomeController extends Controller{
         ->where(function($query) use ($keyword,$city,$state){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
+        ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
         $arr_business_id = $list_cate ->pluck('business_id');
@@ -118,7 +121,7 @@ class HomeController extends Controller{
        /*info restaurant*/
        $info_business = Auth::user()->business()->first();
        /*category*/
-       $category = Category::All();
+       $category = Category::where('status','=',1)->get();
 
        return view('layouts_profile.info-management',compact('info_business','category'));
    }
@@ -135,7 +138,7 @@ public function contact(){
 }
 
 public function create_business(){
-    $category = Category::All();
+    $category = Category::where('status','=',1)->get();
     return view('layouts.create_business',compact('category'));
 }
 

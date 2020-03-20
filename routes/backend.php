@@ -103,6 +103,14 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'postEditEats',
 				'uses' => 'EatsController@postEditEats'
 			]);
+			Route::get('list-pending-eats', [
+				'as' => 'getListPendingEats',
+				'uses' => 'EatsController@getListPendingEats'
+			]);
+			Route::get('approve-eat/{eat_id}', [
+				'as' => 'approvedEat',
+				'uses' => 'EatsController@approvedEat'
+			]);
 		});
 		/*users*/
 		Route::prefix("users")->group(function(){
