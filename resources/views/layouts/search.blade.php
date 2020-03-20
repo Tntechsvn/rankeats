@@ -11,9 +11,9 @@
 			@include('layouts.form-search')
 		</div>
 		<div class="col-lg-12 inform-results">
-			<h1>bạn đang tìm kiếm với từ khóa là Pizza</h1>
+			<h1>You are searching for with the keyword of "@if(isset($keyword)){{$keyword}}@else{{'All Eats'}}@endif"</h1>
 			<div class="img">
-				<img src="images/map_main.png">
+				<img src="@if($list_cate->first()->url_img != null){{asset('').'storage/'.$list_cate->first()->url_img}}@else{{'images/map_main.png'}}@endif">
 			</div>
 		</div>
 
