@@ -211,7 +211,8 @@ public function vote_ajax(Request $request){
                 ->first();
     if($vote){
         return response()->json([
-            'success' => false
+            'success' => false,
+            'message' => "You have already voted"
         ]);
     }else{
         $arr = $user->vote()->pluck('business_id');

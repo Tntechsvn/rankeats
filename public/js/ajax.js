@@ -81,7 +81,10 @@ $(document).on('click','.vote_now',function(){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.show();
       }else{
-        
+        swal({
+          title: res.message,
+          timer: 2000
+        });
       }
     }
   });
