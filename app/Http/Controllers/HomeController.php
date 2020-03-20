@@ -20,7 +20,8 @@ class HomeController extends Controller{
     }
 
     public function home(){
-        return view('layouts.index');
+        $category = Category::where('status','=',1)->take(16)->get();
+        return view('layouts.index',compact('category'));
     }
 
     public function search(Request $request){
