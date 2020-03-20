@@ -1578,22 +1578,25 @@ a.btn.btn-warning.vote_now {
 /* ranket css-End */
 
 .navbar-header {
-	float: none;
+	float: left;
 }
 .navbar-brand {
-	float: none;
+	height: 70px;
+	padding: 0;
 }
-.logo{
-	margin: 0 auto;
+.logo {
+	padding-top: 10px;
+	margin: 0;
 }
 #bs-example-navbar-collapse-1 {
 	position: relative;
+	float: right;
 }
 #bs-example-navbar-collapse-1 .navbar-right {
-	position: absolute;
-    right: 0;
-    top: -60px;
+	padding-top: 10px;
 }
+
+
 .img-responsive{
 	object-fit: cover;
 	height: 300px;
@@ -1929,9 +1932,15 @@ li.active a {
 .pac-container {
 	z-index: 9999;
 }
-
-
-
+.hidden {
+	display: none;
+}
+.show{
+	display: block;
+}
+.verify a {
+	color: #fff;
+}
 
 
 
@@ -2021,7 +2030,7 @@ li.active a {
 	}
 
 }
-@media(min-width: 320px){
+@media(max-width: 320px){
 	img.details_image{
 		width: 100%;
 		object-fit: cover;
