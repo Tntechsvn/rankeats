@@ -74,9 +74,10 @@
 
         <form id="profilepicInfo" class="info-forms" action="update_profile_pic.php" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <div id="preview-avatar" class="pull-left"> 
+            <div id="preview-avatar-old" class="pull-left"> 
               <img src="images/avatar.jpg" width="100" height="100" class="avatar_small"> 
             </div>
+            <div id="preview-avatar" class="pull-left"></div>
             <div class="input-group">
               <label for="inputPic">Maximum 500Kb or 500px x 500px in size</label>
               <br>
@@ -90,22 +91,6 @@
         </form>
 
       </div>
-{{-- 
-<div class="form-group">
-    <label>Restaurant Image</label>
-    <div class="form-group"  style="text-align: center;">
-                <div  class="dt-imgs">
-                  <div class="dt-close" >
-                    <div id="previews" class="preview-img" style="width: 250px;"></div>
-                  </div>
-                </div>
-              </div>
-    <label for="image_restaurant" class="choose_img"><span><i class="fas fa-paperclip"></i> Choose image...</span>
-      <input id="image_restaurant" class="hidden" type="file"  value="" accept="image/*">
-    </label>
-    
-  </div> --}}
-
 
       <div class="tab-pane" id="tab-password">
 
@@ -181,10 +166,10 @@
     $('#inputPic').click(function(e) {
 
       var previews = document.getElementById('preview-avatar');
-      // if (previews.hasChildNodes()) {
-      //   alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
-      //   e.preventDefault();
-      // }     
+      if (previews.hasChildNodes()) {
+        alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+        e.preventDefault();
+      }     
     });
     var images = function(input, imgPreview) {
       if (input.files) {
@@ -201,14 +186,17 @@
     };
 
     $('#inputPic').on('change', function() {
+      
       images(this, '#preview-avatar');
+      $('#preview-avatar-old').addClass('hidden');
     });
     /*clear the file list when image is clicked*/
      $(document).on('click','.deletetimg',function(){
       if(confirm("Bạn Muốn Xóa Ảnh Này?"))
       {
         $(this).parent().remove();
-        $("#image_restaurant").val(null);/* xóa tên của file trong input*/
+        $("#inputPic").val(null);/* xóa tên của file trong input*/
+        $('#preview-avatar-old').removeClass('hidden');
       }
       else
         return false;
