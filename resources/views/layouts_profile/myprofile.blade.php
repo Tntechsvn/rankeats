@@ -37,7 +37,7 @@
 						<h1>Recent Bookmarks by {{Auth::user()->name}}</h1>
 					</div>
 
-					<div class="col-desc row"> 
+					<div class="col-desc "> 
 						<div class="col-note">{{Auth::user()->name}} haven’t bookmarked any business listings yet!.</div>
 					</div>
 
