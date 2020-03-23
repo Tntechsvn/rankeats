@@ -69,23 +69,44 @@
         </form>
 
       </div>
+
       <div class="tab-pane" id="tab-picture"> 
 
-        <div id="output-profile-pic"></div>
         <form id="profilepicInfo" class="info-forms" action="update_profile_pic.php" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <div id="preview-avatar" class="pull-left"> <img src="templates/origin/images/avatar.jpg" width="100" height="100" class="avatar_small"> </div>
+            <div id="preview-avatar" class="pull-left"> 
+              <img src="images/avatar.jpg" width="100" height="100" class="avatar_small"> 
+            </div>
             <div class="input-group">
               <label for="inputPic">Maximum 500Kb or 500px x 500px in size</label>
               <br>
-              <div class="fileUpload btn btn-custom"> <span id="fileContainer"><i class="fa fa-camera"></i> Select</span>
+              <div class="fileUpload btn btn-custom"> 
+                <span id="fileContainer"><i class="fa fa-camera"></i> Select</span>
                 <input type="file" name="inputPic" id="inputPic" class="upload" />
               </div>
             </div>
+            <button type="submit" class="btn btn-custom btn-lg pull-right" id="submitimg">Update</button>
           </div>
         </form>
 
       </div>
+{{-- 
+<div class="form-group">
+    <label>Restaurant Image</label>
+    <div class="form-group"  style="text-align: center;">
+                <div  class="dt-imgs">
+                  <div class="dt-close" >
+                    <div id="previews" class="preview-img" style="width: 250px;"></div>
+                  </div>
+                </div>
+              </div>
+    <label for="image_restaurant" class="choose_img"><span><i class="fas fa-paperclip"></i> Choose image...</span>
+      <input id="image_restaurant" class="hidden" type="file"  value="" accept="image/*">
+    </label>
+    
+  </div> --}}
+
+
       <div class="tab-pane" id="tab-password">
 
         <div id="output-password"></div>
@@ -153,5 +174,45 @@
       document.getElementById('country').value = country;     
     });
   };
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#inputPic').click(function(e) {
+
+      var previews = document.getElementById('preview-avatar');
+      // if (previews.hasChildNodes()) {
+      //   alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+      //   e.preventDefault();
+      // }     
+    });
+    var images = function(input, imgPreview) {
+      if (input.files) {
+        var arr = [];
+        var filesAmount = input.files.length;
+        for (i = 0; i < filesAmount; i++) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            $('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style='width:100%;'>").append('<div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);
+          }
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+    };
+
+    $('#inputPic').on('change', function() {
+      images(this, '#preview-avatar');
+    });
+    /*clear the file list when image is clicked*/
+     $(document).on('click','.deletetimg',function(){
+      if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+      {
+        $(this).parent().remove();
+        $("#image_restaurant").val(null);/* xóa tên của file trong input*/
+      }
+      else
+        return false;
+    }); 
+  });
 </script>
 @endsection
