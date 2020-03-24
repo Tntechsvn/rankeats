@@ -2,9 +2,14 @@
 @section('content')
 
 <div id="main">
-
+  <div class="banner">
+    <img src="images/promo.jpg" alt="" class="fade">
+  </div>
   <div class="container container-main">
-    <div class="col-md-12">
+    <div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
+      @include('layouts.form-search')
+    </div>
+    <div class="col-md-12 m-t-30">
       <div class="col-md-6">
         <div class="row pull-panels">
           <div class="panel panel-default">
@@ -22,7 +27,7 @@
                   </select>
                 </div>
                 <div class="col-md-6">
-                  <button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Pay to Home" data-target="#loginModal">Advertise</button>
+                  <a style="color: #fff;>" type="button" @if(Auth()) href="{{route('create_advertise')}}"  @endif class="btn btn-primary btn-lg seletedplan" @if(!Auth()) data-toggle="modal" data-plan="Pay to Home"  data-target="#loginModal" @endif>Advertise</a>
                 </div>
               </form>
             </div>
@@ -32,32 +37,31 @@
       <!--pull-panels--> 
       </div>
       <div class="col-md-6">
-      <div class="row pull-panels">
-      <div class="panel panel-default">
-      <div class="panel-heading panel-heading-1">
-      <h1 class="panel-title">Search EATS – City </h1>
-      </div>
-      <div class="panel-body">
-      <div id="output-active"></div>
-      <p>At the top of the search results page for the City and EATS you choose you can add a pic of your business. The name of your business along with the City and State will also appear in the lower right of the pic which will link to your business.</p>
-      <form id="activeForm" action="update_payment_active.php" method="post">
-      <div class="col-md-6">
-      <select name="plan" class="form-control planvalue">
-      <option value="62">30 days - $10.99</option>
-      <option value="63">180 days - $49.99</option>
-      <option value="64">364 days - $199.99</option>
+        <div class="row pull-panels">
+          <div class="panel panel-default">
+            <div class="panel-heading panel-heading-1">
+              <h1 class="panel-title">Search EATS – City </h1>
+            </div>
+            <div class="panel-body">
+              <p>At the top of the search results page for the City and EATS you choose you can add a pic of your business. The name of your business along with the City and State will also appear in the lower right of the pic which will link to your business.</p>
+              <form id="activeForm" action="update_payment_active.php" method="post">
+                <div class="col-md-6">
+                  <select name="plan" class="form-control planvalue">
+                    <option value="62">30 days - $10.99</option>
+                    <option value="63">180 days - $49.99</option>
+                    <option value="64">364 days - $199.99</option>
 
-      </select>
-      </div>
-      <div class="col-md-6">
-      <button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search EATS – City" data-target="#loginModal">Advertise</button>
-      </div>
-      </form>
-      </div>
-      </div>
-      <!--/.Panel --> 
-      </div>
-      <!--pull-panels--> 
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search EATS – City" data-target="#loginModal">Advertise</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        <!--/.Panel --> 
+        </div>
+        <!--pull-panels--> 
       </div>
 
     </div>
@@ -211,7 +215,7 @@
 
 </div><!--main-->
  
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade in" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -272,7 +276,8 @@
 	</form>
   </div>
 </div>
-<div id="loginModal" class="modal fade" role="dialog">
+@if(!Auth())
+<div id="loginModal" class="modal fade in" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -282,7 +287,7 @@
 		<h4 class="modal-title">&nbsp;</h4>
 	  </div>
 	  <div class="modal-body">
-		<p>Must be logged in to advertise</p>
+		<p>Must be logged in to advertise <a href="{{route('sign_in')}}">Login Here</a></p>
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -291,5 +296,5 @@
     
   </div>
 </div>
-
+@endif
 @endsection

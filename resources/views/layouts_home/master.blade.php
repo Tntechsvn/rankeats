@@ -145,6 +145,13 @@
     $(document).on('click','.close',function(){
       $(this).closest('.modal').hide();
     });
+    
+    
+    $(document).on('click','.button-menu',function(){
+      $(this).toggleClass('active');
+     $('.menu-desktop').toggleClass('abc');
+    });
+
   });
 </script>
 
