@@ -55,7 +55,6 @@
               		<tbody>              			
               			@if(count($data_pages) > 0)
               			@foreach($data_pages as $data)
-              				    				
               			<tr>
               				<td><a href="{{route('getEditPage',$data->slug)}}">{{$data -> page_title}}</a></td>
               				<td>{{$data-> ordinarily}}</td>
