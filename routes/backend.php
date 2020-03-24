@@ -30,6 +30,11 @@ Route::get('/logout-user', [
 	'as' => 'getLogout',
 	'uses' => 'LoginController@getLogout'
 ]);
+
+Route::get('page/{id_page}', [
+	'as' => 'getPages',
+	'uses' => 'HomeController@getPages'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',
@@ -165,6 +170,35 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			Route::post('/plans-detail', [
 				'as' => 'postPaymentPlan',
 				'uses' => 'PlanController@postPaymentPlan'
+			]);
+		});
+		/*cms*/
+		Route::prefix("pages")->group(function(){
+			Route::get('/', [
+				'as' => 'getListPage',
+				'uses' => 'PageController@getListPage'
+			]);
+			/*create page*/
+			Route::get('/create-page', [
+				'as' => 'getCreatePage',
+				'uses' => 'PageController@getCreatePage'
+			]);
+			Route::post('/create-page', [
+				'as' => 'postCreatePage',
+				'uses' => 'PageController@postCreatePage'
+			]);
+			/*edit page*/
+			Route::get('/edit-page/{id_page}', [
+				'as' => 'getEditPage',
+				'uses' => 'PageController@getEditPage'
+			]);
+			Route::post('/edit-page/{id_page}', [
+				'as' => 'postEditPage',
+				'uses' => 'PageController@postEditPage'
+			]);
+			Route::post('/delete-page', [
+				'as' => 'deletePages',
+				'uses' => 'PageController@deletePages'
 			]);
 		});
 

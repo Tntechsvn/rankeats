@@ -13,14 +13,17 @@ use View;
 use Auth;
 use App\Bookmark;
 use App\Vote;
+use App\Page;
 class HomeController extends Controller{
     public function __construct(){
         $category = Category::where('status','=',1)->get();
-        view()->share(['category'=>$category]);
+        $all_page = Page::all();
+
+        view()->share(['category'=>$category,'all_page'=>$all_page]);
     }
 
     public function home(){
-        $category = Category::where('status','=',1)->take(16)->get();
+        $category = Category::where('status','=',1)->take(9)->get();
         return view('layouts.index',compact('category'));
     }
 
@@ -132,7 +135,12 @@ class HomeController extends Controller{
 public function privacy_policy(){
     return view('layouts.privacy-policy');
 }
-
+/*getPages*/
+public function getPages(Request $request){
+    $info_page = Page::findBySlugOrFail($request -> id_page);
+    return view('layouts.pages',compact('info_page'));
+}
+/*end getPages*/
 public function contact(){
     return view('layouts.contact');
 }
