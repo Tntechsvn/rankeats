@@ -72,10 +72,11 @@
 
       <div class="tab-pane" id="tab-picture"> 
 
-        <form id="profilepicInfo" class="info-forms" action="update_profile_pic.php" method="post" enctype="multipart/form-data">
+        <form id="profilepicInfo" class="info-forms" action="{{route('postEditUserImgFrondEnd')}}" method="post" enctype="multipart/form-data">
+          @csrf
           <div class="form-group">
-            <div id="preview-avatar-old" class="pull-left"> 
-              <img src="images/avatar.jpg" width="100" height="100" class="avatar_small"> 
+            <div id="preview-avatar-old" class="pull-left">
+              <img src="{{Auth::user()->UrlAvatarUser}}" width="100" height="100" class="avatar_small"> 
             </div>
             <div id="preview-avatar" class="pull-left"></div>
             <div class="input-group">

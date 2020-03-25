@@ -174,6 +174,20 @@ class UserController extends Controller
         }
 
     }
+    /*postEditUserImgFrondEnd*/
+    public function postEditUserImgFrondEnd(Request $request){
+        $user = User::findorfail(Auth::user()->id);
+        $response = $user -> update_user($request);
+        $data = $response->getData();
+        if($data->success){
+            session()->put('success',$data->message);
+            return redirect()->back();
+        }else{
+            session()->put('error',$data->message);
+            return redirect()->back();
+        }
+
+    }
    
    
 }

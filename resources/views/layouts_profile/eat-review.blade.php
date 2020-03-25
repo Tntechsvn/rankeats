@@ -38,7 +38,7 @@
 									@for($i = 1;$i <= $data->review_rating->where('review_id','=',$data->id)->first()->rate;$i++)
 									<i class="fas fa-star star-rate"></i>
 									@endfor
-									<span class="bold p-l-20">Review business {{$data->business->name}}</span>
+									<span class="bold p-l-20">Review business <a href="{{$data->business->permalink()}}">{{$data->business->name}}</a></span>
 								</div>
 								
 								<p>{{$data->description}}</p>

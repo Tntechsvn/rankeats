@@ -26,6 +26,27 @@ class Business extends Model
     public function users(){
         return $this->belongsToMany('App\User', 'bookmarks', 'business_id', 'user_id', 'id');
     }
+     /*join locations*/
+    public function scopeJoinLocation($query)
+    {
+        return $query->join('locations', function($join){
+            $join->on('businesses.location_id','=','locations.id');
+        });
+    }
+    /*join businesses_categories*/
+    public function scopeJoinBusinessesCategory($query)
+    {
+        return $query->join('businesses_categories', function($join){
+            $join->on('businesses.id','=','businesses_categories.business_id');
+        });
+    }
+     /*join businesses_categories*/
+    public function scopeJoinCategory($query)
+    {
+        return $query->join('categories', function($join){
+            $join->on('categories.id','=','businesses_categories.cate_id');
+        });
+    }
 
     public function update_business($request,$user){
         if($request -> address){
@@ -115,6 +136,21 @@ class Business extends Model
     public function rate_business(){
         if($this->total_vote > 0){
             $rate = floor(($this->total_rate / $this->total_vote) * 1) / 1;
+        }else{
+            $rate = 0;
+        }
+        return $rate;
+    }
+    public function getUrlAvatarBusinessAttribute(){
+        if($this->url_img != null){
+            return asset('').'storage/'.$this->url_img;
+        }else{
+            return 'images/avatar.jpg';//'images/map_main.png'
+        }
+    }
+     public function getRateBusinessAttribute(){
+       if($this->total_vote > 0){
+            $rate = floor(($this->total_rate / $this->total_vote) * 2) / 2;
         }else{
             $rate = 0;
         }
