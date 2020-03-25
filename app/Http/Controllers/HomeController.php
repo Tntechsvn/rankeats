@@ -49,7 +49,6 @@ class HomeController extends Controller{
             echo $output;
         }
     }
-
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
         $city = $request -> city ? $request -> city : '';
