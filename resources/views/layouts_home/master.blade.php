@@ -154,6 +154,32 @@
 
   });
 </script>
+<script>
+  $(document).ready(function(){
 
+    $('#location_items').keyup(function(){ 
+      var query = $(this).val();
+      if(query != '')
+      {
+        var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('fetchCategory') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+            $('#categoryList').fadeIn();  
+            $('#categoryList').html(data);
+          }
+        });
+      }
+    });
+
+    $(document).on('click', '.category_name', function(e){
+      $('#list_id').remove();
+      $('#location_items').val($(this).text());  
+      $('#categoryList').fadeOut();
+    });
+  });
+</script>
 </body>
 </html> 
