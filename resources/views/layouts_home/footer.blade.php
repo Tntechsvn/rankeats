@@ -3,8 +3,9 @@
     <div class="footer-center">
         @foreach($all_page as $data)
         	<a href="{{route('getPages',['id_page' => $data->slug])}}">{{$data -> page_title}}</a>
-        	&nbsp; | &nbsp;
         @endforeach
+        <a href="{{route('advertise')}}">Advertise</a>
+        <a href="{{route('contact')}}">Contact Us</a>
     </div>
 
     <div class="footer-center copyright"> &#169; 2020 Rank Eats </div>

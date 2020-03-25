@@ -5,7 +5,7 @@
 	<div class="banner">
 		<img src="images/promo.jpg" alt="" class="fade">
 	</div>
-	<div class="container container-main">
+	<div class="container">
 		<div class="col-sm-8 col-xs-8  col-md-8 col-lg-8 inner-content  p-b-20" >
 			<div style="background-color: #fff;" class=" p-l-15 p-r-15">
 				<div class="p-t-30 p-b-30 top-content-res">

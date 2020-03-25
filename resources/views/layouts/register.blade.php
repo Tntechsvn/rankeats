@@ -1,7 +1,7 @@
 @extends('layouts_home.master')
 @section('content')
   	<div id="main">
-		<div class="container container-main">
+		<div class="container">
 			<div class="small-header p-t-30">
 				<h1>Join Us</h1>
 			</div>
@@ -16,25 +16,25 @@
 						<input type="hidden" name="type" value="1"/>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-								<input type="text" class="form-control input-lg" name="name"  placeholder="Username" value="{{old('name')}}">
+								<input type="text" class="form-control input-sm" name="name"  placeholder="Username" value="{{old('name')}}">
 								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon">@</span>
-								<input type="email" class="form-control input-lg" name="email" placeholder="Email" value="{{old('email')}}">
+								<input type="email" class="form-control input-sm" name="email" placeholder="Email" value="{{old('email')}}">
 								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-								<input type="password" class="form-control input-lg" name="password"  placeholder="Password">
+								<input type="password" class="form-control input-sm" name="password"  placeholder="Password">
 								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-								<input type="password" class="form-control input-lg" name="re_password" placeholder="Confirm Password">
+								<input type="password" class="form-control input-sm" name="re_password" placeholder="Confirm Password">
 								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 							</div>
 						</div>
@@ -51,9 +51,61 @@
 					<form id="register_business" class="forms hidden" action="{{route('postSignUp')}}" method="post">
 						@csrf
 						<input type="hidden" name="type" value="2"/>
+						<div class="form-group">
+							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
+								<input class="form-control " type="text" name="" value="1">
+								<button><i class="fas fa-minus"></i></button>
+								<button><i class="fas fa-plus"></i></button>
+							</div>
+							<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+						</div>
+						<div class="location">
+							<h4>Business Location</h4>
+							<div class="form-group">
+								<input type="text" class="form-control " name="state"  placeholder="State" value="">
+								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" name="city" placeholder="City" value="">
+								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
+								
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control " name="address"  placeholder="Address">
+								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control " name="zipcode" placeholder="Zip Code">
+								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
+							</div>
+						</div>
+						<div class="detail">
+							<h4>Business Details</h4>
+							<div class="form-group">
+								<input type="text" class="form-control " name="name"  placeholder="Business Name" value="">
+								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+							</div>
+						</div>
+						<div class="owner-manager">
+							<h4>Owner/Manager Details</h4>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+									<input type="text" class="form-control input-sm" name="firstname"  placeholder="First Name" value="">
+									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-custom btn-lg btn-block">Join</button>
+						</div>
+					</form>
+
+					{{-- <form id="register_business" class="forms hidden" action="{{route('postSignUp')}}" method="post">
+						@csrf
+						<input type="hidden" name="type" value="2"/>
 						<div class="location form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
-								<input type="text" name="search_rs" id="search_rs" class="form-control input-lg"/>
+								<input type="text" name="search_rs" id="search_rs" class="form-control input-sm"/>
 								<input  type="hidden" id="longitude" name="longitude">
 								<input  type="hidden" id="latitude" name="latitude">
 								<input  type="hidden" id="address" name="address">
@@ -66,25 +118,25 @@
 						<div class="infomation">
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-lg" name="name"  placeholder="Username" value="{{old('name')}}">
+									<input type="text" class="form-control input-sm" name="name"  placeholder="Username" value="{{old('name')}}">
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon">@</span>
-									<input type="email" class="form-control input-lg" name="email" placeholder="Email" value="{{old('email')}}">
+									<input type="email" class="form-control input-sm" name="email" placeholder="Email" value="{{old('email')}}">
 									<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control input-lg" name="password"  placeholder="Password">
+									<input type="password" class="form-control input-sm" name="password"  placeholder="Password">
 									<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-									<input type="password" class="form-control input-lg" name="re_password" placeholder="Confirm Password">
+									<input type="password" class="form-control input-sm" name="re_password" placeholder="Confirm Password">
 									<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 								</div>
 							</div>
@@ -96,7 +148,7 @@
 						<div class="form-group">
 							<button type="submit" class="btn btn-custom btn-lg btn-block">Join</button>
 						</div>
-					</form>
+					</form> --}}
 				</div>
 			</div>
 			<div class="small-header"> Have an Account ? <a href="{{route('login')}}"><b>Login</b></a> </div>

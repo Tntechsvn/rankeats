@@ -52,7 +52,13 @@ p {
     object-fit: cover;
     height: 100px;
 }
-
+.content-right-profile {
+	background-color: #fff;
+	padding: 15px;
+}
+.profile-usermenu li a svg {
+	width: 16px !important;
+}
 
 
 
@@ -1493,9 +1499,7 @@ Sidebar
 .review-home-body > p {
 	padding-bottom: 20px;
 }
-.profile-usermenu {
-	margin-top: 15px;
-}
+
 }
 
 /*@media(max-width:768px) {
@@ -1976,6 +1980,21 @@ li.active a {
 .page-link::hover {
 	cursor: pointer;
 }
+.profile-usermenu {
+	margin-left: -15px;
+}
+.footer-center a {
+	border-left: 1px solid #fff;
+	padding: 0 10px;
+}
+.footer-center a:first-child{
+	border-left:  none;
+}
+
+
+
+
+
 /*responsive*/
 
 
@@ -2004,18 +2023,28 @@ li.active a {
 }
 @media(max-width: 768px){
 	.profile-header {
-		margin-bottom: 20px;
+		margin-bottom: 0;
 	}
 	.page-title-small {
 		margin-left: 0;
 		margin-right: 0;
 	}
+	.profile-usermenu {
+    	margin-right: -15px;
+	}
 }
 
 @media(max-width: 767px){
-	.col-md-3 {
-		min-height: auto;
+	.create-advertise > div {
+		margin-bottom: 15px;
 	}
+	.line {
+		margin: 0;
+	}
+	.create-advertise .clear{
+		clear: none;
+	}
+
 	.banner {
 		height: 200px;
 	}

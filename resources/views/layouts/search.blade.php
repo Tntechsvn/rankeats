@@ -5,7 +5,7 @@
 	<div class="banner">
 		<img src="images/promo.jpg" alt="" class="fade">
 	</div>
-	<div class="container container-main">
+	<div class="container">
 
 		<div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
 			@include('layouts.form-search')

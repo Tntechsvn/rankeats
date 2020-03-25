@@ -9,16 +9,16 @@
 		</div>
 	</div>
 
-	<div class="container container-main content-profile">
+	<div class="container content-profile">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-3 col-lg-3 col-sm-5 col-xs-12">
 
 				<div class="profile-usermenu">
 					@include('layouts_profile.menu-sidebar')
 				</div>
 			</div>
 
-			<div class="col-md-9 content-search">
+			<div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 content-search">
 				
 					<div id="infobusiness" class="tab-pane active" style="padding: 20px 0;">
 						<form class="form_addbusiness" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8">

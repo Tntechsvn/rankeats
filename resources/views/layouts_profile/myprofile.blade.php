@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<div class="container container-main">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
 
@@ -22,7 +22,7 @@
 				</div> --}}
 			</div>
 
-			<div class="col-md-9">
+			<div class="col-md-9 content-right-profile">
 
 				<div class="page-title-small">
 					<h1>Recent Reviews by {{Auth::user()->name}}</h1>
