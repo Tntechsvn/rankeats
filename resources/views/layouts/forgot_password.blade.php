@@ -1,7 +1,7 @@
 @extends('layouts_home.master')
 @section('content')
 <div id="main">
-  <div class="container container-main">
+  <div class="container ">
     <div class="small-header">
       <h1>Recover Your Login</h1>
     </div>

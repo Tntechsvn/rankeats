@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<div class="container container-main content-profile">
+	<div class="container  content-profile">
 		<div class="row">
 			<div class="col-md-3">
 

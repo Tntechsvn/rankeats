@@ -9,16 +9,16 @@
 		</div>
 	</div>
 
-	<div class="container container-main content-profile">
+	<div class="container  content-profile">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-3 col-lg-3 col-sm-5 col-xs-12">
 
 				<div class="profile-usermenu">
 					@include('layouts_profile.menu-sidebar')
 				</div>
 			</div>
 
-			<div class="col-md-9 content-search">
+			<div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 content-search">
 				<h3 class="title">Create Advertisement</h3>
 				<div class="clear"></div>
 				<div class="create-advertise">
@@ -34,14 +34,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',1)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>
@@ -66,14 +66,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',2)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>
@@ -99,14 +99,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',3)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>
@@ -130,14 +130,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',4)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>
@@ -163,14 +163,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',5)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>
@@ -194,14 +194,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',6)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>
@@ -227,14 +227,14 @@
 										@php
 										$pay_to_home = $plan_details->where('pd_plan_id',7)->get();
 										@endphp
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6">
 											<select name="plan_detail_id" class="form-control planvalue">
 												@foreach($pay_to_home as $val)
 												<option value="{{$val ->id}}">{{$val ->pd_days}} days - ${{$val ->pd_cost}}</option>
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 col-sm-6 col-xs-6 col-xs-6">
 											<a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
 										</div>
 										<div class="clear"></div>

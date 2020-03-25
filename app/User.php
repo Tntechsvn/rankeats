@@ -60,6 +60,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function business(){
         return $this -> hasMany('App\Business', 'user_id', 'id');
     }
+    public function reviews(){
+        return $this -> hasMany('App\Review', 'user_id', 'id');
+    }
+    
     public function update_user($request){
         if($request -> address){
             if($this -> address != null){
@@ -141,6 +145,13 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }else{
             return false;
+        }
+    }
+    public function getUrlAvatarUserAttribute(){
+        if($this->url_avatar != null){
+            return asset('').'storage/'.$this->url_avatar;
+        }else{
+            return 'images/avatar.jpg';
         }
     }
     /*end Knight*/

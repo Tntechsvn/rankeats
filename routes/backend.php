@@ -35,6 +35,11 @@ Route::get('page/{id_page}', [
 	'as' => 'getPages',
 	'uses' => 'HomeController@getPages'
 ]);
+
+Route::post('/fetchCategory', [
+	'as' => 'fetchCategory',
+	'uses' => 'HomeController@fetchCategory'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',
@@ -43,6 +48,10 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-user-pass', [
 		'as' => 'postEditUserPassFrondEnd',
 		'uses' => 'UserController@postEditUserPassFrondEnd'
+	]);
+	Route::post('/edit-user-image', [
+		'as' => 'postEditUserImgFrondEnd',
+		'uses' => 'UserController@postEditUserImgFrondEnd'
 	]);
 	Route::post('/edit-business/{id_business}', [
 		'as' => 'postEditBusiness',
