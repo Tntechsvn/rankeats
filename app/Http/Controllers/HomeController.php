@@ -39,7 +39,7 @@ class HomeController extends Controller{
             if(count($data)>0){
                 foreach($data as $row)
                 {
-                    $output .= '<li class="category_name" <a>'.$row->category_name.'</a></li>';             
+                    $output .= '<li class="category_name form-search-val">'.$row->category_name.'</li>';             
                 }
             }else{
                 $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   

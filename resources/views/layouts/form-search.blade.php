@@ -2,13 +2,13 @@
 	<div class="">
 		<div class="input-group syl-cus">
 			<div class="input_dish">
-				<input type="text" class="form-control input-lg location_items" id="location_items" name="keyword" placeholder="Steak, Pizza, Salmon…." value="@if(isset($keyword)){{$keyword}}@endif">
+				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_items" name="keyword" placeholder="Steak, Pizza, Salmon…." value="@if(isset($keyword)){{$keyword}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
 				<div id="categoryList"></div>
 			</div>
 
 			<div class="input_state">
-				<input type="text" class="form-control input-lg location_search" id="location_search" placeholder="@if(isset($city) && $city !=''){{$city.','.$state}}@else{{'City or State'}}@endif">
+				<input autocomplete="off" type="text" class="form-control input-lg location_search" id="location_search" placeholder="@if(isset($city) && $city !=''){{$city.','.$state}}@else{{'City or State'}}@endif">
 				<input  type="hidden" id="city_search" name="city" value="@if(isset($city)){{$city}}@endif">
 				<input  type="hidden" id="state_search" name="state" value="@if(isset($state)){{$state}}@endif">
 			</div>

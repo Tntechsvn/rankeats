@@ -1990,7 +1990,16 @@ li.active a {
 .footer-center a:first-child{
 	border-left:  none;
 }
-
+#categoryList .dropdown-menu {
+	width: 100%;
+}
+.form-search-val {
+	padding: 5px 15px;
+}
+.form-search-val:hover {
+	background-color: #f6f6f6;
+	cursor: pointer;
+}
 
 
 

@@ -90,9 +90,20 @@
 							<h4>Owner/Manager Details</h4>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control input-sm" name="firstname"  placeholder="First Name" value="">
+									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="">
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="">
+									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								
+								<input id="owner" type="checkbox" class="" name="owner"  placeholder="Last Name" value="">
+								<label for="owner">Owner</label>
 							</div>
 						</div>
 						<div class="form-group">
