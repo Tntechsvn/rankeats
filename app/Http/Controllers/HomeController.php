@@ -73,7 +73,9 @@ class HomeController extends Controller{
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state'));
+        $category_search = Category::where('category_name','=',$keyword)->first();
+
+        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state','category_search'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  
