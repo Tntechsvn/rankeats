@@ -53,6 +53,22 @@
 			'as' => 'eat_reviews',
 			'uses' => 'HomeController@eat_reviews'
 		]);
+		Route::get('/eat-rank', [
+			'as' => 'eat_rank',
+			'uses' => 'HomeController@eat_rank'
+		]);
+		Route::get('/business-rank', [
+			'as' => 'business_rank',
+			'uses' => 'HomeController@business_rank'
+		]);
+		Route::get('/business-review', [
+			'as' => 'business_review',
+			'uses' => 'HomeController@business_review'
+		]);
+		Route::get('/my-businesses', [
+			'as' => 'my_businesses',
+			'uses' => 'HomeController@my_businesses'
+		]);
 	});
 	
 	Route::get('/sign-up', [
