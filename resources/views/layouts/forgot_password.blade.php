@@ -26,7 +26,7 @@
             <button type="submit" id="submitRecover"class="btn btn-custom btn-lg btn-block">Recover</button>
           </div>
           <div class="form-group last-row">
-            <a href="{{route('login')}}" class="pull-right">Back to login</a> </div>
+            <a href="{{route('sign_in')}}" class="pull-right">Back to login</a> </div>
           </form>
         </div>
       </div>
