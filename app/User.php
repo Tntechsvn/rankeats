@@ -86,6 +86,12 @@ class User extends Authenticatable implements MustVerifyEmail
         }else{
             $url_avatar = $this->url_avatar;
         }
+        if($request -> firstname){
+            $this -> first_name = $request -> firstname;
+        }
+        if($request -> lastname){
+            $this -> last_name = $request -> lastname;
+        }
         if($request -> name){
             $this -> name = $request -> name;
         }
@@ -96,9 +102,11 @@ class User extends Authenticatable implements MustVerifyEmail
         if($request -> gender){
             $this -> gender = $request -> gender;
         }
-        if($request -> user_title){
-            $this -> user_title = $request -> user_title;
-        }       
+        if($request -> check == 'other'){
+            $this -> user_title = $request -> other_choose;
+        }else{
+            $this -> user_title = $request -> check;
+        }
         
         if($request -> password != null){
             $this -> password = bcrypt($request ->password);
@@ -118,6 +126,18 @@ class User extends Authenticatable implements MustVerifyEmail
         }
       
         if($this -> save()) {
+            if(isset($request->type) && $request->type == 2){
+                $Location = new Location;
+                $address_res = $Location->update_location($request)->id;
+
+                $create_business = new Business;
+                $create_business -> name = $request -> name_business;
+                $create_business -> user_id = $this -> id;
+                $create_business -> address = $request -> address;
+                $create_business -> location_id = $address_res;
+                $create_business -> phone = $request -> phone;
+                $create_business -> save();
+            }
             /*sửa thành công*/
             $response =  response()->json([
                         'success' => true,

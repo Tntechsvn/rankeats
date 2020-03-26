@@ -14,13 +14,21 @@ use Auth;
 use App\Bookmark;
 use App\Vote;
 use App\Page;
+use App\State;
+use App\City;
+use App\Country;
+
 class HomeController extends Controller{
 
     public function __construct(){
+
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+
         $this->user = Auth::user();
         $category = Category::where('status','=',1)->get();
         $all_page = Page::all();
-        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user]);
+        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user,'state'=>$state]);
     }
 
     public function home(){
@@ -49,7 +57,6 @@ class HomeController extends Controller{
             echo $output;
         }
     }
-
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
         $city = $request -> city ? $request -> city : '';
@@ -74,7 +81,9 @@ class HomeController extends Controller{
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state'));
+        $category_search = Category::where('category_name','=',$keyword)->first();
+
+        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state','category_search'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  
@@ -111,9 +120,30 @@ class HomeController extends Controller{
     public function mysetting(){
         return view('layouts_profile.setting');
     }
+    /*ajaxCity*/
+    public function ajaxCity(Request $request){
+         if($request->get('name_state'))
+        {
+            $name_state = $request->get('name_state');
+            $state = State::where('name','=',$name_state)->first();
+            $data = $state->cities()->get();
 
+
+            $output = '<option value="" disabled selected >Select City</option>';
+            if(count($data)>0){
+                foreach($data as $row)
+                {
+                    $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
+                }
+            }
+            echo $output;
+        }
+
+    }
     public function sign_up(){
-        return view('layouts.register');
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+        return view('layouts.register',compact('state'));
     }
     public function sign_in(){
 
