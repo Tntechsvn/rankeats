@@ -93,6 +93,8 @@ class UserController extends Controller
 			're_password' => 'same:password',
 			'address' => 'required',
 			'gender' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
 			
 		]);
 		/*update user*/
@@ -112,13 +114,26 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'email|unique:users,email',
             'password' => 'required|min:6|max:32',
-            're_password' => 'same:password',/*
-            'address' => 'required',*/
-            'g-recaptcha-response' => new Captcha(),
+            're_password' => 'same:password',
+            'firstname' => 'required',
+            'lastname' =>'required',
+            //'g-recaptcha-response' => new Captcha(),
         ]);
-        if($request -> type == 2){
+
+         if($request -> type == 1){
              $this-> Validate($request,[
+                 'g-recaptcha-response' => new Captcha(),
+            ]);
+
+         }
+        if($request -> type == 2){
+            $this-> Validate($request,[
                 'address' => 'required',
+                'state' => 'required',
+                'zipcode' => 'required',
+                'name_business' =>'required',                
+                'phone' => 'required',
+
             ]);
 
          }
@@ -142,9 +157,12 @@ class UserController extends Controller
             'email' => 'email|unique:users,email,'.$edit_info_user->id,
             /*'password' => 'nullable|min:6|max:32',
             're_password' => 'same:password',*/
-            'search' => 'required',
-           /* 'gender' => 'required',
-*/            
+           /* 'gender' => 'required',*/
+           'firstname' => 'required',
+           'lastname' => 'required',
+           'address' => 'required',
+           'state' => 'required',
+           'zipcode' => 'required',
         ]);
         /*update user*/
         $response = $edit_info_user->update_user($request);

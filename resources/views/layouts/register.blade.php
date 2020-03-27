@@ -16,6 +16,18 @@
 						<input type="hidden" name="type" value="1"/>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+								<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+								<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 								<input type="text" class="form-control input-lg" name="name"  placeholder="Username" value="{{old('name')}}">
 								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 							</div>
@@ -57,52 +69,79 @@
 								<button class="button-number-location button-number-location-plus" ><i class="fas fa-plus"></i></button>
 								<button class="button-number-location m-r-10 button-number-location-minus" ><i class="fas fa-minus"></i></button>
 							</div>
-							<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+							<span class="bg-danger color-palette"></span>
 						</div>
 						<div class="location">
 							<h4>Business Location</h4>
 							<div class="form-group">
-								<input type="text" class="form-control " name="state"  placeholder="State" value="">
-								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								<select class="form-control select2" name="state" id="name_state">
+										<option value=""disabled selected="selected">Select State</option>
+										@foreach($state as $data)
+										<option value="{{$data->name}}">{{$data->name}}</option>
+										@endforeach
+								</select>
+								<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="city" placeholder="City" value="">
-								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
+								<select class="form-control select2" name="city" id="id_city" style="width: 100%;">
+									<option  value="" disabled selected >Select City</option>
+								</select>
+								<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 								
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control " name="address"  placeholder="Address">
-								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
+								<input type="text" class="form-control " name="address"  placeholder="Address" value="{{old('address')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control " name="zipcode" placeholder="Zip Code">
-								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
+								<input type="text" class="form-control " name="zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
 							</div>
 						</div>
 						<div class="detail">
 							<h4>Business Details</h4>
 							<div class="form-group">
-								<input type="text" class="form-control " name="name"  placeholder="Business Name" value="">
-								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								<input type="text" class="form-control " name="name_business"  placeholder="Business Name" value="{{old('name_business')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('name_business')}}</span>
 							</div>
 						</div>
 						<div class="owner-manager">
 							<h4>Owner/Manager Details</h4>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}">
+									<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}">
+									<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
 								</div>
 							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" name="name" placeholder="Username" value="{{old('name')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="form-control" name="email" placeholder="email" value="{{old('email')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
+								
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control " name="password"  placeholder="password" value="{{old('password')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control " name="re_password" placeholder="re password" value="">
+								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
+							</div>
+
 							<div class="form-group check-role">
 								<div class="">
-									<input id="owner" type="radio" class="" name="check"  value="owner">
+									<input id="owner" type="radio" class="" name="check"  value="owner" checked="checked">
 									<label for="owner">Owner</label>
 								</div>
 								<div class="">
@@ -117,14 +156,14 @@
 							</div>
 							<div class="form-group other-choose hidden">
 								<div class="">
-									<input type="text" class="form-control" name="other-choose" placeholder="Enter Other" value="">
+									<input type="text" class="form-control" name="other_choose" placeholder="Enter Other" value="{{old('other_choose')}}">
 								</div>
 							</div>
 							<div class="form-group">
 								<p style="clear: both;">Please enter the business number that can be verified online and call to confinm</p>
 								<div class="input-group"> <span class="input-group-addon"><i class="fas fa-phone-alt"></i></span>
-									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="{{old('phone')}}">
+									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
 								</div>
 								
 							</div>
@@ -191,6 +230,26 @@
 
 @endsection
 @section('script')
+<script type="text/javascript">
+	$("#name_state").change(function(){
+		var name_state = $(this).val();
+
+		var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('ajaxCity') }}",
+          method:"POST",
+          data:{name_state:name_state, _token:_token},
+          success:function(data){ 
+          	console.log(data)
+            $('#id_city').html(data);
+          }
+        });
+
+		/*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
+			$("#id_city").html('<option value="0"  selected >Select City</option>'+data);
+		});*/				
+	});
+</script>
 	<script type="text/javascript">
 		
 		$(document).on('input','input[name=type]',function(){
@@ -238,7 +297,7 @@
 
 	</script>
 
-	<script type="text/javascript">
+	{{--<script type="text/javascript">
 	  google.maps.event.addDomListener(window, 'load', initialize);
 	  function initialize(){
 	    var search = document.getElementById('search_rs');
@@ -271,5 +330,5 @@
 	      document.getElementById('country').value = country;     
 	    });
 	  };
-	</script>
+	</script>--}}
 @endsection
