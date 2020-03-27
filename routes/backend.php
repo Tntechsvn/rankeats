@@ -40,6 +40,10 @@ Route::post('/fetchCategory', [
 	'as' => 'fetchCategory',
 	'uses' => 'HomeController@fetchCategory'
 ]);
+Route::post('/ajaxCity', [
+	'as' => 'ajaxCity',
+	'uses' => 'HomeController@ajaxCity'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',

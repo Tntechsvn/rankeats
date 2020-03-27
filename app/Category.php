@@ -7,6 +7,7 @@ use App\Http\Controllers\ShareController;
 
 class Category extends Model
 {
+  /*Knight*/
     public function business_category(){
       return $this -> belongsToMany('App\Business','businesses_categories','cate_id','business_id');
     }
@@ -25,4 +26,12 @@ class Category extends Model
         $this->save();
         return $this;
     }
+    public function getUrlImgCategoryAttribute(){
+        if($this->url_img != null){
+            return asset('').'storage/'.$this->url_img;
+        }else{
+            return 'images/avatar.jpg';
+        }
+    }
+    /*end Knight*/
 }

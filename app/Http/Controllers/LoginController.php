@@ -56,6 +56,7 @@ class LoginController extends Controller
 		}
 	}
 	public function postLogin(Request $request){
+
 		$this-> Validate($request,[
 			'email' => 'required',
 			'password' => 'required',
@@ -66,7 +67,6 @@ class LoginController extends Controller
 			'password.required'=>'The password field is required',
 			
 		]);
-
 		if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
 			$user = Auth::user();
 
@@ -75,7 +75,7 @@ class LoginController extends Controller
 		}
 		if(isset($user)){
 
-			return view('layouts.index');
+			return redirect()->route('index');
 
 		}else{
 			return view('layouts.login');

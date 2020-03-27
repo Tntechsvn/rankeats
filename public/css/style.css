@@ -2000,8 +2000,27 @@ li.active a {
 	background-color: #f6f6f6;
 	cursor: pointer;
 }
-
-
+.number-location {
+	width: 70% !important;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.button-number-location {
+	float: right;
+    padding: 5px 9px;
+}
+.forms h4{
+	margin-bottom: 10px;
+}
+.check-role > div {
+	float: left;
+    padding-right: 30px;
+}
 
 
 /*responsive*/
