@@ -1,18 +1,18 @@
 <ul class="nav">
-	<li>
+	{{--<li>
 		<a href="javascript:;"><i class="fa fa-comments"></i>Bussiness Reviews (0) </a>
-	</li>
+	</li>--}}
 	<li class="{{ Route::currentRouteNamed('eat_reviews') ? 'active' : '' }}">
-		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews (0) </a>
+		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews ({{Auth::user()->reviews->count()}}) </a>
 	</li>
-	<li>
+	{{--<li>
 		<a href="javascript:;"><i class="fa fa-comments"></i>Business Ranks (0) </a>
 	</li>
 	<li>
 		<a href="javascript:;"><i class="fa fa-comments"></i>EAT Ranks (0) </a>
-	</li>
+	</li>--}}
 	<li class="{{ Route::currentRouteNamed('bookmark') ? 'active' : '' }}">
-		<a href="{{route('bookmark')}}"><i class="fa fa-bookmark"></i>Bookmarks (0)</a>
+		<a href="{{route('bookmark')}}"><i class="fa fa-bookmark"></i>Bookmarks ({{Auth::user()->bookmark->count()}})</a>
 	</li>
 	@if(Auth::user()->check_role_business())
 		@if(!Auth::user()->check_business() && Auth::user()->check_role_business())

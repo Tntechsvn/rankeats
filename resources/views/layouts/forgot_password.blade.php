@@ -1,7 +1,7 @@
 @extends('layouts_home.master')
 @section('content')
 <div id="main">
-  <div class="container container-main">
+  <div class="container ">
     <div class="small-header">
       <h1>Recover Your Login</h1>
     </div>
@@ -26,7 +26,7 @@
             <button type="submit" id="submitRecover"class="btn btn-custom btn-lg btn-block">Recover</button>
           </div>
           <div class="form-group last-row">
-            <a href="{{route('login')}}" class="pull-right">Back to login</a> </div>
+            <a href="{{route('sign_in')}}" class="pull-right">Back to login</a> </div>
           </form>
         </div>
       </div>

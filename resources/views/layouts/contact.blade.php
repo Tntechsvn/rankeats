@@ -5,9 +5,9 @@
 <div id="main">
  
 
-	<div class="container container-main">
+	<div class="container ">
 		<div class="small-header">
-			<h1>Contact Us</h1>
+			<h1 class="p-t-30">Contact Us</h1>
 		</div>
 		<div class="row login">
 			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 well">

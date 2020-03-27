@@ -3,7 +3,7 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-<h1>Edit Eats</h1>
+<h1>Edit User</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
 				<div class="card ">
 					<div class="card-header">
 						<a class="btn btn-primary" href="@if($user->role_id == 2){{route('getListReviewers')}}@elseif($user->role_id == 3){{route('getListBusinessOwners')}}@endif">back</a>
-						<h3 class="card-title">Edit Eats</h3>               
+						<h3 class="card-title">Edit user</h3>               
 
 					</div>
 					<!-- form start -->
@@ -29,7 +29,7 @@
 									<div  class="dt-imgs">										
 										<div class="dt-close">
 											<div id="previews">@if($user->url_avatar !=null)<div class="gallerythumb">
-												<img class="thumb" src="{{'http://localhost/rankeats/public/storage/'.$user->url_avatar}}" class="pic" >
+												<img class="thumb" src="{{asset('').'storage/'.$user->url_avatar}}" class="pic" >
 												<div class="delete tsm"></div>
 												<input type="hidden" name="id_img[]" value="{{$user->url_avatar}}">
 											</div>@endif</div>
@@ -47,6 +47,18 @@
 								<label for="exampleInputEmail1">Username (Cannot be changed)</label>
 								<input type="text" class="form-control" name="name" placeholder="Enter eat" value="{{$user->name}}" disabled="disabled">
 								<span class="errors">{{$errors -> first('name')}}</span>
+							</div>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{$user->first_name}}">
+									<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{$user->last_name}}">
+									<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
+								</div>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">Gender</label>

@@ -2,11 +2,7 @@
 @section('content')
 
 <div id="main">
-
- 
- 
-
-	<div class="container container-main">
+	<div class="container ">
 		<div class="col-md-8">
 			<div class="single recent">
 				<h1 class="side-title">Privacy Policy</h1>

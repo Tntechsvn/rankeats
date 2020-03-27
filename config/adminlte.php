@@ -253,6 +253,20 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Pages',
+            'icon'    => 'fas fa-fw fa fa-file',
+            'submenu' => [
+                [
+                    'text' => 'List Pages',
+                    'route'  => 'getListPage',
+                ],
+                [
+                    'text' => 'Create Pages',
+                    'route'  => 'getCreatePage',
+                ],
+            ],
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

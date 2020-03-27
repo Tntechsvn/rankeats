@@ -15,8 +15,9 @@ class UpdatePagesTable extends Migration
     {
          if (Schema::hasTable('pages')) {
             Schema::table('pages', function (Blueprint $table) {
-                $table->tinyInteger('page_title')->unsigned()->after('page_content');
-                $table->tinyInteger('slug')->unsigned()->after('page_title');
+                $table->text('page_title')->after('page_content');
+                $table->tinyInteger('ordinarily')->unsigned()->after('page_title');
+                $table->text('slug')->after('ordinarily');
             });
         }
     }
@@ -30,6 +31,7 @@ class UpdatePagesTable extends Migration
     {
          Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('page_title');
+            $table->dropColumn('ordinarily');
             $table->dropColumn('slug');
         });
     }

@@ -5,7 +5,7 @@
 	<div class="banner">
 		<img src="images/promo.jpg" alt="" class="fade">
 	</div>
-	<div class="container container-main">
+	<div class="container">
 
 		<div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
 			@include('layouts.form-search')
@@ -13,10 +13,9 @@
 		<div class="col-lg-12 inform-results">
 			<h1>You are searching for with the keyword of "@if(isset($keyword)){{$keyword}}@else{{'All Eats'}}@endif"</h1>
 			<div class="img">
-				<img src="@if($list_cate->first()->url_img != null){{asset('').'storage/'.$list_cate->first()->url_img}}@else{{'images/map_main.png'}}@endif">
+				<img src="@if($category_search){{$category_search -> UrlImgCategory}}@endif">
 			</div>
 		</div>
-
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			<div class="results-sponsored">
 				<h3 class="title">Sponsored Results</h3>
@@ -24,71 +23,18 @@
 				@foreach($data_business_sponsored as $data)
 					<div class="food-main">
 						<div class="imbx">
-							<a href="{{$data['permalink']}}"><img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;"></a>
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
-								<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
+								<h4><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<ul class="star-rate">
 									@php
-										$val =  (int) substr(strrchr($data['rate'],'.'),1);
-										for($x=1;$x<=$data['rate'];$x++) {
+										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
+										for($x=1;$x<=$data->RateBusiness;$x++) {
 											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
 										}
-										if (strpos($data['rate'],'.') && $val != 0) {
-											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
-											$x++;
-										}
-										while ($x<=5) {
-										echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
-										$x++;
-									}
-									@endphp
-								</ul>
-
-								<div class="pr-dtail">
-									<ul class="p-t-15">
-										<li>$$$.</li>
-										@foreach($data['category_business'] as $cate)
-										<li>{{$cate}}</li>
-										@endforeach
-									</ul>
-								</div>
-							</div>
-							<div class="pr-dtlr">
-								<p>{{$data['business_phone']}}</p>
-								<p>{{$data['total_vote']}} <i>reviews</i></p>
-							</div>
-							<p>{{$data['location']}}</p>
-
-							<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
-							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data['id']}}" >Vote</a>
-				
-
-
-						</div>					
-					</div>
-				@endforeach
-			</div>
-			<h3 class="title">All Results</h3>
-			<div class="clear"></div>
-			<div class="results-all">
-				
-				@foreach($data_business as $data)
-					<div class="food-main">
-						<div class="imbx">
-							<a href="{{$data['permalink']}}"><img class="" src="@if($data['url_img']){{asset('').'storage/'.$data['url_img']}}@else{{'images/map_main.png'}}@endif" alt="" style="width: 100%;"></a>
-						</div>					
-						<div class="imbx-detail">
-							<div class="pr-dtl">
-								<h4><a href="{{$data['permalink']}}">{{$data['business_name']}}</a></h4>
-								<ul class="star-rate">
-									@php
-										$val =  (int) substr(strrchr($data['rate'],'.'),1);
-										for($x=1;$x<=$data['rate'];$x++) {
-											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
-										}
-										if (strpos($data['rate'],'.') && $val != 0) {
+										if (strpos($data->RateBusiness,'.') && $val != 0) {
 											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
 											$x++;
 										}
@@ -101,34 +47,83 @@
 								<div class="pr-dtail">
 									<ul class="p-t-15">
 										<li>$$$.</li>
-										@foreach($data['category_business'] as $cate)
-										<li>{{$cate}}</li>
+										@foreach($data->business_category as $val)
+										<li>{{$val->category_name}}</li>
 										@endforeach
 									</ul>
 								</div>
 							</div>
 							<div class="pr-dtlr">
-								<p>{{$data['business_phone']}}</p>
-								<p>{{$data['total_vote']}} <i>reviews</i></p>
+								<p>{{$data->business_phone}}</p>
+								<p>{{$data->total_vote}} <i>reviews</i></p>
 							</div>
-							<p>{{$data['location']}}</p>
-							<p>{{$data['description']}}<a href="javascript:;" class="m-l-10">read more</a></p>
-							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data['id']}}" >Vote</a>
+							<p>{{$data->location->address}}</p>
+							<p>{{$data->description}}<a href="javascript:;" class="m-l-10">read more</a></p>
+							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
 						</div>					
 					</div>
-
 				@endforeach
-				{!!$list_cate -> appends(request()->except('page')) -> links()!!}
+			</div>
+			<h3 class="title">All Results</h3>
+			<div class="clear"></div>
+			<div class="results-all">
+				
+				@foreach($data_business as $data)
+					<div class="food-main">
+						<div class="imbx">
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
+						</div>					
+						<div class="imbx-detail">
+							<div class="pr-dtl">
+								<h4><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<ul class="star-rate">
+									@php
+										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
+										for($x=1;$x<=$data->RateBusiness;$x++) {
+											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+										}
+										if (strpos($data->RateBusiness,'.') && $val != 0) {
+											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+											$x++;
+										}
+										while ($x<=5) {
+											echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+											$x++;
+										}
+									@endphp
+								</ul>
+								<div class="pr-dtail">
+									<ul class="p-t-15">
+										<li>$$$.</li>
+										@foreach($data->business_category as $val)
+										<li>{{$val->category_name}}</li>
+										@endforeach
+									</ul>
+								</div>
+							</div>
+							<div class="pr-dtlr">
+								<p>{{$data->business_phone}}</p>
+								<p>{{$data->total_vote}} <i>reviews</i></p>
+							</div>
+							<p>{{$data->location->address}}</p>
+							<p>{{$data->description}}<a href="javascript:;" class="m-l-10">read more</a></p>
+							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
+						</div>					
+					</div>
+				@endforeach
+				{!!$data_business -> appends(request()->except('page')) -> links()!!}
 			</div>
 		</div>
 		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30">
 			<div class="map_img">
 				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3709.807695902279!2d105.83079121539541!3d21.59342827363624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1584071260154!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 			</div>
-			<div><h4>Is the EAT for a business you’re looking for missing?</h4>
+			<div>
+				<h4>Is the EAT for a business you’re looking for missing?</h4>
 				<div class="underMap" style="margin-top:10px;">
-					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a></div>
+					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a>
 				</div>
+			</div>
 		</div>
 	<!--container--> 
 	</div>
@@ -146,7 +141,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
-							<img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
+							<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
 							<p class="bold">{{Auth::user()->name}}</p>
 						</div>
 					</div>

@@ -30,6 +30,20 @@ Route::get('/logout-user', [
 	'as' => 'getLogout',
 	'uses' => 'LoginController@getLogout'
 ]);
+
+Route::get('page/{id_page}', [
+	'as' => 'getPages',
+	'uses' => 'HomeController@getPages'
+]);
+
+Route::post('/fetchCategory', [
+	'as' => 'fetchCategory',
+	'uses' => 'HomeController@fetchCategory'
+]);
+Route::post('/ajaxCity', [
+	'as' => 'ajaxCity',
+	'uses' => 'HomeController@ajaxCity'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',
@@ -38,6 +52,10 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-user-pass', [
 		'as' => 'postEditUserPassFrondEnd',
 		'uses' => 'UserController@postEditUserPassFrondEnd'
+	]);
+	Route::post('/edit-user-image', [
+		'as' => 'postEditUserImgFrondEnd',
+		'uses' => 'UserController@postEditUserImgFrondEnd'
 	]);
 	Route::post('/edit-business/{id_business}', [
 		'as' => 'postEditBusiness',
@@ -165,6 +183,35 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			Route::post('/plans-detail', [
 				'as' => 'postPaymentPlan',
 				'uses' => 'PlanController@postPaymentPlan'
+			]);
+		});
+		/*cms*/
+		Route::prefix("pages")->group(function(){
+			Route::get('/', [
+				'as' => 'getListPage',
+				'uses' => 'PageController@getListPage'
+			]);
+			/*create page*/
+			Route::get('/create-page', [
+				'as' => 'getCreatePage',
+				'uses' => 'PageController@getCreatePage'
+			]);
+			Route::post('/create-page', [
+				'as' => 'postCreatePage',
+				'uses' => 'PageController@postCreatePage'
+			]);
+			/*edit page*/
+			Route::get('/edit-page/{id_page}', [
+				'as' => 'getEditPage',
+				'uses' => 'PageController@getEditPage'
+			]);
+			Route::post('/edit-page/{id_page}', [
+				'as' => 'postEditPage',
+				'uses' => 'PageController@postEditPage'
+			]);
+			Route::post('/delete-page', [
+				'as' => 'deletePages',
+				'uses' => 'PageController@deletePages'
 			]);
 		});
 

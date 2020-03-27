@@ -13,47 +13,77 @@ use View;
 use Auth;
 use App\Bookmark;
 use App\Vote;
+use App\Page;
+use App\State;
+use App\City;
+use App\Country;
+
 class HomeController extends Controller{
+
     public function __construct(){
+
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+
+        $this->user = Auth::user();
         $category = Category::where('status','=',1)->get();
-        view()->share(['category'=>$category]);
+        $all_page = Page::all();
+        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user,'state'=>$state]);
     }
 
     public function home(){
-        $category = Category::where('status','=',1)->take(16)->get();
+        $category = Category::where('status','=',1)->take(9)->get();
         return view('layouts.index',compact('category'));
     }
-
+    public function fetchCategory(Request $request){
+        if($request->get('query'))
+        {
+            $query = $request->get('query');
+            $data = Category::select('categories.*')
+            ->where('category_name', 'LIKE', "%{$query}%")
+            ->where('status','=',1)
+            ->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            if(count($data)>0){
+                foreach($data as $row)
+                {
+                    $output .= '<li class="category_name form-search-val">'.$row->category_name.'</li>';             
+                }
+            }else{
+                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
+            }
+            
+            $output .= '</ul>';
+            echo $output;
+        }
+    }
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
         $city = $request -> city ? $request -> city : '';
         $state = $request -> state ? $request -> state : '';
 
 
-        $list_cate_sponsored = Category::select('categories.*','businesses_categories.business_id','businesses.id','businesses.location_id','locations.city','locations.state')->join('businesses_categories','cate_id','=','categories.id')
-        ->join('businesses','businesses_categories.business_id','=','businesses.id')
-        ->join('locations','businesses.location_id','=','locations.id')
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
+        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
         ->where('status','=',1)
-        ->groupBy('businesses_categories.business_id')
-        ->take(2)->pluck('business_id');
-        $data_business_sponsored = $this -> getbusinessCate($list_cate_sponsored);
-        
+        ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
-        $list_cate = Category::select('categories.*','businesses_categories.business_id','businesses.id','businesses.location_id','locations.city','locations.state')->join('businesses_categories','cate_id','=','categories.id')
-        ->join('businesses','businesses_categories.business_id','=','businesses.id')
-        ->join('locations','businesses.location_id','=','locations.id')
+
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
+        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
         })
         ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
-        $arr_business_id = $list_cate ->pluck('business_id');
-        $data_business = $this -> getbusinessCate($arr_business_id);
-        return view('layouts.search',compact('data_business','list_cate','data_business_sponsored','keyword','city','state'));
+
+        $category_search = Category::where('category_name','=',$keyword)->first();
+
+        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state','category_search'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  
@@ -90,9 +120,30 @@ class HomeController extends Controller{
     public function mysetting(){
         return view('layouts_profile.setting');
     }
+    /*ajaxCity*/
+    public function ajaxCity(Request $request){
+         if($request->get('name_state'))
+        {
+            $name_state = $request->get('name_state');
+            $state = State::where('name','=',$name_state)->first();
+            $data = $state->cities()->get();
 
+
+            $output = '<option value="" disabled selected >Select City</option>';
+            if(count($data)>0){
+                foreach($data as $row)
+                {
+                    $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
+                }
+            }
+            echo $output;
+        }
+
+    }
     public function sign_up(){
-        return view('layouts.register');
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+        return view('layouts.register',compact('state'));
     }
     public function sign_in(){
 
@@ -132,7 +183,12 @@ class HomeController extends Controller{
 public function privacy_policy(){
     return view('layouts.privacy-policy');
 }
-
+/*getPages*/
+public function getPages(Request $request){
+    $info_page = Page::findBySlugOrFail($request -> id_page);
+    return view('layouts.pages',compact('info_page'));
+}
+/*end getPages*/
 public function contact(){
     return view('layouts.contact');
 }
@@ -149,9 +205,7 @@ public function business_management(){
     return view('layouts_profile.business-management');
 }
 public function bookmark(){
-    $arr_business_id = Auth::user()->bookmark->pluck('business_id');
-    $data_business = $this -> getbusinessCate($arr_business_id);
-    // dd($data_business);
+    $data_business = Auth::user()->businesses()->paginate(Myconst::PAGINATE_ADMIN);
     return view('layouts_profile.bookmark',compact('data_business'));
 }
 /*create_advertise*/

@@ -3,7 +3,7 @@
 <div id="main">
 
 
-  <div class="container container-main">
+  <div class="container ">
 
     <div class="small-header">
       <h1>Submit Your Business</h1>
