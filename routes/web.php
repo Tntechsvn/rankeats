@@ -132,5 +132,9 @@
 		'as' => 'vote_ajax',
 		'uses' => 'HomeController@vote_ajax'
 	]);
+	Route::post('/rank-join', [
+		'as' => 'rank-join',
+		'uses' => 'UserController@postSignUp'
+	]);
 	
 // end hungpro

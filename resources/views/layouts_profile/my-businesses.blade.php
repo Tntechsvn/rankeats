@@ -54,29 +54,50 @@
 							</div>
 							<div class="form-group">
 								<p>Address</p>
-								<div class="input-group">
+								<div class="input-group" style="width: 100%">
 									<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								</div>
+							</div>
+							<div class="" style="display: flex;justify-content: space-between;">
+								<div class="form-group" style="width: 30%">
+								
+									<div class="input-group" style="width: 100%">
+										<p>state</p>
+										<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
+										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									</div>
+								</div>
+								<div class="form-group" style="width: 30%">
+									<div class="input-group" style="width: 100%">
+										<p>City</p>
+										<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
+										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									</div>
+								</div>
+								<div class="form-group" style="width: 30%">
+									<div class="input-group" style="width: 100%">
+										<p>Zip code</p>
+										<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
+										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								
-								<div class="input-group">
-									<p>state</p>
-									<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
-								</div>
-								<div class="input-group">
-									<p>ct</p>
-									<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
-								</div>
-								<div class="input-group">
-									<p>Address</p>
-									<input type="text" class="form-control input-lg" name="address" value="{{old('name')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								<i class="fas fa-star"></i> Reviews: <a href="javascript">20 reviews </a>
+							</div>
+							<div class="form-group">
+								<span>Time open - close</span>
+								<div class="row">
+									<div class="col-lg-6">
+										
+									</div>
+									<div class="col-lg-6">
+										
+									</div>
 								</div>
 							</div>
+							
 						</form>
 							
 						

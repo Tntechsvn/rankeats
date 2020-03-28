@@ -267,7 +267,7 @@ public function vote_ajax(Request $request){
     if($vote){
         return response()->json([
             'success' => false,
-            'message' => "You have already voted"
+            'message' => "Would you like to change your vote?"
         ]);
     }else{
         $arr = $user->vote()->pluck('business_id');
