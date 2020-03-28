@@ -16,10 +16,6 @@
 				<div class="profile-usermenu">
 					@include('layouts_profile.menu-sidebar')
 				</div>
-{{-- 				<div class="user-description">
-					<h1>About {{Auth::user()->name}}</h1>
-					<p></p>
-				</div> --}}
 			</div>
 
 			<div class="col-md-9 content-right-profile">

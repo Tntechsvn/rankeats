@@ -58,7 +58,7 @@
 								<p>{{$data->total_vote}} <i>reviews</i></p>
 							</div>
 							<p>{{$data->location->address}}</p>
-							<p>{{$data->description}}<a href="javascript:;" class="m-l-10">read more</a></p>
+							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
 							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
 						</div>					
 					</div>
@@ -106,7 +106,7 @@
 								<p>{{$data->total_vote}} <i>reviews</i></p>
 							</div>
 							<p>{{$data->location->address}}</p>
-							<p>{{$data->description}}<a href="javascript:;" class="m-l-10">read more</a></p>
+							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
 							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
 						</div>					
 					</div>
@@ -115,14 +115,15 @@
 			</div>
 		</div>
 		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30">
+			<div class="underMap" style="margin-bottom:10px;">
+				<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a>
+			</div>
 			<div class="map_img">
 				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3709.807695902279!2d105.83079121539541!3d21.59342827363624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1584071260154!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 			</div>
 			<div>
 				<h4>Is the EAT for a business you’re looking for missing?</h4>
-				<div class="underMap" style="margin-top:10px;">
-					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a>
-				</div>
+				
 			</div>
 		</div>
 	<!--container--> 
@@ -178,8 +179,8 @@
 					</div>
 					<div class="modal-footer" style="text-align: center;">
 						<div class="verify">
-							<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">CANCEL</a>
-							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">OK</a>
+							<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 						</div>
 						<div class="firstWindow hidden" style="width: 100%">
 							<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
@@ -201,8 +202,8 @@
 			</div>
 			<div class="modal-body">
 				<a href="javascript:;"  style="color:#fff;" class="btn btn-primary rankerBtn">Ranker</a>
-				&nbsp;
-				<a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a>
+				{{-- &nbsp;
+				<a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a> --}}
 				<div class="rankerShow" style="display:none;">
 					<form action="{{route('postCreateEatsFrontEnd')}}" method="post" data-parsley-validate>
 						@csrf

@@ -12,13 +12,13 @@
     <div class="col-md-12 m-t-30">
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Pay to Home EATS</h1>
             </div>
             <div class="panel-body">
               <p>At the top of the home page you can add a pic of your business to a 3 pic rotation which will be seen by everyone when they visit us. The name of your business, along with the City and State, will also appear in the lower right of the pic which will link to your business home page. </p>
-              <form id="activeForm" action="update_payment_active.php" method="post">
+              <form id="activeForm" action="update_payment_active.php" method="post" style="float:left;width:100%;margin-top:20px;">
                 <div class="col-md-6">
                   <select name="plan" class="form-control planvalue">
                     <option value="38">30 days - $10.99</option>
@@ -38,13 +38,13 @@
       </div>
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Search EATS – City </h1>
             </div>
             <div class="panel-body">
               <p>At the top of the search results page for the City and EATS you choose you can add a pic of your business. The name of your business along with the City and State will also appear in the lower right of the pic which will link to your business.</p>
-              <form id="activeForm" action="update_payment_active.php" method="post">
+              <form id="activeForm" action="update_payment_active.php" method="post" style="float:left;width:100%;margin-top:20px;">
                 <div class="col-md-6">
                   <select name="plan" class="form-control planvalue">
                     <option value="62">30 days - $10.99</option>
@@ -54,7 +54,7 @@
                   </select>
                 </div>
                 <div class="col-md-6">
-                  <button type="button" class="btn btn-primary btn-lg seletedplan" data-toggle="modal" data-plan="Search EATS – City" data-target="#loginModal">Advertise</button>
+                  <a style="color: #fff;>" type="button" @if(Auth()) href="{{route('create_advertise')}}"  @endif class="btn btn-primary btn-lg seletedplan" @if(!Auth()) data-toggle="modal" data-plan="Pay to Home"  data-target="#loginModal" @endif>Advertise</a>
                 </div>
               </form>
             </div>
@@ -68,7 +68,7 @@
     <div class="col-md-12">
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Search EATS – County </h1>
             </div>
@@ -95,7 +95,7 @@
       </div>
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Search EATS – State </h1>
             </div>
@@ -125,7 +125,7 @@
     <div class="col-md-12">
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Search Feature EATS – City </h1>
             </div>
@@ -152,7 +152,7 @@
       </div>
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Search Feature EATS – County </h1>
             </div>
@@ -182,7 +182,7 @@
     <div class="col-md-12">
       <div class="col-md-6">
         <div class="row pull-panels">
-          <div class="panel panel-default">
+          <div class="panel panel-default" style="min-height: 250px">
             <div class="panel-heading panel-heading-1">
               <h1 class="panel-title">Search Feature EATS – State </h1>
             </div>

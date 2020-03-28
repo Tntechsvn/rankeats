@@ -89,3 +89,4 @@ $(document).on('click','.vote_now',function(){
     }
   });
 });
+
