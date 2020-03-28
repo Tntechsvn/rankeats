@@ -40,6 +40,10 @@ Route::post('/fetchCategory', [
 	'as' => 'fetchCategory',
 	'uses' => 'HomeController@fetchCategory'
 ]);
+Route::post('/fetch-city-state', [
+	'as' => 'fetchCityState',
+	'uses' => 'HomeController@fetchCityState'
+]);
 Route::post('/ajaxCity', [
 	'as' => 'ajaxCity',
 	'uses' => 'HomeController@ajaxCity'

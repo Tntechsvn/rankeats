@@ -213,14 +213,30 @@
 						</div>
 						<div class="form-group">
 							<label for="eat_location">Location</label>
-							<input type="text" name="search" id="location_res_eat" class="form-control"  data-parsley-required style="height: 46px" />
-							<input  type="hidden" id="longitude1" name="longitude">
-							<input  type="hidden" id="latitude1" name="latitude" >
-							<input  type="hidden" id="address1" name="address" >
-							<input  type="hidden" id="city1" name="city" >
-							<input  type="hidden" id="state1" name="state">
-							<input  type="hidden" id="country1" name="country">
-							<span class="text-danger">{!!$errors -> first('address')!!}</span>
+							<div class="form-group">
+								<select class="form-control select2" name="state" id="add_eat_state" data-parsley-required >
+										<option value=""disabled selected="selected">Select State</option>
+										@foreach($state as $data)
+										<option value="{{$data->name}}">{{$data->name}}</option>
+										@endforeach
+								</select>
+								<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+							</div>
+							<div class="form-group">
+								<select class="form-control select2" name="city" id="add_eat_city" style="width: 100%;">
+									<option  value="" disabled selected >Select City</option>
+								</select>
+								<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+								
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control " name="address"  placeholder="Address" value="{{old('address')}}" data-parsley-required>
+								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control " name="zipcode" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required>
+								<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="business_name">Business Name</label>
@@ -265,38 +281,24 @@
 
 @section('script')
 <script type="text/javascript">
-	google.maps.event.addDomListener(window, 'load', initialize);
-	function initialize(){
-		var search = document.getElementById('location_res_eat');
-		var autocomplete = new google.maps.places.Autocomplete(search);
-		google.maps.event.addListener(autocomplete, 'place_changed', function(){
-			var place = autocomplete.getPlace();
-			if (!place.geometry) {
-				window.alert("No details available for input: '" + place.name + "'");
-				return;
-			}
-			document.getElementById('address1').value = place.formatted_address;
-			document.getElementById('longitude1').value = place.geometry.location.lng();
-			document.getElementById('latitude1').value = place.geometry.location.lat();
-			for (var i = 0; i < place.address_components.length; i++) {
-				var addressType = place.address_components[i].types[0];
-				switch (addressType) {
-					case 'locality':
-					var city = place.address_components[i].long_name;
-					break;
-					case 'administrative_area_level_1':
-					var state = place.address_components[i].long_name;
-					break;
-					case 'country':
-					var country = place.address_components[i].long_name;
-					break;
-				}
-			}
-			document.getElementById('city1').value = city;
-			document.getElementById('state1').value = state;
-			document.getElementById('country1').value = country;     
-		});
-	};
+	$("#add_eat_state").change(function(){
+		var name_state = $(this).val();
+
+		var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('ajaxCity') }}",
+          method:"POST",
+          data:{name_state:name_state, _token:_token},
+          success:function(data){ 
+          	console.log(data)
+            $('#add_eat_city').html(data);
+          }
+        });
+
+		/*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
+			$("#id_city").html('<option value="0"  selected >Select City</option>'+data);
+		});*/				
+	});
 </script>
 <script type="text/javascript">
 	$(document).ready(function(){

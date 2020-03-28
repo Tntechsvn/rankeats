@@ -32,7 +32,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&libraries=places&language=EN&region=US"></script>
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 
@@ -69,70 +68,6 @@
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 <!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script> -->
 @yield('script')
-<script type="text/javascript">
-  google.maps.event.addDomListener(window, 'load', initialize);
-  function initialize(){
-    var search = document.getElementById('location_search_cate');
-    var autocomplete = new google.maps.places.Autocomplete(search);
-    google.maps.event.addListener(autocomplete, 'place_changed', function(){
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-      //document.getElementById('address_search').value = place.formatted_address;
-      for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        switch (addressType) {
-          case 'locality':
-          var city = place.address_components[i].long_name;
-          break;
-          case 'administrative_area_level_1':
-          var state = place.address_components[i].long_name;
-          break;
-          case 'country':
-          var country = place.address_components[i].long_name;
-          break;
-        }
-      }
-      document.getElementById('city_search_cate').value = city;
-      document.getElementById('state_search_cate').value = state;
-     // document.getElementById('country_search').value = country;     
-    });
-  };
-</script>
-<script type="text/javascript">
-  google.maps.event.addDomListener(window, 'load', initialize);
-  function initialize(){
-    var search = document.getElementById('location_search');
-    var autocomplete = new google.maps.places.Autocomplete(search);
-    google.maps.event.addListener(autocomplete, 'place_changed', function(){
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-      //document.getElementById('address_search').value = place.formatted_address;
-      for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        switch (addressType) {
-          case 'locality':
-          var city = place.address_components[i].long_name;
-          break;
-          case 'administrative_area_level_1':
-          var state = place.address_components[i].long_name;
-          break;
-          case 'country':
-          var country = place.address_components[i].long_name;
-          break;
-        }
-      }
-      document.getElementById('city_search').value = city;
-      document.getElementById('state_search').value = state;
-     // document.getElementById('country_search').value = country;     
-    });
-  };
-</script>
 <script type="text/javascript">
   
   $(document).on('click','.dropdown',function(){
@@ -178,6 +113,32 @@
       $('#list_id').remove();
       $('#location_items').val($(this).text());  
       $('#categoryList').fadeOut();
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+
+    $('#location_search').keyup(function(){ 
+      var query = $(this).val();
+      if(query != '')
+      {
+        var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('fetchCityState') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+            $('#LocationList').fadeIn();  
+            $('#LocationList').html(data);
+          }
+        });
+      }
+    });
+
+    $(document).on('click', '.location_name', function(e){
+      $('#location_search').val($(this).text());  
+      $('#LocationList').fadeOut();
     });
   });
 </script>
