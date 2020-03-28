@@ -57,16 +57,53 @@ class HomeController extends Controller{
             echo $output;
         }
     }
+    /*fetchCityState*/
+    public function fetchCityState(Request $request){
+        if($request->get('query'))
+        {
+            $keyword = $request->get('query');
+
+            $data = Country::select('countries.*','states.name as state_name','cities.name as city_name')
+            ->leftjoin('states','states.country_id','=','countries.id')
+            ->leftjoin('cities','cities.state_id','=','states.id')
+            ->where('code','=','US')
+            ->where(function($query) use ($keyword){            
+                $query->where('cities.name','LIKE', '%'.$keyword.'%')->orwhere('states.name', 'LIKE', '%'.$keyword.'%');
+            })->get();
+            /*$data = Category::select('categories.*')
+            ->where('category_name', 'LIKE', "%{$query}%")
+            ->where('status','=',1)
+            ->get();*/
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            if(count($data)>0){
+                foreach($data as $row)
+                {
+                    if($row->city_name){
+                        $text = $row->city_name.' or '.$row->state_name;
+                    }else{
+                        $text = $row->state_name;
+                    }
+
+                    $output .= '<li class="location_name form-search-val">'.$text.'</li>';             
+                }
+            }else{
+                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
+            }
+            
+            $output .= '</ul>';
+            echo $output;
+        }
+    }
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $city = $request -> city ? $request -> city : '';
-        $state = $request -> state ? $request -> state : '';
+        $city = $request -> city ? $request -> city : $request -> state;
+        $state_search = $request -> state ? $request -> state : '';
 
 
         $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
-        ->where(function($query) use ($keyword,$city,$state){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
+        ->where(function($query) use ($keyword,$city,$state_search){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
         })
         ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
@@ -74,16 +111,16 @@ class HomeController extends Controller{
 
         $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
-        ->where(function($query) use ($keyword,$city,$state){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state.'%');
+        ->where(function($query) use ($keyword,$city,$state_search){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
         })
         ->where('status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
-
+//return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
 
-        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state','category_search'));
+        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','category_search'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  
@@ -125,7 +162,10 @@ class HomeController extends Controller{
          if($request->get('name_state'))
         {
             $name_state = $request->get('name_state');
-            $state = State::where('name','=',$name_state)->first();
+            $state = State::select('states.*','countries.code')
+            ->join('countries','countries.id','=','states.country_id')
+            ->where('code','=','US')
+            ->where('states.name','=',$name_state)->first();
             $data = $state->cities()->get();
 
 
@@ -267,7 +307,7 @@ public function vote_ajax(Request $request){
     if($vote){
         return response()->json([
             'success' => false,
-            'message' => "You have already voted"
+            'message' => "Would you like to change your vote?"
         ]);
     }else{
         $arr = $user->vote()->pluck('business_id');
@@ -279,6 +319,21 @@ public function vote_ajax(Request $request){
     }
 
 }
+
+
+public function eat_rank(){
+    return view('layouts_profile.eat-rank');
+}
+public function business_rank(){
+    return view('layouts_profile.business-rank');
+}
+public function business_review(){
+    return view('layouts_profile.business-review');
+}
+public function my_businesses(){
+    return view('layouts_profile.my-businesses');
+}
+
 
 
 }

@@ -24,15 +24,21 @@
 					@csrf
 					<div class="form-group">
 						<label>Name Business</label>
-						<input type="text" class="form-control input-lg" name="name"placeholder="Business Name">
+						<div class="input-group"> 
+							<span class="input-group-addon"><i class="fas fa-user"></i></span>
+							<input type="text" class="form-control input-lg" name="name"placeholder="Business Name">
+						</div>
                      	<span class="text-danger"> * {!!$errors -> first('name')!!}</span>
 						
 					</div>
 
 					<div class="form-group">
 						<label>Email</label>
-						<input type="email" class="form-control input-lg" name="email"placeholder="Business email">
-                     	<span class="text-danger"> * {!!$errors -> first('email')!!}</span>
+						<div class="input-group"> 
+							<span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+							<input type="email" class="form-control input-lg" name="email"placeholder="Business email">
+						</div>
+                     	<span class="text-danger"> {!!$errors -> first('email')!!}</span>
 						
 					</div>
 

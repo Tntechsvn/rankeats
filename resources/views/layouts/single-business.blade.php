@@ -103,7 +103,7 @@
 		</div>
 		<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 inner-sidebar">
 			<div class="right-sidebar" style="background-color: #fff;padding: 30px 15px 0px;">
-				<h3 class="title m-b-20">List Restaurent Featured</h3>
+				<h3 class="title m-b-20">Featured Restaurants</h3>
 				<div class="clear"></div>	
 				<div class="row m-b-20 p-t-20">
 					<div class="col-lg-4">

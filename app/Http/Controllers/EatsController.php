@@ -103,6 +103,8 @@ class EatsController extends Controller
             'category_name' => 'required|unique:categories,category_name',
             'address' => 'required',
             'business_name' => 'required',
+            'state' => 'required',
+            'zipcode' => 'required',
         ]);
         /*create category*/
         $update_category = new Category;

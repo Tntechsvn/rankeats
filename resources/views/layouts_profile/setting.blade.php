@@ -96,7 +96,7 @@
             </div>
             <div class="form-group">
               <label for="inputAbout">About</label>
-              <textarea name="user_title" class="form-control input-lg" cols="40" rows="5" placeholder="Tell us little bit inputAbout your self ">{{Auth::user()->user_title}}</textarea>
+              <textarea name="user_title" class="form-control input-lg" cols="40" rows="5" placeholder="Tell us a little bit about yourself">{{Auth::user()->user_title}}</textarea>
             </div>
             <button type="submit" class="btn btn-custom btn-lg pull-right" id="submitInfo">Update</button>
           </form>

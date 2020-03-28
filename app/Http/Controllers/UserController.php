@@ -147,7 +147,7 @@ class UserController extends Controller
             return redirect()->route('sign_in')-> with('message','Vui lòng xác minh email của bạn trước khi đăng nhập');
         }else{
             session()->put('error',$data->message);
-            return redirect()->rback();
+            return redirect()->back();
         }
     }
 

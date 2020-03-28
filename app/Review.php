@@ -45,7 +45,7 @@ class Review extends Model
 			$update_business ->save();
 			return $response =  response()->json([
 				'success' => true,
-				'message' => 'Thêm Mới Đánh Giá Thành Công',
+				'message' => 'Add New Review Success',
 			], 200);
 		}		
 	}

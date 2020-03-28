@@ -7,10 +7,10 @@
 				<div id="categoryList"></div>
 			</div>
 
-			<div class="input_state">
-				<input autocomplete="off" type="text" class="form-control input-lg location_search" id="location_search" placeholder="@if(isset($city) && $city !=''){{$city.','.$state}}@else{{'City or State'}}@endif">
-				<input  type="hidden" id="city_search" name="city" value="@if(isset($city)){{$city}}@endif">
-				<input  type="hidden" id="state_search" name="state" value="@if(isset($state)){{$state}}@endif">
+			<div class="input_dish">
+				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_search" name="state" placeholder="City or State" value="@if(isset($state_search)){{$state_search}}@endif">
+				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
+				<div id="LocationList"></div>
 			</div>
 			<span class="input-group-btn">
 				<button type="submit" class="btn btn-custom input-lg" style="border-radius: 0;"><span class="glyphicon glyphicon-search"></span><span class="text-search">Search</span></button>
