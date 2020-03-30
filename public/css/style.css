@@ -1647,7 +1647,7 @@ input#location_search {
 }
 .input_dish::after{
 	position: absolute;
-	content: "Find";
+	content: "IN";
 	width: 50px;
     top: 0;
     left: 0;
@@ -1660,7 +1660,7 @@ input#location_search {
 }
 .input_state::after{
 	position: absolute;
-	content: "In";
+	content: "IN";
     width: 50px;
     top: 0;
     left: 0;
@@ -1980,6 +1980,7 @@ li.active a {
 }
 .banner img {
 	width: 100%;
+	display: none;
 }
 .page-link::hover {
 	cursor: pointer;
@@ -2077,6 +2078,92 @@ input[type=number]::-webkit-outer-spin-button {
 .profile-usermenu li.active ul{
 	display: block;
 }
+.choose-method {
+    width: 150px;
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+.choose-time {
+    width: 150px;
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+.location-res thead {
+	background-color: #f2f2f2;
+}
+.location-res th,
+.location-res td {
+	width: 150px;
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #d7d7d7;
+}
+
+.res-menu .map iframe {
+    width: 100%;
+    margin-left: -15px;	
+}
+.hours p {
+	font-size: 16px;
+	padding-bottom: 10px;
+}
+.hours span {
+	width: 50px;
+	display: inline-block;
+}
+.res-menu {
+	border-bottom: 2px solid #ebebeb;
+	padding-bottom: 30px;
+}
+.description .tap-pane a {
+	background-color: #707070;
+	padding: 10px 20px;
+	color: #fff;
+	margin-right: 20px;
+	border-radius: 5px;
+}
+.description .tap-pane a svg {
+	color: #fff;
+}
+.description .nav-tabs a.active,
+.description .nav-tabs a:hover,
+.description .nav-tabs a:focus{
+	background-color: #0073bb !important;
+	color: #fff;
+}
+#businessinfo svg {
+	color: #f15a2c;
+	width: 18px !important;
+	margin-right: 15px;
+}
+#businessinfo p {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+#eatrank svg {
+	color: #0073bb;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -20,9 +20,10 @@
 			<a href="{{route('add_business')}}"><i class="fas fa-plus-circle"></i>Add Business</a>
 		</li>
 		@else
-		<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}">
-			<a class="dropdown"  href="{{route('my_businesses')}}"><i class="fas fa-plus-circle"></i>My Business<span class="caret" style="float: right;margin-top: 8px;"></span></a>
+		<li class="">
+			<a class="dropdown"  href="javascript:;"><i class="fas fa-plus-circle"></i>My Business<span class="caret" style="float: right;margin-top: 8px;"></span></a>
 			<ul class="nav menudropdown">
+				<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses')}}"><i class="fas fa-caret-right"></i> Add Business</a></li>
 				<li class="{{ Route::currentRouteNamed('info-management') ? 'active' : '' }}"><a class="" href="{{route('info-management')}}"><i class="fas fa-caret-right"></i> Info Restaurant</a></li>
 				<li class="{{ Route::currentRouteNamed('menu-management') ? 'active' : '' }}"><a class="" href="{{route('menu-management')}}"><i class="fas fa-caret-right"></i> Menu</a></li>
 				<li class="{{ Route::currentRouteNamed('review-management') ? 'active' : '' }}"><a class="" href="{{route('review-management')}}"><i class="fas fa-caret-right"></i> Reviews</a></li>
