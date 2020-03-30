@@ -44,7 +44,10 @@
 
 					<div class="form-group">
 						<label>Phone Number</label>
-						<input type="text" class="form-control input-lg" name="phone"  placeholder="Business phone">
+						<div class="input-group"> 
+							<span class="input-group-addon"><i class="fas fa-phone-alt"></i></span>
+							<input type="text" class="form-control input-lg" name="phone"  placeholder="Business phone">
+						</div>
                      	<span class="text-danger"> * {!!$errors -> first('phone')!!}</span>
 						
 					</div>
