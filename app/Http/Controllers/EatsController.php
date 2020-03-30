@@ -33,7 +33,7 @@ class EatsController extends Controller
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        $total_record =  Category::count();
+        $total_record =  $data_category->total();
         $count_record = count($data_category);
         if(isset($request -> page)){
             if($request -> page < 2){
@@ -84,8 +84,23 @@ class EatsController extends Controller
 
     }
     public function postCreateEats(Request $request){
+         $this-> Validate($request,[
+            'category_name' => 'required|unique:categories,category_name',
+            'description' => 'required',
+        ]);
         $create = new Category;
-        $create -> update_category($request);
+        if($request -> image !=null){
+           $base64String = $request->image;
+           $ShareController = new ShareController;
+           $url_img = $ShareController->saveImgBase64($base64String, 'uploads');
+        }else{
+            $url_img = null;
+        }
+        $create->category_name = $request -> category_name;
+        $create->url_img = $url_img;
+        $create->status = 1;
+        $create->description = $request->description;
+        $create->save();
         return redirect()->back();
     }
     public function getEditEats($id_eat){
@@ -94,6 +109,10 @@ class EatsController extends Controller
     }
     public function postEditEats(Request $request){
         $data_eat = Category::findorfail($request->id_eat);
+        $this-> Validate($request,[
+            'category_name' => 'required|unique:categories,category_name,'.$data_eat->id,
+            'description' => 'required',
+        ]);
         $data_eat -> update_category($request);
         return redirect()->back();
     }

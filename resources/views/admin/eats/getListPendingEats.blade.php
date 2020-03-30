@@ -72,11 +72,11 @@
               					</div>
               				</td>
               				<td>{{$data -> category_name}}</td>
-                      <td>{{$data->business_category()->first()->name}}</td>
-                      <td>{{$data->business_category()->first()->location->address}}</td>
+              				<td>@if($data->business_category()->first()){{$data->business_category()->first()->name}}@endif</td>
+              				<td>@if($data->business_category()->first()){{$data->business_category()->first()->location->address}}@endif</td>
               				<td>{{$data -> created_at}}</td>
               				<td>
-                        <a href="{{route('approvedEat',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this eat?">Approve</button></a>
+              					<a href="{{route('approvedEat',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this eat?">Approve</button></a>
               				</td>
               			</tr>
               			@endforeach

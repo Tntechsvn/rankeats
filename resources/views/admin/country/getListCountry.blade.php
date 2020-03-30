@@ -3,11 +3,11 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-    <h1>Eats</h1>
-    <p>Manage your website business eats</p>
+    <h1>Countries</h1>
+    <p>Manage business countries</p>
     <div class="card-header">    	
     	<div class="card-tools">
-    		<form action="{{route('getListEats')}}" method="get">
+    		<form action="{{route('getListCountry')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
 	    			
 	    				<input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
@@ -29,40 +29,29 @@
             <!-- general form elements -->
             <div class="card ">
             	<div class="card-header">
-                <h3 class="card-title">Add New Eats</h3>               
+                <h3 class="card-title">Add New Country</h3>               
                 
               </div>
               <!-- form start -->
-              <form role="form" action="{{route('postCreateEats')}}" method="post" enctype="multipart/form-data">
+              <form role="form" action="{{route('postCreateCountry')}}" method="post" enctype="multipart/form-data">
               	{{csrf_field()}}
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Eat</label>
-                    <input type="text" class="form-control" name="category_name" placeholder="Enter the EAT's name">
-                    <span class="text-danger">{{$errors -> first('category_name')}}</span>
+                    <label for="exampleInputEmail1">Country Code</label>
+                    <input type="text" class="form-control" name="code" placeholder="Enter country code">
+                    <span class="errors">{{$errors -> first('code')}}</span>
                   </div>
                   <div class="form-group">
-                  	<label>Eat Description</label>
-                  	<textarea class="form-control" name="description" rows="3" placeholder="Enter the description of the EAT's"></textarea>
-                  	<span class="text-danger">{{$errors -> first('description')}}</span>
+                    <label for="exampleInputEmail1">Country</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter country name">
+                    <span class="errors">{{$errors -> first('name')}}</span>
                   </div>
                   <div class="form-group">
-                    <label for="">Image Eat</label>
-                    <div class="form-group"  style="text-align: center;">
-                    	<div  class="dt-imgs">
-                    		<div class="dt-close">
-                    			<div id="previews"></div>
-                    		</div>
-                    	</div>
-                    </div>
-                    <div class="abc">
-                    	<div class="btn btn-default btn-file" style="background-color: #ffffff;">
-                    		<i class="fa fa-paperclip"></i> Attachment
-                    		<input type="file" id="avatar" name="avatar" >
-                    	</div><!-- <span class="max">Max. 32MB</span> -->
-                    </div>	
+                    <label for="exampleInputEmail1">Phone Code</label>
+                    <input type="text" class="form-control" name="phonecode" placeholder="Enter country phone code">
+                    <span class="errors">{{$errors -> first('phonecode')}}</span>
                   </div>
-
+                  
                 </div>
                 <!-- /.card-body -->
 
@@ -104,14 +93,15 @@
               		<thead>
               			<tr>
               				<th></th>
-              				<th>Eat</th>              				
-              				<th>Image Eat</th>
+              				<th>Country Code</th>              				
+              				<th>Country Name</th>
+                      <th>Phone Code</th>
               				<th>Created At</th>
               			</tr>
               		</thead>
               		<tbody>              			
-              			@if(count($data_category) > 0)
-              			@foreach($data_category as $data)
+              			@if(count($data_countries) > 0)
+              			@foreach($data_countries as $data)
               				    				
               			<tr>
               				<td>
@@ -120,16 +110,9 @@
               						<label for="check{{$data->id}}"></label>
               					</div>
               				</td>
-              				<td><a href="{{route('getEditEats',$data->id)}}">{{$data -> category_name}}</a></td>
-              				<img src="" alt="">
-              				
-              				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"><img src="{{'http://localhost/rankeats/public/storage/'.$data->url_img}}" style="width: 100px;"></td>
-              				@else
-              				<td class="mailbox-subject">
-              					<img src="" style="width: 100px;">
-              				</td>
-              				@endif
+              				<td><a href="{{route('getEditCountry',['country_id'=>$data->id])}}">{{$data -> code}}</a></td>
+              				<td>{{$data -> name}}</td>
+                      <td>{{$data -> phonecode}}</td>
               				<td>{{$data -> created_at}}</td>
               			</tr>
               			@endforeach
@@ -147,7 +130,7 @@
             <!-- /.card-body -->
               <div class="card-header">
                 <div class="card-tools">                	
-                	{!!$data_category -> appends(request()->except('page')) -> links()!!}
+                	{!!$data_countries -> appends(request()->except('page')) -> links()!!}
                 </div>
               </div>
           </div>
@@ -182,10 +165,10 @@
 				arr.push($(this).data('row-id'));
 			});
 			if(arr.length <= 0 ) {
-				alert("Please select the item you want to delete.");
+				alert("Vui Lòng Chọn Mục Muốn Xóa.");
 				return;
 			} else {
-				WRN_PROFILE_DELETE = "Are You Sure You Want To Delete"+(arr.length > 1 ? "these" : "this") + " row?";
+				WRN_PROFILE_DELETE = "Bạn Có Chắc Muốn Xóa"+(arr.length > 1 ? "these" : "this") + " row?";
 			}
 			var checked = confirm(WRN_PROFILE_DELETE);
 			if(checked == true) {
@@ -202,9 +185,9 @@
 						console.log(data);
 						if(data == "Success"){
 							window.location.reload();
-							alert('Delete Success');
+							alert('Xóa Danh Mục Nhà Hàng Thành Công');
 						}else{
-							alert('Delete errors');
+							alert('Bạn Không Thể Xóa Danh Mục Này');
 						}
 					}
 				});
@@ -212,44 +195,6 @@
 		});
 	});
 </script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#avatar').click(function(e) {
-			var previews = document.getElementById('previews');
-			if (previews.hasChildNodes()) {
-				alert('You Can Only Choose An Image For This Item');
-				e.preventDefault();
-			}			
-		});
-		var images = function(input, imgPreview) {
-			if (input.files) {
-				var arr = [];
-				var filesAmount = input.files.length;
-				for (i = 0; i < filesAmount; i++) {
-					var reader = new FileReader();
-					reader.onload = function(event) {
-						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="deletethumb tsm"></div>').appendTo(imgPreview);;
-					}
-					reader.readAsDataURL(input.files[i]);
-				}
-			}
-		};
-
-		$('#avatar').on('change', function() {
-			images(this, '#previews');
-		});
-            /*clear the file list when image is clicked*/
-            $('body').on('click','.deletethumb',function(){
-            	if(confirm("Do you want to delete this image?"))
-            	{
-            		$(this).parent().remove();
-					$("#avatar").val(null);/* xóa tên của file trong input*/
-				}
-				else
-					return false;
-			});
-        });
-    </script>
 <script type="text/javascript">
 	/*paginate ********************** //*/
 
