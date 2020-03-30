@@ -56,8 +56,9 @@
               				<th></th>
               				<th>Profile Photo</th>              				
               				<th>Username</th>
-              				<th>Email</th>
-              				<th>Created At</th>
+              				<th>Business Name</th>
+                      <th>State</th>
+                      <th>City</th>
               				<th>Manage</th>
               			</tr>
               		</thead>
@@ -73,15 +74,17 @@
               					</div>
               				</td>
               				@if($data->url_avatar != null)	              				
-              				<td class="mailbox-subject"><img src="{{'http://localhost/rankeats/public/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"><img src="{{asset('').'/storage/'.$data->url_avatar}}" style="width: 50px;"></td>
               				@else
               				<td class="mailbox-subject">
-              					<img src="http://localhost/rankeats/public/vendor/adminlte/dist/img/AdminLTELogo.png" style="width: 100px;">
+              					<img src="{{asset('').'/vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 50px;">
               				</td>
               				@endif
               				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
-              				<td>{{$data -> email}}</td>              				
-              				<td>{{$data -> created_at}}</td>
+              				<td>{{$data -> business()->first()->name}}</td>
+                      <td>{{$data -> business()->first()->location->state}}</td>
+                      <td>{{$data -> business()->first()->location->city}}</td>
+                      
               				<td>
               					<button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
               					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
