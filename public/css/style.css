@@ -2145,11 +2145,29 @@ input[type=number]::-webkit-outer-spin-button {
 #eatrank svg {
 	color: #0073bb;
 }
-
-
-
-
-
+.star-rate li {
+	display: inline-block;
+}
+#eatrank {
+	position: relative;
+    margin-left: -15px;
+    margin-right: -15px;
+    border: 1px solid #e1e1e1;
+    margin-top: -15px;
+    padding: 15px;
+}
+#eatrank .star-view {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+#eatrank .star-view svg {
+	color: #ffbc05;
+}
+#eatrank .list-review {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e1e1e1;
+}
 
 
 
