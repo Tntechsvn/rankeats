@@ -206,6 +206,24 @@ return [
             ],
         ],
         [
+            'text'    => 'Cities',
+            'icon'    => 'fas fa-map-marker',
+            'route'  => 'getListCity',
+           
+        ],
+         [
+            'text'    => 'States',
+            'icon'    => 'fas fa-map-marker',
+            'route'  => 'getListState',
+           
+        ],
+        [
+            'text'    => 'Countries',
+            'icon'    => 'fas fa-map-marker',
+            'route'  => 'getListCountry',
+           
+        ],
+        [
             'text'    => 'Users',
             'icon'    => 'fas fa-fw fa-users',
             'submenu' => [

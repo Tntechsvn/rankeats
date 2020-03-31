@@ -46,6 +46,7 @@ class ReviewsController extends Controller
         return view('admin.reviews.getListReviews', compact('start', 'record', 'total_record','list_reviews','keyword'));
 	}
     public function postReviewFrontEnd(Request $request){
+        
         $user_id = Auth::user()->id;
         $reviews = new Review;        
         $response = $reviews -> update_review($request,$user_id);

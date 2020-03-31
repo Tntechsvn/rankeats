@@ -60,8 +60,7 @@ class BusinessController extends Controller
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        $total_record =  Business::select('businesses.*')
-        ->whereNull('activated_on')->count();
+        $total_record =  $list_business->total();
         $count_record = count($list_business);
 
         if(isset($request -> page)){
@@ -93,8 +92,7 @@ class BusinessController extends Controller
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        $total_record =  Business::select('businesses.*')
-        ->whereNull('activated_on')->count();
+        $total_record =  $list_business->total();
         $count_record = count($list_business);
 
         if(isset($request -> page)){

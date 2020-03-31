@@ -40,6 +40,10 @@ Route::post('/fetchCategory', [
 	'as' => 'fetchCategory',
 	'uses' => 'HomeController@fetchCategory'
 ]);
+Route::post('/fetch-city-state', [
+	'as' => 'fetchCityState',
+	'uses' => 'HomeController@fetchCityState'
+]);
 Route::post('/ajaxCity', [
 	'as' => 'ajaxCity',
 	'uses' => 'HomeController@ajaxCity'
@@ -213,6 +217,65 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'deletePages',
 				'uses' => 'PageController@deletePages'
 			]);
+		});
+		/*Countries*/
+		Route::prefix("country")->group(function(){
+			Route::get('/', [
+				'as' => 'getListCountry',
+				'uses' => 'LocationController@getListCountry'
+			]);
+			Route::post('/create', [
+				'as' => 'postCreateCountry',
+				'uses' => 'LocationController@postCreateCountry'
+			]);
+			Route::get('/edit/{country_id}', [
+				'as' => 'getEditCountry',
+				'uses' => 'LocationController@getEditCountry'
+			]);
+			Route::post('/edit/{country_id}', [
+				'as' => 'postEditCountry',
+				'uses' => 'LocationController@postEditCountry'
+			]);
+		
+		});
+		/*state*/
+		Route::prefix("state")->group(function(){
+			Route::get('/', [
+				'as' => 'getListState',
+				'uses' => 'LocationController@getListState'
+			]);
+			Route::post('/create', [
+				'as' => 'postCreateState',
+				'uses' => 'LocationController@postCreateState'
+			]);
+			Route::get('/edit/{state_id}', [
+				'as' => 'getEditState',
+				'uses' => 'LocationController@getEditState'
+			]);
+			Route::post('/edit/{state_id}', [
+				'as' => 'postEditState',
+				'uses' => 'LocationController@postEditState'
+			]);
+		
+		});
+		Route::prefix("city")->group(function(){
+			Route::get('/', [
+				'as' => 'getListCity',
+				'uses' => 'LocationController@getListCity'
+			]);
+			Route::post('/create', [
+				'as' => 'postCreateCity',
+				'uses' => 'LocationController@postCreateCity'
+			]);
+			Route::get('/edit/{city_id}', [
+				'as' => 'getEditCity',
+				'uses' => 'LocationController@getEditCity'
+			]);
+			Route::post('/edit/{city_id}', [
+				'as' => 'postEditCity',
+				'uses' => 'LocationController@postEditCity'
+			]);
+		
 		});
 
 	});

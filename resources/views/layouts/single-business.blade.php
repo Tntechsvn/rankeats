@@ -5,9 +5,9 @@
 	<div class="banner">
 		<img src="images/promo.jpg" alt="" class="fade">
 	</div>
-	<div class="container">
-		<div class="col-sm-8 col-xs-8  col-md-8 col-lg-8 inner-content  p-b-20" >
-			<div style="background-color: #fff;" class=" p-l-15 p-r-15">
+	<div class="container" style="background-color: #fff;">
+		<div class="inner-content p-b-20" >
+			<div  class="">
 				<div class="p-t-30 p-b-30 top-content-res">
 					<h1 class="big-title">{{$info_business->name}}</h1>
 					@if($info_business->activated_on)<button>Verified<i class="far fa-check-square"></i></button> @endif
@@ -23,134 +23,155 @@
 					</div>
 				</div>
 				<div class="location-res">
-					<p>
-						<i class="fa fa-star star-rate" aria-hidden="true"></i>
-						<i class="fa fa-star star-rate" aria-hidden="true"></i>
-						<i class="fa fa-star star-rate" aria-hidden="true"></i>
-						<i class="fa fa-star star-rate" aria-hidden="true"></i>
-						<i class="fa fa-star star-rate" aria-hidden="true"></i>
-						({{$info_business->rate_business()}})
-					</p>
-					<p>
-						<i class="fas fa-map-marker-alt"></i>
-						{{$info_business->location-> address}}
-					</p>
-					<p style="color: #95bbdb;" class="bold">
-						<i class="fas fa-building"></i>
-						@foreach($info_business->business_category as $val)
-							{{$val->category_name.','}}
-						@endforeach
-					</p>
+					<div class="businessrank" style="float: left;">
+						<h3 class="title m-b-20">Business Rank: 50</h3>
+						<div class="clear"></div>
+						<table>
+							<thead>
+								<tr>
+									<th>{{$info_business->location->city}}</th>
+									<th>{{$info_business->location->state}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>16</td>
+									<td>23</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="eatrank" style="float: left;margin-left: 50px">
+						<h3 class="title m-b-20">EATS Rank</h3>
+						<div class="clear"></div>
+						<table>
+							<thead>
+								<tr>
+									<th>Eat Name</th>
+									<th>{{$info_business->location->city}}</th>
+									<th>{{$info_business->location->state}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach($info_business->business_category as $val)
+									<tr>
+										<td>{{$val->category_name}}</td>
+										<td>16</td>
+										<td>23</td>
+									</tr>
+								@endforeach
+								
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="res-menu">
-					<h3 class="title m-b-20 m-t-30">Menu</h3>
+					<h3 class="title m-b-20 m-t-30">Map & Hours</h3>
 					<div class="clear"></div>	
-					<div class="row m-b-30">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-b-10">
-							<h4 class="p-b-10"><i class="fas fa-caret-right"></i> com xa xiu </h4>
-							<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
+					
+					<div class="col-lg-6 map">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.0280704153997!2d-71.05816368426183!3d42.3632410428928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3708f2d8f5e8b%3A0x76e5ba9980db682e!2s63%20Salem%20St%2C%20Boston%2C%20MA%2002113%2C%20Hoa%20K%E1%BB%B3!5e0!3m2!1svi!2s!4v1585540921075!5m2!1svi!2s" width="800" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+						<div class="m-t-20">
+							đại từ thái nguyên
+							ngọc cô vít
 						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-b-10">
-							<h4 class="p-b-10"><i class="fas fa-caret-right"></i> com xa xiu</h4>
-							<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
-						</div>
-						<div class="clear"></div>
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-b-10">
-							<h4 class="p-b-10"><i class="fas fa-caret-right"></i> com xa xiu</h4>
-							<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-b-10">
-							<h4 class="p-b-10"><i class="fas fa-caret-right"></i> com xa xiu</h4>
-							<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
-						</div>
-						<div class="clear"></div>
 					</div>
-					<button class="load-more">Load More</button>
+					<div class="col-lg-6 hours">
+						<div>
+							<p><span class="bold">Mon</span> 11:30 am - 9:30 pm</p>
+							<p><span class="bold">Tue</span> 11:30 am - 9:30 pm</p>
+							<p><span class="bold">Wed</span> 11:30 am - 9:30 pm</p>
+							<p><span class="bold">Thu</span> 11:30 am - 9:30 pm</p>
+							<p><span class="bold">Fri</span> 11:30 am - 9:30 pm</p>
+							<p><span class="bold">Sat</span> 11:30 am - 9:30 pm</p>
+							<p><span class="bold">Sun</span> 11:30 am - 9:30 pm</p>
+						</div>
+					</div>
 				</div>
 				
-				<div class="reiview">
-					<h3 class="title m-b-20 m-t-30">Reviews</h3>
+				<div class="reiview description">
+					<h3 class="title m-b-20 m-t-30">Description</h3>
 					<div class="clear"></div>	
-					@foreach($list_reviews as $data)
-						<div class="row m-b-20">
-							<div class="col-lg-1">
-								<div class="avata">
-									<img src="@if($data->user->url_avatar != null){{asset('').'storage/'.$data->user->url_avatar}}@else{{'images/avatar-default.png'}}@endif" alt="" style="width: 70px;">
-								</div>
-							</div>
-							<div class="col-lg-11">
-								<div class="content-right p-b-20">
-								<h4>{{$data->user->name}}</h4>
-								<span class="review-date">{{$data -> created_at}}</span>
-								<div class="star-view clear p-b-10">
-									@for($i = 1;$i <= $data->review_rating->where('review_id','=',$data->id)->first()->rate;$i++)
-									<i class="fas fa-star star-rate"></i>
-									@endfor
-									<span class="bold p-l-20">Review business {{$data->business->name}}</span>
-								</div>
-								
-								<p>{{$data->description}}</p>
-							</div>
-							</div>
-						</div>
-						@endforeach
-						{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 					
+					<p>{{$info_business->description}}</p>
+					<div class="tap-pane">
+						<ul class="nav nav-tabs" style="border-bottom: none;">
+						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info"></i> Business Info</a></li>
+						    <li><a href="#businessreview" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Business Reviews</a></li>
+						    <li><a href="#eatrank" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
+						    <li><a href="#picture" data-toggle="tab" class="btn "><i class="fas fa-images"></i> Picture</a></li>
+						  </ul>
+					</div>
+					<div class="tab-content">
+					    <div class="tab-pane active" id="businessinfo">
+					    	<p>
+					    		<i class="fas fa-user"></i>
+					    		<span class="bold">Owner / Manager :</span>
+					    		<span class="bold" style="color: #0073bb">{{$info_business->name}}</span>
+					    	</p>
+					    	<p>
+					    		<i class="fas fa-phone-alt"></i>
+					    		<span class="bold">Phone Number :</span>
+					    		<span>{{$info_business->phone}}</span>
+					    	</p>
+					    	<p>
+					    		<i class="fas fa-clock"></i>
+					    		<span class="bold">Business Opening :</span>
+					    		<span>20/3/2020</span>
+					    	</p>
+					    	<p>
+					    		<i class="fas fa-shipping-fast"></i>
+					    		<span class="bold">Delivery</span>
+					    	</p>
+						</div>
+					    <div class="tab-pane" id="businessreview">
+
+					    </div>
+					    <div class="tab-pane" id="eatrank">
+					    	@if($list_reviews->total() >0)
+				    			@foreach($list_reviews as $data)
+							    	<p>
+							    		<i class="fas fa-user"></i>
+							    		<span class="bold">Name :</span>
+							    		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
+							    	</p>
+							    	<p>
+							    		<i class="fas fa-user"></i>
+							    		<span class="bold">EAT :</span>
+							    		<span>
+							    			@foreach($info_business->business_category as $val)
+												{{$val->category_name.','}}
+											@endforeach
+										</span>
+							    	</p>
+							    	<div >
+							    		<label class="m-r-30"><i class="fas fa-globe-americas" style="color: "></i> Country: {{$info_business->location->country}} (12)</label>
+							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$info_business->location->city}} (12)</label>
+							    		<label><i class="fas fa-city"></i> State: {{$info_business->location->state}} (12)</label>
+							    	</div>
+
+							    	<p>{{$info_business->description}}</p>
+							    	<div class="star-view clear p-b-10">
+							    		
+												
+										@for($i = 1;$i <= $data->review_rating->where('review_id','=',$data->id)->first()->rate;$i++)
+											<i class="fas fa-star star-rate"></i>
+										@endfor
+							    		
+
+							    		
+									</div>
+
+								@endforeach
+				    		@endif
+					    </div>
+					    <div class="tab-pane" id="picture">Liên Hệ</div>
+					</div>
 				</div>
 				<div class="clear"></div>
 			</div>
 			
 		</div>
-		<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 inner-sidebar">
-			<div class="right-sidebar" style="background-color: #fff;padding: 30px 15px 0px;">
-				<h3 class="title m-b-20">List Restaurent Featured</h3>
-				<div class="clear"></div>	
-				<div class="row m-b-20 p-t-20">
-					<div class="col-lg-4">
-						<div class="avata" >
-							<img src="images/avatar-default.png" alt="" style="width: 100%;">
-						</div>
-					</div>
-					<div class="col-lg-8">
-						<div class="content-right p-b-20">
-							<h4>name reviews</h4>
-							<div class="star-view clear p-b-10">
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-							</div>
-							
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-						</div>
-					</div>
-				</div>
-				<div class="row m-b-20">
-					<div class="col-lg-4">
-						<div class="avata" >
-							<img src="images/avatar-default.png" alt="" style="width: 100%;">
-						</div>
-					</div>
-					<div class="col-lg-8">
-						<div class="content-right p-b-20">
-							<h4>name reviews</h4>
-							<div class="star-view clear p-b-10">
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-								<i class="fas fa-star star-rate"></i>
-							</div>
-							
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et lorem sit amet justo consequat porttitor. Fusce ut ultrices nunc. Suspendisse ut porta libero, quis venenatis nisi. Phasellus pellentesque, est at fermentum rutrum, ante purus suscipit arcu, sit amet sollicitudin nibh lorem vitae odio.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-		<!--container--> 
 
 
 

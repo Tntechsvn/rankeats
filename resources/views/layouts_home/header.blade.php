@@ -29,9 +29,9 @@
                   <li >
                     <a href="{{route('mysetting')}}" class="btn btn-default btn-flat" ><i class="fas fa-tools"></i> My Setting</a>
                   </li>
-                  <li>
+                 {{--  <li>
                     <a href="#" class="btn btn-default btn-flat" ><i class="fas fa-money-check-alt"></i> My Payments</a>
-                  </li>
+                  </li> --}}
                   <li class="user-footer">
                     <a href="{{route('getLogout')}}" class="btn btn-default btn-flat" onclick="return confirm('Do you want to logout?');"><i class="fas fa-sign-out-alt"></i> logout</a>
                   </li>

@@ -21,14 +21,13 @@
 			<div class="col-md-9">
 				<div class="tab-content" style="margin-right: -15px;">
 					<div>
-						<h3 class="title m-b-20">EAT Reviews</h3>
+						<h3 class="title m-b-20">Business Reviews</h3>
 						<div class="clear"></div>
 							
 						<div class="list-review">
 							<div class="review-gr">
 								<h4 class="m-b-10">neptuyn</h4>
 								<p><i class="fas fa-calendar-alt"></i>25/3/2020</p>
-								<p><i class="fas fa-utensils"></i>Dessert</p>
 								<p><i class="fas fa-map-marker-alt"></i>new york</p>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc rutrum finibus lorem vitae elementum. Etiam in turpis id sapien commodo finibus in non neque. Curabitur vel sodales mi. </p>
 								

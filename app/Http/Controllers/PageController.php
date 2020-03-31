@@ -40,7 +40,7 @@ class PageController extends Controller
         
     }
     public function getCreatePage(){
-    	return view('admin.pages.Createpage');
+    	return view('admin.pages.CreatePage');
     }
     public function postCreatePage(Request $request){
     	$this-> Validate($request,[
@@ -59,7 +59,7 @@ class PageController extends Controller
     }
     public function getEditPage(Request $request){
     	$info_page = Page::findBySlugOrFail($request -> id_page);
-    	return view('admin.pages.Createpage',compact('info_page'));
+    	return view('admin.pages.CreatePage',compact('info_page'));
 
     }
     public function postEditPage(Request $request){
@@ -78,7 +78,7 @@ class PageController extends Controller
     		session()->put('error','error');
     	}
     	$info_page = Page::findBySlugOrFail($data -> slug);
-    	return view('admin.pages.Createpage',compact('info_page'));
+    	return view('admin.pages.CreatePage',compact('info_page'));
 
     }
     public function deletePages(Request $request){

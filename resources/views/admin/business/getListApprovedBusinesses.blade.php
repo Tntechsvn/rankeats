@@ -9,7 +9,7 @@
       <div class="card-tools">
         <form action="{{route('getListApprovedBusinesses')}}" method="get">
           <div class="input-group input-group-sm" style="width: 150px;">
-            <input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
+            <input type="text" name="keyword" id="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 
             <div class="input-group-append">
               <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -73,19 +73,19 @@
                         </div>
                       </td>
                       @if($data->url_img != null)                       
-                      <td class="mailbox-subject"><img src="{{'http://localhost/rankeats/public/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
+                      <td class="mailbox-subject"><img src="{{asset('').'/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
                       @else
                       <td class="mailbox-subject">
-                        <img src="http://localhost/rankeats/public/vendor/adminlte/dist/img/AdminLTELogo.png" style="width: 100px;">
+                        <img src="{{asset('').'/vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
                       </td>
                       @endif
-                      <td><a href="{{route('getEditBusiness',$data->id)}}">{{$data -> name}}</a></td>
-                      <td>{{$data -> email}}</td>                     
-                      <td>{{$data -> location->address}}</td>  
+                      <td>{{$data -> name}}</td>
+                      <td style="width: 15%">{{$data -> email}}</td>                     
+                      <td style="width: 20%">{{$data -> location->address}}</td>  
                       <td>{{$data -> created_at}}</td>
                       <td>
-                        <button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
-                        <a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
+                        {{--<a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>--}}
+                        <a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="{{$data->permalink()}}" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
                       </td>
                     </tr>
                     @endforeach
@@ -138,10 +138,10 @@
         arr.push($(this).data('row-id'));
       });
       if(arr.length <= 0 ) {
-        alert("Vui Lòng Chọn Mục Muốn Xóa.");
+        alert("Please select the item you want to delete.");
         return;
       } else {
-        WRN_PROFILE_DELETE = "Bạn Có Chắc Muốn Xóa"+(arr.length > 1 ? "these" : "this") + " row?";
+        WRN_PROFILE_DELETE = "Are You Sure You Want To Delete"+(arr.length > 1 ? "these" : "this") + " row?";
       }
       var checked = confirm(WRN_PROFILE_DELETE);
       if(checked == true) {
@@ -158,9 +158,9 @@
             console.log(data);
             if(data == "Success"){
               window.location.reload();
-              alert('Xóa Danh Mục Nhà Hàng Thành Công');
+              alert('Delete Success');
             }else{
-              alert('Bạn Không Thể Xóa Danh Mục Này');
+              alert('Delete Errors');
             }
           }
         });
