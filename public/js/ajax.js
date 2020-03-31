@@ -90,3 +90,8 @@ $(document).on('click','.vote_now',function(){
   });
 });
 
+
+$(document).on('change','select[name=state]', function(){
+  var val = $(this).val();
+  // alert(val);
+});
