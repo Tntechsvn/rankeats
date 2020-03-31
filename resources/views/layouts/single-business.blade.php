@@ -152,6 +152,11 @@
 							    	</div>
 
 							    	<p>{{$info_business->description}}</p>
+
+							    	<div style="text-align: right;">
+							    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+							    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a>
+							    	</div>
 							    	<div class="star-view clear p-b-10">
 							    		<ul class="star-rate">
 								    		@php
@@ -177,7 +182,61 @@
 								@endforeach
 				    		@endif
 					    </div>
-					    <div class="tab-pane" id="picture">Liên Hệ</div>
+					    <div class="tab-pane" id="picture">
+					    	<div class="">
+					    		<ul id="lightgalleryphoto">
+					    			
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+	                                    <a href="images/pizza.jpg" class="lightbox">
+	                                        
+	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                    </a>       
+	                                </li>
+					    		</ul>
+					    	</div>
+					    </div>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -191,16 +250,110 @@
 	</div>
 </div>
 
+{{-- modal --}}
+<div id="vote_review" class="modal fade in" role="dialog">
+  <div class="modal-dialog" style="max-width: 500px;width: 100%;">
+
+    <!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title bold">EAT Rank/Reviews</h4>
+	  </div>
+	  <div class="modal-body">
+		<form class="" action="" method="get">
+			<div class="form-group">
+				<select class="test" multiple="multiple"  name="Category_type[]">
+					<optgroup>
+						@foreach($info_business->business_category as $menu)
+
+						<option value="{{$menu->id}}">{{$menu->category_name}}</option>
+						@endforeach
+					</optgroup>
+				</select>
+				<span class="errors"></span>
+			</div>
+			<div class="tap-pane">
+				<ul class="nav nav-tabs" style="border-bottom: none;">
+					<li><a href="#vote" data-toggle="tab" class="btn active"><i class="fas fa-thumbs-up"></i> Vote</a></li>
+					<li><a href="#write" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Write Reviews</a></li>
+				</ul>
+			</div>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="vote">
+			    	<p>Which area(s) dose "business name" have the best "Eat item"?</p>
+			    	<div class="form-group">
+			    		Country
+		    			<input type="text" class="form-control" name="location_country" value="" >
+			    	</div>
+			    	<div class="form-group">
+			    		City
+		    			<input type="text" class="form-control" name="location_city" value="" >
+			    	</div>
+			    	<div class="form-group">
+			    		State
+		    			<input type="text" class="form-control" name="location_cstate" value="" >
+			    	</div>
+			    	
+			    	<div>
+				    	<button class="btn btn-primary" type="submit" name="submit">Done</button>
+				    </div>
+
+				</div>
+			    <div class="tab-pane" id="write">
+			    	<div class="popup-star" style="text-align: center;">
+						<label class="customstar star-1">							
+							<input type="radio" name="rate" value="1" checked="checked">
+							<span class="starimg checkstar" ></span>
+						</label>
+						<label class="customstar star-2">							
+							<input type="radio" name="rate" value="2">
+							<span class="starimg" ></span>
+						</label>
+						<label class="customstar star-3">							
+							<input type="radio" name="rate" value="3">
+							<span class="starimg" ></span>
+						</label>
+						<label class="customstar star-4">							
+							<input type="radio" name="rate" value="4">
+							<span class="starimg" ></span>
+						</label>
+						<label class="customstar star-5">							
+							<input type="radio" name="rate" value="5">
+							<span class="starimg "></span>
+						</label>
+					</div>
+					<div class="form-group reviewBox">
+						<textarea class="form-control" placeholder="Write Your Review" name="description" style="height: 150px;"></textarea>
+					</div>
+
+				    <div>
+				    	<button class=" btn btn-default" data-dismiss="modal">Cancel</button>
+				    	<button class="btn btn-primary" type="submit" name="submit">Submit</button>
+				    </div>
+				</div>
+			</div>
+		</form>
+	  </div>
+	</div>
+    
+  </div>
+</div>
+
 @endsection
 
 @section('script')
+	<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+	<script src="lightbox/js/lightgallery-all.min.js"></script>
+	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			// $(document).on('click','.starimg',function(){
 			// 	$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
 			// 	$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 			// });
-
+			$('.test').fSelect();
+			$("#lightgalleryphoto").lightGallery();
 
 			$(document).on('click','.check-bookmark',function(){
 				var $this = $(this);
