@@ -337,6 +337,28 @@ public function my_businesses(){
     return view('layouts_profile.my-businesses');
 }
 
+public function ajaxcitystate(Request $request){
+    $state_id = $request->id;
+
+    $citys = City::select('cities.*')
+    ->where('state_id','=',$state_id)->get();
+    // dd($city);
+    // $data = $state->cities()->get();
+
+    $output = '<option value="" selected >Select City</option>';
+    if(count($citys)>0){
+        foreach($citys as $city){
+            $output .= '<option value="'.$city->name.'" >'.$city->name.'</option>';             
+        }
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => $output
+    ]);
+
+}
+
 
 
 }

@@ -136,5 +136,9 @@
 		'as' => 'rank-join',
 		'uses' => 'UserController@postSignUp'
 	]);
+	Route::post('/ajaxcitystate', [
+		'as' => 'ajaxcitystate',
+		'uses' => 'HomeController@ajaxcitystate'
+	]);
 	
 // end hungpro
