@@ -316,7 +316,7 @@
 </div>
 @endif
 
-
+@auth
 <div id="adver-pop" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
   <div class="modal-dialog">
 
@@ -339,17 +339,15 @@
           </div>
           <div class="form-group">
             <select class="test state"  name="state">
-              <option value=""disabled selected="selected">Select State</option>
+              <option value="" selected="selected">Select State</option>
               @foreach($state as $data)
                 <option value="{{$data->id}}">{{$data->name}}</option>
               @endforeach
             </select>
           </div>
           <div class="form-group">
-            <select class="test city" multiple="multiple"  name="city">
-              <optgroup>
-                <option value=""></option>
-              </optgroup>
+            <select class="city" name="city">
+                <option value="" selected="selected">Select City</option>
             </select>
           </div>
 
@@ -359,8 +357,11 @@
 
           <div class="form-group">
             <p>Please provide a picture of your EATS a your business</p>
-            <input type="file" name="" accept="image/*">
-            <div id="preview-avatar" class="pull-left"></div>
+            <input class="inputPic" type="file" name="" accept="image/*">
+            
+          </div>
+          <div style="width: 100%;float: left;">
+            <div id="preview-images" class="pull-left"></div>
           </div>
           <div class="form-group">
             <label for="check-paypal">
@@ -380,6 +381,8 @@
 
   </div>
 </div>
+@endauth
+<input type="hidden" name="ajaxcitystate" value="{{route('ajaxcitystate')}}">
 @endsection
 
 @section('script')
@@ -412,9 +415,9 @@
   <script type="text/javascript">
     $(document).ready(function() {
 
-      $('#inputPic').click(function(e) {
+      $('.inputPic').click(function(e) {
 
-        var previews = document.getElementById('preview-avatar');
+        var previews = document.getElementById('preview-images');
         if (previews.hasChildNodes()) {
           alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
           e.preventDefault();
@@ -434,18 +437,18 @@
         }
       };
 
-      $('#inputPic').on('change', function() {
+      $('.inputPic').on('change', function() {
 
-        images(this, '#preview-avatar');
-        $('#preview-avatar-old').addClass('hidden');
+        images(this, '#preview-images');
+        // $('#preview-avatar-old').addClass('hidden');
       });
       /*clear the file list when image is clicked*/
       $(document).on('click','.deletetimg',function(){
         if(confirm("Bạn Muốn Xóa Ảnh Này?"))
         {
           $(this).parent().remove();
-          $("#inputPic").val(null);/* xóa tên của file trong input*/
-          $('#preview-avatar-old').removeClass('hidden');
+          $(".inputPic").val(null);/* xóa tên của file trong input*/
+          // $('#preview-avatar-old').removeClass('hidden');
         }
         else
           return false;
