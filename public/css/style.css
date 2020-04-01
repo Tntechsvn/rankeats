@@ -1574,7 +1574,7 @@ span.select2{
 .pr-dtail ul li {color: #777;font-size: 14px;margin: 5px 9px 0 0;}
 .pr-dtail ul li:first-child {color: #000;}
 .imbx-detail > p {font-size: 15px;color: #000;margin: 5px 0 15px 15px;}
-.imbx-detail > a {color: #0073bb;}
+.imbx-detail > a {color: #fff;}
 .pr-dtl ul li i {font-size: 24px; margin: 5px 0 0 0; color: #ffbc05;}
 .pr-dtail {margin: -20px 0 0 0;}
 a.btn.btn-warning.vote_now {
@@ -2145,13 +2145,37 @@ input[type=number]::-webkit-outer-spin-button {
 #eatrank svg {
 	color: #0073bb;
 }
-
-
-
-
-
-
-
+.star-rate li {
+	display: inline-block;
+}
+#eatrank {
+	position: relative;
+}
+#eatrank .star-view {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+#eatrank .star-view svg {
+	color: #ffbc05;
+}
+#eatrank .list-review {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e1e1e1;
+}
+.reiview.description .tab-content {
+    border: 1px solid #e1e1e1;
+}
+#picture ul {
+	padding: 0;
+}
+#picture ul li{
+	display: inline-block;
+    margin: 0 5px 10px 0;
+}
+.fs-label {
+	height: 30px;
+}
 
 
 
