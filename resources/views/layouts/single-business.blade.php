@@ -13,7 +13,7 @@
 					@if($info_business->activated_on)<button>Verified<i class="far fa-check-square"></i></button> @endif
 					<div>
 						<a class="check-bookmark" href="javascript:;" data-id="{{$info_business->id}}" data-user="{{Auth::id()}}">
-							@if($bookmark)
+							@if($info_business->is_bookmarked())
 							<i class="fas fa-bookmark"></i> bookmark
 							@else
 							<i class="far fa-bookmark"></i> bookmark

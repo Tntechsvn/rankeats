@@ -259,24 +259,25 @@ public function create_advertise(){
     return view('layouts_profile.create-advertise',compact('plan_details','advertisement'));
 }
 public function eat_reviews(){
-    $user_id = Auth::user()->id;
-    /*list reviews for business*/
-    $list_reviews = Review::select('reviews.*')
-    ->where('user_id','=',$user_id)
-    ->orderBy('created_at', 'desc')
-    ->paginate(Myconst::PAGINATE_ADMIN);
+    if(Auth()){
+        $user_id = Auth::id();
+        /*list reviews for business*/
+        $list_reviews = Review::select('reviews.*')
+        ->where('user_id','=',$user_id)
+        ->orderBy('created_at', 'desc')
+        ->paginate(Myconst::PAGINATE_ADMIN);
 
-    return view('layouts_profile.eat-review',compact('list_reviews'));
+        return view('layouts_profile.eat-review',compact('list_reviews'));
+    }else{
+        return view('layouts.index');
+    }
+    
 }
 /*single_restaurent*/
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
     $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
-    $bookmark = Bookmark::select('*')
-    ->where('user_id','=',Auth::user()->id)
-    ->where('business_id','=',$request -> id_business)
-    ->first();
-    return view('layouts.single-business',compact('info_business','list_reviews','bookmark'));
+    return view('layouts.single-business',compact('info_business','list_reviews'));
 }
 public function ajax_bookmark(Request $request){
     $data = $request->toArray();
@@ -334,7 +335,30 @@ public function business_review(){
     return view('layouts_profile.business-review');
 }
 public function my_businesses(){
-    return view('layouts_profile.my-businesses');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.my-businesses',compact('info_business'));
+}
+
+public function ajaxcitystate(Request $request){
+    $state_id = $request->id;
+
+    $citys = City::select('cities.*')
+    ->where('state_id','=',$state_id)->get();
+    // dd($city);
+    // $data = $state->cities()->get();
+
+    $output = '<option value="" selected >Select City</option>';
+    if(count($citys)>0){
+        foreach($citys as $city){
+            $output .= '<option value="'.$city->name.'" >'.$city->name.'</option>';             
+        }
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => $output
+    ]);
+
 }
 
 
