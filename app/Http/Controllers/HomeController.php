@@ -259,14 +259,19 @@ public function create_advertise(){
     return view('layouts_profile.create-advertise',compact('plan_details','advertisement'));
 }
 public function eat_reviews(){
-    $user_id = Auth::user()->id;
-    /*list reviews for business*/
-    $list_reviews = Review::select('reviews.*')
-    ->where('user_id','=',$user_id)
-    ->orderBy('created_at', 'desc')
-    ->paginate(Myconst::PAGINATE_ADMIN);
+    if(Auth()){
+        $user_id = Auth::user()->id;
+        /*list reviews for business*/
+        $list_reviews = Review::select('reviews.*')
+        ->where('user_id','=',$user_id)
+        ->orderBy('created_at', 'desc')
+        ->paginate(Myconst::PAGINATE_ADMIN);
 
-    return view('layouts_profile.eat-review',compact('list_reviews'));
+        return view('layouts_profile.eat-review',compact('list_reviews'));
+    }else{
+        return view('layouts.index');
+    }
+    
 }
 /*single_restaurent*/
 public function single_business(Request $request){
@@ -334,7 +339,8 @@ public function business_review(){
     return view('layouts_profile.business-review');
 }
 public function my_businesses(){
-    return view('layouts_profile.my-businesses');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.my-businesses',compact('info_business'));
 }
 
 public function ajaxcitystate(Request $request){
