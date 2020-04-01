@@ -25,6 +25,21 @@
 						<div class="clear"></div>
 						<form class="" action="#" method="post">
 							<div class="form-group">
+								<label>Business Picture</label>
+								<div class="form-group"  style="text-align: center;">
+									<div  class="dt-imgs">
+										<div class="dt-close" style="position:relative;">
+											<div id="previews" class="preview-img" style="width: 250px;">@if($info_business ->url_img != null)<img class='thumb' src="{{asset('').'storage/'.$info_business ->url_img}}" style='width:100%;'><div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>@endif</div>
+										</div>
+									</div>
+								</div>
+								<label for="image_restaurant" class="choose_img">
+									<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;"><i class="fas fa-paperclip"></i> Choose image...</span>
+									<input id="image_restaurant" class="hidden" type="file" value="" accept="image/*">
+								</label>
+
+							</div>
+							<div class="form-group">
 								<p>Name</p>
 								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-user"></i></span>
 									<input type="email" class="form-control " name="email" value="{{old('name')}}">
@@ -70,21 +85,26 @@
 								<div class="form-group" style="width: 30%">
 								
 									<div class="input-group" style="width: 100%">
-										<p>state</p>
-										<input type="text" class="form-control " name="address" value="{{old('name')}}">
-										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+										<p>State</p>
+										 	<select class="test state"  name="state">
+								             	 <option value="" selected="selected">Select State</option>
+								              	@foreach($state as $data)
+							                	<option value="{{$data->id}}">{{$data->name}}</option>
+								              	@endforeach
+							            	</select>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
 									<div class="input-group" style="width: 100%">
 										<p>City</p>
-										<input type="text" class="form-control " name="address" value="{{old('name')}}">
-										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+										<select class="city" name="city">
+							                <option value="" selected="selected">Select City</option>
+							            </select>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
 									<div class="input-group" style="width: 100%">
-										<p>Zip code</p>
+										<p>Zipcode</p>
 										<input type="text" class="form-control " name="address" value="{{old('name')}}">
 										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 									</div>
@@ -95,14 +115,19 @@
 							</div>
 							<div class="form-group">
 								<span>Time open - close</span>
+										
 								<div class="row">
-									<div class="col-lg-6">
-										<span>Sun - </span>
+									@php 
+										$days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+									@endphp
+									@for($i=0;$i<=6;$i++)
+									<div class="col-lg-6 uptime" style="margin-bottom: 10px;">
+										<span class="bold" style="display: inline-block;width: 45px;">{{$days[$i]}}</span>
 										<select class="choose-method" name="">
-											<option value="1">Open</option>
-											<option value="2">Close</option>
+											<option value="open">Open</option>
+											<option value="close" selected>Close</option>
 										</select>
-										<div class="" style="margin-top: 20px;padding-left: 38px;">
+										<div class="show_time hidden" style="margin-top: 10px;padding-left: 50px;">
 											<select class="time-open choose-time" name="">
 												<option value="1">Open</option>
 												<option value="2">Close</option>
@@ -114,13 +139,7 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-lg-6">
-										<span>Mon - </span>
-										<select class="choose-method" name="">
-											<option value="1">Open</option>
-											<option value="2">Close</option>
-										</select>
-									</div>
+									@endfor
 								</div>
 							</div>
 							<div class="form-group">
@@ -212,10 +231,64 @@
 
 	</div>
 </div>
+
+<input type="hidden" name="ajaxcitystate" value="{{route('ajaxcitystate')}}">
 @endsection
 @section('script')
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
-		
+		$(document).ready(function(){
+			$('.test').fSelect();
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).on('change','.choose-method',function(){
+			var method = $(this).val();
+			if(method == "open"){
+				$(this).closest('.uptime').find('.show_time').removeClass('hidden');
+			}
+			if(method == "close"){
+				$(this).closest('.uptime').find('.show_time').addClass('hidden');
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$('#image_restaurant').click(function(e) {
+
+			var previews = document.getElementById('previews');
+			if (previews.hasChildNodes()) {
+				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				e.preventDefault();
+			}			
+		});
+		var images = function(input, imgPreview) {
+			if (input.files) {
+				var arr = [];
+				var filesAmount = input.files.length;
+				for (i = 0; i < filesAmount; i++) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style='width:100%;'>").append('<div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);
+					}
+					reader.readAsDataURL(input.files[i]);
+				}
+			}
+		};
+
+		$('#image_restaurant').on('change', function() {
+			images(this, '#previews');
+		});
+		/*clear the file list when image is clicked*/
+		$(document).on('click','.deletetimg',function(){
+			if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+			{
+				$(this).closest('#previews').html('');
+				$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+			}
+			else
+				return false;
+		});
+	});
 	</script>
 @stop
