@@ -8,13 +8,13 @@ $(function () {
   	function after_ajax() {
     	$('body').find('.loading').remove();
   	}
-  	$(document).ajaxStart(function(){
-    	before_ajax();
-   	});
+  	// $(document).ajaxStart(function(){
+   //  	before_ajax();
+   // 	});
 
-  	$(document).ajaxComplete(function(){
-     	after_ajax();
-   	});
+  	// $(document).ajaxComplete(function(){
+   //   	after_ajax();
+   // 	});
 });
 
 // sign-in
@@ -90,3 +90,28 @@ $(document).on('click','.vote_now',function(){
   });
 });
 
+
+$(document).on('change','select[name=state]', function(){
+  // var val = $(this).val();
+  var form = $(this).closest('form');
+  var val = 1;
+  var url = $('input[name=ajaxcitystate]').val();
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      id: val
+    },
+    success:function(res){
+      if(res.success == true){
+          form.find('select.city').html(res.data);
+          form.find('select.city').fSelect();
+      }else{
+        
+      }
+    }
+  });
+});

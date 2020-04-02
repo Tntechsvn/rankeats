@@ -155,69 +155,72 @@ class HomeController extends Controller{
     }
 
     public function mysetting(){
-        return view('layouts_profile.setting');
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+        return view('layouts_profile.setting',compact('state'));
     }
     /*ajaxCity*/
     public function ajaxCity(Request $request){
-         if($request->get('name_state'))
-        {
-            $name_state = $request->get('name_state');
-            $state = State::select('states.*','countries.code')
-            ->join('countries','countries.id','=','states.country_id')
-            ->where('code','=','US')
-            ->where('states.name','=',$name_state)->first();
-            $data = $state->cities()->get();
+       if($request->get('name_state'))
+       {
+        $name_state = $request->get('name_state');
+        $state = State::select('states.*','countries.code')
+        ->join('countries','countries.id','=','states.country_id')
+        ->where('code','=','US')
+        ->where('states.name','=',$name_state)->first();
+        $data = $state->cities()->get();
 
 
-            $output = '<option value="" disabled selected >Select City</option>';
-            if(count($data)>0){
-                foreach($data as $row)
-                {
-                    $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
-                }
+        $output = '<option value="" disabled selected >Select City</option>';
+        if(count($data)>0){
+            foreach($data as $row)
+            {
+                $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
             }
-            echo $output;
         }
-
-    }
-    public function sign_up(){
-        $Country = Country::where('code','=','US')->first();
-        $state =  $Country->states()->get();
-        return view('layouts.register',compact('state'));
-    }
-    public function sign_in(){
-
-        return view('layouts.login');
+        echo $output;
     }
 
-    public function forgot_password(){
-        return view('layouts.forgot_password');
-    }
+}
+public function sign_up(){
+    $Country = Country::where('code','=','US')->first();
+    $state =  $Country->states()->get();
+    return view('layouts.register',compact('state'));
+}
+public function sign_in(){
 
-    public function menu_management(){
-        return view('layouts_profile.menu-management');
-    }
+    return view('layouts.login');
+}
 
-    public function review_management(){
-        $business_id = Auth::user()->business()->first()->id;
-        /*list reviews for business*/
-        $list_reviews = Review::select('reviews.*')
-        ->where('business_id','=',$business_id)
-        ->orderBy('created_at', 'desc')
-        ->paginate(Myconst::PAGINATE_ADMIN);
-        return view('layouts_profile.review-management',compact('list_reviews'));
-    }
+public function forgot_password(){
+    return view('layouts.forgot_password');
+}
 
-    public function info_management(){
-       /*info restaurant*/
-       $info_business = Auth::user()->business()->first();
-       /*category*/
-       $category = Category::where('status','=',1)->get();
+public function menu_management(){
+    return view('layouts_profile.menu-management');
+}
 
-       return view('layouts_profile.info-management',compact('info_business','category'));
-   }
-   public function advertise(){
-    return view('layouts.advertise');
+public function review_management(){
+    $business_id = Auth::user()->business()->first()->id;
+    /*list reviews for business*/
+    $list_reviews = Review::select('reviews.*')
+    ->where('business_id','=',$business_id)
+    ->orderBy('created_at', 'desc')
+    ->paginate(Myconst::PAGINATE_ADMIN);
+    return view('layouts_profile.review-management',compact('list_reviews'));
+}
+
+public function info_management(){
+ /*info restaurant*/
+ $info_business = Auth::user()->business()->first();
+ /*category*/
+ $category = Category::where('status','=',1)->get();
+
+ return view('layouts_profile.info-management',compact('info_business','category'));
+}
+public function advertise(){
+    $plan_details = new PlanDetail;
+    return view('layouts.advertise', compact('plan_details'));
 }
 
 public function privacy_policy(){
@@ -256,23 +259,28 @@ public function create_advertise(){
     return view('layouts_profile.create-advertise',compact('plan_details','advertisement'));
 }
 public function eat_reviews(){
-    $user_id = Auth::user()->id;
-    /*list reviews for business*/
-    $list_reviews = Review::select('reviews.*')
-    ->where('user_id','=',$user_id)
-    ->orderBy('created_at', 'desc')
-    ->paginate(Myconst::PAGINATE_ADMIN);
+    if(Auth()){
+        $user_id = Auth::user()->id;
+        /*list reviews for business*/
+        $list_reviews = Review::select('reviews.*')
+        ->where('user_id','=',$user_id)
+        ->orderBy('created_at', 'desc')
+        ->paginate(Myconst::PAGINATE_ADMIN);
 
-    return view('layouts_profile.eat-review',compact('list_reviews'));
+        return view('layouts_profile.eat-review',compact('list_reviews'));
+    }else{
+        return view('layouts.index');
+    }
+    
 }
 /*single_restaurent*/
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
     $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
     $bookmark = Bookmark::select('*')
-                ->where('user_id','=',Auth::user()->id)
-                ->where('business_id','=',$request -> id_business)
-                ->first();
+    ->where('user_id','=',Auth::user()->id)
+    ->where('business_id','=',$request -> id_business)
+    ->first();
     return view('layouts.single-business',compact('info_business','list_reviews','bookmark'));
 }
 public function ajax_bookmark(Request $request){
@@ -280,9 +288,9 @@ public function ajax_bookmark(Request $request){
     $check;
     $user = Auth::user();
     $bookmark = Bookmark::select('*')
-                ->where('user_id','=',$user->id)
-                ->where('business_id','=',$request -> business)
-                ->first();
+    ->where('user_id','=',$user->id)
+    ->where('business_id','=',$request -> business)
+    ->first();
     if($bookmark){
         $user->businesses()->detach([$data['business']]);
         $check = false;
@@ -301,9 +309,9 @@ public function ajax_bookmark(Request $request){
 public function vote_ajax(Request $request){
     $user = Auth::user();
     $vote = Vote::select('*')
-                ->where('user_id','=',$user->id)
-                ->where('business_id','=',$request->business)
-                ->first();
+    ->where('user_id','=',$user->id)
+    ->where('business_id','=',$request->business)
+    ->first();
     if($vote){
         return response()->json([
             'success' => false,
@@ -331,7 +339,30 @@ public function business_review(){
     return view('layouts_profile.business-review');
 }
 public function my_businesses(){
-    return view('layouts_profile.my-businesses');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.my-businesses',compact('info_business'));
+}
+
+public function ajaxcitystate(Request $request){
+    $state_id = $request->id;
+
+    $citys = City::select('cities.*')
+    ->where('state_id','=',$state_id)->get();
+    // dd($city);
+    // $data = $state->cities()->get();
+
+    $output = '<option value="" selected >Select City</option>';
+    if(count($citys)>0){
+        foreach($citys as $city){
+            $output .= '<option value="'.$city->name.'" >'.$city->name.'</option>';             
+        }
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => $output
+    ]);
+
 }
 
 
