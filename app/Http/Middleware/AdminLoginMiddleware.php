@@ -27,18 +27,14 @@ class AdminLoginMiddleware
             $check = Auth::user()-> deleted_at;
             if($check != null){
                 Auth::logout();
-                return redirect()-> route('getLogin')->with('error', 'Tài Khoản Không Tồn Tại');
+                return redirect()-> route('getLogin')->with('error', 'Account does not exist');
             }else{
-                if(Auth::user()->status == 1){
-                    Auth::logout();
-                    return redirect()->route('getLogin')->with('error', 'Tài khoản của bạn đã bị chặn, vui lòng liên hệ với quản trị viên');
-                }else{
-                    return $next($request);
-                }
+               
+                return $next($request);
             }
             
         }else{
-            return redirect()-> route('getLogin')->with('error', 'Tên đăng nhập hoặc tài khoản của bạn không chính xác');
+            return redirect()-> route('getLogin')->with('error', 'Your username or account is incorrect');
         }
     }
 }

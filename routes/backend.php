@@ -278,6 +278,12 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 		
 		});
 
+		/*thienvu*/
+		Route::get('advertisements', [
+			'as' => 'advertisements',
+			'uses' => 'AdminController@advertisements'
+		]);
+
 	});
 });
 

@@ -32,5 +32,23 @@ class Location extends Model
 		$this -> save();
 		return $this;
 	}
+	public function getIdCountryAttribute(){
+        $id_country = Country::where('name','=',$this ->country)->first();
+        if($id_country){
+        	return $id_country->id;
+        }
+    }
+    public function getIdStateAttribute(){
+        $id_state = State::where('name','=',$this -> state)->where('country_id','=',$this->IdCountry)->first();
+        if($id_state){
+        	return $id_state ->id;
+        }
+    }
+    public function getIdCityAttribute(){
+        $id_city = City::where('name','=',$this -> city)->where('state_id','=',$this->IdState)->first();
+        if($id_city){
+        	return $id_city ->id;
+        }
+    }
 	/*end knight*/
 }

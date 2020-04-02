@@ -31,7 +31,7 @@ class FrontEndLoginMiddleware
 		if(Auth::check()){
 			return $next($request);
 		}else{
-			 return redirect()->route('sign_in')-> with('message','Vui lòng đăng nhập để thực hiện thao tác');
+			 return redirect()->route('sign_in')-> with('message','Please log in to perform the operation');
 		}
 	}
 }

@@ -84,10 +84,10 @@
               				<td>{{$data -> business()->first()->name}}</td>
                       <td>{{$data -> business()->first()->location->state}}</td>
                       <td>{{$data -> business()->first()->location->city}}</td>
-                      
+
               				<td>
-              					<button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
-              					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
+              					<a href="{{route('getEditUser',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>
+                        <a href="{{$data -> business()->first()->permalink()}}"><button class="btn btn-warning" ><i class="fa fa-home" style="color: white;"></i></button></a>
               				</td>
               			</tr>
               			@endforeach
