@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use Carbon\Carbon;
 use App\PlanDetail;
+
 class Advertisement extends Model
 {
+	public function business(){
+		return $this -> belongsTo('App\Business', 'business_id', 'id');
+	}
+
 	public function plan_detail(){
 		return $this -> belongsTo('App\PlanDetail', 'plan_detail_id', 'id');
 	}
@@ -40,4 +45,62 @@ class Advertisement extends Model
 		}
 
 	}
+
+	// home
+	public function scopeHome($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->where('plan_details.pd_plan_id', 1);
+	}
+	// search
+	public function scopeSearch($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->whereIn('plan_details.pd_plan_id', [2,4]);
+	}
+	// state
+	public function scopeSearchState($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->where('plan_details.pd_plan_id', 4);
+	}
+	// city
+	public function scopeSearchCity($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->where('plan_details.pd_plan_id', 2);
+	}
+	// feature
+	public function scopeFeature($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->whereIn('plan_details.pd_plan_id', [5,7]);
+	}
+	// state feature
+	public function scopeFeatureState($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->where('plan_details.pd_plan_id', 7);
+	}
+	// city feature
+	public function scopeFeatureCity($query) {
+		return $query->with('business')
+			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
+			->where('plan_details.pd_plan_id', 5);
+	}
+
+	public function scopePending($query) {
+		return $query->where('active_date', '>',Carbon::now());
+	}
+
+	public function scopeActive($query) {
+		return $query->where('active_date', '<=',Carbon::now())->where('expiration_date', '>=',Carbon::now());
+	}
+
+	public function scopeExpired($query) {
+		return $query->where('expiration_date', '<=',Carbon::now());
+	}
+
+
+
 }
