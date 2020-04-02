@@ -382,7 +382,7 @@
   </div>
 </div>
 @endauth
-<input type="hidden" name="ajaxcitystate" value="{{route('ajaxcitystate')}}">
+
 @endsection
 
 @section('script')

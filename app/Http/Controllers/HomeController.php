@@ -251,6 +251,10 @@ public function bookmark(){
     $data_business = Auth::user()->businesses()->paginate(Myconst::PAGINATE_ADMIN);
     return view('layouts_profile.bookmark',compact('data_business'));
 }
+
+public function my_eat(){
+    return view('layouts_profile.my-eat');
+}
 /*create_advertise*/
 public function create_advertise(){
     $business_id = Auth::user()->business()->first()->id;
