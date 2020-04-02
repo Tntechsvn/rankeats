@@ -74,8 +74,12 @@ class LoginController extends Controller
 			$user = Auth::user();
 		}
 		if(isset($user)){
-
-			return redirect()->route('index');
+			if($user -> role_id == 1){
+				return redirect()->route('getListEats');
+			}else{
+				return redirect()->route('index');
+			}
+			
 
 		}else{
 			return view('layouts.login');

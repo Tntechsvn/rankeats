@@ -7,6 +7,9 @@ use Auth;
 use Storage;
 use App\Myconst;
 use App\User;
+use App\State;
+use App\City;
+use App\Country;
 use Hash;
 use App\Http\Controllers\ShareController;
 use App\Rules\Captcha;
@@ -18,10 +21,13 @@ class UserController extends Controller
      *
      * @return void
      */
-   /* public function __construct()
+   public function __construct()
     {
-        $this->middleware('auth');
-    }*/
+        $Country = Country::where('code','=','US')->first();
+        $state_cstr =  $Country->states()->get();
+
+        view()->share(['state_cstr'=>$state_cstr]);
+    }
 
     public function getListReviewers(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
@@ -92,7 +98,8 @@ class UserController extends Controller
 			'password' => 'nullable|min:6|max:32',
 			're_password' => 'same:password',
 			'address' => 'required',
-			'gender' => 'required',
+            'state' => 'required',
+            'zipcode' => 'required',
             'firstname' => 'required',
             'lastname' => 'required',
 			
@@ -144,7 +151,7 @@ class UserController extends Controller
         if($data->success){
             $user ->sendEmailVerificationNotification();
             //session()->put('success',$data->message);
-            return redirect()->route('sign_in')-> with('message','Vui lòng xác minh email của bạn trước khi đăng nhập');
+            return redirect()->route('sign_in')-> with('message','Please verify your email before signing in');
         }else{
             session()->put('error',$data->message);
             return redirect()->back();

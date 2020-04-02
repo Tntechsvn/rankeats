@@ -107,14 +107,17 @@ class User extends Authenticatable implements MustVerifyEmail
         }else{
             $this -> user_title = $request -> check;
         }
+        if($request -> user_title){
+             $this -> user_title = $request -> user_title;
+        }
         
         if($request -> password != null){
             $this -> password = bcrypt($request ->password);
         }
         $this -> url_avatar = $url_avatar;
         /*$birthday = new Carbon($request->birthday);*/
-        if($request -> birthday){
-            $this -> birthday = date("Y-m-d H:i:s",strtotime($request -> birthday));
+        if($request -> created_at){
+            $this -> created_at = date("Y-m-d H:i:s",strtotime($request -> created_at));
         }
         if($address){
             $this -> address = $address;
