@@ -155,7 +155,7 @@
 
 							    	<div style="text-align: right;">
 							    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
-							    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a>
+							    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 							    	</div>
 							    	<div class="star-view clear p-b-10">
 							    		<ul class="star-rate">
@@ -263,40 +263,49 @@
 	  <div class="modal-body">
 		<form class="" action="" method="get">
 			<div class="form-group">
-				<select class="test" multiple="multiple"  name="Category_type[]">
+				Choose eat
+				<select class="test choose_dish" multiple="multiple"  name="Category_type[]">
 					<optgroup>
 						@foreach($info_business->business_category as $menu)
-
-						<option value="{{$menu->id}}">{{$menu->category_name}}</option>
+							<option value="{{$menu->id}}">{{$menu->category_name}}</option>
 						@endforeach
 					</optgroup>
 				</select>
-				<span class="errors"></span>
+				<span class="errors e-dish"></span>
 			</div>
 			<div class="tap-pane">
 				<ul class="nav nav-tabs" style="border-bottom: none;">
-					<li><a href="#vote" data-toggle="tab" class="btn active"><i class="fas fa-thumbs-up"></i> Vote</a></li>
-					<li><a href="#write" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Write Reviews</a></li>
+					<li><a href="#vote" data-toggle="tab" class="btn active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a></li>
+					<li><a href="#write" data-toggle="tab" class="btn write-tab"><i class="fas fa-star"></i> Write Reviews</a></li>
 				</ul>
 			</div>
 			<div class="tab-content">
 			    <div class="tab-pane active" id="vote">
 			    	<p>Which area(s) dose "business name" have the best "Eat item"?</p>
-			    	<div class="form-group">
+			    	{{-- <div class="form-group">
 			    		Country
 		    			<input type="text" class="form-control" name="location_country" value="" >
+			    	</div> --}}
+			    	<div class="form-group">
+			    		State
+		    			<select class="test state"  name="state">
+			             	 <option value="" selected="selected">Select State</option>
+			              	@foreach($state as $data)
+		                	<option value="{{$data->id}}">{{$data->name}}</option>
+			              	@endforeach
+		            	</select>
+		            	<span class="errors e-state"></span>
 			    	</div>
 			    	<div class="form-group">
 			    		City
-		    			<input type="text" class="form-control" name="location_city" value="" >
-			    	</div>
-			    	<div class="form-group">
-			    		State
-		    			<input type="text" class="form-control" name="location_cstate" value="" >
+		    			<select class="city" name="city">
+			                <option value="" selected="selected">Select City</option>
+			            </select>
+			            <span class="errors e-city"></span>
 			    	</div>
 			    	
 			    	<div>
-				    	<button class="btn btn-primary" type="submit" name="submit">Done</button>
+				    	<button class="btn btn-primary done-vote" type="submit">Done</button>
 				    </div>
 
 				</div>
@@ -348,10 +357,10 @@
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			// $(document).on('click','.starimg',function(){
-			// 	$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
-			// 	$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
-			// });
+			$(document).on('click','.starimg',function(){
+				$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
+				$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
+			});
 			$('.test').fSelect();
 			$("#lightgalleryphoto").lightGallery();
 
@@ -386,6 +395,33 @@
 			        }
 				});
 			});
+
+
+			$(document).on('click','.done-vote',function(e){
+				e.preventDefault();
+				var form = $(this).closest('form');
+				var choose_dish = form.find('.choose_dish').val();
+				var choose_state = form.find('.state').val();
+				var choose_city = form.find('.city').val();
+				if(choose_dish == null){
+					form.find('.e-dish').html("error");
+					return false;
+				}
+				if(choose_state == ""){
+					form.find('.e-state').html("error");
+					return false;
+				}
+				if(choose_city == ""){
+					form.find('.e-city').html("error");
+					return false;
+				}
+				form.find('.vote-tab').removeClass('active');
+				form.find('#vote').removeClass('active');
+				form.find('.write-tab').addClass('active');
+				form.find('#write').addClass('active');
+			});
+
+
 		});
 	</script>
 @stop

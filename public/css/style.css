@@ -1647,7 +1647,7 @@ input#location_search {
 }
 .input_dish::after{
 	position: absolute;
-	content: "IN";
+	content: "FIND";
 	width: 50px;
     top: 0;
     left: 0;
@@ -2089,6 +2089,7 @@ input[type=number]::-webkit-outer-spin-button {
     height: 35px;
     border-radius: 5px;
     padding-left: 15px;
+    border: 1px solid #a9a9a9;
 }
 .location-res thead {
 	background-color: #f2f2f2;

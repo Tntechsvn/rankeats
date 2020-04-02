@@ -7,7 +7,7 @@
 				<div id="categoryList"></div>
 			</div>
 
-			<div class="input_dish">
+			<div class="input_state">
 				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_search" name="state" placeholder="City or State" value="@if(isset($state_search)){{$state_search}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
 				<div id="LocationList"></div>

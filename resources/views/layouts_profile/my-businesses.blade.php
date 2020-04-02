@@ -128,15 +128,10 @@
 											<option value="close" selected>Close</option>
 										</select>
 										<div class="show_time hidden" style="margin-top: 10px;padding-left: 50px;">
-											<select class="time-open choose-time" name="">
-												<option value="1">Open</option>
-												<option value="2">Close</option>
-											</select>
+											
+											<input class="timepic time-open choose-time" type="text" value="" name="time-open" autocomplete="off" />
 											-
-											<select class="time-close choose-time" name="">
-												<option value="1">Open</option>
-												<option value="2">Close</option>
-											</select>
+											<input class="timepic time-close choose-time" type="text" value="" name="time-close" autocomplete="off" />
 										</div>
 									</div>
 									@endfor
@@ -232,13 +227,25 @@
 	</div>
 </div>
 
-<input type="hidden" name="ajaxcitystate" value="{{route('ajaxcitystate')}}">
+
 @endsection
 @section('script')
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('.test').fSelect();
+			$('.timepic').timepicker({
+		        timeFormat: 'H:mm',
+		        interval: 30,
+		        // minTime: '10',
+		        // maxTime: '8:00pm',
+		        // defaultTime: '12',
+		        // startTime: '10:00',
+		        dynamic: false,
+		        dropdown: true,
+		        scrollbar: true,
+		        zindex: 9999999
+		    });
 		});
 	</script>
 	<script type="text/javascript">

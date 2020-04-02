@@ -22,7 +22,8 @@ class AdminController extends Controller
 				return view('admin.home');
 			}else{
 				Auth::logout();
-				return view('vendor.adminlte.login');
+				// return view('vendor.adminlte.login');
+				return redirect()->back();
 			}
 			
 		}else{
