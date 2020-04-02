@@ -308,18 +308,48 @@ public function vote_ajax(Request $request){
     ->where('user_id','=',$user->id)
     ->where('business_id','=',$request->business)
     ->first();
+    $data_business = Business::find($request->business);
+    $city_id = $data_business->location->IdCity;
     if($vote){
         return response()->json([
             'success' => false,
             'message' => "Would you like to change your vote?"
         ]);
     }else{
-        $arr = $user->vote()->pluck('business_id');
-        $arr[] = $request->business;
-        $user->vote()->sync($arr);
-        return response()->json([
-            'success' => true
-        ]);
+        $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
+        if($check_vote_city ){
+             $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->delete();
+             $new_vote = new Vote;
+             $new_vote -> user_id = $user->id;
+             $new_vote -> business_id = $data_business->id;
+             $new_vote -> state_id = $data_business->location->IdState;
+             $new_vote -> city_id = $city_id;
+
+             /*vote = 1 vote cho business bằng 2 vote cho eat*/
+             $new_vote -> type_vote = 1;
+             $new_vote -> save();
+
+             return response()->json([
+                'success' => true
+            ]);
+
+        }else{
+            
+            $new_vote = new Vote;
+            $new_vote -> user_id = $user->id;
+            $new_vote -> business_id = $data_business->id;
+            $new_vote -> state_id = $data_business->location->IdState;
+            $new_vote -> city_id = $city_id;
+            
+            /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            $new_vote -> type_vote = 1;
+            $new_vote -> save();
+
+            return response()->json([
+                'success' => true
+            ]);
+        }
+        
     }
 
 }
