@@ -260,7 +260,7 @@ public function create_advertise(){
 }
 public function eat_reviews(){
     if(Auth()){
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         /*list reviews for business*/
         $list_reviews = Review::select('reviews.*')
         ->where('user_id','=',$user_id)
@@ -277,11 +277,7 @@ public function eat_reviews(){
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
     $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
-    $bookmark = Bookmark::select('*')
-    ->where('user_id','=',Auth::user()->id)
-    ->where('business_id','=',$request -> id_business)
-    ->first();
-    return view('layouts.single-business',compact('info_business','list_reviews','bookmark'));
+    return view('layouts.single-business',compact('info_business','list_reviews'));
 }
 public function ajax_bookmark(Request $request){
     $data = $request->toArray();
