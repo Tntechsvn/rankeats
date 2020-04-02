@@ -32,4 +32,7 @@
 		</li>
 		@endif
 	@endif
+	<li class="{{ Route::currentRouteNamed('my_eat') ? 'active' : '' }}">
+		<a href="{{route('my_eat')}}"><i class="fas fa-plus-circle"></i>My EATS</a>
+	</li>
 </ul>

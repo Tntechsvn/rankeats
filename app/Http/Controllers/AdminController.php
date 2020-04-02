@@ -20,18 +20,19 @@ class AdminController extends Controller
     }*/
 
     public function getLogin(){
-    	if(Auth::user()){
-    		if(Auth::user()->role->id == 1){
-    			return view('admin.home');
-    		}else{
-    			Auth::logout();
-    			return view('vendor.adminlte.login');
-    		}
-
-    	}else{
-    		return view('vendor.adminlte.login');
-    	}
-    }
+		if(Auth::user()){
+			if(Auth::user()->role->id == 1){
+				return view('admin.home');
+			}else{
+				Auth::logout();
+				// return view('vendor.adminlte.login');
+				return redirect()->back();
+			}
+			
+		}else{
+			return view('vendor.adminlte.login');
+		}
+	}
 
     public function advertisements(){
     	// $ads = Advertisement::with('business')->get();
@@ -52,4 +53,5 @@ class AdminController extends Controller
     			'ads_expired_home', 'ads_expired_search', 'ads_expired_feature',
     		));
     }
+    
 }

@@ -49,38 +49,17 @@
 								<span class="errors">{{$errors -> first('name')}}</span>
 							</div>
 							<div class="form-group">
+								<label for="exampleInputEmail1">First Name</label>
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{$user->first_name}}">
 									<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
+								<label for="exampleInputEmail1">Last Name</label>
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{$user->last_name}}">
 									<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail1">Gender</label>
-								<select class="form-control select2" style="width: 100%;" name="gender">
-									<option value="" selected="selected">Chose</option>
-									<option value="1" @if($user->gender == 1){{"selected"}}@endif >Male</option>
-									<option value="2" @if($user->gender == 2){{"selected"}}@endif>Female</option>
-									<option value="3" @if($user->gender == 3){{"selected"}}@endif>Other</option>
-								</select>
-								<span class="bg-danger color-palette">{{$errors -> first('gender')}}</span>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail1">Birthday</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-									</div>
-									@php
-										$date = date("d-m-Y",strtotime($user->birthday))
-										
-									@endphp
-									<input type="text" name="birthday" class="form-control" data-inputmask-alias="datetime"data-inputmask-inputformat="dd-mm-yyyy" data-mask value="{{$date}}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -89,15 +68,54 @@
 								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 							</div>
 							<div class="form-group">
-								<label for="exampleInputEmail1">Country</label>
-								<input type="text" name="search" id="search" class="form-control" value="@if($user->address != null){{$user->location->address}}@endif" />
-								<input  type="hidden" id="longitude" name="longitude" value="@if($user->address != null){{$user->location->longitude}}@endif">
-								<input  type="hidden" id="latitude" name="latitude" value="@if($user->address != null){{$user->location->latitude}}@endif">
-								<input  type="hidden" id="address" name="address" value="@if($user->address != null){{$user->location->address}}@endif">
-								<input  type="hidden" id="city" name="city" value="@if($user->address != null){{$user->location->city}}@endif">
-								<input  type="hidden" id="state" name="state" value="@if($user->address != null){{$user->location->state}}@endif">
-								<input  type="hidden" id="country" name="country" value="@if($user->address != null){{$user->location->country}}@endif">
-								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+								<label for="inputBirthday">Address </label>
+								<div class="form-group">
+									<select class="form-control select2" name="state" id="state_profile">
+										<option value=""disabled selected="selected">Select State</option>
+										@foreach($state_cstr as $data)
+										<option value="{{$data->name}}" 
+											@if($user->address != null)
+											@if($user->location->state == $data->name){{'selected'}}@endif
+											@endif"
+											>{{$data->name}}
+										</option>
+										@endforeach
+									</select>
+									<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+								</div>
+								<div class="form-group">
+									<select class="form-control select2" name="city" id="city_profile" style="width: 100%;">
+										<option  value="" disabled selected >Select City</option>
+										@if($user->address != null)
+										@if($user->location->city != null)
+										<option  value="{{$user->location->city}}" disabled selected >{{$user->location->city}}</option>
+										@endif
+										@endif"
+									</select>
+									<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control " name="address"  placeholder="Address" value="@if($user->address != null){{$user->location->address}}@endif">
+									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control " name="zipcode" placeholder="Zip Code" value="@if($user->address != null){{$user->location->code}}@endif">
+									<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail1">Date Created</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+									</div>
+									@php
+										$date = date("d-m-Y",strtotime($user->created_at))
+										
+									@endphp
+									<input type="text" name="created_at" class="form-control" data-inputmask-alias="datetime"data-inputmask-inputformat="dd-mm-yyyy" data-mask value="{{$date}}">
+								</div>
 							</div>
 							<div class="form-group">
 								<label>About</label>
@@ -110,7 +128,7 @@
 								<span class="errors">{{$errors -> first('password')}}</span>
 							</div>
 							<div class="form-group">
-								<label>Conform Password</label>
+								<label>Confirm Password</label>
 								<input type="text" class="form-control" name="re_password" placeholder="Enter confirm password" value="">
 								<span class="errors">{{$errors -> first('re_password')}}</span>
 							</div>
@@ -129,6 +147,27 @@
 </section>
 @stop
 @section('adminlte_js')
+<script type="text/javascript">
+  $("#state_profile").change(function(){
+    var name_state = $(this).val();
+
+    var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('ajaxCity') }}",
+          method:"POST",
+          data:{name_state:name_state, _token:_token},
+          success:function(data){ 
+            console.log(data)
+            $('#city_profile').html(data);
+          }
+        });
+
+    /*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
+      $("#id_city").html('<option value="0"  selected >Select City</option>'+data);
+    });*/       
+  });
+</script>
+
 <script type="text/javascript">
   google.maps.event.addDomListener(window, 'load', initialize);
   function initialize(){

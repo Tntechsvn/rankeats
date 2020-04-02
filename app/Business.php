@@ -155,6 +155,7 @@ class Business extends Model
         }
         return $rate;
     }
+   
     /*end knight*/
 
     /*Thienvu*/

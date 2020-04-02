@@ -69,6 +69,10 @@
 			'as' => 'my_businesses',
 			'uses' => 'HomeController@my_businesses'
 		]);
+		Route::get('/my-eat', [
+			'as' => 'my_eat',
+			'uses' => 'HomeController@my_eat'
+		]);
 	});
 	
 	Route::get('/sign-up', [

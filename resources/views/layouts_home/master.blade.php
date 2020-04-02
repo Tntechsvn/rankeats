@@ -19,6 +19,7 @@
 <link href="css/sweetalert.css" rel="stylesheet" type="text/css">
 
 <link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="css/jquery.timepicker.min.css" rel="stylesheet" type="text/css">
 <link href="css/default.css" rel="stylesheet" type="text/css">
 <link href="css/animate.css" rel="stylesheet" type="text/css">
 
@@ -36,6 +37,7 @@
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+<script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
 </head>
 
 <body>
