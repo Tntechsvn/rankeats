@@ -338,7 +338,6 @@ public function vote_ajax(Request $request){
             ]);
 
         }else{
-            
             $new_vote = new Vote;
             $new_vote -> user_id = $user->id;
             $new_vote -> business_id = $data_business->id;
