@@ -72,8 +72,9 @@
 					<div class="col-lg-6 map">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.0280704153997!2d-71.05816368426183!3d42.3632410428928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3708f2d8f5e8b%3A0x76e5ba9980db682e!2s63%20Salem%20St%2C%20Boston%2C%20MA%2002113%2C%20Hoa%20K%E1%BB%B3!5e0!3m2!1svi!2s!4v1585540921075!5m2!1svi!2s" width="800" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 						<div class="m-t-20">
-							đại từ thái nguyên
-							ngọc cô vít
+							{!!$info_business->location->state!!}
+							{!!$info_business->location->city!!}
+							
 						</div>
 					</div>
 					<div class="col-lg-6 hours">
@@ -230,7 +231,7 @@
 							    	
 
 								@endforeach
-								<div style="text-align: right;">
+								<div class="p-t-15" style="text-align: right;">
 						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
@@ -333,7 +334,7 @@
 					<li><a href="#write" data-toggle="tab" class="btn write-tab"><i class="fas fa-star"></i> Write Reviews</a></li>
 				</ul>
 			</div>
-			<div class="tab-content">
+			<div class="tab-content" style="overflow: unset;">
 			    <div class="tab-pane active" id="vote">
 			    	<p>Which area(s) dose "business name" have the best "Eat item"?</p>
 			    	{{-- <div class="form-group">

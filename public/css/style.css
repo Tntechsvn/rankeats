@@ -2188,6 +2188,15 @@ input[type=number]::-webkit-outer-spin-button {
 	height: 98px;
 	object-fit: cover;
 }
+.addeat {
+    padding: 10px 20px;
+    background-color: #0073bb;
+    color: #fff !important;
+    border-radius: 5px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
 
 
 
