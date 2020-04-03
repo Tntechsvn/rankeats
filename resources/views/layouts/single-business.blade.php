@@ -96,7 +96,7 @@
 					<p>{{$info_business->description}}</p>
 					<div class="tap-pane">
 						<ul class="nav nav-tabs" style="border-bottom: none;">
-						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info"></i> Business Info</a></li>
+						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info-circle"></i> Business Info</a></li>
 						    <li><a href="#businessreview" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Business Reviews</a></li>
 						    <li><a href="#eatrank" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
 						    <li><a href="#picture" data-toggle="tab" class="btn "><i class="fas fa-images"></i> Picture</a></li>
@@ -125,7 +125,60 @@
 					    	</p>
 						</div>
 					    <div class="tab-pane" id="businessreview">
+					    	@if($list_reviews->total() >0)
+				    			@foreach($list_reviews as $data)
+				    			<div class="list-review">
+				    				<p>
+							    		<i class="fas fa-user"></i>
+							    		<span class="bold">Name :</span>
+							    		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
+							    	</p>
+							    	<p>
+							    		<i class="fas fa-user"></i>
+							    		<span class="bold">EAT :</span>
+							    		<span>
+							    			@foreach($info_business->business_category as $val)
+												{{$val->category_name.','}}
+											@endforeach
+										</span>
+							    	</p>
+							    	<div >
+							    		<label class="m-r-30"><i class="fas fa-globe-americas" style="color: "></i> Country: {{$data->business->location->country}} (12)</label>
+							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$data->business->location->city}} (12)</label>
+							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
+							    	</div>
 
+							    	<p>{{$info_business->description}}</p>
+
+							    	
+							    	<div class="star-view clear p-b-10">
+							    		<ul class="star-rate">
+								    		@php
+									    		$star_review = $data->review_rating->where('review_id','=',$data->id)->first()->rate;
+												$val =  (int) substr(strrchr($star_review,'.'),1);
+												for($x=1;$x<=$star_review;$x++) {
+													echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+												}
+												if (strpos($star_review,'.') && $val != 0) {
+													echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+												while ($x<=5) {
+													echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+											@endphp
+										</ul>
+									</div>
+				    			</div>
+							    	
+
+								@endforeach
+								<div style="text-align: right;">
+						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+						    	</div>
+				    		@endif
 					    </div>
 					    <div class="tab-pane" id="eatrank">
 					    	@if($list_reviews->total() >0)
@@ -153,10 +206,7 @@
 
 							    	<p>{{$info_business->description}}</p>
 
-							    	<div style="text-align: right;">
-							    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
-							    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
-							    	</div>
+							    	
 							    	<div class="star-view clear p-b-10">
 							    		<ul class="star-rate">
 								    		@php
@@ -180,6 +230,10 @@
 							    	
 
 								@endforeach
+								<div style="text-align: right;">
+						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+						    	</div>
 				    		@endif
 					    </div>
 					    <div class="tab-pane" id="picture">
