@@ -272,6 +272,11 @@ return [
             ],
         ],
         [
+            'text'    => 'Advertisements',
+            'icon'    => 'fas fa-fw fa-ad',
+            'route'   => 'advertisements',
+        ],
+        [
             'text'    => 'Pages',
             'icon'    => 'fas fa-fw fa fa-file',
             'submenu' => [

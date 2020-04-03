@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\ShareController;
 use Carbon\Carbon;
 use App\Location;
+use Auth;
 
 class Business extends Model
 {
@@ -134,10 +135,9 @@ class Business extends Model
         return route('single_business',[$this->id]);
     }
     public function rate_business(){
+        $rate = 0;
         if($this->total_vote > 0){
             $rate = floor(($this->total_rate / $this->total_vote) * 1) / 1;
-        }else{
-            $rate = 0;
         }
         return $rate;
     }
@@ -149,12 +149,21 @@ class Business extends Model
         }
     }
      public function getRateBusinessAttribute(){
-       if($this->total_vote > 0){
+        $rate = 0;
+        if($this->total_vote > 0){
             $rate = floor(($this->total_rate / $this->total_vote) * 2) / 2;
-        }else{
-            $rate = 0;
         }
         return $rate;
     }
+   
     /*end knight*/
+
+    /*Thienvu*/
+
+    // check user logged in bookmark
+    public function is_bookmarked(){
+        return !! Auth::user() && $this->users->contains(Auth::user());
+    } 
+
+
 }
