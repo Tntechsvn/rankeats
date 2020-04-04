@@ -17,6 +17,7 @@ use App\Page;
 use App\State;
 use App\City;
 use App\Country;
+use App\Review_rating;
 use DB;
 class HomeController extends Controller{
 
@@ -79,7 +80,7 @@ class HomeController extends Controller{
                 foreach($data as $row)
                 {
                     if($row->city_name){
-                        $text = $row->city_name.' or '.$row->state_name;
+                        $text = $row->city_name;/*.' or '.$row->state_name*/
                     }else{
                         $text = $row->state_name;
                     }
@@ -280,8 +281,9 @@ public function eat_reviews(){
 /*single_restaurent*/
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
-    $list_reviews = $info_business->review()->paginate(Myconst::PAGINATE_ADMIN);
-    return view('layouts.single-business',compact('info_business','list_reviews'));
+    $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
+    $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+    return view('layouts.single-business',compact('info_business','list_reviews','list_review_eats'));
 }
 public function ajax_bookmark(Request $request){
     $data = $request->toArray();
@@ -311,6 +313,7 @@ public function vote_ajax(Request $request){
     $vote = Vote::select('*')
     ->where('user_id','=',$user->id)
     ->where('business_id','=',$request->business)
+    ->where('type_vote','=',1)
     ->first();
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
@@ -358,6 +361,7 @@ public function vote_ajax(Request $request){
 }
 /*knight*/
 public function voteReviewEat_ajax(Request $request){
+    $Category_type = $request -> Category_type;
     $user = Auth::user();
     $user_id = $user->id;
     $vote = Vote::select('*')
@@ -365,25 +369,35 @@ public function voteReviewEat_ajax(Request $request){
     ->where('business_id','=',$request->business)
     ->where('type_vote','=',2)
     ->first();
-    return $vote;
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
     if($vote){
-        return response()->json([
+        return redirect()->back();
+        /*return response()->json([
             'success' => false,
             'message' => "Would you like to change your vote?"
-        ]);
+        ]);*/
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
             $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
-            foreach($category_id as $cate_id){
+            foreach($Category_type as $cate_id){
                 $new_vote = new Vote;
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
-                $new_vote -> category_id = null;
-                $new_vote -> state_id = $data_business->location->IdState;
-                $new_vote -> city_id = $city_id;
+                $new_vote -> category_id = $cate_id;
+                if($data_business->location->IdState){
+                    $new_vote -> state_id = $data_business->location->IdState;
+                }else{
+                    $new_vote -> state_id = null;
+                }
+               
+                if($city_id){
+                    $new_vote -> city_id = $city_id;
+                }else{
+                    $new_vote -> city_id = null;
+                }
+                
 
                 /*vote = 1 vote cho business bằng 2 vote cho eat*/
                 $new_vote -> type_vote = 2;
@@ -392,6 +406,7 @@ public function voteReviewEat_ajax(Request $request){
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
+                $new_review -> description = $request -> description;
                 if($new_review -> save()){
                     /*update review rating*/
                     $review_rating = new Review_rating;
@@ -405,19 +420,28 @@ public function voteReviewEat_ajax(Request $request){
                 }
             }
                    
-
-             return response()->json([
+            return redirect()->back();
+             /*return response()->json([
                 'success' => true
-            ]);
+            ]);*/
 
         }else{
-            foreach($category_id as $cate_id){
+            foreach($Category_type as $cate_id){
                 $new_vote = new Vote;
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
-                $new_vote -> category_id = null;
-                $new_vote -> state_id = $data_business->location->IdState;
-                $new_vote -> city_id = $city_id;
+                $new_vote -> category_id = $cate_id;
+                if($data_business->location->IdState){
+                    $new_vote -> state_id = $data_business->location->IdState;
+                }else{
+                    $new_vote -> state_id = null;
+                }
+               
+                if($city_id){
+                    $new_vote -> city_id = $city_id;
+                }else{
+                    $new_vote -> city_id = null;
+                }
 
                 /*vote = 1 vote cho business bằng 2 vote cho eat*/
                 $new_vote -> type_vote = 2;
@@ -426,6 +450,7 @@ public function voteReviewEat_ajax(Request $request){
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
+                $new_review -> description = $request -> description;
                 if($new_review -> save()){
                     /*update review rating*/
                     $review_rating = new Review_rating;
@@ -438,10 +463,10 @@ public function voteReviewEat_ajax(Request $request){
                     $review_rating -> save();
                 }
             }
-
-            return response()->json([
+            return redirect()->back();
+            /*return response()->json([
                 'success' => true
-            ]);
+            ]);*/
         }
         
     }

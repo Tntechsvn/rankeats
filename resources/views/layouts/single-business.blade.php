@@ -35,8 +35,8 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>16</td>
-									<td>23</td>
+									<td>{{$info_business->RankBusinessCity}}</td>
+									<td>{{$info_business->RankBusinessState}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -56,8 +56,8 @@
 								@foreach($info_business->business_category as $val)
 									<tr>
 										<td>{{$val->category_name}}</td>
-										<td>16</td>
-										<td>23</td>
+										<td>{{$val->RankEatState}}</td>
+										<td>{{$val->RankEatCity}}</td>
 									</tr>
 								@endforeach
 								
@@ -138,9 +138,7 @@
 							    		<i class="fas fa-user"></i>
 							    		<span class="bold">EAT :</span>
 							    		<span>
-							    			@foreach($info_business->business_category as $val)
-												{{$val->category_name.','}}
-											@endforeach
+							    			{{$info_business->business_category->pluck('category_name')->implode(', ')}}
 										</span>
 							    	</p>
 							    	<div >
@@ -149,13 +147,13 @@
 							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
 							    	</div>
 
-							    	<p>{{$info_business->description}}</p>
+							    	<p>{{$data->review->description}}</p>
 
 							    	
 							    	<div class="star-view clear p-b-10">
 							    		<ul class="star-rate">
 								    		@php
-									    		$star_review = $data->review_rating->where('review_id','=',$data->id)->first()->rate;
+									    		$star_review = $data->rate;
 												$val =  (int) substr(strrchr($star_review,'.'),1);
 												for($x=1;$x<=$star_review;$x++) {
 													echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
@@ -171,19 +169,105 @@
 											@endphp
 										</ul>
 									</div>
-				    			</div>
-							    	
+				    			</div>						    	
 
-								@endforeach
-								<div style="text-align: right;">
-						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+								@endforeach								
+				    		@endif
+				    		<div style="text-align: right;">
+				    			@if(Auth::user()->check_vote_eat($info_business->id))
+						    		<a  href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}">Vote</a>
+						    	@else
+						    		<a  href="javascript:;"  class="btn btn-warning">Voted</a>
+						    	@endif
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
+				    		@if(Auth::check())
+				    		<!-- Knight modan review-->
+				    		<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
+				    			<div class="modal-dialog">
+
+				    				<!-- Modal content-->
+				    				<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
+				    					@csrf
+				    					<input type="hidden" name="business_id" value="">
+				    					<div class="modal-content">
+				    						<div class="modal-header">
+				    							<div class="avata-popup " style="width: 100%;text-align: center;">
+				    								<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
+				    								<p class="bold">{{Auth::user()->name}}</p>
+				    							</div>
+				    						</div>
+				    						<div class="modal-body">
+				    							<p>Would you like to write a review for this EAT?</p>
+				    							<div class="okverify hidden">
+				    								<div class="popup-star">
+				    									<label class="customstar star-1">							
+				    										<input type="radio" name="rate" value="1" checked="checked">
+				    										<span class="starimg checkstar" ></span>
+				    									</label>
+				    									<label class="customstar star-2">							
+				    										<input type="radio" name="rate" value="2">
+				    										<span class="starimg" ></span>
+				    									</label>
+				    									<label class="customstar star-3">							
+				    										<input type="radio" name="rate" value="3">
+				    										<span class="starimg" ></span>
+				    									</label>
+				    									<label class="customstar star-4">							
+				    										<input type="radio" name="rate" value="4">
+				    										<span class="starimg" ></span>
+				    									</label>
+				    									<label class="customstar star-5">							
+				    										<input type="radio" name="rate" value="5">
+				    										<span class="starimg "></span>
+				    									</label>
+				    								</div>
+				    								<div class="form-group reviewBox">
+				    									<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
+				    								</div>
+				    							</div>
+
+				    						</div>
+				    						<div class="modal-footer" style="text-align: center;">
+				    							<div class="verify">
+				    								<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+				    								<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
+				    							</div>
+				    							<div class="firstWindow hidden" style="width: 100%">
+				    								<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
+				    							</div>
+				    						</div>
+				    					</div>
+				    				</form>
+
+				    			</div>
+				    		</div>
 				    		@endif
+				    		<div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+				    			<div class="modal-dialog">
+
+				    				<!-- Modal content-->
+				    				<div class="modal-content">
+				    					<div class="modal-header">
+				    						<button type="button" class="close" data-dismiss="modal">&times;</button>
+				    						<h4 class="modal-title">&nbsp;</h4>
+				    					</div>
+				    					<div class="modal-body">
+				    						<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+				    					</div>
+				    					<div class="modal-footer">
+				    						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				    					</div>
+				    				</div>
+
+				    			</div>
+				    		</div>
+				    		<input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
+				    		<!-- end Knight modan review-->
 					    </div>
 					    <div class="tab-pane" id="eatrank">
-					    	@if($list_reviews->total() >0)
-				    			@foreach($list_reviews as $data)
+					    	@if($list_review_eats->total() >0)
+				    			@foreach($list_review_eats as $data)
 				    			<div class="list-review">
 				    				<p>
 							    		<i class="fas fa-user"></i>
@@ -194,24 +278,20 @@
 							    		<i class="fas fa-user"></i>
 							    		<span class="bold">EAT :</span>
 							    		<span>
-							    			@foreach($info_business->business_category as $val)
-												{{$val->category_name.','}}
-											@endforeach
+							    			{{$data->category->category_name}}
 										</span>
 							    	</p>
-							    	<div >
-							    		<label class="m-r-30"><i class="fas fa-globe-americas" style="color: "></i> Country: {{$data->business->location->country}} (12)</label>
+							    	<div>
 							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$data->business->location->city}} (12)</label>
 							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
 							    	</div>
 
-							    	<p>{{$info_business->description}}</p>
+							    	<p>{{$data->review->description}}</p>
 
 							    	
-							    	<div class="star-view clear p-b-10">
 							    		<ul class="star-rate">
 								    		@php
-									    		$star_review = $data->review_rating->where('review_id','=',$data->id)->first()->rate;
+									    		$star_review = $data->rate;
 												$val =  (int) substr(strrchr($star_review,'.'),1);
 												for($x=1;$x<=$star_review;$x++) {
 													echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
@@ -226,16 +306,17 @@
 												}
 											@endphp
 										</ul>
-									</div>
 				    			</div>
-							    	
-
-								@endforeach
-								<div class="p-t-15" style="text-align: right;">
-						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
-						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
-						    	</div>
+								@endforeach								
 				    		@endif
+				    		<div class="p-t-15" style="text-align: right;">
+				    			@if(Auth::user()->check_vote_eat($info_business->id))
+				    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+				    			@else
+				    			<a href="javascript:;" class="btn btn-danger" style="color: #fff;">Voted</a>
+				    			@endif
+				    			{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+				    		</div>
 					    </div>
 					    <div class="tab-pane" id="picture">
 					    	<div class="">
@@ -316,7 +397,9 @@
 		<h4 class="modal-title bold">EAT Rank/Reviews</h4>
 	  </div>
 	  <div class="modal-body">
-		<form class="" action="" method="get">
+		<form class="" action="{{route('voteReviewEat_ajax')}}" method="post">
+			@csrf
+			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="form-group">
 				Choose eat
 				<select class="test choose_dish" multiple="multiple"  name="Category_type[]">
@@ -479,4 +562,40 @@
 
 		});
 	</script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(document).on('click','.starimg',function(){
+			$(this).addClass('checkstar');
+			$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
+			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
+
+		});
+
+		// $(document).on('click','.vote_now', function(){
+		// 	var user = $('input[name=user]').val();
+		// 	var modal_login = $('#loginModal');
+		// 	console.log(user);
+		// 	if(user == ""){
+		// 		modal_login.show();
+		// 	}
+		// });
+	});
+
+	// show form add eat
+
+	$(document).on('click','.rankerBtn',function(){
+		var modal = $('#eatModal');
+		modal.find('.rankerShow').addClass('show');
+	});
+
+	$(document).on('click','.noverify',function(){
+		$('#voteModal').hide();
+	});
+	$(document).on('click','.yesverify',function(){
+		$(this).closest('form').find('.okverify').removeClass('hidden');
+		$(this).closest('.modal-footer').find('.verify').addClass('hidden');
+		$(this).closest('.modal-footer').find('.firstWindow').removeClass('hidden');
+	});
+
+</script>
 @stop
