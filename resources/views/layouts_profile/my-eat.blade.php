@@ -87,11 +87,14 @@
                 	<option value="">humbeger</option>
 	            </select>
           	</div>
+			<div class="form-group">
+				<input type="text" name="asdsda" data-parsley-required>
+          	</div>
 		</form>
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		<button class="btn btn-primary" type="submit" name="submit">Submit</button>
+		<button class="btn btn-primary" name="submit">Submit</button>
 	  </div>
 	</div>
     
@@ -102,6 +105,7 @@
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#addeat').find('form').parsley();
 			$('.test').fSelect();
 		});
 	</script>

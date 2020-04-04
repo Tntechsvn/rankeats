@@ -265,7 +265,7 @@
 
 			var previews = document.getElementById('previews');
 			if (previews.hasChildNodes()) {
-				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				alert('You Can Only Choose An Image For This Item');
 				e.preventDefault();
 			}			
 		});
@@ -288,7 +288,7 @@
 		});
 		/*clear the file list when image is clicked*/
 		$(document).on('click','.deletetimg',function(){
-			if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+			if(confirm("You want to delete it?"))
 			{
 				$(this).closest('#previews').html('');
 				$("#image_restaurant").val(null);/* xóa tên của file trong input*/
