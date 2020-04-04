@@ -1,7 +1,7 @@
 <footer class="main-footer">
   <div class="container">
     <div class="footer-center">
-        @foreach($all_page as $data)
+        @foreach($all_page ?? '' as $data)
         	<a href="{{route('getPages',['id_page' => $data->slug])}}">{{$data -> page_title}}</a>
         @endforeach
         <a href="{{route('advertise')}}">Advertise</a>

@@ -82,7 +82,7 @@ class LoginController extends Controller
 			
 
 		}else{
-			return view('layouts.login');
+			return redirect()->back();
 		}
 	}
 	public function getLogout(){

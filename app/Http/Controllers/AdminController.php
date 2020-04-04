@@ -50,7 +50,7 @@ class AdminController extends Controller
     	return view('admin.advertisements', compact(
     			'ads_pending_home', 'ads_pending_search', 'ads_pending_feature',
     			'ads_active_home', 'ads_active_search', 'ads_active_feature',
-    			'ads_expired_home', 'ads_expired_search', 'ads_expired_feature',
+    			'ads_expired_home', 'ads_expired_search', 'ads_expired_feature'
     		));
     }
     
