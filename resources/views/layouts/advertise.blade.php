@@ -67,7 +67,7 @@
           </div>
           <div class="clear"></div>
           <span class="line"></span>
-          <div class="col-md-6">
+          {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
                 <div style="border: 1px solid #dedede;">
@@ -97,7 +97,7 @@
               <!--/.Panel --> 
             </div>
             <!--pull-panels--> 
-          </div>
+          </div>--}}
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -129,8 +129,6 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="clear"></div>
-          <span class="line"></span>
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -162,7 +160,10 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="col-md-6">
+          
+          <div class="clear"></div>
+          <span class="line"></span>
+          {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
                 <div style="border: 1px solid #dedede;">
@@ -192,7 +193,7 @@
               <!--/.Panel --> 
             </div>
             <!--pull-panels--> 
-          </div>
+          </div>--}}
           <div class="clear"></div>
           <span class="line"></span>
           <div class="col-md-6">
@@ -353,7 +354,7 @@
 
           <div class="form-group">
             <input type="radio" id="adv-now" name="custom-date" value=""><label for="adv-now">Now</label>
-            <input type="radio" id="adv-date" name="custom-date" value=""><label for="adv-date">Date</label>
+            <input type="radio" id="adv-date" name="custom-date" value="customdate"><label for="adv-date">Date</label>
 
             <input class="form-control hidden datepicker" type="text" name="custom-datetime" value="" placeholder="dd/mm/YYYY">
           </div> 
@@ -392,16 +393,17 @@
 @section('script')
 <script type="text/javascript" src="js/fSelect.js"></script>
   <script type="text/javascript">
+
     $(document).ready(function(){
       $('.test').fSelect();
 
-      
       $('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         startDate: '0d',
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
       });
+
 
       $(document).on('input','#adv-date',function(){
         $(this).closest('.form-group').find('.datepicker').removeClass('hidden');
