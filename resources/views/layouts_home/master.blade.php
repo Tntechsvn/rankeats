@@ -31,7 +31,7 @@
 <!-- jQuery library -->
 
 <script src="js/jquery.min.js"></script>
-{{-- <script src="js/bootstrap.min.js"></script> --}}
+
 
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
