@@ -383,7 +383,7 @@ public function ajaxcitystate(Request $request){
     $output = '<option value="" selected >Select City</option>';
     if(count($citys)>0){
         foreach($citys as $city){
-            $output .= '<option value="'.$city->name.'" >'.$city->name.'</option>';             
+            $output .= '<option value="'.$city->id.'" >'.$city->name.'</option>';             
         }
     }
 

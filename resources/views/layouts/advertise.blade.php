@@ -351,9 +351,13 @@
             </select>
           </div>
 
-         {{--  <div class="form-group">
-            <input class="form-control" type="text" name="state" value="" placeholder="State">
-          </div> --}}
+          <div class="form-group">
+            <input type="radio" id="adv-now" name="custom-date" value=""><label for="adv-now">Now</label>
+            <input type="radio" id="adv-date" name="custom-date" value=""><label for="adv-date">Date</label>
+
+            <input class="form-control hidden datepicker" type="text" name="custom-datetime" value="" placeholder="dd/mm/YYYY">
+          </div> 
+         
 
           <div class="form-group">
             <p>Please provide a picture of your EATS a your business</p>
@@ -390,7 +394,27 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $('.test').fSelect();
+
+
+
+      $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        startDate: '0d',
+        autoclose: true,
+        todayHighlight: true
+      });
+
+      $(document).on('input','#adv-date',function(){
+        $(this).closest('.form-group').find('.datepicker').removeClass('hidden');
+      });
+      $(document).on('input','#adv-now',function(){
+        $(this).closest('.form-group').find('.datepicker').addClass('hidden');
+        var date = new Date();
+        $(this).val(date);
+      });
+      
     });
+      
   </script>
   @if(session('SweetAlert'))
   <script type="text/javascript">
