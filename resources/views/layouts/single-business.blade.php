@@ -10,7 +10,7 @@
 			<div  class="">
 				<div class="p-t-30 p-b-30 top-content-res">
 					<h1 class="big-title">{{$info_business->name}}</h1>
-					@if($info_business->activated_on)<button>Verified<i class="far fa-check-square"></i></button> @endif
+					@if($info_business->activated_on)<label class="verify">Verified <i class="far fa-check-square"></i></label> @endif
 					<div>
 						<a class="check-bookmark" href="javascript:;" data-id="{{$info_business->id}}" data-user="{{Auth::id()}}">
 							@if($info_business->is_bookmarked())
