@@ -43,16 +43,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_pending_home as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+							    			@include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -78,16 +69,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_pending_search as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -113,16 +95,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_pending_feature as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -150,16 +123,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_active_home as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -185,16 +149,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_active_search as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -220,16 +175,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_active_feature as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -257,16 +203,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_expired_home as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -292,16 +229,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_expired_search as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -327,16 +255,7 @@
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_expired_feature as $ad)
-						    			<tr>
-						    				<td>{{$ad->id}}</td>
-						    				<td>{{$ad->business->user->name}}</td>
-						    				<td>{{$ad->business->name}}</td>
-						    				<td>city</td>
-						    				<td>state</td>
-						    				<td>duration</td>
-						    				<td>pic</td>
-						    				<td>action</td>
-						    			</tr>
+						    			    @include('admin.content-ad', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>

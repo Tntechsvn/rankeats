@@ -23,6 +23,14 @@ class Advertisement extends Model
 		return $this -> belongsTo('App\PlanDetail', 'plan_detail_id', 'id');
 	}
 
+	public function state(){
+		return $this -> belongsTo('App\State');
+	}
+
+	public function city(){
+		return $this -> belongsTo('App\City');
+	}
+
 	public function update_adv($plan_detail_id, $img_path){
 		$business_id = Auth::user()->business()->first()->id;
 		if($business_id){
@@ -103,7 +111,7 @@ class Advertisement extends Model
 	}
 
 	public function getImageUrlAttribute() {
-		return asset('storage').$this->image;
+		return asset('storage').'/'.$this->image;
 	}
 
 }
