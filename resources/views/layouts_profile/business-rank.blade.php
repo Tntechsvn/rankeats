@@ -32,54 +32,20 @@
 									<td width="20%">State</td>
 									<td colspan="2" width="20%">
 										<div style="width: 100%;line-height: 30px;border-bottom: 1px solid #e1e1e1;">Rank</div>
-										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">City</div>
-										<div style="width: 50%;float: left;line-height: 30px;">State</div>
+										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$info_business->location->city}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;">{{$info_business->location->state}}</div>
 									</td>
 								</tr>
 							</thead>
 							<tbody class="content-table">
 								<tr>
-									<td>Business Name</td>
+									<td>{{$info_business->name}}</td>
 									<td>Date</td>
-									<td>City</td>
-									<td>State</td>
-									<td width="10%">City</div>
-									<td width="10%">State</div>
+									<td>{{$info_business->location->city}}</td>
+									<td>{{$info_business->location->state}}</td>
+									<td width="10%">{{$info_business->RankBusinessCity}}</td>
+									<td width="10%">{{$info_business->RankBusinessState}}</td>
 								</tr>
-								<tr>
-									<td>Business Name</td>
-									<td>Date</td>
-									<td>City</td>
-									<td>State</td>
-									<td width="10%">City</div>
-									<td width="10%">State</div>
-								</tr>
-								<tr>
-									<td>Business Name</td>
-									<td>Date</td>
-									<td>City</td>
-									<td>State</td>
-									<td width="10%">City</div>
-									<td width="10%">State</div>
-								</tr>
-								<tr>
-									<td>Business Name</td>
-									<td>Date</td>
-									<td>City</td>
-									<td>State</td>
-									<td width="10%">City</div>
-									<td width="10%">State</div>
-								</tr>
-								<tr>
-									<td>Business Name</td>
-									<td>Date</td>
-									<td>City</td>
-									<td>State</td>
-									<td width="10%">City</div>
-									<td width="10%">State</div>
-								</tr>
-
-								
 							</tbody>
 						</table>
 					</div>
