@@ -22,6 +22,7 @@
 <link href="css/jquery.timepicker.min.css" rel="stylesheet" type="text/css">
 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
 <link href="css/default.css" rel="stylesheet" type="text/css">
+<link href="css/parsley.css" rel="stylesheet" type="text/css">
 <link href="css/animate.css" rel="stylesheet" type="text/css">
 
 <link href="lightbox/css/lightgallery.css" rel="stylesheet">
@@ -41,6 +42,7 @@
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script src="js/parsley.min.js"></script> 
 </head>
 
 <body>
@@ -61,7 +63,7 @@
 
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="js/parsley.min.js"></script> 
+
 <script type="text/javascript" src="js/sweetalert.min.js"></script>   
 {{-- <script src="js/wow.min.js"></script>  --}}
 {{-- <script src="js/jquery.raty.js"></script> --}}
