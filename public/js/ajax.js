@@ -108,7 +108,7 @@ $(document).on('change','select[name=state]', function(){
     success:function(res){
       if(res.success == true){
           form.find('select.city').html(res.data);
-          form.find('select.city').fSelect();
+          form.find('select.city').fSelect('reload');
       }else{
         
       }
