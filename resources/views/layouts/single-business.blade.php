@@ -72,8 +72,9 @@
 					<div class="col-lg-6 map">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.0280704153997!2d-71.05816368426183!3d42.3632410428928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3708f2d8f5e8b%3A0x76e5ba9980db682e!2s63%20Salem%20St%2C%20Boston%2C%20MA%2002113%2C%20Hoa%20K%E1%BB%B3!5e0!3m2!1svi!2s!4v1585540921075!5m2!1svi!2s" width="800" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 						<div class="m-t-20">
-							đại từ thái nguyên
-							ngọc cô vít
+							{!!$info_business->location->state!!}
+							{!!$info_business->location->city!!}
+							
 						</div>
 					</div>
 					<div class="col-lg-6 hours">
@@ -96,7 +97,7 @@
 					<p>{{$info_business->description}}</p>
 					<div class="tap-pane">
 						<ul class="nav nav-tabs" style="border-bottom: none;">
-						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info"></i> Business Info</a></li>
+						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info-circle"></i> Business Info</a></li>
 						    <li><a href="#businessreview" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Business Reviews</a></li>
 						    <li><a href="#eatrank" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
 						    <li><a href="#picture" data-toggle="tab" class="btn "><i class="fas fa-images"></i> Picture</a></li>
@@ -125,7 +126,60 @@
 					    	</p>
 						</div>
 					    <div class="tab-pane" id="businessreview">
+					    	@if($list_reviews->total() >0)
+				    			@foreach($list_reviews as $data)
+				    			<div class="list-review">
+				    				<p>
+							    		<i class="fas fa-user"></i>
+							    		<span class="bold">Name :</span>
+							    		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
+							    	</p>
+							    	<p>
+							    		<i class="fas fa-user"></i>
+							    		<span class="bold">EAT :</span>
+							    		<span>
+							    			@foreach($info_business->business_category as $val)
+												{{$val->category_name.','}}
+											@endforeach
+										</span>
+							    	</p>
+							    	<div >
+							    		<label class="m-r-30"><i class="fas fa-globe-americas" style="color: "></i> Country: {{$data->business->location->country}} (12)</label>
+							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$data->business->location->city}} (12)</label>
+							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
+							    	</div>
 
+							    	<p>{{$info_business->description}}</p>
+
+							    	
+							    	<div class="star-view clear p-b-10">
+							    		<ul class="star-rate">
+								    		@php
+									    		$star_review = $data->review_rating->where('review_id','=',$data->id)->first()->rate;
+												$val =  (int) substr(strrchr($star_review,'.'),1);
+												for($x=1;$x<=$star_review;$x++) {
+													echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+												}
+												if (strpos($star_review,'.') && $val != 0) {
+													echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+												while ($x<=5) {
+													echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+											@endphp
+										</ul>
+									</div>
+				    			</div>
+							    	
+
+								@endforeach
+								<div style="text-align: right;">
+						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+						    	</div>
+				    		@endif
 					    </div>
 					    <div class="tab-pane" id="eatrank">
 					    	@if($list_reviews->total() >0)
@@ -153,10 +207,7 @@
 
 							    	<p>{{$info_business->description}}</p>
 
-							    	<div style="text-align: right;">
-							    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
-							    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
-							    	</div>
+							    	
 							    	<div class="star-view clear p-b-10">
 							    		<ul class="star-rate">
 								    		@php
@@ -180,6 +231,10 @@
 							    	
 
 								@endforeach
+								<div class="p-t-15" style="text-align: right;">
+						    		<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+						    	</div>
 				    		@endif
 					    </div>
 					    <div class="tab-pane" id="picture">
@@ -279,7 +334,7 @@
 					<li><a href="#write" data-toggle="tab" class="btn write-tab"><i class="fas fa-star"></i> Write Reviews</a></li>
 				</ul>
 			</div>
-			<div class="tab-content">
+			<div class="tab-content" style="overflow: unset;">
 			    <div class="tab-pane active" id="vote">
 			    	<p>Which area(s) dose "business name" have the best "Eat item"?</p>
 			    	{{-- <div class="form-group">

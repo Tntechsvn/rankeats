@@ -22,8 +22,9 @@
 				<div class="tab-content" style="margin-right: -15px;">
 					<div>
 						<h3 class="title m-b-20">My EATS</h3>
+						<a href="javascript:;" class="addeat" >ADD EATS</a>
 						<div class="clear"></div>
-						<table style="width: 100%">
+						<table class="m-t-15" style="width: 100%;">
 							<thead class="head-table">
 								<tr>
 									<td width="15%">EAT</td>
