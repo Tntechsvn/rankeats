@@ -321,7 +321,7 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
-    <form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8">
+    <form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8" data-parsley-validate>
       @csrf
       <input type="hidden" name="title" value="">
       <div class="modal-content">
@@ -338,7 +338,7 @@
             <input class="form-control" type="hidden" name="pd_id" value="">
           </div>
           <div class="form-group">
-            <select class="test state"  name="state">
+            <select class="test state"  name="state" required>
               <option value="" selected="selected">Select State</option>
               @foreach($state as $data)
                 <option value="{{$data->id}}">{{$data->name}}</option>
@@ -346,7 +346,7 @@
             </select>
           </div>
           <div class="form-group">
-            <select class="city" name="city">
+            <select class="city" name="city" required>
                 <option value="" selected="selected">Select City</option>
             </select>
           </div>
@@ -357,7 +357,7 @@
 
           <div class="form-group">
             <p>Please provide a picture of your EATS a your business</p>
-            <input class="inputPic" type="file" name="" accept="image/*">
+            <input class="inputPic" type="file" name="image" accept="image/*" required>
             
           </div>
           <div style="width: 100%;float: left;">
@@ -365,7 +365,7 @@
           </div>
           <div class="form-group">
             <label for="check-paypal">
-              <input id="check-paypal" type="radio" name="paypal" value="">
+              <input id="check-paypal" type="radio" name="paypal" value="paypal" required>
               <img src="images/paypal.png" alt="" width="100px">
             </label>
             

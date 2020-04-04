@@ -9,6 +9,12 @@ use App\PlanDetail;
 
 class Advertisement extends Model
 {
+	// defaul query status 1
+	public function newQuery($excludeDeleted = true) {
+        return parent::newQuery($excludeDeleted)
+            ->where('status', '=', 1);
+    }
+
 	public function business(){
 		return $this -> belongsTo('App\Business', 'business_id', 'id');
 	}
@@ -17,33 +23,28 @@ class Advertisement extends Model
 		return $this -> belongsTo('App\PlanDetail', 'plan_detail_id', 'id');
 	}
 
-	public function update_adv($plan_detail_id){
+	public function update_adv($plan_detail_id, $img_path){
 		$business_id = Auth::user()->business()->first()->id;
 		if($business_id){
 			$pd_days = PlanDetail::findOrfail($plan_detail_id)->pd_days;
 			$expiration_date = Carbon::now()->addDays($pd_days);
 
-
 			$this -> business_id = $business_id;
 			$this -> plan_detail_id = $plan_detail_id;
+			$this -> image = $img_path;
 			$this -> active_date = Carbon::now();
 			$this -> expiration_date = $expiration_date;
-			$this -> status = 1;
+			$this -> status = 0;
 			if($this -> save()){
-				$response =  response()->json([
-					'success' => true,
-					'message' => 'success',
-				], 200);
-				return $response;
+				return $this;
 			}
-		}else{
-			$response =  response()->json([
-					'success' => false,
-					'message' => 'error',
-				], 200);
-				return $response;
 		}
+		return false;
 
+	}
+
+	public function success_ad($id){
+		return static::where('id', $id)->update(['status' => 1]);
 	}
 
 	// home
@@ -101,6 +102,8 @@ class Advertisement extends Model
 		return $query->where('expiration_date', '<=',Carbon::now());
 	}
 
-
+	public function getImageUrlAttribute() {
+		return asset('storage').$this->image;
+	}
 
 }

@@ -38,6 +38,8 @@ use PayPal\Api\MerchantPreferences;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\CreateProfileResponse;
 
+use App\Http\Controllers\ShareController;
+
 class PaymentController extends Controller
 {
     private $_api_context;
@@ -54,6 +56,7 @@ class PaymentController extends Controller
         $user = Auth::user();
         View::share('user', $user);
 
+        $this->shareController = new ShareController();
         $this->model_payment = new ModelPayment();
         $this->advertisement = new Advertisement();
         
@@ -81,9 +84,19 @@ class PaymentController extends Controller
     }
 
     public function submitPayment(Request $request) {
+        $pd = PlanDetail::find($request->pd_id);
+        if($request->image !=null){
+            $base64String = $request->image;
+            $url_img = $this->shareController->saveImgBase64($base64String, 'uploads');
+            $ad = $this->advertisement->update_adv($pd->id, $url_img);
+            if(!$ad) {
+                redirect()->back();
+            }
+        }else {
+            redirect()->back();
+        }
         $title = $request->pd_id;
         $b_name = $request->name;
-        $pd = PlanDetail::find($request->pd_id);
         $days = $pd->pd_days;
         $price = $pd->pd_cost;
 
@@ -149,7 +162,7 @@ class PaymentController extends Controller
 
         /** add payment ID to session **/
         Session::put('paypal_payment_id', $payment->getId());
-        Session::put('plan_detail_id', $pd->id);
+        Session::put('ad_id', $ad->id);
 
         if(isset($redirect_url)) {
             /** redirect to paypal **/
@@ -166,7 +179,7 @@ class PaymentController extends Controller
         // dd(Session::all());
         /** Get the payment ID before session clear **/
         $payment_id = Session::get('paypal_payment_id');
-        $plan_detail_id = Session::get('plan_detail_id');
+        $ad_id = Session::get('ad_id');
         if(!$payment_id){
             return Redirect::route('create_advertise');
         }
@@ -209,8 +222,8 @@ class PaymentController extends Controller
             $currency = $amount->getCurrency();
             // dd($transactions);
             //add db
-            $this->advertisement->update_adv($plan_detail_id);
-            Session::forget('plan_detail_id');
+            $this->advertisement->success_ad($ad_id);
+            Session::forget('ad_id');
 
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
