@@ -129,8 +129,6 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="clear"></div>
-          <span class="line"></span>
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -162,6 +160,9 @@
             </div>
             <!--pull-panels--> 
           </div>
+          
+          <div class="clear"></div>
+          <span class="line"></span>
           {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
