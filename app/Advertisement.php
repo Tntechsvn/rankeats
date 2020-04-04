@@ -31,16 +31,19 @@ class Advertisement extends Model
 		return $this -> belongsTo('App\City');
 	}
 
-	public function update_adv($plan_detail_id, $img_path){
+	public function update_adv($plan_detail_id, $img_path, $date, $state_id, $city_id){
 		$business_id = Auth::user()->business()->first()->id;
 		if($business_id){
 			$pd_days = PlanDetail::findOrfail($plan_detail_id)->pd_days;
-			$expiration_date = Carbon::now()->addDays($pd_days);
+			$date_active = ($date == null) ? Carbon::now() : Carbon::createFromFormat('d-m-Y H:i:s',  $date. "00:00:00");
+			$expiration_date = $date_active->addDays($pd_days);
 
 			$this -> business_id = $business_id;
+			$this -> city_id = $city_id;
+			$this -> state_id = $state_id;
 			$this -> plan_detail_id = $plan_detail_id;
 			$this -> image = $img_path;
-			$this -> active_date = Carbon::now();
+			$this -> active_date = $date_active;
 			$this -> expiration_date = $expiration_date;
 			$this -> status = 0;
 			if($this -> save()){
@@ -52,7 +55,7 @@ class Advertisement extends Model
 	}
 
 	public function success_ad($id){
-		return static::where('id', $id)->update(['status' => 1]);
+		return $this->orWhere('status', 0)->where('id', $id)->update(['status' => 1]);
 	}
 
 	// home
