@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\ShareController;
-
+use DB;
 class Category extends Model
 {
   /*Knight*/
@@ -32,6 +32,50 @@ class Category extends Model
         }else{
             return 'images/avatar.jpg';
         }
+    }
+    /*rank business for state*/
+    public function getRankEatStateAttribute(){
+        $business = Business::findOrfail($this->getOriginal('pivot_business_id'));
+        $id_business = $business -> id;
+        $state_id = $business->location->IdState;
+
+        $get_all_vote_business_state = Vote::select('votes.*',  DB::raw('COUNT(votes.category_id) AS "So luong"'))
+        ->where('type_vote','=',2)
+        ->where('state_id','=',$state_id)
+        ->where('business_id','=',$id_business)
+        ->groupBy('category_id')
+        ->orderBy('So luong', 'desc' )
+        ->get();
+        $i =1;
+        foreach ($get_all_vote_business_state as $val) {
+            if($val -> business_id == $id_business){
+                return $i;
+            }
+            $i++;
+        }
+        return "No Rank";
+    }
+    /*rank business for city*/
+    public function getRankEatCityAttribute(){
+        $business = Business::findOrfail($this->getOriginal('pivot_business_id'));
+        $id_business = $business -> id;
+        $city_id = $business->location->IdCity;
+
+        $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.category_id) AS "So luong"'))
+        ->where('type_vote','=',2)
+        ->where('city_id','=',$city_id)
+        ->where('business_id','=',$id_business)
+        ->groupBy('category_id')
+        ->orderBy('So luong', 'desc' )
+        ->get();
+        $i =1;
+        foreach ($get_all_vote_business_city as $val) {
+            if($val -> business_id == $id_business){
+                return $i;
+            }
+            $i++;
+        }
+        return "No Rank";
     }
     /*end Knight*/
 }
