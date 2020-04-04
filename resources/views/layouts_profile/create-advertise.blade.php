@@ -278,7 +278,7 @@
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8">
+		<form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8" data-parsley-validate="">
 			@csrf
 			<input type="hidden" name="title" value="">
 			<div class="modal-content">
@@ -296,12 +296,12 @@
 					</div>
 					<div class="form-group">
 						<p>Please provide a picture of your EATS a your business</p>
-						<input type="file" name="" accept="image/*">
+						<input type="file" name="" accept="image/*" required>
 					</div>
 					<div class="form-group">
 						<p>Please provide a picture of your EATS a your business</p>
 						<label for="check-paypal">
-							<input id="check-paypal" type="radio" name="paypal" value="">
+							<input id="check-paypal" type="radio" name="paypal" value="" required>
 							<img src="images/paypal.png" alt="" width="100px">
 						</label>
 						
