@@ -510,7 +510,7 @@ public function my_businesses(){
 
 public function ajaxcitystate(Request $request){
     $state_id = $request->id;
-
+    // dd($state_id);
     $citys = City::select('cities.*')
     ->where('state_id','=',$state_id)->get();
     // dd($city);
