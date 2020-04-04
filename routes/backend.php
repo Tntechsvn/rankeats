@@ -48,6 +48,14 @@ Route::post('/ajaxCity', [
 	'as' => 'ajaxCity',
 	'uses' => 'HomeController@ajaxCity'
 ]);
+Route::post('/vote-review-eats', [
+	'as' => 'voteReviewEat_ajax',
+	'uses' => 'HomeController@voteReviewEat_ajax'
+]);
+Route::get('/get-rank', [
+	'as' => 'getRankBusiness',
+	'uses' => 'HomeController@getRankBusiness'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',

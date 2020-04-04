@@ -92,9 +92,9 @@ $(document).on('click','.vote_now',function(){
 
 
 $(document).on('change','select[name=state]', function(){
-  // var val = $(this).val();
+  var val = $(this).val();
   var form = $(this).closest('form');
-  var val = 1;
+  // var val = 1;
   var url = $('input[name=ajaxcitystate]').val();
   $.ajax({
     headers: {

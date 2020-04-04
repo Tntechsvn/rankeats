@@ -100,7 +100,7 @@
 				<!-- /.card -->
 			</div>
 			<!-- left column -->
-			<div class="col-md-6">
+			{{--<div class="col-md-6">
 				<!-- general form elements -->
 				<div class="card ">
 					<div class="card-header">
@@ -152,7 +152,7 @@
 					</form>
 				</div>
 				<!-- /.card -->
-			</div>
+			</div>--}}
 			<!-- left column -->
 			<div class="col-md-6">
 				<!-- general form elements -->
@@ -262,7 +262,7 @@
 				<!-- /.card -->
 			</div>
 			<!-- left column -->
-			<div class="col-md-6">
+			{{--<div class="col-md-6">
 				<!-- general form elements -->
 				<div class="card ">
 					<div class="card-header">
@@ -314,7 +314,7 @@
 					</form>
 				</div>
 				<!-- /.card -->
-			</div>
+			</div>--}}
 			<!-- left column -->
 			<div class="col-md-6">
 				<!-- general form elements -->
