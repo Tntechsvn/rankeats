@@ -67,7 +67,7 @@
           </div>
           <div class="clear"></div>
           <span class="line"></span>
-          <div class="col-md-6">
+          {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
                 <div style="border: 1px solid #dedede;">
@@ -97,7 +97,7 @@
               <!--/.Panel --> 
             </div>
             <!--pull-panels--> 
-          </div>
+          </div>--}}
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -129,8 +129,6 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="clear"></div>
-          <span class="line"></span>
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -162,7 +160,10 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="col-md-6">
+          
+          <div class="clear"></div>
+          <span class="line"></span>
+          {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
                 <div style="border: 1px solid #dedede;">
@@ -192,7 +193,7 @@
               <!--/.Panel --> 
             </div>
             <!--pull-panels--> 
-          </div>
+          </div>--}}
           <div class="clear"></div>
           <span class="line"></span>
           <div class="col-md-6">
