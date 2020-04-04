@@ -17,7 +17,7 @@ use App\Page;
 use App\State;
 use App\City;
 use App\Country;
-
+use DB;
 class HomeController extends Controller{
 
     public function __construct(){
@@ -356,7 +356,118 @@ public function vote_ajax(Request $request){
     }
 
 }
+/*knight*/
+public function voteReviewEat_ajax(Request $request){
+    $user = Auth::user();
+    $user_id = $user->id;
+    $vote = Vote::select('*')
+    ->where('user_id','=',$user->id)
+    ->where('business_id','=',$request->business)
+    ->where('type_vote','=',2)
+    ->first();
+    return $vote;
+    $data_business = Business::find($request->business);
+    $city_id = $data_business->location->IdCity;
+    if($vote){
+        return response()->json([
+            'success' => false,
+            'message' => "Would you like to change your vote?"
+        ]);
+    }else{
+        $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+        if($check_vote_city ){
+            $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
+            foreach($category_id as $cate_id){
+                $new_vote = new Vote;
+                $new_vote -> user_id = $user->id;
+                $new_vote -> business_id = $data_business->id;
+                $new_vote -> category_id = null;
+                $new_vote -> state_id = $data_business->location->IdState;
+                $new_vote -> city_id = $city_id;
 
+                /*vote = 1 vote cho business bằng 2 vote cho eat*/
+                $new_vote -> type_vote = 2;
+                $new_vote -> save();
+                /*reviews eats*/
+                $new_review = new Review;
+                $new_review -> user_id = $user_id;
+                $new_review -> business_id = $request -> business;
+                if($new_review -> save()){
+                    /*update review rating*/
+                    $review_rating = new Review_rating;
+                    $review_rating -> user_id = $user_id;
+                    $review_rating -> review_id = $new_review -> id;
+                    $review_rating -> id_rate_from = $new_review -> business_id;
+                    $review_rating -> category_id = $cate_id;
+                    $review_rating -> type_rate = 2;
+                    $review_rating -> rate = $request -> rate;
+                    $review_rating -> save();
+                }
+            }
+                   
+
+             return response()->json([
+                'success' => true
+            ]);
+
+        }else{
+            foreach($category_id as $cate_id){
+                $new_vote = new Vote;
+                $new_vote -> user_id = $user->id;
+                $new_vote -> business_id = $data_business->id;
+                $new_vote -> category_id = null;
+                $new_vote -> state_id = $data_business->location->IdState;
+                $new_vote -> city_id = $city_id;
+
+                /*vote = 1 vote cho business bằng 2 vote cho eat*/
+                $new_vote -> type_vote = 2;
+                $new_vote -> save();
+                /*reviews eats*/
+                $new_review = new Review;
+                $new_review -> user_id = $user_id;
+                $new_review -> business_id = $request -> business;
+                if($new_review -> save()){
+                    /*update review rating*/
+                    $review_rating = new Review_rating;
+                    $review_rating -> user_id = $user_id;
+                    $review_rating -> review_id = $new_review -> id;
+                    $review_rating -> id_rate_from = $new_review -> business_id;
+                    $review_rating -> category_id = $cate_id;
+                    $review_rating -> type_rate = 2;
+                    $review_rating -> rate = $request -> rate;
+                    $review_rating -> save();
+                }
+            }
+
+            return response()->json([
+                'success' => true
+            ]);
+        }
+        
+    }
+
+}
+public function getRankBusiness(){
+    $id_business = 1;
+    $data_business = Business::find($id_business);
+    $state_id = $data_business->location->IdState;
+
+    $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
+    ->where('type_vote','=',1)
+    ->where('state_id','=',$state_id)
+    ->groupBy('business_id')
+    ->orderBy('So luong', 'desc' )
+    ->get();
+    $i =1;
+    foreach ($get_all_vote_business_city as $val) {
+       if($val -> business_id == $id_business){
+        return $i;
+       }
+       $i++;
+    }
+    return ($get_all_vote_business_city);
+}
+/*end knight*/
 
 public function eat_rank(){
     return view('layouts_profile.eat-rank');
