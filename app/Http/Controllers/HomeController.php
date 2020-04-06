@@ -26,6 +26,7 @@ class HomeController extends Controller{
         $Country = Country::where('code','=','US')->first();
         $state =  $Country->states()->get();
 
+        $this->ad = new Advertisement();
         $this->user = Auth::user();
         $category = Category::where('status','=',1)->get();
         $all_page = Page::all();
@@ -33,8 +34,9 @@ class HomeController extends Controller{
     }
 
     public function home(){
+        $ads_active_home = Advertisement::home()->active()->take(3)->get();
         $category = Category::where('status','=',1)->take(9)->get();
-        return view('layouts.index',compact('category'));
+        return view('layouts.index',compact('category', 'ads_active_home'));
     }
     public function fetchCategory(Request $request){
         if($request->get('query'))

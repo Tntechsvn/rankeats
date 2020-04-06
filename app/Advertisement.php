@@ -114,7 +114,8 @@ class Advertisement extends Model
 	}
 
 	public function getImageUrlAttribute() {
-		return asset('storage').'/'.$this->image;
+		if($this->image)
+			return asset('storage').'/'.$this->image;
 	}
 
 }
