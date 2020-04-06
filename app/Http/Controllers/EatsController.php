@@ -151,5 +151,11 @@ class EatsController extends Controller
         }
         return redirect()->back();
     }
+    public function createBusinessCategory(Request $request){
+       
+        $business = Business::findorfail($request ->business);
+        $business->business_category()->sync($request ->category_type);
+        return redirect()->back();
+    }
    
 }

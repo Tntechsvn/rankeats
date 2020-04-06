@@ -254,7 +254,8 @@ public function bookmark(){
 }
 
 public function my_eat(){
-    return view('layouts_profile.my-eat');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.my-eat',compact('info_business'));
 }
 /*create_advertise*/
 public function create_advertise(){
@@ -263,20 +264,26 @@ public function create_advertise(){
     $advertisement = Advertisement::where('business_id','=',$business_id)->get();
     return view('layouts_profile.create-advertise',compact('plan_details','advertisement'));
 }
-public function eat_reviews(){
-    if(Auth()){
+public function eat_reviews(Request $request){
         $user_id = Auth::id();
         /*list reviews for business*/
-        $list_reviews = Review::select('reviews.*')
-        ->where('user_id','=',$user_id)
+        $list_review_eats = Review_rating::where('user_id','=',$user_id)
+        ->where('type_rate','=',2)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        return view('layouts_profile.eat-review',compact('list_reviews'));
-    }else{
-        return view('layouts.index');
-    }
+        return view('layouts_profile.eat-review',compact('list_review_eats'));
+   
     
+}
+public function business_review(){
+       $user_id = Auth::id();
+       /*list reviews for business*/
+       $list_reviews = Review_rating::where('user_id','=',$user_id)
+       ->where('type_rate','=',1)
+       ->orderBy('created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
+    return view('layouts_profile.business-review',compact('list_reviews'));
 }
 /*single_restaurent*/
 public function single_business(Request $request){
@@ -289,6 +296,12 @@ public function ajax_bookmark(Request $request){
     $data = $request->toArray();
     $check;
     $user = Auth::user();
+    if(!$user){
+        return response()->json([
+            'success' => false,
+            'message' => "You need to log-in to proceed",
+        ]);
+    }
     $bookmark = Bookmark::select('*')
     ->where('user_id','=',$user->id)
     ->where('business_id','=',$request -> business)
@@ -495,14 +508,14 @@ public function getRankBusiness(){
 /*end knight*/
 
 public function eat_rank(){
-    return view('layouts_profile.eat-rank');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.eat-rank',compact('info_business'));
 }
 public function business_rank(){
-    return view('layouts_profile.business-rank');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.business-rank',compact('info_business'));
 }
-public function business_review(){
-    return view('layouts_profile.business-review');
-}
+
 public function my_businesses(){
     $info_business = Auth::user()->business()->first();
     return view('layouts_profile.my-businesses',compact('info_business'));

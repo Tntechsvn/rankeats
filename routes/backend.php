@@ -56,6 +56,10 @@ Route::get('/get-rank', [
 	'as' => 'getRankBusiness',
 	'uses' => 'HomeController@getRankBusiness'
 ]);
+Route::post('/create-business-category', [
+	'as' => 'createBusinessCategory',
+	'uses' => 'EatsController@createBusinessCategory'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',
