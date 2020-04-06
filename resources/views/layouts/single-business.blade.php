@@ -180,9 +180,10 @@
 						    	@else
 						    		<a  href="javascript:;"  class="btn btn-warning">Voted</a>
 						    	@endif
+						    	
+						    	@endif
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
-						    	@endif
 				    		@if(Auth::check())
 				    		<!-- Knight modan review-->
 				    		<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
