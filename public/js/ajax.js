@@ -95,7 +95,6 @@ $(document).on('change','select[name=state]', function(){
   var val = $(this).val();
   var form = $(this).closest('form');
   // var val = 1;
-  form.find('select.city').html('');
   var url = $('input[name=ajaxcitystate]').val();
   $.ajax({
     headers: {

@@ -88,7 +88,7 @@ class PaymentController extends Controller
         if($request->image !=null){
             $base64String = $request->image;
             $url_img = $this->shareController->saveImgBase64($base64String, 'uploads');
-            $ad = $this->advertisement->update_adv($pd->id, $url_img, $request->date_active, $request->state, $request->city);
+            $ad = $this->advertisement->update_adv($pd->id, $url_img);
             if(!$ad) {
                 redirect()->back();
             }
