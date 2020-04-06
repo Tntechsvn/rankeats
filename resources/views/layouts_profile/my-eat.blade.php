@@ -92,11 +92,11 @@
 	            	@endforeach
 	            </select>
           	</div>
-		
+
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		<button class="btn btn-primary" type="submit" name="submit">Submit</button>
+		<button class="btn btn-primary" name="submit">Submit</button>
 	  </div>
 	  </form>
 	</div>
@@ -108,6 +108,7 @@
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#addeat').find('form').parsley();
 			$('.test').fSelect();
 		});
 	</script>

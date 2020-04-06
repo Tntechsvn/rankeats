@@ -50,7 +50,7 @@ class Category extends Model
         ->get();
         $i =1;
         foreach ($get_all_vote_business_state as $val) {
-            if($val -> business_id == $id_business){
+            if($val -> category_id == $this ->id){
                 return $i;
             }
             $i++;
@@ -72,7 +72,7 @@ class Category extends Model
         ->get();
         $i =1;
         foreach ($get_all_vote_business_city as $val) {
-            if($val -> business_id == $id_business){
+            if($val -> category_id == $this ->id){
                 return $i;
             }
             $i++;

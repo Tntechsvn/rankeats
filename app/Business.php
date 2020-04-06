@@ -86,9 +86,12 @@ class Business extends Model
     	if($request -> phone){
     		$this -> phone = $request -> phone;
     	}
-    	if($request -> 	website){
-    		$this -> 	website = $request -> 	website;
+    	if($request -> website){
+    		$this -> website = $request -> website;
     	}
+        if($request -> day_opening){
+            $this -> day_opening = date("Y-m-d H:i:s",strtotime($request -> day_opening));
+        }
     	if($request -> fb){
     		$this -> fb = $request -> fb;
     	}
@@ -118,7 +121,8 @@ class Business extends Model
     	if($this -> save()) {
     		// business_category
 			$this->business_category()->sync($request-> category_id);
-
+            /*update date-time*/
+            
             /*sửa thành công*/
             $response =  response()->json([
                         'success' => true,

@@ -27,7 +27,7 @@
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
-								<h4><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
@@ -43,6 +43,7 @@
 											$x++;
 										}
 									@endphp
+									<span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$data->total_vote}} <i>reviews</i></span>
 								</ul>
 								<div class="pr-dtail">
 									<ul class="p-t-15">
@@ -55,11 +56,11 @@
 							</div>
 							<div class="pr-dtlr">
 								<p>{{$data->business_phone}}</p>
-								<p>{{$data->total_vote}} <i>reviews</i></p>
+								<p>{{$data->location->state}}</p>
+								<p>{{$data->location->city}}</p>
 							</div>
-							<p>{{$data->location->address}}</p>
 							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
-							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
+							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
 						</div>					
 					</div>
 				@endforeach
@@ -75,7 +76,7 @@
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
-								<h4><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
@@ -91,6 +92,7 @@
 											$x++;
 										}
 									@endphp
+									<span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$data->total_vote}} <i>reviews</i></span>
 								</ul>
 								<div class="pr-dtail">
 									<ul class="p-t-15">
@@ -103,11 +105,11 @@
 							</div>
 							<div class="pr-dtlr">
 								<p>{{$data->business_phone}}</p>
-								<p>{{$data->total_vote}} <i>reviews</i></p>
+								<p>{{$data->location->state}}</p>
+								<p>{{$data->location->city}}</p>
 							</div>
-							<p>{{$data->location->address}}</p>
 							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
-							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
+							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
 						</div>					
 					</div>
 				@endforeach
@@ -205,7 +207,7 @@
 				{{-- &nbsp;
 				<a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a> --}}
 				<div class="rankerShow" style="display:none;">
-					<form action="{{route('postCreateEatsFrontEnd')}}" method="post" data-parsley-validate>
+					<form action="" method="post" data-parsley-validate>
 						@csrf
 						<div class="form-group m-t-15">
 							<label for="eat_item">EAT</label>
@@ -278,6 +280,7 @@
 
 
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
+<input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
 @endsection
 
 @section('script')
