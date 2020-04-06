@@ -6,7 +6,28 @@
 <div class="promo">
   <div class="container">
     <div class="front-search">
-      <h1>Find The Best, Eat The Best</h1>
+      {{-- <h1>Find The Best, Eat The Best</h1> --}}
+      <div class="banner-image">
+        <div>
+          <a href="javascript:;">
+            <img src="images/oyster.png" alt="">
+            <span>Neptune Oyster</span>
+          </a>
+        </div>
+        <div>
+          <a href="javascript:;">
+            <img src="images/prozlab.png" alt="">
+            <span>FrozLab</span>
+          </a>
+        </div>
+        <div>
+          <a href="javascript:;">
+            <img src="images/lobster.png" alt="">
+            <span>Luke's Lobster Back Bay</span>
+          </a>
+        </div>
+        
+      </div>
       @include('layouts.form-search')
     </div>
   </div>

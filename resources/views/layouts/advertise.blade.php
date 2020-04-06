@@ -67,7 +67,7 @@
           </div>
           <div class="clear"></div>
           <span class="line"></span>
-          <div class="col-md-6">
+          {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
                 <div style="border: 1px solid #dedede;">
@@ -97,7 +97,7 @@
               <!--/.Panel --> 
             </div>
             <!--pull-panels--> 
-          </div>
+          </div>--}}
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -129,8 +129,6 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="clear"></div>
-          <span class="line"></span>
           <div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
@@ -162,7 +160,10 @@
             </div>
             <!--pull-panels--> 
           </div>
-          <div class="col-md-6">
+          
+          <div class="clear"></div>
+          <span class="line"></span>
+          {{--<div class="col-md-6">
             <div class="row ">
               <div class="parent-plan">
                 <div style="border: 1px solid #dedede;">
@@ -192,7 +193,7 @@
               <!--/.Panel --> 
             </div>
             <!--pull-panels--> 
-          </div>
+          </div>--}}
           <div class="clear"></div>
           <span class="line"></span>
           <div class="col-md-6">
@@ -321,7 +322,7 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
-    <form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8">
+    <form action="{{route('submit.payment')}}" method="post" accept-charset="utf-8" data-parsley-validate>
       @csrf
       <input type="hidden" name="title" value="">
       <div class="modal-content">
@@ -338,7 +339,7 @@
             <input class="form-control" type="hidden" name="pd_id" value="">
           </div>
           <div class="form-group">
-            <select class="test state"  name="state">
+            <select class="test state"  name="state" required>
               <option value="" selected="selected">Select State</option>
               @foreach($state as $data)
                 <option value="{{$data->id}}">{{$data->name}}</option>
@@ -346,18 +347,22 @@
             </select>
           </div>
           <div class="form-group">
-            <select class="city" name="city">
+            <select class="city" name="city" required>
                 <option value="" selected="selected">Select City</option>
             </select>
           </div>
 
-         {{--  <div class="form-group">
-            <input class="form-control" type="text" name="state" value="" placeholder="State">
-          </div> --}}
+          <div class="form-group">
+            <input type="radio" id="adv-now" name="custom-date" value=""><label for="adv-now">Now</label>
+            <input type="radio" id="adv-date" name="custom-date" value="customdate"><label for="adv-date">Date</label>
+
+            <input class="form-control hidden datepicker" type="text" name="date_active" value="" placeholder="dd/mm/YYYY">
+          </div> 
+         
 
           <div class="form-group">
             <p>Please provide a picture of your EATS a your business</p>
-            <input class="inputPic" type="file" name="" accept="image/*">
+            <input class="inputPic" type="file" name="image" accept="image/*" required>
             
           </div>
           <div style="width: 100%;float: left;">
@@ -365,7 +370,7 @@
           </div>
           <div class="form-group">
             <label for="check-paypal">
-              <input id="check-paypal" type="radio" name="paypal" value="">
+              <input id="check-paypal" type="radio" name="paypal" value="paypal" required>
               <img src="images/paypal.png" alt="" width="100px">
             </label>
             
@@ -388,9 +393,29 @@
 @section('script')
 <script type="text/javascript" src="js/fSelect.js"></script>
   <script type="text/javascript">
+
     $(document).ready(function(){
       $('.test').fSelect();
+
+      $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        startDate: '0d',
+        autoclose: true,
+        todayHighlight: true,
+      });
+
+
+      $(document).on('input','#adv-date',function(){
+        $(this).closest('.form-group').find('.datepicker').removeClass('hidden');
+      });
+      $(document).on('input','#adv-now',function(){
+        $(this).closest('.form-group').find('.datepicker').addClass('hidden');
+        var date = new Date();
+        $(this).val(date);
+      });
+      
     });
+      
   </script>
   @if(session('SweetAlert'))
   <script type="text/javascript">
@@ -419,7 +444,7 @@
 
         var previews = document.getElementById('preview-images');
         if (previews.hasChildNodes()) {
-          alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+          alert('You Can Only Choose An Image For This Item');
           e.preventDefault();
         }     
       });
@@ -444,7 +469,7 @@
       });
       /*clear the file list when image is clicked*/
       $(document).on('click','.deletetimg',function(){
-        if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+        if(confirm("Do you want to delete this image?"))
         {
           $(this).parent().remove();
           $(".inputPic").val(null);/* xóa tên của file trong input*/

@@ -9,6 +9,12 @@ use App\PlanDetail;
 
 class Advertisement extends Model
 {
+	// defaul query status 1
+	public function newQuery($excludeDeleted = true) {
+        return parent::newQuery($excludeDeleted)
+            ->where('status', '=', 1);
+    }
+
 	public function business(){
 		return $this -> belongsTo('App\Business', 'business_id', 'id');
 	}
@@ -17,33 +23,39 @@ class Advertisement extends Model
 		return $this -> belongsTo('App\PlanDetail', 'plan_detail_id', 'id');
 	}
 
-	public function update_adv($plan_detail_id){
+	public function state(){
+		return $this -> belongsTo('App\State');
+	}
+
+	public function city(){
+		return $this -> belongsTo('App\City');
+	}
+
+	public function update_adv($plan_detail_id, $img_path, $date, $state_id, $city_id){
 		$business_id = Auth::user()->business()->first()->id;
 		if($business_id){
 			$pd_days = PlanDetail::findOrfail($plan_detail_id)->pd_days;
-			$expiration_date = Carbon::now()->addDays($pd_days);
-
+			$date_active = ($date == null) ? Carbon::now() : Carbon::createFromFormat('d-m-Y H:i:s',  $date. "00:00:00");
+			$expiration_date = $date_active->addDays($pd_days);
 
 			$this -> business_id = $business_id;
+			$this -> city_id = $city_id;
+			$this -> state_id = $state_id;
 			$this -> plan_detail_id = $plan_detail_id;
-			$this -> active_date = Carbon::now();
+			$this -> image = $img_path;
+			$this -> active_date = $date_active;
 			$this -> expiration_date = $expiration_date;
-			$this -> status = 1;
+			$this -> status = 0;
 			if($this -> save()){
-				$response =  response()->json([
-					'success' => true,
-					'message' => 'success',
-				], 200);
-				return $response;
+				return $this;
 			}
-		}else{
-			$response =  response()->json([
-					'success' => false,
-					'message' => 'error',
-				], 200);
-				return $response;
 		}
+		return false;
 
+	}
+
+	public function success_ad($id){
+		return $this->orWhere('status', 0)->where('id', $id)->update(['status' => 1]);
 	}
 
 	// home
@@ -101,6 +113,8 @@ class Advertisement extends Model
 		return $query->where('expiration_date', '<=',Carbon::now());
 	}
 
-
+	public function getImageUrlAttribute() {
+		return asset('storage').'/'.$this->image;
+	}
 
 }

@@ -75,7 +75,7 @@
 		$('#avatar').click(function(e) {
 			var previews = document.getElementById('previews');
 			if (previews.hasChildNodes()) {
-				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				alert('You Can Only Choose An Image For This Item');
 				e.preventDefault();
 			}			
 		});

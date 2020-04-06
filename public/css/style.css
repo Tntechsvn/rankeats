@@ -146,7 +146,7 @@ p {
 }
 .promo {
 	height: 400px;
-	background: url(../images/promo.jpg) no-repeat #F5F5F5;
+	background: url(../images/default.jpg) no-repeat;
 	margin: 0;
 	border-bottom: 3px solid #D4D4D4;
 	background-size: cover;
@@ -154,8 +154,8 @@ p {
 }
 .front-search {
 	width: 100%;
-	margin: 100px auto;
-	padding: 40px 30px;
+	margin: 0 auto;
+	padding: 50px 0;
 	text-align: center;
 }
 .front-search h1 {
@@ -2122,8 +2122,8 @@ input[type=number]::-webkit-outer-spin-button {
 	background-color: #707070;
 	padding: 10px 20px;
 	color: #fff;
-	margin-right: 20px;
-	border-radius: 5px;
+	margin-right: 10px;
+    border-radius: 0;
 }
 .description .tap-pane a svg {
 	color: #fff;
@@ -2188,15 +2188,62 @@ input[type=number]::-webkit-outer-spin-button {
 	height: 98px;
 	object-fit: cover;
 }
+.addeat {
+    padding: 10px 20px;
+    background-color: #0073bb;
+    color: #fff !important;
+    border-radius: 5px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
 
+.banner-image img {
+	max-width: 250px;
+	width: 100%;
+	height: 180px;
+	object-fit: cover;
+}
 
+.banner-image a {
+	position: relative;
+	display: inline-block;
+}
+.banner-image span {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	color: #fff;
+    font-weight: bold;
+    padding: 15px 5px;
+    background-color: #000;
+    opacity: 0.7;	
+}
+.banner-image>div {
+	float: left;
+    border: 3px solid #fff;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+.banner-image {
+	display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.top-content-res label.verify {
+	padding: 5px 20px;
+    background-color: #74ac36;
+    color: #fff;
+    border-radius: 3px;
+}
 
-
-
-
-
-
-
+.datepicker{
+z-index: 1100 !important;
+}
+#ui-datepicker-div {
+width: 30% !important;
+}
 
 
 
@@ -2213,7 +2260,8 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 300px;
 	}
 	.front-search{
-		margin: 40px auto;
+		margin: 0px auto;
+		padding: 20px 0;
 	}
 	.front-search h1{
 		font-size: 30px;
@@ -2228,6 +2276,19 @@ input[type=number]::-webkit-outer-spin-button {
 @media(max-width: 990px){
 	.howitwork {
 		height: auto;
+	}
+}
+@media(max-width: 640px){
+	.banner-image {
+		display: block;
+		float: left;
+    	width: 100%;
+	}
+	.banner-image >div {
+		clear: both;
+		width: 250px;
+		float: none;
+		margin: 10px auto;
 	}
 }
 @media(max-width: 768px){
@@ -2297,7 +2358,7 @@ input[type=number]::-webkit-outer-spin-button {
 	    display: block;
 	}
 	.promo {
-	    height: 260px;
+	    height: auto;
 	}
 	.map-business h2 {
 		font-size: 15px;

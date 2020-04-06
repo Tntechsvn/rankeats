@@ -7,7 +7,7 @@ use App\Http\Controllers\ShareController;
 use Carbon\Carbon;
 use App\Location;
 use Auth;
-
+use DB;
 class Business extends Model
 {
 	/*knight*/
@@ -22,6 +22,9 @@ class Business extends Model
     }
     public function review(){
         return $this -> hasMany('App\Review', 'business_id', 'id');
+    }
+    public function review_rating(){
+        return $this -> hasMany('App\Review_rating', 'id_rate_from', 'id');
     }
 
     public function users(){
@@ -155,7 +158,46 @@ class Business extends Model
         }
         return $rate;
     }
-   
+    /*rank business for state*/
+    public function getRankBusinessStateAttribute(){
+        $id_business = $this -> id;
+        $state_id = $this->location->IdState;
+
+        $get_all_vote_business_state = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
+        ->where('type_vote','=',1)
+        ->where('state_id','=',$state_id)
+        ->groupBy('business_id')
+        ->orderBy('So luong', 'desc' )
+        ->get();
+        $i =1;
+        foreach ($get_all_vote_business_state as $val) {
+            if($val -> business_id == $id_business){
+                return $i;
+            }
+            $i++;
+        }
+        return "No Rank";
+    }
+    /*rank business for city*/
+    public function getRankBusinessCityAttribute(){
+        $id_business = $this -> id;
+        $city_id = $this->location->IdCity;
+
+        $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
+        ->where('type_vote','=',1)
+        ->where('city_id','=',$city_id)
+        ->groupBy('business_id')
+        ->orderBy('So luong', 'desc' )
+        ->get();
+        $i =1;
+        foreach ($get_all_vote_business_city as $val) {
+            if($val -> business_id == $id_business){
+                return $i;
+            }
+            $i++;
+        }
+        return "No Rank";
+    }
     /*end knight*/
 
     /*Thienvu*/

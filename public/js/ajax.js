@@ -92,9 +92,10 @@ $(document).on('click','.vote_now',function(){
 
 
 $(document).on('change','select[name=state]', function(){
-  // var val = $(this).val();
+  var val = $(this).val();
   var form = $(this).closest('form');
-  var val = 1;
+  // var val = 1;
+  form.find('select.city').html('');
   var url = $('input[name=ajaxcitystate]').val();
   $.ajax({
     headers: {
@@ -108,7 +109,7 @@ $(document).on('change','select[name=state]', function(){
     success:function(res){
       if(res.success == true){
           form.find('select.city').html(res.data);
-          form.find('select.city').fSelect();
+          form.find('select.city').fSelect('reload');
       }else{
         
       }

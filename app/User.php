@@ -177,5 +177,29 @@ class User extends Authenticatable implements MustVerifyEmail
             return 'images/avatar.jpg';
         }
     }
+     public function check_vote($business_id){
+        $vote = Vote::select('*')
+        ->where('user_id','=',$this->id)
+        ->where('business_id','=',$business_id)
+        ->where('type_vote','=',1)
+        ->first();
+        if($vote){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public function check_vote_eat($business_id){
+        $vote = Vote::select('*')
+        ->where('user_id','=',$this->id)
+        ->where('business_id','=',$business_id)
+        ->where('type_vote','=',2)
+        ->first();
+        if($vote){
+            return false;
+        }else{
+            return true;
+        }
+    }
     /*end Knight*/
 }

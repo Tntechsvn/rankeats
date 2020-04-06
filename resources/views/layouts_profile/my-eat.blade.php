@@ -22,8 +22,9 @@
 				<div class="tab-content" style="margin-right: -15px;">
 					<div>
 						<h3 class="title m-b-20">My EATS</h3>
+						<a href="javascript:;" class="addeat" data-toggle="modal" data-target="#addeat">ADD EATS</a>
 						<div class="clear"></div>
-						<table style="width: 100%">
+						<table class="m-t-15" style="width: 100%;">
 							<thead class="head-table">
 								<tr>
 									<td width="15%">EAT</td>
@@ -56,9 +57,56 @@
 	</div>
 
 </div>
+
+{{-- modal --}}
+
+<div id="addeat" class="modal fade in" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title">ADD EATS</h4>
+	  </div>
+	  <div class="modal-body">
+		<form action="" method="post" accept-charset="utf-8" data-parsley-validate>
+			<div class="form-group">
+				Select Business
+	            <select class="test " required multiple="multiple"  name="business[]" data-parsley-required>
+                	<option value="">Business1</option>
+                	<option value="">Business2</option>
+                	<option value="">Business3</option>
+	            </select>
+          	</div>
+			<div class="form-group">
+				Select eats
+	            <select class="test " required multiple="multiple"  name="eat[]" data-parsley-required>
+                	<option value="">pizza</option>
+                	<option value="">hotpot</option>
+                	<option value="">humbeger</option>
+	            </select>
+          	</div>
+			<div class="form-group">
+				<input type="text" name="asdsda" data-parsley-required>
+          	</div>
+		</form>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		<button class="btn btn-primary" name="submit">Submit</button>
+	  </div>
+	</div>
+    
+  </div>
+</div>
 @endsection
 @section('script')
+	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
-		
+		$(document).ready(function(){
+			$('#addeat').find('form').parsley();
+			$('.test').fSelect();
+		});
 	</script>
 @stop

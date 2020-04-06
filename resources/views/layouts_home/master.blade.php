@@ -20,7 +20,9 @@
 
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link href="css/jquery.timepicker.min.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
 <link href="css/default.css" rel="stylesheet" type="text/css">
+<link href="css/parsley.css" rel="stylesheet" type="text/css">
 <link href="css/animate.css" rel="stylesheet" type="text/css">
 
 <link href="lightbox/css/lightgallery.css" rel="stylesheet">
@@ -31,6 +33,7 @@
 
 <script src="js/jquery.min.js"></script>
 
+
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -38,6 +41,8 @@
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script src="js/parsley.min.js"></script> 
 </head>
 
 <body>
@@ -58,7 +63,7 @@
 
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="js/parsley.min.js"></script> 
+
 <script type="text/javascript" src="js/sweetalert.min.js"></script>   
 {{-- <script src="js/wow.min.js"></script>  --}}
 {{-- <script src="js/jquery.raty.js"></script> --}}
