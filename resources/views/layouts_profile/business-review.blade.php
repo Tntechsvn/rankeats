@@ -24,23 +24,28 @@
 						<h3 class="title m-b-20">Business Reviews</h3>
 						<div class="clear"></div>
 							
-						<div class="list-review">
-							<div class="review-gr">
-								<h4 class="m-b-10">neptuyn</h4>
-								<p><i class="fas fa-calendar-alt"></i>25/3/2020</p>
-								<p><i class="fas fa-map-marker-alt"></i>new york</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc rutrum finibus lorem vitae elementum. Etiam in turpis id sapien commodo finibus in non neque. Curabitur vel sodales mi. </p>
-								
-								<div class="edit">
-									<a href="" ><i class="fas fa-pencil-alt"></i></a>
-									<a href="" ><i class="fas fa-scroll"></i></a>
+						@if($list_reviews->total() >0)
+					    	@foreach($list_reviews as $data)
+							<div class="list-review">
+								<div class="review-gr">
+									<h4 class="m-b-10"><a href="{{$data->business->permalink()}}">{{$data->business->name}}</a></h4>
+									<p><i class="fas fa-calendar-alt"></i>{{$data->created_at}}</p>
+									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
+									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
+									<p>{{$data->review->description}}</p>
+									
+									<div class="edit">
+										<a href="" ><i class="fas fa-pencil-alt"></i></a>
+										<a href="" ><i class="fas fa-scroll"></i></a>
+									</div>
 								</div>
+								
+
 							</div>
-							
+							@endforeach
+						@endif
 
-						</div>
-
-						{{-- {!!$list_reviews -> appends(request()->except('page')) -> links()!!} --}}
+						{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 					</div>
 				</div>
 			</div>
