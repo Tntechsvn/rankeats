@@ -389,7 +389,7 @@ public function voteReviewEat_ajax(Request $request){
         // return redirect()->back();
         return response()->json([
             'success' => false,
-            'data' => $vote
+            'message' => "You have already voted!!!"
         ]);
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
@@ -434,10 +434,11 @@ public function voteReviewEat_ajax(Request $request){
                 }
             }
                    
-            return redirect()->back();
-             /*return response()->json([
-                'success' => true
-            ]);*/
+            // return redirect()->back();
+            //  return response()->json([
+            //     'success' => true,
+            //     'data' => 'ok'
+            // ]);
 
         }else{
             foreach($Category_type as $cate_id){
@@ -477,10 +478,18 @@ public function voteReviewEat_ajax(Request $request){
                     $review_rating -> save();
                 }
             }
-            return redirect()->back();
-            /*return response()->json([
-                'success' => true
-            ]);*/
+            $info_business = Business::findOrfail($request->business);
+            $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+            $data = "";
+            $view = View::make('layouts.ajax_list_review', ['list_review_eats' => $list_review_eats]);
+            $data .= (string) $view;
+            $message = 'You have voted and successfully evaluated';
+            // return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+                'message' =>  $message
+            ]);
         }
         
     }

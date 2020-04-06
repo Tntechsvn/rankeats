@@ -134,18 +134,6 @@
 							    		<span class="bold">Name :</span>
 							    		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
 							    	</p>
-							    	<p>
-							    		<i class="fas fa-user"></i>
-							    		<span class="bold">EAT :</span>
-							    		<span>
-							    			{{$info_business->business_category->pluck('category_name')->implode(', ')}}
-										</span>
-							    	</p>
-							    	<div >
-							    		<label class="m-r-30"><i class="fas fa-globe-americas" style="color: "></i> Country: {{$data->business->location->country}} (12)</label>
-							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$data->business->location->city}} (12)</label>
-							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
-							    	</div>
 
 							    	<p>{{$data->review->description}}</p>
 
@@ -233,7 +221,6 @@
 								@endforeach								
 				    		@endif
 				    		<div class="p-t-15" style="text-align: right;">
-				    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
 					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
@@ -419,11 +406,11 @@
 
 @if(Auth::check())
 <!-- Knight modan review-->
-<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
+<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="false"> 
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
+		<form action="" method="post" accept-charset="utf-8">
 			@csrf
 			<input type="hidden" name="business_id" value="">
 			<div class="modal-content">
@@ -499,7 +486,8 @@
 	</div>
 </div>
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
-<input type="hidden" name="voteReviewEat_aja" value="{{route('voteReviewEat_ajax')}}">
+<input type="hidden" name="voteReviewEat_ajax" value="{{route('voteReviewEat_ajax')}}">
+<input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
 @endsection
 
 @section('script')
