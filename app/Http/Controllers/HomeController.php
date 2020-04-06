@@ -484,20 +484,16 @@ public function getRankBusiness(){
     $data_business = Business::find($id_business);
     $state_id = $data_business->location->IdState;
 
-    $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
-    ->where('type_vote','=',1)
-    ->where('state_id','=',$state_id)
-    ->groupBy('business_id')
-    ->orderBy('So luong', 'desc' )
-    ->get();
-    $i =1;
-    foreach ($get_all_vote_business_city as $val) {
-       if($val -> business_id == $id_business){
-        return $i;
-       }
-       $i++;
-    }
-    return ($get_all_vote_business_city);
+   foreach($data_business->business_category as $val){
+    return $val->RankEatCity;
+    /*echo '<tr>
+    <td>'.$val->category_name.'</td>
+    <td>'.$val->RankEatState.'</td>
+    <td>'.$val->RankEatCity.'</td>
+    </tr></br>';*/
+   }
+                                    
+                                
 }
 /*end knight*/
 
