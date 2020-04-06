@@ -160,7 +160,7 @@ $(document).on('click','.submit_votereview',function(e){
   var form = $(this).closest('form');
   var target = $('#eatrank');
   var modal = $('#vote_review');
-  var url = $('input[name=voteReviewEat_aja]').val();
+  var url = $('input[name=voteReviewEat_ajax]').val();
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
