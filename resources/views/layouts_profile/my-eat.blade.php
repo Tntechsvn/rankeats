@@ -87,9 +87,9 @@
                 	<option value="">humbeger</option>
 	            </select>
           	</div>
-			<div class="form-group">
+			{{-- <div class="form-group">
 				<input type="text" name="asdsda" data-parsley-required>
-          	</div>
+          	</div> --}}
 		</form>
 	  </div>
 	  <div class="modal-footer">
