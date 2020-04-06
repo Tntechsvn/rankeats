@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Review;
 use App\Myconst;
+use App\Business;
+use App\Review_rating;
+use View;
 class ReviewsController extends Controller
 {
     /**
@@ -46,13 +49,25 @@ class ReviewsController extends Controller
         return view('admin.reviews.getListReviews', compact('start', 'record', 'total_record','list_reviews','keyword'));
 	}
     public function postReviewFrontEnd(Request $request){
+        // dd($request->toArray());
         $user_id = Auth::user()->id;
         $reviews = new Review;        
         $response = $reviews -> update_review($request,$user_id);
         $data = $response->getData();
+        $info_business = Business::findOrfail($request -> business_id);
+        $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
         if($data->success){
             session()->put('success',$data->message);
-            return redirect()->back();
+            $response = "";
+            $view = View::make('layouts.ajax_business_review', ['list_reviews' => $list_reviews]);
+            $response .= (string) $view;
+            $message = 'You have voted and successfully evaluated';
+            // return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'data' => $response,
+                'message' =>  $message
+            ]);
         }else{
             session()->put('error',$data->message);
             return redirect()->back();
