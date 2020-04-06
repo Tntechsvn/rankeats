@@ -175,97 +175,18 @@
 				    		@endif
 				    		<div style="text-align: right;">
 				    			@if(Auth::check())
-				    			@if(Auth::user()->check_vote($info_business->id))
-						    		<a  href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}">Vote</a>
+					    			@if(Auth::user()->check_vote($info_business->id))
+							    		<a  href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}">Vote</a>
+							    	@else
+							    		<a  href="javascript:;"  class="btn btn-warning">Voted</a>
+							    	@endif
 						    	@else
-						    		<a  href="javascript:;"  class="btn btn-warning">Voted</a>
-						    	@endif
 
-						    	@endif
+				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-success" style="color: #fff;">Vote</a>
+				    			@endif
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
-				    		@if(Auth::check())
-				    		<!-- Knight modan review-->
-				    		<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
-				    			<div class="modal-dialog">
-
-				    				<!-- Modal content-->
-				    				<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
-				    					@csrf
-				    					<input type="hidden" name="business_id" value="">
-				    					<div class="modal-content">
-				    						<div class="modal-header">
-				    							<div class="avata-popup " style="width: 100%;text-align: center;">
-				    								<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
-				    								<p class="bold">{{Auth::user()->name}}</p>
-				    							</div>
-				    						</div>
-				    						<div class="modal-body">
-				    							<p>Would you like to write a review for this EAT?</p>
-				    							<div class="okverify hidden">
-				    								<div class="popup-star">
-				    									<label class="customstar star-1">							
-				    										<input type="radio" name="rate" value="1" checked="checked">
-				    										<span class="starimg checkstar" ></span>
-				    									</label>
-				    									<label class="customstar star-2">							
-				    										<input type="radio" name="rate" value="2">
-				    										<span class="starimg" ></span>
-				    									</label>
-				    									<label class="customstar star-3">							
-				    										<input type="radio" name="rate" value="3">
-				    										<span class="starimg" ></span>
-				    									</label>
-				    									<label class="customstar star-4">							
-				    										<input type="radio" name="rate" value="4">
-				    										<span class="starimg" ></span>
-				    									</label>
-				    									<label class="customstar star-5">							
-				    										<input type="radio" name="rate" value="5">
-				    										<span class="starimg "></span>
-				    									</label>
-				    								</div>
-				    								<div class="form-group reviewBox">
-				    									<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
-				    								</div>
-				    							</div>
-
-				    						</div>
-				    						<div class="modal-footer" style="text-align: center;">
-				    							<div class="verify">
-				    								<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
-				    								<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
-				    							</div>
-				    							<div class="firstWindow hidden" style="width: 100%">
-				    								<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
-				    							</div>
-				    						</div>
-				    					</div>
-				    				</form>
-
-				    			</div>
-				    		</div>
-				    		@endif
-				    		<div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
-				    			<div class="modal-dialog">
-
-				    				<!-- Modal content-->
-				    				<div class="modal-content">
-				    					<div class="modal-header">
-				    						<button type="button" class="close" data-dismiss="modal">&times;</button>
-				    						<h4 class="modal-title">&nbsp;</h4>
-				    					</div>
-				    					<div class="modal-body">
-				    						<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
-				    					</div>
-				    					<div class="modal-footer">
-				    						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				    					</div>
-				    				</div>
-
-				    			</div>
-				    		</div>
-				    		<input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
+				    		
 				    		<!-- end Knight modan review-->
 					    </div>
 					    <div class="tab-pane" id="eatrank">
@@ -313,12 +234,15 @@
 								@endforeach								
 				    		@endif
 				    		<div class="p-t-15" style="text-align: right;">
+				    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
 					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
 					    			@else
 					    			<a href="javascript:;" class="btn btn-danger" style="color: #fff;">Voted</a>
 					    			@endif
+				    			@else
+				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-success" style="color: #fff;">Vote</a>
 				    			@endif
 				    			{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 				    		</div>
@@ -402,7 +326,7 @@
 		<h4 class="modal-title bold">EAT Rank/Reviews</h4>
 	  </div>
 	  <div class="modal-body">
-		<form class="" action="{{route('voteReviewEat_ajax')}}" method="post">
+		<form class="" action="" method="post">
 			@csrf
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="form-group">
@@ -481,7 +405,7 @@
 
 				    <div>
 				    	<button class=" btn btn-default" data-dismiss="modal">Cancel</button>
-				    	<button class="btn btn-primary" type="submit" name="submit">Submit</button>
+				    	<button class="btn btn-primary submit_votereview" type="submit" name="submit">Submit</button>
 				    </div>
 				</div>
 			</div>
@@ -492,6 +416,91 @@
   </div>
 </div>
 
+
+
+@if(Auth::check())
+<!-- Knight modan review-->
+<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="true"> 
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
+			@csrf
+			<input type="hidden" name="business_id" value="">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="avata-popup " style="width: 100%;text-align: center;">
+						<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
+						<p class="bold">{{Auth::user()->name}}</p>
+					</div>
+				</div>
+				<div class="modal-body">
+					<p>Would you like to write a review for this EAT?</p>
+					<div class="okverify hidden">
+						<div class="popup-star">
+							<label class="customstar star-1">							
+								<input type="radio" name="rate" value="1" checked="checked">
+								<span class="starimg checkstar" ></span>
+							</label>
+							<label class="customstar star-2">							
+								<input type="radio" name="rate" value="2">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-3">							
+								<input type="radio" name="rate" value="3">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-4">							
+								<input type="radio" name="rate" value="4">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-5">							
+								<input type="radio" name="rate" value="5">
+								<span class="starimg "></span>
+							</label>
+						</div>
+						<div class="form-group reviewBox">
+							<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<div class="verify">
+						<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+						<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
+					</div>
+					<div class="firstWindow hidden" style="width: 100%">
+						<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+	</div>
+</div>
+@endif
+<div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">&nbsp;</h4>
+			</div>
+			<div class="modal-body">
+				<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
+<input type="hidden" name="voteReviewEat_aja" value="{{route('voteReviewEat_ajax')}}">
 @endsection
 
 @section('script')
@@ -533,7 +542,10 @@
 			        			$this.find('.fa-bookmark').attr('data-prefix','far');
 			        		}
 			        	}else{
-			        		alert('error');
+			        		swal({
+					          title: res.message,
+					          timer: 2000
+					        });
 			        	}
 			        }
 				});

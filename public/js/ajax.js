@@ -95,6 +95,7 @@ $(document).on('change','select[name=state]', function(){
   var val = $(this).val();
   var form = $(this).closest('form');
   // var val = 1;
+  form.find('select.city').html('');
   var url = $('input[name=ajaxcitystate]').val();
   $.ajax({
     headers: {
@@ -108,10 +109,34 @@ $(document).on('change','select[name=state]', function(){
     success:function(res){
       if(res.success == true){
           form.find('select.city').html(res.data);
-          form.find('select.city').fSelect();
+          form.find('select.city').fSelect('reload');
       }else{
         
       }
     }
   });
 });
+
+
+// vote+review single
+
+$(document).on('click','.submit_votereview',function(e){
+  e.preventDefault();
+  var form = $(this).closest('form');
+  var url = $('input[name=voteReviewEat_aja]').val();
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: form.serialize(),
+    success:function(res){
+      if(res.success == true){
+          console.log(res.data);
+      }else{
+        
+      }
+    }
+  });
+})

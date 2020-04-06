@@ -137,10 +137,10 @@
 				arr.push($(this).data('row-id'));
 			});
 			if(arr.length <= 0 ) {
-				alert("Vui Lòng Chọn Mục Muốn Xóa.");
+				alert("Please select the item you want to delete.");
 				return;
 			} else {
-				WRN_PROFILE_DELETE = "Bạn Có Chắc Muốn Xóa"+(arr.length > 1 ? "these" : "this") + " row?";
+				WRN_PROFILE_DELETE = "Are You Sure You Want To Delete"+(arr.length > 1 ? "these" : "this") + " row?";
 			}
 			var checked = confirm(WRN_PROFILE_DELETE);
 			if(checked == true) {
@@ -157,9 +157,9 @@
 						console.log(data);
 						if(data == "Success"){
 							window.location.reload();
-							alert('Xóa Danh Mục Nhà Hàng Thành Công');
+							alert('Delete Restaurant Directory Success');
 						}else{
-							alert('Bạn Không Thể Xóa Danh Mục Này');
+							alert('You Cannot Delete This Category');
 						}
 					}
 				});
@@ -172,7 +172,7 @@
 		$('#avatar').click(function(e) {
 			var previews = document.getElementById('previews');
 			if (previews.hasChildNodes()) {
-				alert('Bạn Chỉ Có Thể Chọn Một Ảnh Cho Mục Này');
+				alert('You Can Only Choose An Image For This Item');
 				e.preventDefault();
 			}			
 		});
@@ -195,7 +195,7 @@
 		});
             /*clear the file list when image is clicked*/
             $('body').on('click','.deletethumb',function(){
-            	if(confirm("Bạn Muốn Xóa Ảnh Này?"))
+            	if(confirm("You want to delete it?"))
             	{
             		$(this).parent().remove();
 					$("#avatar").val(null);/* xóa tên của file trong input*/
