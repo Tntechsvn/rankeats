@@ -243,7 +243,8 @@ public function create_business(){
 }
 
 public function add_business(){
-    return view('layouts_profile.add_business');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.add_business',compact('info_business'));
 }
 public function business_management(){
     return view('layouts_profile.business-management');
@@ -385,11 +386,11 @@ public function voteReviewEat_ajax(Request $request){
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
     if($vote){
-        return redirect()->back();
-        /*return response()->json([
+        // return redirect()->back();
+        return response()->json([
             'success' => false,
-            'message' => "Would you like to change your vote?"
-        ]);*/
+            'data' => $vote
+        ]);
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){

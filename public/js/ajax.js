@@ -116,3 +116,27 @@ $(document).on('change','select[name=state]', function(){
     }
   });
 });
+
+
+// vote+review single
+
+$(document).on('click','.submit_votereview',function(e){
+  e.preventDefault();
+  var form = $(this).closest('form');
+  var url = $('input[name=voteReviewEat_aja]').val();
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: form.serialize(),
+    success:function(res){
+      if(res.success == true){
+          console.log(res.data);
+      }else{
+        
+      }
+    }
+  });
+})
