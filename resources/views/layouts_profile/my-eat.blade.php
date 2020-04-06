@@ -32,22 +32,23 @@
 									<td width="40%">Email</td>
 									<td width="20%" colspan="2">
 										<div style="width: 100%;line-height: 30px;border-bottom: 1px solid #e1e1e1;">Rank</div>
-										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">City</div>
-										<div style="width: 50%;float: left;line-height: 30px;">State</div>
+										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$info_business->location->city}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;">{{$info_business->location->state}}</div>
 									</td>
 									<td width="10%">Action</td>
 								</tr>
 							</thead>
-							<tbody class="content-table">
+							<tbody class="content-table">								
+								@foreach($info_business->business_category as $val)
 								<tr>
-									<td>Pizza</td>
-									<td>500 review</td>
-									<td>Eat@adsda</td>
-									<td>10</td>
-									<td>24</div>
-									<td><i class="fas fa-trash"></i></div>
+									<td>{{$val->category_name}}</td>
+									<td>{{$val->review_rating()->where('id_rate_from','=',$info_business->id)->count()}}</td>
+									<td>{{$info_business->email}}</td>
+									<td>{{$val->RankEatState}}</td>
+									<td>{{$val->RankEatCity}}</td>
+									<td><i class="fas fa-trash"></i></td>
 								</tr>
-								
+								@endforeach
 							</tbody>
 						</table>
 					</div>
@@ -68,23 +69,27 @@
 	  <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">&times;</button>
 		<h4 class="modal-title">ADD EATS</h4>
-	  </div>
+	  </div><form action="{{route('createBusinessCategory')}}" method="post" accept-charset="utf-8" data-parsley-validate>
 	  <div class="modal-body">
-		<form action="" method="post" accept-charset="utf-8" data-parsley-validate>
+		
+			@csrf
 			<div class="form-group">
 				Select Business
-	            <select class="test " required multiple="multiple"  name="business[]" data-parsley-required>
-                	<option value="">Business1</option>
-                	<option value="">Business2</option>
-                	<option value="">Business3</option>
+	            <select class="test" name="business" data-parsley-required>
+                	<option value="{{$info_business->id}}" selected="selected" >{{$info_business->name}}</option>
 	            </select>
           	</div>
 			<div class="form-group">
 				Select eats
-	            <select class="test " required multiple="multiple"  name="eat[]" data-parsley-required>
-                	<option value="">pizza</option>
-                	<option value="">hotpot</option>
-                	<option value="">humbeger</option>
+	            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required>
+	            	@foreach($category as $data_cate)
+	            		<option value="{{$data_cate->id}}"
+	            			@foreach($info_business->business_category as $val)
+	            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
+
+	            			@endforeach
+							>{{$data_cate->category_name}}</option>
+	            	@endforeach
 	            </select>
           	</div>
 			<div class="form-group">
@@ -96,6 +101,7 @@
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 		<button class="btn btn-primary" name="submit">Submit</button>
 	  </div>
+	  </form>
 	</div>
     
   </div>

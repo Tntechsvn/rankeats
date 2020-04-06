@@ -124,7 +124,7 @@
               				<img src="" alt="">
               				
               				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"><img src="{{'http://localhost/rankeats/public/storage/'.$data->url_img}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 100px;"></td>
               				@else
               				<td class="mailbox-subject">
               					<img src="" style="width: 100px;">
