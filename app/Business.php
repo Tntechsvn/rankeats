@@ -122,6 +122,7 @@ class Business extends Model
     		// business_category
 			$this->business_category()->sync($request-> category_id);
             /*update date-time*/
+            
             /*sửa thành công*/
             $response =  response()->json([
                         'success' => true,
