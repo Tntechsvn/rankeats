@@ -151,6 +151,7 @@
 									@endfor
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<a data-toggle="modal" data-target="#sentmail-popup" href="javascript:;" class="btn btn-success" style="color: #fff">Email followwer</a>
 								<a href="javascript:;" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
