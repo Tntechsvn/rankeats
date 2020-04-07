@@ -92,9 +92,6 @@
 	            	@endforeach
 	            </select>
           	</div>
-			<div class="form-group">
-				<input type="text" name="asdsda" data-parsley-required>
-          	</div>
 		</form>
 	  </div>
 	  <div class="modal-footer">

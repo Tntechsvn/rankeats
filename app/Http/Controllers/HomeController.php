@@ -182,6 +182,9 @@ class HomeController extends Controller{
             }
         }
         echo $output;
+    }else{
+        $output = '<option value="" disabled selected >Select City</option>';
+        echo $output;
     }
 
 }
@@ -245,7 +248,8 @@ public function create_business(){
 }
 
 public function add_business(){
-    return view('layouts_profile.add_business');
+    $info_business = Auth::user()->business()->first();
+    return view('layouts_profile.add_business',compact('info_business'));
 }
 public function business_management(){
     return view('layouts_profile.business-management');
@@ -298,6 +302,12 @@ public function ajax_bookmark(Request $request){
     $data = $request->toArray();
     $check;
     $user = Auth::user();
+    if(!$user){
+        return response()->json([
+            'success' => false,
+            'message' => "You need to log-in to proceed",
+        ]);
+    }
     $bookmark = Bookmark::select('*')
     ->where('user_id','=',$user->id)
     ->where('business_id','=',$request -> business)
@@ -381,11 +391,11 @@ public function voteReviewEat_ajax(Request $request){
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
     if($vote){
-        return redirect()->back();
-        /*return response()->json([
+        // return redirect()->back();
+        return response()->json([
             'success' => false,
-            'message' => "Would you like to change your vote?"
-        ]);*/
+            'message' => "You have already voted!!!"
+        ]);
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
@@ -429,10 +439,11 @@ public function voteReviewEat_ajax(Request $request){
                 }
             }
                    
-            return redirect()->back();
-             /*return response()->json([
-                'success' => true
-            ]);*/
+            // return redirect()->back();
+            //  return response()->json([
+            //     'success' => true,
+            //     'data' => 'ok'
+            // ]);
 
         }else{
             foreach($Category_type as $cate_id){
@@ -472,10 +483,18 @@ public function voteReviewEat_ajax(Request $request){
                     $review_rating -> save();
                 }
             }
-            return redirect()->back();
-            /*return response()->json([
-                'success' => true
-            ]);*/
+            $info_business = Business::findOrfail($request->business);
+            $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+            $data = "";
+            $view = View::make('layouts.ajax_list_review', ['list_review_eats' => $list_review_eats]);
+            $data .= (string) $view;
+            $message = 'You have voted and successfully evaluated';
+            // return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+                'message' =>  $message
+            ]);
         }
         
     }
@@ -486,20 +505,16 @@ public function getRankBusiness(){
     $data_business = Business::find($id_business);
     $state_id = $data_business->location->IdState;
 
-    $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
-    ->where('type_vote','=',1)
-    ->where('state_id','=',$state_id)
-    ->groupBy('business_id')
-    ->orderBy('So luong', 'desc' )
-    ->get();
-    $i =1;
-    foreach ($get_all_vote_business_city as $val) {
-       if($val -> business_id == $id_business){
-        return $i;
-       }
-       $i++;
-    }
-    return ($get_all_vote_business_city);
+   foreach($data_business->business_category as $val){
+    return $val->RankEatCity;
+    /*echo '<tr>
+    <td>'.$val->category_name.'</td>
+    <td>'.$val->RankEatState.'</td>
+    <td>'.$val->RankEatCity.'</td>
+    </tr></br>';*/
+   }
+                                    
+                                
 }
 /*end knight*/
 
