@@ -356,7 +356,7 @@
             <input type="radio" id="adv-now" name="custom-date" value=""><label for="adv-now">Now</label>
             <input type="radio" id="adv-date" name="custom-date" value="customdate"><label for="adv-date">Date</label>
 
-            <input class="form-control hidden datepicker" type="text" name="custom-datetime" value="" placeholder="dd/mm/YYYY">
+            <input class="form-control hidden datepicker" type="text" name="date_active" value="" placeholder="dd/mm/YYYY">
           </div> 
          
 

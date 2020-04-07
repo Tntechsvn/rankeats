@@ -66,41 +66,43 @@
 
     <!-- Modal content-->
 	<div class="modal-content">
-	  <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h4 class="modal-title">ADD EATS</h4>
-	  </div><form action="{{route('createBusinessCategory')}}" method="post" accept-charset="utf-8" data-parsley-validate>
-	  <div class="modal-body">
-		
-			@csrf
-			<div class="form-group">
-				Select Business
-	            <select class="test" name="business" data-parsley-required>
-                	<option value="{{$info_business->id}}" selected="selected" >{{$info_business->name}}</option>
-	            </select>
-          	</div>
-			<div class="form-group">
-				Select eats
-	            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required>
-	            	@foreach($category as $data_cate)
-	            		<option value="{{$data_cate->id}}"
-	            			@foreach($info_business->business_category as $val)
-	            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
+	  	<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">ADD EATS</h4>
+	  	</div>
+	  	<form action="{{route('createBusinessCategory')}}" method="post" accept-charset="utf-8" data-parsley-validate>
+	  		<div class="modal-body">
+				@csrf
+				<div class="form-group">
+					Select Business
+		            <select class="test" name="business" data-parsley-required>
+	                	<option value="{{$info_business->id}}" selected="selected" >{{$info_business->name}}</option>
+		            </select>
+	          	</div>
+				<div class="form-group">
+					Select eats
+		            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required>
+		            	@foreach($category as $data_cate)
+		            		<option value="{{$data_cate->id}}"
+		            			@foreach($info_business->business_category as $val)
+		            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
 
-	            			@endforeach
-							>{{$data_cate->category_name}}</option>
-	            	@endforeach
-	            </select>
-          	</div>
+		            			@endforeach
+								>{{$data_cate->category_name}}</option>
+		            	@endforeach
+		            </select>
+	          	</div>
 
-	  </div>
-	  <div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		<button class="btn btn-primary" name="submit">Submit</button>
-	  </div>
+				<div class="form-group">
+					<input type="text" name="asdsda" data-parsley-required>
+	          	</div>
+  			</div>
+		  	<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button class="btn btn-primary" name="submit">Submit</button>
+		  	</div>
 	  </form>
 	</div>
-    
   </div>
 </div>
 @endsection
