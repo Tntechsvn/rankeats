@@ -23,6 +23,9 @@ class Business extends Model
     public function review(){
         return $this -> hasMany('App\Review', 'business_id', 'id');
     }
+    public function business_hour(){
+        return $this -> hasMany('App\BusinessHour', 'business_id', 'id');
+    }
     public function review_rating(){
         return $this -> hasMany('App\Review_rating', 'id_rate_from', 'id');
     }
@@ -86,9 +89,12 @@ class Business extends Model
     	if($request -> phone){
     		$this -> phone = $request -> phone;
     	}
-    	if($request -> 	website){
-    		$this -> 	website = $request -> 	website;
+    	if($request -> website){
+    		$this -> website = $request -> website;
     	}
+        if($request -> day_opening){
+            $this -> day_opening = date("Y-m-d H:i:s",strtotime($request -> day_opening));
+        }
     	if($request -> fb){
     		$this -> fb = $request -> fb;
     	}
@@ -118,7 +124,18 @@ class Business extends Model
     	if($this -> save()) {
     		// business_category
 			$this->business_category()->sync($request-> category_id);
-
+            /*update date-time*/
+            $delete_business_hour = BusinessHour::where('business_id','=',$this->id)->delete();
+            $days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            for($j=0;$j < 7;$j++){
+                $new_business_hour = new BusinessHour;
+                $new_business_hour -> business_id = $this -> id;
+                $new_business_hour -> business_days =  $days[$j];
+                $new_business_hour -> open_from = $request->time_open[$days[$j]][0];
+                $new_business_hour -> open_till = $request->time_close[$days[$j]][0];
+                $new_business_hour ->save();
+                
+            } 
             /*sửa thành công*/
             $response =  response()->json([
                         'success' => true,

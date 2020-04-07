@@ -56,8 +56,8 @@
 								@foreach($info_business->business_category as $val)
 									<tr>
 										<td>{{$val->category_name}}</td>
-										<td>{{$val->RankEatState}}</td>
 										<td>{{$val->RankEatCity}}</td>
+										<td>{{$val->RankEatState}}</td>
 									</tr>
 								@endforeach
 								
@@ -169,6 +169,7 @@
 							    		<a  href="javascript:;"  class="btn btn-warning">Voted</a>
 							    	@endif
 						    	@else
+
 				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-success" style="color: #fff;">Vote</a>
 				    			@endif
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}

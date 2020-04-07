@@ -129,15 +129,16 @@ class BusinessController extends Controller
     }
     public function postEditBusiness(Request $request){
         $user = Auth::user();
-        $business = Business::findOrfail($request->id_business);
-
+        $business = Business::findOrfail($request->id_business);        
         $this-> Validate($request,[
-            'search' => 'required',
             'email' => 'email|unique:businesses,email,'.$business->id,
             'phone' =>'required',
-            'category_id' => 'required',
+            'day_opening' => 'required',
+            'address' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'zipcode' => 'required',
         ]);
-
         $response = $business -> update_business($request,$user);
         $data = $response->getData();
         if($data->success){
