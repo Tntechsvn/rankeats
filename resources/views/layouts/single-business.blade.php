@@ -470,7 +470,7 @@
 				</div>
 				<div class="modal-footer" style="text-align: center;">
 					<div class="verify">
-						<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+						<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
 						<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 					</div>
 					<div class="firstWindow hidden" style="width: 100%">

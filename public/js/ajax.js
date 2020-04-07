@@ -83,10 +83,14 @@ $(document).on('click','.vote_now',function(){
           $this.html('Voted');
           $this.removeClass('btn-success').removeClass('vote_now').addClass('btn-danger');
       }else{
-        swal({
-          title: res.message,
-          timer: 2000
-        });
+        // swal({
+        //   title: res.message,
+        //   timer: 2000
+        // });;
+        var unvote_modal = $('#un_vote');
+        unvote_modal.modal('show');
+        console.log(res.databusiness);
+        console.log(res.vote);
       }
     }
   });

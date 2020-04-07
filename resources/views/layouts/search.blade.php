@@ -296,6 +296,23 @@
 	</div>
 </div>
 
+<div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<p>You voted for business21; 0/1 votes remain.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				<button type="submit" class="btn btn-success">Yes</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
 
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
 <input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
