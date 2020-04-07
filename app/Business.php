@@ -123,7 +123,7 @@ class Business extends Model
         }
     	if($this -> save()) {
     		// business_category
-			$this->business_category()->sync($request-> category_id);
+			//$this->business_category()->sync($request-> category_id);
             /*update date-time*/
             $delete_business_hour = BusinessHour::where('business_id','=',$this->id)->delete();
             $days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];

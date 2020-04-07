@@ -79,13 +79,26 @@
 					</div>
 					<div class="col-lg-6 hours">
 						<div>
-							<p><span class="bold">Mon</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Tue</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Wed</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Thu</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Fri</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Sat</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Sun</span> 11:30 am - 9:30 pm</p>
+							@php 
+								$days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+							@endphp
+
+							@for($i=0;$i<=6;$i++)
+								@php
+									$open_from = '';
+									$open_till ='';
+
+									foreach($info_business->business_hour as $val){
+										if($val -> business_days == $days[$i]){
+											$open_from = $val->open_from ?? 'close';
+											$open_till = $val->open_till ?? 'close';
+										}
+									}
+
+								@endphp
+								<p><span class="bold">{{$days[$i]}}</span> {{$open_from}} - {{$open_till}}</p>
+							@endfor
+							
 						</div>
 					</div>
 				</div>
@@ -118,7 +131,10 @@
 					    	<p>
 					    		<i class="fas fa-clock"></i>
 					    		<span class="bold">Business Opening :</span>
-					    		<span>20/3/2020</span>
+					    		@php
+									$day_opening = date("Y-m-d",strtotime($info_business->day_opening))
+								@endphp
+					    		<span>{{$day_opening}}</span>
 					    	</p>
 					    	<p>
 					    		<i class="fas fa-shipping-fast"></i>
