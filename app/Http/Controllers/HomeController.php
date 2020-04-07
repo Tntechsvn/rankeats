@@ -341,7 +341,7 @@ public function vote_ajax(Request $request){
             'success' => false,
             'message' => "Would you like to change your vote?",
             'databusiness' => $data_business,
-            'vote' => $vote
+            // 'vote' => $vote
         ]);
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
