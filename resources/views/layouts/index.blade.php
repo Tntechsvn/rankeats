@@ -8,6 +8,16 @@
     <div class="front-search">
       {{-- <h1>Find The Best, Eat The Best</h1> --}}
       <div class="banner-image">
+      @if($ads_active_home)
+        @foreach($ads_active_home as $ad)
+        <div>
+          <a href="{{$ad->business->permalink()}}">
+            <img src="{{$ad->image_url ?? "images/oyster.png"}}" alt="">
+            <span>{{$ad->business->name}}</span>
+          </a>
+        </div>
+        @endforeach
+      @else
         <div>
           <a href="javascript:;">
             <img src="images/oyster.png" alt="">
@@ -26,7 +36,13 @@
             <span>Luke's Lobster Back Bay</span>
           </a>
         </div>
-        
+        <div>
+          <a href="javascript:;">
+            <img src="images/lobster.png" alt="">
+            <span>Luke's Lobster Back Bay</span>
+          </a>
+        </div>
+      @endif
       </div>
       @include('layouts.form-search')
     </div>
@@ -95,7 +111,9 @@
     <h3 class="wow bounceIn">Feature Eats</h3>
     @foreach($category as $data)
     <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4 col-box wow fadeInUp animated featuredeats" style="visibility: visible; animation-name: fadeInUp;" >
-      <div class="grid" data-toggle="modal"> <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'/storage/'.$data->url_img}}@else{{'images/default.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
+      <div class="grid" data-toggle="modal"> 
+        <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> 
+        <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'storage/'.$data->url_img}}@else{{'images/default.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
         <input type="hidden" name="category_name"  value="{{$data->category_name}}" />
 
       </div>

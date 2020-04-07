@@ -1,9 +1,9 @@
 @extends('layouts_home.master')
 @section('content')
 <div id="main">
-  <div class="container ">
+  <div class="container p-t-30">
     <div class="small-header">
-      <h1>Recover Your Login</h1>
+      <h1>Forgot Password</h1>
     </div>
     <div class="row login">
       <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 well">

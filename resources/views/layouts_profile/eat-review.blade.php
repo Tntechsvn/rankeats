@@ -34,8 +34,8 @@
 								<p>{{$data->review->description}}</p>
 								
 								<div class="edit">
-									<a href="" ><i class="fas fa-pencil-alt"></i></a>
-									<a href="" ><i class="fas fa-scroll"></i></a>
+									<a href="javascript:;" ><i class="fas fa-pencil-alt"></i></a>
+									<a href="javascript:;" ><i class="fas fa-scroll"></i></a>
 								</div>
 							</div>
 							
