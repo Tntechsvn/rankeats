@@ -136,16 +136,38 @@
 										$days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 									@endphp
 									@for($i=0;$i<=6;$i++)
+										@php
+										$open_from = '';
+										$open_till ='';
+											foreach($info_business->business_hour as $val){
+												if($val -> business_days == $days[$i]){
+													$open_from = $val->open_from;
+													$open_till = $val->open_till;
+												}
+											}
+											
+										@endphp
 									<div class="col-lg-6 uptime" style="margin-bottom: 10px;">
 										<span class="bold" style="display: inline-block;width: 45px;">{{$days[$i]}}</span>
 										<select class="choose-method" name="">
+
 											<option value="open">Open</option>
-											<option value="close" selected>Close</option>
+											<option value="close" @foreach($info_business->business_hour as $val)
+													@if($val -> business_days == $days[$i])
+														@if($val ->open_from == null && $val ->open_till == null){{'selected'}}@endif
+													@endif
+												@endforeach>Close</option>
+											
 										</select>
-										<div class="show_time hidden" style="margin-top: 10px;padding-left: 50px;">
-											<input class="timepic time-open choose-time" type="text" value="" name="time_open_{{$days[$i]}}" autocomplete="off" />
+										<div class="show_time @foreach($info_business->business_hour as $val)
+													@if($val -> business_days == $days[$i])
+														@if($val ->open_from == null && $val ->open_till == null){{'hidden'}}@endif
+													@endif
+												@endforeach" style="margin-top: 10px;padding-left: 50px;">
+											<input class="timepic time-open choose-time" type="text" value="{{$open_from}}" name="time_open[{{$days[$i]}}][]" autocomplete="off" />
 											-
-											<input class="timepic time-close choose-time" type="text" value="" name="time_close_{{$days[$i]}}" autocomplete="off" />
+											<input class="timepic time-close choose-time" type="text" value="{{$open_till}}"
+												name="time_close[{{$days[$i]}}][]" autocomplete="off" />
 										</div>
 									</div>
 									@endfor
