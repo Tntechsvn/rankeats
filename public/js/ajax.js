@@ -63,7 +63,7 @@ $(document).on('click','.signin-popup',function(e){
 
 
 $(document).on('click','.vote_now',function(){
-  
+  var $this = $(this);
   var url = $('input[name=vote-ajax]').val();
   var business = $(this).data('id');
   var modal_target = $('#voteModal');
@@ -80,6 +80,8 @@ $(document).on('click','.vote_now',function(){
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
+          $this.html('Voted');
+          $this.removeClass('btn-success').removeClass('vote_now').addClass('btn-danger');
       }else{
         swal({
           title: res.message,
@@ -109,6 +111,7 @@ $(document).on('click','.yesforvote',function(e){
       if(res.success == true){
           modal.modal('hide');
           target.html(res.data);
+
           swal({
             title: res.message,
             timer: 2000

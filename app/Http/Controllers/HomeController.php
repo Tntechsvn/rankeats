@@ -120,7 +120,7 @@ class HomeController extends Controller{
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
-
+        // dd($data_business);
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','category_search'));
     }
     public function getbusinessCate($arr_id){

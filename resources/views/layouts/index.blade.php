@@ -95,7 +95,9 @@
     <h3 class="wow bounceIn">Feature Eats</h3>
     @foreach($category as $data)
     <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4 col-box wow fadeInUp animated featuredeats" style="visibility: visible; animation-name: fadeInUp;" >
-      <div class="grid" data-toggle="modal"> <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'/storage/'.$data->url_img}}@else{{'images/default.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
+      <div class="grid" data-toggle="modal"> 
+        <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> 
+        <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'storage/'.$data->url_img}}@else{{'images/default.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
         <input type="hidden" name="category_name"  value="{{$data->category_name}}" />
 
       </div>

@@ -60,7 +60,16 @@
 								<p>{{$data->location->city}}</p>
 							</div>
 							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
-							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
+							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
+							@if(Auth::check())
+				    			@if(Auth::user()->check_vote_eat($data->business_id))
+				    			<a href="javascript:;"  class="btn btn-success vote_now vote" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
+				    			@else
+				    			<a href="javascript:;" class="btn btn-danger vote" style="color: #fff;">Voted</a>
+				    			@endif
+			    			@else
+			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
+			    			@endif
 						</div>					
 					</div>
 				@endforeach
@@ -109,7 +118,16 @@
 								<p>{{$data->location->city}}</p>
 							</div>
 							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
-							<a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a>
+							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
+							@if(Auth::check())
+				    			@if(Auth::user()->check_vote_eat($data->business_id))
+				    			<a href="javascript:;"  class="btn btn-success vote_now vote" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
+				    			@else
+				    			<a href="javascript:;" class="btn btn-danger vote" style="color: #fff;">Voted</a>
+				    			@endif
+			    			@else
+			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
+			    			@endif
 						</div>					
 					</div>
 				@endforeach
@@ -181,7 +199,7 @@
 					</div>
 					<div class="modal-footer" style="text-align: center;">
 						<div class="verify">
-							<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+							<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
 							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 						</div>
 						<div class="firstWindow hidden" style="width: 100%">
