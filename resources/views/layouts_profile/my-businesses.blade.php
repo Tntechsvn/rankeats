@@ -23,7 +23,8 @@
 					<div>
 						<h3 class="title m-b-20">My Businesses</h3>
 						<div class="clear"></div>
-						<form class="" action="#" method="post">
+						<form class="" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8">
+							@csrf
 							<div class="form-group">
 								<label>Business Picture</label>
 								<div class="form-group"  style="text-align: center;">
@@ -42,42 +43,45 @@
 							<div class="form-group">
 								<p>Name</p>
 								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-user"></i></span>
-									<input type="email" class="form-control " name="email" value="{{old('name')}}">
+									<input type="text" class="form-control " value="{{$info_business->name}}" readonly="readonly">
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Email</p>
 								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-envelope"></i></span>
-									<input type="email" class="form-control " name="email" value="{{old('name')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<input type="email" class="form-control " name="email" value="{{$info_business->email}}">
+									<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Phone Number</p>
-								<div class="input-group"> <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-phone-alt"></i></span>
-									<input type="phone" class="form-control " name="phone" value="{{old('name')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								<div class="input-group"><span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-phone-alt"></i></span>
+									<input type="phone" class="form-control " name="phone" value="{{$info_business->phone}}">
+									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Website</p>
 								<div class="input-group"> <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-globe-americas"></i></span>
-									<input type="email" class="form-control " name="website" value="{{old('name')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<input type="text" class="form-control " name="website" value="{{$info_business->website}}">
+									<span class="bg-danger color-palette">{{$errors -> first('website')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Add Business Opening</p>
+								@php
+									$date = date("Y-m-d",strtotime($info_business->day_opening))
+								@endphp
 								<div class="input-group"> <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-calendar-alt"></i></span>
-									<input type="text" class="form-control " name="timeopen" placeholder="YYYY/mm/dd" value="{{old('name')}}">
+									<input type="text" class="form-control datepicker" name="day_opening" placeholder="YYYY/mm/dd" value="{{$date}}">
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Address</p>
 								<div class="input-group" style="width: 100%">
-									<input type="text" class="form-control " name="address" value="{{old('name')}}">
+									<input type="text" class="form-control " name="address" value="{{$info_business->location->address}}">
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
 							</div>
@@ -86,32 +90,43 @@
 								
 									<div class="input-group" style="width: 100%">
 										<p>State</p>
-										 	<select class="test state"  name="state">
+										 	<select class="form-control"  name="state"  id="state_profile">
 								             	 <option value="" selected="selected">Select State</option>
-								              	@foreach($state as $data)
-							                	<option value="{{$data->id}}">{{$data->name}}</option>
-								              	@endforeach
+								             	 @foreach($state as $data)
+								             	 <option value="{{$data->name}}" 
+								             	 	@if($info_business->location_id != null)
+								             	 		@if($info_business->location->state == $data->name){{'selected'}}@endif
+								             	 	@endif"
+								             	 	>{{$data->name}}
+								             	 </option>
+								             	 @endforeach
 							            	</select>
+							            	<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
 									<div class="input-group" style="width: 100%">
 										<p>City</p>
-										<select class="city" name="city">
+										 <select class="form-control" id="city_profile1" name="city" style="width: 100%;">
 							                <option value="" selected="selected">Select City</option>
+							                @if($info_business->location_id != null)
+								                @if($info_business->location->city != null)
+								                <option  value="{{$info_business->location->city}}" selected >{{$info_business->location->city}}</option>
+								                @endif
+							                @endif							               
 							            </select>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
 									<div class="input-group" style="width: 100%">
 										<p>Zipcode</p>
-										<input type="text" class="form-control " name="address" value="{{old('name')}}">
-										<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+										<input type="text" class="form-control " name="zipcode" value="{{$info_business->location->code}}">
+										<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								<i class="fas fa-star"></i> Reviews: <a href="javascript" data-toggle="modal" data-target="#review-popup">20 reviews </a>
+								<i class="fas fa-star"></i> Reviews: <a href="javascript" data-toggle="modal" data-target="#review-popup">{{$info_business->review()->count()}} reviews </a>
 							</div>
 							<div class="form-group">
 								<span>Time open - close</span>
@@ -121,26 +136,48 @@
 										$days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 									@endphp
 									@for($i=0;$i<=6;$i++)
+										@php
+										$open_from = '';
+										$open_till ='';
+											foreach($info_business->business_hour as $val){
+												if($val -> business_days == $days[$i]){
+													$open_from = $val->open_from;
+													$open_till = $val->open_till;
+												}
+											}
+											
+										@endphp
 									<div class="col-lg-6 uptime" style="margin-bottom: 10px;">
 										<span class="bold" style="display: inline-block;width: 45px;">{{$days[$i]}}</span>
 										<select class="choose-method" name="">
+
 											<option value="open">Open</option>
-											<option value="close" selected>Close</option>
-										</select>
-										<div class="show_time hidden" style="margin-top: 10px;padding-left: 50px;">
+											<option value="close" @foreach($info_business->business_hour as $val)
+													@if($val -> business_days == $days[$i])
+														@if($val ->open_from == null && $val ->open_till == null){{'selected'}}@endif
+													@endif
+												@endforeach>Close</option>
 											
-											<input class="timepic time-open choose-time" type="text" value="" name="time-open" autocomplete="off" />
+										</select>
+										<div class="show_time @foreach($info_business->business_hour as $val)
+													@if($val -> business_days == $days[$i])
+														@if($val ->open_from == null && $val ->open_till == null){{'hidden'}}@endif
+													@endif
+												@endforeach" style="margin-top: 10px;padding-left: 50px;">
+											<input class="timepic time-open choose-time" type="text" value="{{$open_from}}" name="time_open[{{$days[$i]}}][]" autocomplete="off" />
 											-
-											<input class="timepic time-close choose-time" type="text" value="" name="time-close" autocomplete="off" />
+											<input class="timepic time-close choose-time" type="text" value="{{$open_till}}"
+												name="time_close[{{$days[$i]}}][]" autocomplete="off" />
 										</div>
 									</div>
 									@endfor
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<a data-toggle="modal" data-target="#sentmail-popup" href="javascript:;" class="btn btn-success" style="color: #fff">Email followwer</a>
-								<a href="javascript:;" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
-								<a href="javascript:;" class="btn btn-primary" style="color: #fff">Success</a>
+								<a href="{{$info_business->permalink()}}" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
+								<button type="submit" class="btn btn-primary" style="color: #fff" > Success</button>
 							</div>
 							
 						</form>
@@ -195,7 +232,7 @@
 				<div class="modal-body">
 					<div id="reviewforbusiness" class="tab-pane">
 					
-					{{-- @foreach($list_reviews as $data) --}}
+					@foreach($info_business->review_rating()->where('type_rate','=',1)->get() as $data)
 					<div class="row m-b-20">
 						<div class="col-lg-2">
 							<div class="avata">
@@ -204,22 +241,20 @@
 						</div>
 						<div class="col-lg-10" style="margin-left: -15px;">
 							<div class="content-right p-b-20">
-							<h4>{{-- {{$data->user->name}} --}} hung pro</h4>
-							<span class="review-date">{{--$data -> created_at--}}12/3/2020</span>
+							<h4>{{$data->user->name}}</h4>
+							<span class="review-date">{{$data -> created_at}}</span>
 							<div class="star-view clear p-b-10">
-								{{-- @for($i = 1;$i <= $data->review_rating->where('review_id','=',$data->id)->first()->rate;$i++) --}}
+								@for($i = 1;$i <= $data->rate;$i++)
 								<i class="fas fa-star star-rate"></i>
-								{{-- @endfor --}}
-								<span class="bold p-l-20">Review business {{-- {{$data->business->name}} --}}</span>
+								@endfor
+								<span class="bold p-l-20">Review business {{$data->business->name}}</span>
 							</div>
 							
-							<p>{{-- {{$data->description}} --}}asdasdsdasd</p>
+							<p>{{$data->description}}</p>
 						</div>
 						</div>
 					</div>
-					{{-- @endforeach --}}
-					{{-- {!!$list_reviews -> appends(request()->except('page')) -> links()!!} --}}
-					
+					@endforeach
 				</div>
 				</div>
 			</div>
@@ -230,10 +265,37 @@
 
 @endsection
 @section('script')
+<script type="text/javascript">
+	$('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        startDate: '0d',
+        autoclose: true,
+        todayHighlight: true,
+      });
+
+  $("#state_profile").change(function(){
+    var name_state = $(this).val();
+
+    var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('ajaxCity') }}",
+          method:"POST",
+          data:{name_state:name_state, _token:_token},
+          success:function(data){ 
+            console.log(data)
+            $('#city_profile1').html(data);
+          }
+        });
+
+    /*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
+      $("#id_city").html('<option value="0"  selected >Select City</option>'+data);
+    });*/       
+  });
+</script>
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('.test').fSelect();
+			$('.test1').fSelect();
 			$('.timepic').timepicker({
 		        timeFormat: 'H:mm',
 		        interval: 30,

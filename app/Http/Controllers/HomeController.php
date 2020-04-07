@@ -26,6 +26,7 @@ class HomeController extends Controller{
         $Country = Country::where('code','=','US')->first();
         $state =  $Country->states()->get();
 
+        $this->ad = new Advertisement();
         $this->user = Auth::user();
         $category = Category::where('status','=',1)->get();
         $all_page = Page::all();
@@ -33,8 +34,9 @@ class HomeController extends Controller{
     }
 
     public function home(){
+        $ads_active_home = Advertisement::home()->active()->take(3)->get();
         $category = Category::where('status','=',1)->take(9)->get();
-        return view('layouts.index',compact('category'));
+        return view('layouts.index',compact('category', 'ads_active_home'));
     }
     public function fetchCategory(Request $request){
         if($request->get('query'))
@@ -120,7 +122,7 @@ class HomeController extends Controller{
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
-
+        // dd($data_business);
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','category_search'));
     }
     public function getbusinessCate($arr_id){
@@ -337,7 +339,9 @@ public function vote_ajax(Request $request){
     if($vote){
         return response()->json([
             'success' => false,
-            'message' => "Would you like to change your vote?"
+            'message' => "Would you like to change your vote?",
+            'databusiness' => $data_business,
+            'vote' => $vote
         ]);
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
