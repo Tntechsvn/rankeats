@@ -100,7 +100,7 @@ class HomeController extends Controller{
         $city = $request -> city ? $request -> city : $request -> state;
         $state_search = $request -> state ? $request -> state : '';
 
-
+        /*fix search*/
         $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state_search){            
