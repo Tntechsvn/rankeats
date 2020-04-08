@@ -144,5 +144,9 @@
 		'as' => 'ajaxcitystate',
 		'uses' => 'HomeController@ajaxcitystate'
 	]);
+	Route::post('/ajax-unvoted', [
+		'as' => 'ajax_unvoted',
+		'uses' => 'HomeController@ajax_unvoted'
+	]);
 	
 // end hungpro

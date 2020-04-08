@@ -62,10 +62,10 @@
 							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
 							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
 							@if(Auth::check())
-				    			@if(Auth::user()->check_vote_eat($data->business_id))
-				    			<a href="javascript:;"  class="btn btn-success vote_now vote" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
+				    			@if(Auth::user()->check_vote($data->business_id))
+				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger vote" style="color: #fff;">Voted</a>
+				    			<a href="javascript:;" class="btn btn-danger vote vote-{{$data->id}}" style="color: #fff;">Voted</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
@@ -120,10 +120,10 @@
 							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
 							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
 							@if(Auth::check())
-				    			@if(Auth::user()->check_vote_eat($data->business_id))
-				    			<a href="javascript:;"  class="btn btn-success vote_now vote" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
+				    			@if(Auth::user()->check_vote($data->business_id))
+				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger vote" style="color: #fff;">Voted</a>
+				    			<a href="javascript:;" class="btn btn-danger vote vote-{{$data->id}}" style="color: #fff;">Voted</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
@@ -136,7 +136,7 @@
 		</div>
 		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30">
 			<div class="map_img">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3709.807695902279!2d105.83079121539541!3d21.59342827363624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1584071260154!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26361000.332878!2d-113.75050573534398!3d36.242031228413545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2zSG9hIEvhu7M!5e0!3m2!1svi!2s!4v1586315585512!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 			</div>
 			<div>
 				<h4>Is the EAT for a business you’re looking for missing?</h4>
@@ -298,15 +298,17 @@
 
 <div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
-
+		<input type="hidden" name="business_id" value="">
+		<input type="hidden" name="city_id" value="">
+		<input type="hidden" name="unvoted" value="{{route('ajax_unvoted')}}">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-body">
-				<p>You voted for business21; 0/1 votes remain.</p>
+				<p class="message">You voted for business21; 0/1 votes remain.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-				<button type="submit" class="btn btn-success">Yes</button>
+				<button type="submit" class="btn btn-success unvote_submit">Yes</button>
 			</div>
 		</div>
 

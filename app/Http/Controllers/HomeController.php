@@ -326,22 +326,36 @@ public function ajax_bookmark(Request $request){
         'book' => $check,
     ]);
 }
-
+public function ajax_unvoted(Request $request){
+    $user = Auth::user();
+    $delete_vote = Vote::select('*')
+    ->where('user_id','=',$user->id)
+    ->where('type_vote','=',1)
+    ->where('city_id','=',$request->city_id)
+    ->where('business_id','=',$request->business_id)
+    ->delete();
+    return response()->json([
+        'message' => "You have successfully deleted votes!!!"
+    ]);
+}
 public function vote_ajax(Request $request){
     $user = Auth::user();
-    $vote = Vote::select('*')
-    ->where('user_id','=',$user->id)
-    ->where('business_id','=',$request->business)
-    ->where('type_vote','=',1)
-    ->first();
+    
+    // $business_voted = $vote->
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
+    $vote = Vote::select('*')
+    ->where('user_id','=',$user->id)
+    ->where('type_vote','=',1)
+    ->where('city_id','=',$city_id)
+    ->first();
     if($vote){
+        $business_voted = Business::find($vote->business_id);
         return response()->json([
             'success' => false,
-            'message' => "Would you like to change your vote?",
-            'databusiness' => $data_business,
-            // 'vote' => $vote
+            'message' => "You voted for <b>".$business_voted->name."</b>, 0/1 votes remain.",
+            'business_id' => $business_voted->id,
+            'city_id' => $city_id
         ]);
     }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
