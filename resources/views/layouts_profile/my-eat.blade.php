@@ -93,9 +93,6 @@
 		            </select>
 	          	</div>
 
-				<div class="form-group">
-					<input type="text" name="asdsda" data-parsley-required>
-	          	</div>
   			</div>
 		  	<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

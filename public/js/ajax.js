@@ -67,7 +67,6 @@ $(document).on('click','.unvote_submit',function(e){
   var modall = $(this).closest('#un_vote');
   var url = modall.find('input[name=unvoted]').val();
   var business_id = modall.find('input[name=business_id]').val();
-  var city_id = modall.find('input[name=city_id]').val();
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -75,21 +74,28 @@ $(document).on('click','.unvote_submit',function(e){
     type:'POST',
     url: url,
     data: {
-      business_id: business_id,
-      city_id: city_id
+      business_id: business_id
     },
     success:function(res){
       modall.modal('hide');
       var vote_id = '.vote-'+business_id;
-      $('#main').find(vote_id).removeClass('btn-danger').addClass('btn-success').html('Vote');
+      $('#main').find(vote_id).removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
       swal({
         title: res.message,
-        timer: 2000
+        timer: 4000
       });;
     }
   });
 });
 
+$(document).on('click','.unvote',function(){
+  var business_id = $(this).data('id');
+  var business_name = $(this).closest('.food-main').find('h4 a').html();
+  var modal = $('#un_vote');
+  modal.find('input[name=business_id]').val(business_id);
+  modal.find('.message').html('You voted for '+business_name+', 0/1 votes remain.');
+  modal.modal('show');
+});
 
 $(document).on('click','.vote_now',function(){
   var $this = $(this);
@@ -110,19 +116,20 @@ $(document).on('click','.vote_now',function(){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
           var vote_id = '.vote-'+business;
-          $('#main').find(vote_id).removeClass('btn-success').addClass('btn-danger').html('Voted');
+          $('#main').find('.unvote').removeClass('btn-danger').addClass('btn-success').removeClass('unvote').html('Vote');
+          $('#main').find(vote_id).removeClass('btn-success').addClass('btn-danger').addClass('unvote').html('Voted');
           $this.html('Voted');
-          $this.removeClass('btn-success').removeClass('vote_now').addClass('btn-danger');
+          $this.removeClass('btn-success').addClass('unvote').removeClass('vote_now').addClass('btn-danger');
       }else{
         // swal({
         //   title: res.message,
         //   timer: 2000
         // });;
-        var unvote_modal = $('#un_vote');
-        unvote_modal.find('.message').html(res.message);
-        unvote_modal.find('input[name=business_id]').val(res.business_id);
-        unvote_modal.find('input[name=city_id]').val(res.city_id);
-        unvote_modal.modal('show');
+        // var unvote_modal = $('#un_vote');
+        // unvote_modal.find('.message').html(res.message);
+        // unvote_modal.find('input[name=business_id]').val(res.business_id);
+        // unvote_modal.find('input[name=city_id]').val(res.city_id);
+        // unvote_modal.modal('show');
       }
     }
   });

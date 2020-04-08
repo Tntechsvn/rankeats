@@ -65,7 +65,7 @@
 				    			@if(Auth::user()->check_vote($data->business_id))
 				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger vote vote-{{$data->id}}" style="color: #fff;">Voted</a>
+				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}" style="color: #fff;" data-id="{{$data->id}}">Voted</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
@@ -123,7 +123,7 @@
 				    			@if(Auth::user()->check_vote($data->business_id))
 				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger vote vote-{{$data->id}}" style="color: #fff;">Voted</a>
+				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}" style="color: #fff;" data-id="{{$data->id}}">Voted</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
@@ -299,7 +299,7 @@
 <div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
 		<input type="hidden" name="business_id" value="">
-		<input type="hidden" name="city_id" value="">
+		{{-- <input type="hidden" name="city_id" value=""> --}}
 		<input type="hidden" name="unvoted" value="{{route('ajax_unvoted')}}">
 		<!-- Modal content-->
 		<div class="modal-content">
