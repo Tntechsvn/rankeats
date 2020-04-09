@@ -63,9 +63,9 @@
 							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
-				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
+				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}" style="color: #fff;" data-id="{{$data->id}}">Voted</a>
+				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;" data-id="{{$data->id}}" data-name="{{$data->name}}">Voted</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
@@ -121,9 +121,9 @@
 							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
-				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}" style="color: #fff;"  data-id="{{$data->id}}">Vote</a>
+				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}" style="color: #fff;" data-id="{{$data->id}}">Voted</a>
+				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;" data-id="{{$data->id}}" data-name="{{$data->name}}">Voted</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>

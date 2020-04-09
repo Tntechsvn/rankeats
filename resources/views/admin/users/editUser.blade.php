@@ -30,7 +30,7 @@
 										<div class="dt-close">
 											<div id="previews">@if($user->url_avatar !=null)<div class="gallerythumb">
 												<img class="thumb" src="{{asset('').'storage/'.$user->url_avatar}}" class="pic" >
-												<div class="delete tsm"></div>
+												<div class="deletethumb tsm"><i class="fas fa-times-circle"></i></div>
 												<input type="hidden" name="id_img[]" value="{{$user->url_avatar}}">
 											</div>@endif</div>
 										</div>
@@ -229,7 +229,7 @@
 				for (i = 0; i < filesAmount; i++) {
 					var reader = new FileReader();
 					reader.onload = function(event) {
-						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="delete tsm"></div>').appendTo(imgPreview);;
+						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="deletethumb tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);;
 					}
 					reader.readAsDataURL(input.files[i]);
 				}
@@ -240,8 +240,8 @@
 			images(this, '#previews');
 		});
             //clear the file list when image is clicked
-            $('body').on('click','.delete',function(){
-            	if(confirm("Bạn Có Muốn Xóa Ảnh?"))
+            $('body').on('click','.deletethumb',function(){
+            	if(confirm("Do You Want To Delete Photos?"))
             	{
             		$(this).parent().remove();
 					$("#avatar").val(null); //xóa tên của file trong input

@@ -47,6 +47,18 @@ class Business extends Model
             $join->on('businesses.id','=','advertisements.business_id');
         });
     }
+     public function scopeJoinState($query)
+    {
+        return $query->join('states', function($join){
+            $join->on('states.id','=','advertisements.state_id');
+        });
+    }
+    public function scopeJoinCity($query)
+    {
+        return $query->join('cities', function($join){
+            $join->on('cities.id','=','advertisements.city_id');
+        });
+    }
     /*join businesses_categories*/
     public function scopeJoinBusinessesCategory($query)
     {

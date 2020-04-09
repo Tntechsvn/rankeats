@@ -78,8 +78,9 @@ $(document).on('click','.unvote_submit',function(e){
     },
     success:function(res){
       modall.modal('hide');
-      var vote_id = '.vote-'+business_id;
+      var vote_id = '.vote-'+business_id+'-'+res.city_id;
       $('#main').find(vote_id).removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
+      $('#businessreview').find('.unvote').removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
       swal({
         title: res.message,
         timer: 4000
@@ -90,10 +91,10 @@ $(document).on('click','.unvote_submit',function(e){
 
 $(document).on('click','.unvote',function(){
   var business_id = $(this).data('id');
-  var business_name = $(this).closest('.food-main').find('h4 a').html();
+  var business_name = $(this).data('name');
   var modal = $('#un_vote');
   modal.find('input[name=business_id]').val(business_id);
-  modal.find('.message').html('You voted for '+business_name+', 0/1 votes remain.');
+  modal.find('.message').html('You voted for '+business_name+', do you want to change your vote? 0/1 votes remain.');
   modal.modal('show');
 });
 
@@ -115,7 +116,7 @@ $(document).on('click','.vote_now',function(){
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
-          var vote_id = '.vote-'+business;
+          var vote_id = '.vote-'+business+'-'+res.city_id;
           $('#main').find('.unvote').removeClass('btn-danger').addClass('btn-success').removeClass('unvote').html('Vote');
           $('#main').find(vote_id).removeClass('btn-success').addClass('btn-danger').addClass('unvote').html('Voted');
           $this.html('Voted');
