@@ -108,11 +108,11 @@ class HomeController extends Controller{
             $text_city_state = $state_search;
         }
         /*fix search*/
-        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','advertisements.status as status_adv')
-        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
-        ->JoinAdvertisement()
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city')
+        ->JoinBusinessesCategory()->JoinCategory()
+        ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
         })
         ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
@@ -128,13 +128,7 @@ class HomeController extends Controller{
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
-<<<<<<< HEAD
-        // dd($data_business);
-        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','category_search'));
-=======
-
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
->>>>>>> origin/Knight
     }
     public function getbusinessCate($arr_id){
         $result = array();  
