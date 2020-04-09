@@ -128,8 +128,13 @@ class HomeController extends Controller{
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
+<<<<<<< HEAD
+        // dd($data_business);
+        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','category_search'));
+=======
 
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
+>>>>>>> origin/Knight
     }
     public function getbusinessCate($arr_id){
         $result = array();  
@@ -332,22 +337,39 @@ public function ajax_bookmark(Request $request){
         'book' => $check,
     ]);
 }
-
+public function ajax_unvoted(Request $request){
+    $user = Auth::user();
+    $data_business = Business::find($request->business_id);
+    $city_id = $data_business->location->IdCity;
+    $delete_vote = Vote::select('*')
+    ->where('user_id','=',$user->id)
+    ->where('type_vote','=',1)
+    ->where('city_id','=',$city_id)
+    ->where('business_id','=',$request->business_id)
+    ->delete();
+    return response()->json([
+        'message' => "You have not voted yet, 1/1 votes remain.!!!"
+    ]);
+}
 public function vote_ajax(Request $request){
     $user = Auth::user();
-    $vote = Vote::select('*')
-    ->where('user_id','=',$user->id)
-    ->where('business_id','=',$request->business)
-    ->where('type_vote','=',1)
-    ->first();
+    
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
-    if($vote){
-        return response()->json([
-            'success' => false,
-            'message' => "Would you like to change your vote?"
-        ]);
-    }else{
+    // $vote = Vote::select('*')
+    // ->where('user_id','=',$user->id)
+    // ->where('type_vote','=',1)
+    // ->where('city_id','=',$city_id)
+    // ->first();
+    // if($vote){
+    //     // $business_voted = Business::find($vote->business_id);
+    //     return response()->json([
+    //         'success' => false,
+    //         // 'message' => "You voted for <b>".$business_voted->name."</b>, 0/1 votes remain.",
+    //         // 'business_id' => $business_voted->id,
+    //         // 'city_id' => $city_id
+    //     ]);
+    // }else{
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
              $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->delete();
@@ -381,7 +403,7 @@ public function vote_ajax(Request $request){
             ]);
         }
         
-    }
+    // }
 
 }
 /*knight*/

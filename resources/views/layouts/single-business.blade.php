@@ -466,7 +466,7 @@
 				</div>
 				<div class="modal-footer" style="text-align: center;">
 					<div class="verify">
-						<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+						<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
 						<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 					</div>
 					<div class="firstWindow hidden" style="width: 100%">
@@ -493,6 +493,24 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+		<input type="hidden" name="business_id" value="">
+		<input type="hidden" name="city_id" value="">
+		<input type="hidden" name="unvoted" value="{{route('ajax_unvoted')}}">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<p class="message">You voted for business21; 0/1 votes remain.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				<button type="submit" class="btn btn-success unvote_submit">Yes</button>
 			</div>
 		</div>
 

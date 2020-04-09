@@ -396,7 +396,6 @@
 
     $(document).ready(function(){
       $('.test').fSelect();
-
       $('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         startDate: '0d',

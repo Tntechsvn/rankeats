@@ -15,7 +15,7 @@
 				<!-- general form elements -->
 				<div class="card ">
 					<div class="card-header">
-						<a class="btn btn-primary" href="{{route('getListEats')}}">back</a>
+						<a style="float: right;" class="btn btn-primary" href="{{route('getListEats')}}">back</a>
 						<h3 class="card-title">Edit Eats</h3>               
 
 					</div>
@@ -98,7 +98,7 @@
 		});
             //clear the file list when image is clicked
             $('body').on('click','.delete',function(){
-            	if(confirm("Bạn Có Muốn Xóa Ảnh?"))
+            	if(confirm("You want to delete it?"))
             	{
             		$(this).parent().remove();
 					$("#avatar").val(null); //xóa tên của file trong input
