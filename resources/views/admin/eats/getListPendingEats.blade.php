@@ -9,7 +9,7 @@
     	<div class="card-tools">
     		<form action="{{route('getListPendingEats')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
-	    			<input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
+	    			<input type="text" name="keyword" id="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 
 	    			<div class="input-group-append">
 	    				<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>

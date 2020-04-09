@@ -60,6 +60,11 @@ Route::post('/create-business-category', [
 	'as' => 'createBusinessCategory',
 	'uses' => 'EatsController@createBusinessCategory'
 ]);
+
+Route::post('/send-mail-follwers', [
+	'as' => 'sendMailFollwers',
+	'uses' => 'MailController@sendMailFollwers'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',

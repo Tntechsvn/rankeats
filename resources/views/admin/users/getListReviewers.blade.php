@@ -5,7 +5,8 @@
 @section('content_header')
     <h1>Reviewers</h1>
     <p>Manage Reviewers</p>
-    <div class="card-header">    	
+    <div class="card-header">  	
+    	<a data-toggle="modal" data-target="#sentmail-popup" href="javascript:;" class="btn btn-success" style="color: #fff">Email All Reviewers</a>
     	<div class="card-tools">
     		<form action="{{route('getListReviewers')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
@@ -23,6 +24,39 @@
 @section('content')
     <section class="content">
       <div class="container-fluid">
+      	<!-- sent-email -->
+      	<div id="sentmail-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+      		<div class="modal-dialog">
+
+      			<!-- Modal content-->
+      			<form action="#" method="post" accept-charset="utf-8">
+      				@csrf
+      				<input type="hidden" name="title" value="">
+      				<div class="modal-content">
+      					<div class="modal-header">
+      						<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
+      						<h2 style="text-align: center;">Sent message to all review</h2>
+      					</div>
+      					<div class="modal-body">
+      						<div class="form-group">
+      							<input class="form-control" type="text" name="" value="" placeholder="Subject">
+      						</div>
+      						<div class="form-group">
+      							<textarea class="form-control" name="" placeholder="Message"></textarea>
+      						</div>
+      					</div>
+      					<div class="modal-footer">
+      						<div class="firstWindow" style="width: 100%">
+      							<button type="submit" class="btn btn-default " data-dismiss="modal" >Cancel</button>
+      							<button type="submit" class="btn btn-primary " >Save</button>
+      						</div>
+      					</div>
+      				</div>
+      			</form>
+
+      		</div>
+      	</div>
+      	<!-- end sent-email -->
         <div class="row">
           <!--/.col (right) ------------------------------------------------------------------------------------------>
           <div class="col-md-12">

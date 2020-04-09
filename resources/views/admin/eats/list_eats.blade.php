@@ -10,7 +10,7 @@
     		<form action="{{route('getListEats')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
 	    			
-	    				<input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
+	    				<input type="text" name="keyword" id="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 	    				<div class="input-group-append">
 	    					<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
 	    				</div>
@@ -228,7 +228,7 @@
 				for (i = 0; i < filesAmount; i++) {
 					var reader = new FileReader();
 					reader.onload = function(event) {
-						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="deletethumb tsm"></div>').appendTo(imgPreview);;
+						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="deletethumb tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);;
 					}
 					reader.readAsDataURL(input.files[i]);
 				}
