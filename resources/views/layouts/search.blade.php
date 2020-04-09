@@ -49,7 +49,7 @@
 									<ul class="p-t-15">
 										<li>$$$.</li>
 										@foreach($data->business_category as $val)
-										<li>{{$val->category_name}}</li>
+										<li>,{{$val->category_name}}</li>
 										@endforeach
 									</ul>
 								</div>
