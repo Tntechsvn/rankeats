@@ -87,18 +87,18 @@
 		            			@foreach($info_business->business_category as $val)
 		            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
 
-		            			@endforeach
-								>{{$data_cate->category_name}}</option>
+	            				@endforeach
+							>{{$data_cate->category_name}}</option>
 		            	@endforeach
 		            </select>
 	          	</div>
-
-  			</div>
+		  	</div>
 		  	<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 				<button class="btn btn-primary" name="submit">Submit</button>
 		  	</div>
-	  </form>
+
+	  	</form>
 	</div>
   </div>
 </div>

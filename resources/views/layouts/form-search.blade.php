@@ -8,9 +8,13 @@
 			</div>
 
 			<div class="input_state">
-				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_search" name="state" placeholder="City or State" value="@if(isset($state_search)){{$state_search}}@endif">
+				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_search" placeholder="City or State" value="@if(isset($text_city_state)){{$text_city_state}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
 				<div id="LocationList"></div>
+				<div class="input_hidden">
+					<input type="hidden" name="city" id="city_searech" value="@if(isset($city)){{$city}}@endif">;
+      				<input type="hidden" name="state" id="state_searech" value="@if(isset($state_search)){{$state_search}}@endif">;
+				</div>
 			</div>
 			<span class="input-group-btn">
 				<button type="submit" class="btn btn-custom input-lg" style="border-radius: 0;"><span class="glyphicon glyphicon-search"></span><span class="text-search">Search</span></button>

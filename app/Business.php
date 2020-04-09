@@ -40,6 +40,13 @@ class Business extends Model
             $join->on('businesses.location_id','=','locations.id');
         });
     }
+    /*join advertisements*/
+    public function scopeJoinAdvertisement($query)
+    {
+        return $query->join('advertisements', function($join){
+            $join->on('businesses.id','=','advertisements.business_id');
+        });
+    }
     /*join businesses_categories*/
     public function scopeJoinBusinessesCategory($query)
     {
