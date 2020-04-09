@@ -40,7 +40,7 @@
 									<div class="dt-close">
 										<div id="previews">@if($data_eat->url_img !=null)<div class="gallerythumb">
 											<img class="thumb" src="{{'http://localhost/rankeats/public/storage/'.$data_eat->url_img}}" class="pic" >
-											<div class="delete tsm"></div>
+											<div class="deletethumb tsm"><i class="fas fa-times-circle"></i></div>
 											<input type="hidden" name="id_img[]" value="{{$data_eat->url_img}}">
 										</div>@endif</div>
 									</div>
@@ -86,7 +86,7 @@
 				for (i = 0; i < filesAmount; i++) {
 					var reader = new FileReader();
 					reader.onload = function(event) {
-						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="delete tsm"></div>').appendTo(imgPreview);;
+						$('<div class="dt-close"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').append("<img class='thumb' src='"+event.target.result+"'"+"style=''>").append('<div class="deletethumb tsm"><i class="fas fa-times-circle"></i></div>').appendTo(imgPreview);;
 					}
 					reader.readAsDataURL(input.files[i]);
 				}
@@ -97,7 +97,7 @@
 			images(this, '#previews');
 		});
             //clear the file list when image is clicked
-            $('body').on('click','.delete',function(){
+            $('body').on('click','.deletethumb',function(){
             	if(confirm("You want to delete it?"))
             	{
             		$(this).parent().remove();

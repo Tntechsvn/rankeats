@@ -150,10 +150,16 @@ input[type="checkbox"], input[type="radio"] {
  {
 	top: 0;
 }
+.deletethumb {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    cursor: pointer;
+}
+
 .dt-imgs .delete.tsm:before,
-.dt-imgs .deletethumb.tsm:before,
 .dt-imgs .deletegallery.tsm:before   {
-    background: url("../img/iconx.png") no-repeat 0 0;
+    background: url("../img/iconx1.png") no-repeat 0 0;
     content: "";
 	right: 4px;
 	position: absolute;

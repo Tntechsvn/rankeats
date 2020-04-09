@@ -193,9 +193,9 @@
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<form action="#" method="post" accept-charset="utf-8">
+		<form action="{{route('sendMailFollwers')}}" method="post" accept-charset="utf-8">
 			@csrf
-			<input type="hidden" name="title" value="">
+			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
@@ -203,10 +203,10 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<input class="form-control" type="text" name="" value="" placeholder="Subject">
+						<input class="form-control" type="text" name="subject" value="" placeholder="Subject">
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" name="" placeholder="Message"></textarea>
+						<textarea class="form-control" name="message" placeholder="Message"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
