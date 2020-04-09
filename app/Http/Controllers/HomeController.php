@@ -116,7 +116,6 @@ class HomeController extends Controller{
         })
         ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
-        return $data_business_sponsored;
         /*list all Results*/
 
         $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
