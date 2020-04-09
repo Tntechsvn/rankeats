@@ -342,7 +342,8 @@ public function ajax_unvoted(Request $request){
     ->where('business_id','=',$request->business_id)
     ->delete();
     return response()->json([
-        'message' => "You have not voted yet, 1/1 votes remain.!!!"
+        'message' => "You have not voted yet, 1/1 votes remain.!!!",
+        'city_id' => $city_id
     ]);
 }
 public function vote_ajax(Request $request){
@@ -393,7 +394,8 @@ public function vote_ajax(Request $request){
             $new_vote -> save();
 
             return response()->json([
-                'success' => true
+                'success' => true,
+                'city_id' => $city_id
             ]);
         }
         

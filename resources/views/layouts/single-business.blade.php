@@ -170,15 +170,28 @@
 										</ul>
 									</div>
 				    			</div>						    	
-
+				    			<div class="funny">
+				    				<div class="hungry">
+				    					<img src="images/hungry.png" alt="">
+				    					<button>Hungry</button>
+				    				</div>
+				    				<div class="useful">
+				    					<img src="images/useful.png" alt="">
+				    					<button>Useful</button>
+				    				</div>
+				    				<div class="cool">
+				    					<img src="images/cool.png" alt="">
+				    					<button>Cool</button>
+				    				</div>
+				    			</div>
 								@endforeach								
 				    		@endif
 				    		<div style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote($info_business->id))
-							    		<a  href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}">Vote</a>
+							    		<a  href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
 							    	@else
-							    		<a  href="javascript:;"  class="btn btn-warning">Voted</a>
+							    		<a  href="javascript:;"  class="btn btn-danger unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Voted</a>
 							    	@endif
 						    	@else
 
