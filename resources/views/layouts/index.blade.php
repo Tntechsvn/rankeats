@@ -8,6 +8,16 @@
     <div class="front-search">
       {{-- <h1>Find The Best, Eat The Best</h1> --}}
       <div class="banner-image">
+      @if($ads_active_home)
+        @foreach($ads_active_home as $ad)
+        <div>
+          <a href="{{$ad->business->permalink()}}">
+            <img src="{{$ad->image_url ?? "images/oyster.png"}}" alt="">
+            <span>{{$ad->business->name}}</span>
+          </a>
+        </div>
+        @endforeach
+      @else
         <div>
           <a href="javascript:;">
             <img src="images/oyster.png" alt="">
@@ -26,7 +36,13 @@
             <span>Luke's Lobster Back Bay</span>
           </a>
         </div>
-        
+        <div>
+          <a href="javascript:;">
+            <img src="images/lobster.png" alt="">
+            <span>Luke's Lobster Back Bay</span>
+          </a>
+        </div>
+      @endif
       </div>
       @include('layouts.form-search')
     </div>

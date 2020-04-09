@@ -26,6 +26,7 @@ class HomeController extends Controller{
         $Country = Country::where('code','=','US')->first();
         $state =  $Country->states()->get();
 
+        $this->ad = new Advertisement();
         $this->user = Auth::user();
         $category = Category::where('status','=',1)->get();
         $all_page = Page::all();
@@ -33,8 +34,9 @@ class HomeController extends Controller{
     }
 
     public function home(){
+        $ads_active_home = Advertisement::home()->active()->take(3)->get();
         $category = Category::where('status','=',1)->take(9)->get();
-        return view('layouts.index',compact('category'));
+        return view('layouts.index',compact('category', 'ads_active_home'));
     }
     public function fetchCategory(Request $request){
         if($request->get('query'))
@@ -80,12 +82,12 @@ class HomeController extends Controller{
                 foreach($data as $row)
                 {
                     if($row->city_name){
-                        $text = $row->city_name;/*.' or '.$row->state_name*/
+                        $text = $row->city_name.', '.$row->state_name;
                     }else{
                         $text = $row->state_name;
                     }
 
-                    $output .= '<li class="location_name form-search-val">'.$text.'</li>';             
+                    $output .= '<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
                 }
             }else{
                 $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
@@ -100,14 +102,21 @@ class HomeController extends Controller{
         $city = $request -> city ? $request -> city : $request -> state;
         $state_search = $request -> state ? $request -> state : '';
 
+        if($city){
+            $text_city_state = $city.', '.$state_search;
+        }else{
+            $text_city_state = $state_search;
+        }
         /*fix search*/
-        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','advertisements.status as status_adv')
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
+        ->JoinAdvertisement()
         ->where(function($query) use ($keyword,$city,$state_search){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
         })
-        ->where('status','=',1)
+        ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
+        return $data_business_sponsored;
         /*list all Results*/
 
         $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
@@ -121,7 +130,7 @@ class HomeController extends Controller{
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
 
-        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','category_search'));
+        return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
     }
     public function getbusinessCate($arr_id){
         $result = array();  

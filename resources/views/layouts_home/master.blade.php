@@ -130,6 +130,8 @@
   $(document).ready(function(){
 
     $('#location_search').keyup(function(){ 
+      $('#city_searech').val('');
+      $('#state_searech').val('');
       var query = $(this).val();
       if(query != '')
       {
@@ -147,8 +149,26 @@
     });
 
     $(document).on('click', '.location_name', function(e){
+      $('#city_searech').remove();
+      $('#state_searech').remove();
       $('#location_search').val($(this).text());  
       $('#LocationList').fadeOut();
+      
+
+      $('#restaurant_name').val($(this).text());  
+      $('#emailList').fadeOut();
+      var arr = [];
+      var arr2 = [];
+
+      arr.push($(this).data('city'));
+      var selected_values = arr.join(",");
+
+      arr2.push($(this).data('state'));
+      var selected_values2 = arr2.join(",");
+
+      $( ".input_hidden" ).append( '<input type="hidden" name="city" id="city_searech" value="'+selected_values+'">' );
+      $( ".input_hidden" ).append( '<input type="hidden" name="state" id="state_searech" value="'+selected_values2+'">' );
+
     });
   });
 </script>

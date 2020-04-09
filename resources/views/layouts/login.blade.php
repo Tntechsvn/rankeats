@@ -15,6 +15,9 @@
 					</div>
 					<form id="formLogin" class="forms" action="{{route('postLogin')}}" method="post" enctype="multipart/form-data">
 						{{csrf_field()}}
+						@if (session()->has('error'))
+						<p class="alert alert-danger">{{ session('error') }}</p>
+						@endif
 						<div class="form-group">
 							<input type="text" class="form-control input-lg" name="email" id="inputUsername" placeholder="Username">
 							<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
