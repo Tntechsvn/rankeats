@@ -57,7 +57,7 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js')}}"></script>
 @include('adminlte::plugins', ['type' => 'js'])
-
+@include('notifycation.notifycation')
 @yield('adminlte_js')
 @else
 <script src="{{ asset('js/app.js') }}"></script>
