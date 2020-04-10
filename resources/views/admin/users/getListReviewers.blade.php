@@ -10,7 +10,7 @@
     	<div class="card-tools">
     		<form action="{{route('getListReviewers')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
-	    			<input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
+	    			<input type="text" name="keyword" id="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 
 	    			<div class="input-group-append">
 	    				<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -109,10 +109,10 @@
               					</div>
               				</td>
               				@if($data->url_avatar != null)	              				
-              				<td class="mailbox-subject"><img src="{{'http://localhost/rankeats/public/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_avatar}}" style="width: 100px;"></td>
               				@else
               				<td class="mailbox-subject">
-              					<img src="http://localhost/rankeats/public/vendor/adminlte/dist/img/AdminLTELogo.png" style="width: 100px;">
+              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
               				</td>
               				@endif
               				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
@@ -121,6 +121,7 @@
               				<td>
               					<a  href="{{route('getEditUser',$data->id)}}" class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></a>
               					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-danger del_user" data-id="{{$data->id }}" onclick="delUserFunction()"><i class="far fa-trash-alt" style="color: #fff;"></i></a>
               				</td>
               			</tr>
               			@endforeach
@@ -150,6 +151,36 @@
 @stop
 @section('adminlte_js')
 <script>
+  function delUserFunction() {
+    var r = confirm("You want to delete user?");
+    if (r == true) {
+      $(document).on('click', '.del_user',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
+
+        var link = "{{route('deleteUser')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
+
 	$(function () {
     	 //Enable check and uncheck all functionality
 		    $('.checkbox-toggle').click(function () {
@@ -181,7 +212,7 @@
 			var checked = confirm(WRN_PROFILE_DELETE);
 			if(checked == true) {
 				var selected_values = arr.join(",");
-				var link = "";
+				var link = "{{route('deleteUser')}}";
 				$.ajax({
 					headers:{
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -191,11 +222,11 @@
 					data: 'list_id='+selected_values,
 					success:function(data){
 						console.log(data);
-						if(data == "Success"){
+						if(data.success){
 							window.location.reload();
-							alert('Delete Restaurant Directory Success');
+							alert(data.message);
 						}else{
-							alert('You Cannot Delete This Category');
+							alert(data.message);
 						}
 					}
 				});

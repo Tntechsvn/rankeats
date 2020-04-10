@@ -73,7 +73,7 @@
               					</div>
               				</td>
               				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"><img src="{{asset('').'/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 100px;"></td>
               				@else
               				<td class="mailbox-subject">
               					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
