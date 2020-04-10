@@ -28,7 +28,7 @@
             <td align="center">
                 <table class="content" width="100%" cellpadding="0" cellspacing="0">
                     <tr align="center">
-                        <td class="header">Dear {{$mail_to}}!</td>
+                        <td class="header">Dear {{$user['mail_to']}}!</td>
                     </tr>
                     <!-- Email Body -->
                     <tr>
@@ -36,7 +36,7 @@
                             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0">
                                 <!-- Body content -->
                                 <tr align="center">
-                                    <td>{!!$message1!!}</td></tr>
+                                    <td>{{$user['message1']}}</td></tr>
                                 <tr>
                                 
                                 </tr>

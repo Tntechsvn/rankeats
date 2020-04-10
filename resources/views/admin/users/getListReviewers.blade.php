@@ -29,20 +29,22 @@
       		<div class="modal-dialog">
 
       			<!-- Modal content-->
-      			<form action="#" method="post" accept-charset="utf-8">
+      			<form action="{{route('SendEmailAllReviewers')}}" method="post" accept-charset="utf-8">
       				@csrf
       				<input type="hidden" name="title" value="">
       				<div class="modal-content">
       					<div class="modal-header">
       						<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
-      						<h2 style="text-align: center;">Sent message to all review</h2>
+      						<h2 style="text-align: center;">Sent message to all reviewers</h2>
       					</div>
       					<div class="modal-body">
       						<div class="form-group">
-      							<input class="form-control" type="text" name="" value="" placeholder="Subject">
+      							<input class="form-control" type="text" name="subject" value="" placeholder="Subject">
+                    <span class="bg-danger color-palette">{{$errors -> first('subject')}}</span>
       						</div>
       						<div class="form-group">
-      							<textarea class="form-control" name="" placeholder="Message"></textarea>
+      							<textarea class="form-control" name="message" placeholder="Message"></textarea>
+                    <span class="bg-danger color-palette">{{$errors -> first('message')}}</span>
       						</div>
       					</div>
       					<div class="modal-footer">

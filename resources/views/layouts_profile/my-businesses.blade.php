@@ -204,9 +204,11 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<input class="form-control" type="text" name="subject" value="" placeholder="Subject">
+						<span class="bg-danger color-palette">{{$errors -> first('subject')}}</span>
 					</div>
 					<div class="form-group">
 						<textarea class="form-control" name="message" placeholder="Message"></textarea>
+						<span class="bg-danger color-palette">{{$errors -> first('message')}}</span>
 					</div>
 				</div>
 				<div class="modal-footer">

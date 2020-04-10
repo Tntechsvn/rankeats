@@ -77,6 +77,8 @@
 <script src="js/ajax.js"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 <!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script> -->
+ 
+@include('notifycation.notifycation')
 @yield('script')
 <script type="text/javascript">
   
