@@ -115,6 +115,27 @@ class UserController extends Controller
 			return redirect()->back();
 		}
     }
+    /*function delete user*/
+    public function deleteUser(Request $request){
+        $Arr_list_users = explode(',', $request->list_id);
+
+        foreach($Arr_list_users as $user_id){
+            $user_del = User::findOrFail($user_id);
+            if($user_del){
+                $user_del -> delete();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Delete user success',
+        ], 200);
+    }
+
     /*====================================user frond-end=====================================================*/
     public function postSignUp(Request $request){
         $this-> Validate($request,[

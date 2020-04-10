@@ -178,6 +178,10 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'SendEmailAllBusinessOwners',
 				'uses' => 'MailController@SendEmailAllBusinessOwners'
 			]);
+			Route::post('delete-user', [
+				'as' => 'deleteUser',
+				'uses' => 'UserController@deleteUser',
+			]);
 		});
 		Route::prefix("business-listings")->group(function(){
 			Route::get('/list-approved-businesses', [
