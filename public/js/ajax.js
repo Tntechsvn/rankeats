@@ -117,7 +117,7 @@ $(document).on('click','.vote_now',function(){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
           var vote_id = '.vote-'+business+'-'+res.city_id;
-          $('#main').find('.unvote').removeClass('btn-danger').addClass('btn-success').removeClass('unvote').html('Vote');
+          $('#main').find('.unvote').removeClass('btn-danger').addClass('vote_now').addClass('btn-success').removeClass('unvote').html('Vote');
           $('#main').find(vote_id).removeClass('btn-success').addClass('btn-danger').addClass('unvote').html('Voted');
           $this.html('Voted');
           $this.removeClass('btn-success').addClass('unvote').removeClass('vote_now').addClass('btn-danger');
@@ -232,3 +232,35 @@ $(document).on('click','.submit_votereview',function(e){
     }
   });
 })
+
+
+// reaction review
+
+$(document).on('click','.funnyy',function(){
+  var $this = $(this);
+  var url = $('input[name=reaction_review]').val();
+  var review_id = $(this).data('review');
+  var type = $(this).data('type');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      review_id: review_id,
+      type: type
+    },
+    success:function(res){
+      if(res.success == true){
+        $this.closest('.funny').find('.active').removeClass('active').addClass('funnyy');
+        $this.addClass('active').removeClass('funnyy');
+      }else{
+        swal({
+          title: res.message,
+          timer: 2000
+        });
+      }
+    }
+  });
+});

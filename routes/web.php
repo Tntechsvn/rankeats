@@ -148,5 +148,9 @@
 		'as' => 'ajax_unvoted',
 		'uses' => 'HomeController@ajax_unvoted'
 	]);
+	Route::post('/ajax-reaction', [
+		'as' => 'reaction_review',
+		'uses' => 'HomeController@reaction_review'
+	]);
 	
 // end hungpro

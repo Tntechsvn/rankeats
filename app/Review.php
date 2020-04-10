@@ -3,7 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
+use DB;
 class Review extends Model
 {
 	/*Knight*/
@@ -15,6 +16,9 @@ class Review extends Model
     }
     public function review_rating(){
         return $this -> hasMany('App\Review_rating', 'review_id', 'id');
+    }
+    public function users_reaction(){
+        return $this -> belongsToMany('App\User', 'review_reactions');
     }
 
 	public function update_review($request,$user_id){
@@ -50,4 +54,12 @@ class Review extends Model
 		}		
 	}
 	/*end knight*/
+
+
+	public function is_reacted(){
+        return !! Auth::user() && $this->users_reaction->contains(Auth::user());
+    } 
+	public function is_reacted_type(){
+        return $this->users_reaction()->where('user_id','=',Auth::id())->pluck('type')->first();
+    } 
 }
