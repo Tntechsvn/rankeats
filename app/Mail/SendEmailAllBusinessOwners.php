@@ -29,6 +29,6 @@ class SendEmailAllBusinessOwners extends Mailable
      */
     public function build()
     {       
-        return $this->from($this->user['mail_from'])->subject($this->user['subject'])->view('mail.mail_follwers');
+        return $this->subject($this->user['subject'])->view('mail.mail_follwers');
     }
 }
