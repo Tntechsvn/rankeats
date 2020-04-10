@@ -36,9 +36,6 @@ class MailController extends Controller
 		$business = Business::findOrfail($request->business);
 		$list_bookmark = $business->bookmark;
 		foreach ($list_bookmark as $value) {
-			$mail_business = $business->email;
-			$mail_config = \Config::get('mail');
-			$user['mail_from'] = $mail_config['username'];
 			$user['mail_to'] = $value->user->email;
 			$user['subject'] = $request->subject;
 			$user['message1'] = $request -> message;
@@ -57,8 +54,8 @@ class MailController extends Controller
         ->where('role_id','=',2)->get();
 
 		foreach ($list_reviewers as $value) {
-			$mail_config = \Config::get('mail');
-			$user['mail_from'] = $mail_config['username'];
+			/*$mail_config = \Config::get('mail');
+			$user['mail_from'] = $mail_config['username'];*/
 			$user['mail_to'] = $value->email;
 			$user['subject'] = $request->subject;
 			$user['message1'] = $request -> message;
@@ -76,8 +73,8 @@ class MailController extends Controller
         ->where('role_id','=',3)->get();
 
 		foreach ($list_reviewers as $value) {
-			$mail_config = \Config::get('mail');
-			$user['mail_from'] = $mail_config['username'];
+			/*$mail_config = \Config::get('mail');
+			$user['mail_from'] = $mail_config['username'];*/
 			$user['mail_to'] = $value->email;
 			$user['subject'] = $request->subject;
 			$user['message1'] = $request -> message;
