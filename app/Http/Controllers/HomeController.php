@@ -19,6 +19,7 @@ use App\City;
 use App\Country;
 use App\Review_rating;
 use DB;
+use App\ReviewReaction;
 class HomeController extends Controller{
 
     public function __construct(){
@@ -579,6 +580,34 @@ public function ajaxcitystate(Request $request){
 
 }
 
+public function reaction_review(Request $request){
 
+    $user = Auth::user();
+    if(!$user){
+        return response()->json([
+            'success' => false,
+            'message' => "You need to login!!!"
+        ]);
+    }else{
+
+        $reaction = ReviewReaction::where('user_id','=',$user->id)->where('review_id','=',$request->review_id)->first();
+        if($reaction){
+            $reaction_update = ReviewReaction::where('user_id',$user->id)
+                                                ->where('review_id',$request->review_id)
+                                                ->update(['type' => $request->type]);
+        }else{
+            $new_reaction = new ReviewReaction;
+            $new_reaction -> user_id = $user->id;
+            $new_reaction -> review_id = $request->review_id;
+            $new_reaction -> type = $request->type;
+            $new_reaction -> save();
+        }
+        return response()->json([
+            'success' => true
+        ]);  
+    }
+
+    
+}
 
 }

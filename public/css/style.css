@@ -2296,6 +2296,29 @@ width: 30% !important;
 	color: #fff;
 	background-color: #ec5a2f;
 }
+.funny .active {
+	color: #fff;
+	background-color: #ec5a2f;
+}
+.setting-page .nav-tabs a.active {
+	background-color: #fff;
+}
+
+.output-success {
+	border-left: 6px solid #80D651;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+.output-error {
+	border-left: 6px solid #7f7f84;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+
+
+
+
+
 /*responsive*/
 
 

@@ -170,18 +170,19 @@
 										</ul>
 									</div>
 				    			</div>						    	
-				    			<div class="funny">
+				    			<div class="funny funny-{{$data->review->id}}">
+
 				    				<div class="hungry">
 				    					<img src="images/hungry.png" alt="">
-				    					<button>Hungry</button>
+				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 1) active @endif" data-type="1" data-review="{{$data->review->id}}">Hungry</button>
 				    				</div>
 				    				<div class="useful">
 				    					<img src="images/useful.png" alt="">
-				    					<button>Useful</button>
+				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 2) active @endif" data-type="2" data-review="{{$data->review->id}}">Useful</button>
 				    				</div>
 				    				<div class="cool">
 				    					<img src="images/cool.png" alt="">
-				    					<button>Cool</button>
+				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 3) active @endif" data-type="3" data-review="{{$data->review->id}}">Cool</button>
 				    				</div>
 				    			</div>
 								@endforeach								
@@ -442,7 +443,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<div class="avata-popup " style="width: 100%;text-align: center;">
-						<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
+						<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
 						<p class="bold">{{Auth::user()->name}}</p>
 					</div>
 				</div>
@@ -532,6 +533,7 @@
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
 <input type="hidden" name="voteReviewEat_ajax" value="{{route('voteReviewEat_ajax')}}">
 <input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
+<input type="hidden" name="reaction_review" value="{{route('reaction_review')}}">
 @endsection
 
 @section('script')

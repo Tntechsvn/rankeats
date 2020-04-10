@@ -162,7 +162,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
-							<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}">
+							<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
 							<p class="bold">{{Auth::user()->name}}</p>
 						</div>
 					</div>
