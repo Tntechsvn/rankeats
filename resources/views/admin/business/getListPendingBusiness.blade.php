@@ -66,26 +66,26 @@
               			@foreach($list_business as $data)
               				    				
               			<tr>
-              				<td>
+              				<td style="width: 5%">
               					<div class="icheck-primary">
               						<input type="checkbox" value="" class="check" id="check{{$data->id}}" data-row-id="{{$data->id}}">
               						<label for="check{{$data->id}}"></label>
               					</div>
               				</td>
               				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"style="width: 7%"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 45px;"></td>
               				@else
-              				<td class="mailbox-subject">
-              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
+              				<td class="mailbox-subject" style="width: 7%">
+              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 45px;">
               				</td>
               				@endif
               				<td>{{$data -> name}}</td>
               				<td style="width: 15%">{{$data -> email}}</td>              				
               				<td style="width: 20%">{{$data -> location->address}}</td>  
               				<td>{{$data -> created_at}}</td>
-              				<td>
+              				<td  style="width: 20%">
                         <a href="{{route('approvedBusinesses',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this business?">A</button></a>
-              					{{--<a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>--}}
+              					<a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>
               					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="{{$data->permalink()}}" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
               				</td>
               			</tr>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Storage;
 use App\Category;
+use App\Country;
 use App\Myconst;
 use App\Business;
 use App\Http\Controllers\ShareController;
@@ -19,10 +20,13 @@ class BusinessController extends Controller
      *
      * @return void
      */
-   /* public function __construct()
+    public function __construct()
     {
-        $this->middleware('auth');
-    }*/
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+
+        view()->share(['state'=>$state]);
+    }
 
     public function postCreateBusiness(Request $request){
     	$this-> Validate($request,[
@@ -124,8 +128,8 @@ class BusinessController extends Controller
 		return redirect()->back();
     }
     public function getEditBusiness($id_business){
-    	$business = Business::findOrfail($id_business);
-    	return $business;
+        $info_business = Business::findOrfail($id_business);
+    	return view('admin.business.getEditBusiness',compact('info_business'));
     }
     public function postEditBusiness(Request $request){
         $user = Auth::user();

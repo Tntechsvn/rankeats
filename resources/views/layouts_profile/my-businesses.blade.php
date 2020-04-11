@@ -11,14 +11,14 @@
 
 	<div class="container content-profile">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-3 col-lg-3 col-sm-5 col-xs-12 menu-sidebar">
 
 				<div class="profile-usermenu">
 					@include('layouts_profile.menu-sidebar')
 				</div>
 			</div>
 
-			<div class="col-md-9">
+			<div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 content-search content-right-profile">
 				<div class="tab-content" style="margin-right: -15px;">
 					<div>
 						<h3 class="title m-b-20">My Businesses</h3>
