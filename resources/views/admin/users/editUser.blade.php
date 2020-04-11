@@ -15,8 +15,8 @@
 				<!-- general form elements -->
 				<div class="card ">
 					<div class="card-header">
-						<a class="btn btn-primary" href="@if($user->role_id == 2){{route('getListReviewers')}}@elseif($user->role_id == 3){{route('getListBusinessOwners')}}@endif">back</a>
-						<h3 class="card-title">Edit user</h3>               
+						<a class="btn btn-primary" style="float: left;" href="@if($user->role_id == 2){{route('getListReviewers')}}@elseif($user->role_id == 3){{route('getListBusinessOwners')}}@endif">back</a>
+						<h3 class="card-title" style="padding-top: 10px;">Edit user</h3>               
 
 					</div>
 					<!-- form start -->
@@ -68,7 +68,7 @@
 								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 							</div>
 							<div class="form-group">
-								<label for="inputBirthday">Address </label>
+								<label for="inputBirthday">States</label>
 								<div class="form-group">
 									<select class="form-control select2" name="state" id="state_profile">
 										<option value=""disabled selected="selected">Select State</option>
@@ -83,6 +83,7 @@
 									</select>
 									<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
 								</div>
+								<label for="inputBirthday">Cities</label>
 								<div class="form-group">
 									<select class="form-control select2" name="city" id="city_profile" style="width: 100%;">
 										<option  value="" disabled selected >Select City</option>
@@ -95,10 +96,12 @@
 									<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 
 								</div>
+								<label for="inputBirthday">Address</label>
 								<div class="form-group">
 									<input type="text" class="form-control " name="address"  placeholder="Address" value="@if($user->address != null){{$user->location->address}}@endif">
 									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 								</div>
+								<label for="inputBirthday">Zipcode</label>
 								<div class="form-group">
 									<input type="text" class="form-control " name="zipcode" placeholder="Zip Code" value="@if($user->address != null){{$user->location->code}}@endif">
 									<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
@@ -167,42 +170,6 @@
     });*/       
   });
 </script>
-
-<script type="text/javascript">
-  google.maps.event.addDomListener(window, 'load', initialize);
-  function initialize(){
-    var search = document.getElementById('search');
-    var autocomplete = new google.maps.places.Autocomplete(search);
-    google.maps.event.addListener(autocomplete, 'place_changed', function(){
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-      document.getElementById('address').value = place.formatted_address;
-      document.getElementById('longitude').value = place.geometry.location.lng();
-      document.getElementById('latitude').value = place.geometry.location.lat();
-      for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        switch (addressType) {
-          case 'locality':
-          var city = place.address_components[i].long_name;
-          break;
-          case 'administrative_area_level_1':
-          var state = place.address_components[i].long_name;
-          break;
-          case 'country':
-          var country = place.address_components[i].long_name;
-          break;
-        }
-      }
-      document.getElementById('city').value = city;
-      document.getElementById('state').value = state;
-      document.getElementById('country').value = country;     
-    });
-  };
-</script>
-
 <script>
   $(function () {
 	$('.select2').select2()
