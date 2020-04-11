@@ -36,12 +36,6 @@
             <span>Luke's Lobster Back Bay</span>
           </a>
         </div>
-        <div>
-          <a href="javascript:;">
-            <img src="images/lobster.png" alt="">
-            <span>Luke's Lobster Back Bay</span>
-          </a>
-        </div>
       @endif
       </div>
       @include('layouts.form-search')

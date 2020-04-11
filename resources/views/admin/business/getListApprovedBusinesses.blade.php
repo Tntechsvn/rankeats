@@ -84,7 +84,7 @@
                       <td style="width: 20%">{{$data -> location->address}}</td>  
                       <td>{{$data -> created_at}}</td>
                       <td>
-                        {{--<a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>--}}
+                        <a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>
                         <a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="{{$data->permalink()}}" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
                       </td>
                     </tr>
