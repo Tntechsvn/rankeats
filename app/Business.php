@@ -33,6 +33,9 @@ class Business extends Model
     public function users(){
         return $this->belongsToMany('App\User', 'bookmarks', 'business_id', 'user_id', 'id');
     }
+    public function bookmark(){
+        return $this->hasMany('App\Bookmark', 'business_id', 'id');
+    }
      /*join locations*/
     public function scopeJoinLocation($query)
     {

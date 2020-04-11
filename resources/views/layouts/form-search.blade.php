@@ -12,8 +12,8 @@
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
 				<div id="LocationList"></div>
 				<div class="input_hidden">
-					<input type="hidden" name="city" id="city_searech" value="@if(isset($city)){{$city}}@endif">;
-      				<input type="hidden" name="state" id="state_searech" value="@if(isset($state_search)){{$state_search}}@endif">;
+					<input type="hidden" name="city" id="city_searech" value="@if(isset($city)){{$city}}@endif">
+      				<input type="hidden" name="state" id="state_searech" value="@if(isset($state_search)){{$state_search}}@endif">
 				</div>
 			</div>
 			<span class="input-group-btn">

@@ -53,7 +53,6 @@
 
 </div>
 <!--wrap--> 
-
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 
 {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>  --}}
@@ -77,6 +76,8 @@
 <script src="js/ajax.js"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 <!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script> -->
+ 
+@include('notifycation.notifycation')
 @yield('script')
 <script type="text/javascript">
   
