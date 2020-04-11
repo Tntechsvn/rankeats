@@ -31,7 +31,7 @@
 
 <!-- jQuery library -->
 
-{{-- <script src="js/jquery-2.1.3.min.js"></script> --}}
+<script src="js/jquery-2.1.3.min.js"></script>
 
 
 
@@ -56,8 +56,8 @@
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>  --}}
+{{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
