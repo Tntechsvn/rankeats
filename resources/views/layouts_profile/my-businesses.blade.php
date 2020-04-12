@@ -136,24 +136,47 @@
 										$days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 									@endphp
 									@for($i=0;$i<=6;$i++)
+										@php
+										$open_from = '';
+										$open_till ='';
+											foreach($info_business->business_hour as $val){
+												if($val -> business_days == $days[$i]){
+													$open_from = $val->open_from;
+													$open_till = $val->open_till;
+												}
+											}
+											
+										@endphp
 									<div class="col-lg-6 uptime" style="margin-bottom: 10px;">
 										<span class="bold" style="display: inline-block;width: 45px;">{{$days[$i]}}</span>
 										<select class="choose-method" name="">
+
 											<option value="open">Open</option>
-											<option value="close" selected>Close</option>
+											<option value="close" @foreach($info_business->business_hour as $val)
+													@if($val -> business_days == $days[$i])
+														@if($val ->open_from == null && $val ->open_till == null){{'selected'}}@endif
+													@endif
+												@endforeach>Close</option>
+											
 										</select>
-										<div class="show_time hidden" style="margin-top: 10px;padding-left: 50px;">
-											<input class="timepic time-open choose-time" type="text" value="" name="time_open_{{$days[$i]}}" autocomplete="off" />
+										<div class="show_time @foreach($info_business->business_hour as $val)
+													@if($val -> business_days == $days[$i])
+														@if($val ->open_from == null && $val ->open_till == null){{'hidden'}}@endif
+													@endif
+												@endforeach" style="margin-top: 10px;padding-left: 50px;">
+											<input class="timepic time-open choose-time" type="text" value="{{$open_from}}" name="time_open[{{$days[$i]}}][]" autocomplete="off" />
 											-
-											<input class="timepic time-close choose-time" type="text" value="" name="time_close_{{$days[$i]}}" autocomplete="off" />
+											<input class="timepic time-close choose-time" type="text" value="{{$open_till}}"
+												name="time_close[{{$days[$i]}}][]" autocomplete="off" />
 										</div>
 									</div>
 									@endfor
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<a data-toggle="modal" data-target="#sentmail-popup" href="javascript:;" class="btn btn-success" style="color: #fff">Email followwer</a>
-								<a href="javascript:;" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
+								<a href="{{$info_business->permalink()}}" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
 								<button type="submit" class="btn btn-primary" style="color: #fff" > Success</button>
 							</div>
 							
@@ -170,9 +193,9 @@
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<form action="#" method="post" accept-charset="utf-8">
+		<form action="{{route('sendMailFollwers')}}" method="post" accept-charset="utf-8">
 			@csrf
-			<input type="hidden" name="title" value="">
+			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
@@ -180,10 +203,12 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<input class="form-control" type="text" name="" value="" placeholder="Subject">
+						<input class="form-control" type="text" name="subject" value="" placeholder="Subject">
+						<span class="bg-danger color-palette">{{$errors -> first('subject')}}</span>
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" name="" placeholder="Message"></textarea>
+						<textarea class="form-control" name="message" placeholder="Message"></textarea>
+						<span class="bg-danger color-palette">{{$errors -> first('message')}}</span>
 					</div>
 				</div>
 				<div class="modal-footer">

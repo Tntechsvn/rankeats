@@ -60,6 +60,12 @@ Route::post('/create-business-category', [
 	'as' => 'createBusinessCategory',
 	'uses' => 'EatsController@createBusinessCategory'
 ]);
+
+Route::post('/send-mail-follwers', [
+	'as' => 'sendMailFollwers',
+	'uses' => 'MailController@sendMailFollwers'
+]);
+
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',
@@ -163,6 +169,14 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			Route::post('/edit-user/{id_user}', [
 				'as' => 'postEditUser',
 				'uses' => 'UserController@postEditUser'
+			]);
+			Route::post('/send-email-all-reviewers', [
+				'as' => 'SendEmailAllReviewers',
+				'uses' => 'MailController@SendEmailAllReviewers'
+			]);
+			Route::post('/send-email-all-business-owners', [
+				'as' => 'SendEmailAllBusinessOwners',
+				'uses' => 'MailController@SendEmailAllBusinessOwners'
 			]);
 		});
 		Route::prefix("business-listings")->group(function(){

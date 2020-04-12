@@ -41,9 +41,6 @@
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
-
-
-
 </head>
 
 <body>
@@ -80,6 +77,8 @@
 <script src="js/ajax.js"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 <!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script> -->
+ 
+@include('notifycation.notifycation')
 @yield('script')
 <script type="text/javascript">
   
@@ -133,6 +132,8 @@
   $(document).ready(function(){
 
     $('#location_search').keyup(function(){ 
+      $('#city_searech').val('');
+      $('#state_searech').val('');
       var query = $(this).val();
       if(query != '')
       {
@@ -150,8 +151,26 @@
     });
 
     $(document).on('click', '.location_name', function(e){
+      $('#city_searech').remove();
+      $('#state_searech').remove();
       $('#location_search').val($(this).text());  
       $('#LocationList').fadeOut();
+      
+
+      $('#restaurant_name').val($(this).text());  
+      $('#emailList').fadeOut();
+      var arr = [];
+      var arr2 = [];
+
+      arr.push($(this).data('city'));
+      var selected_values = arr.join(",");
+
+      arr2.push($(this).data('state'));
+      var selected_values2 = arr2.join(",");
+
+      $( ".input_hidden" ).append( '<input type="hidden" name="city" id="city_searech" value="'+selected_values+'">' );
+      $( ".input_hidden" ).append( '<input type="hidden" name="state" id="state_searech" value="'+selected_values2+'">' );
+
     });
   });
 </script>

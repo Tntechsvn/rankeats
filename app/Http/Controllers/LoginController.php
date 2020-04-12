@@ -82,7 +82,7 @@ class LoginController extends Controller
 			
 
 		}else{
-			return view('layouts.login');
+			return redirect()->back()->with('error','Email or password is incorrect');
 		}
 	}
 	public function getLogout(){

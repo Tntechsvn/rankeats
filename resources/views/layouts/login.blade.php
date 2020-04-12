@@ -1,20 +1,23 @@
 @extends('layouts_home.master')
 @section('content')
   	<div id="main">
-		<div class="container">
+		<div class="container p-t-20">
 			<div class="small-header">
 				<h1>Log in to Rank Eats</h1>
-				@if (session()->has('message'))
+				{{-- @if (session()->has('message'))
 				<p class="alert alert-success">{{ session('message') }}</p>
-				@endif
+				@endif --}}
 			</div>
 			<div class="row login">
 				<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 well">
 					<div class="form-group text-center">
-						<div class="user-logo"> <img src="images/avatar.jpg" class="img-circle" width="150" height="150" alt="user login"> </div>
+						<div class="user-logo"> <img src="images/avatar.jpg" class="img-circle" width="100" height="100" alt="user login"> </div>
 					</div>
 					<form id="formLogin" class="forms" action="{{route('postLogin')}}" method="post" enctype="multipart/form-data">
 						{{csrf_field()}}
+						@if (session()->has('error'))
+						<p class="alert alert-danger">{{ session('error') }}</p>
+						@endif
 						<div class="form-group">
 							<input type="text" class="form-control input-lg" name="email" id="inputUsername" placeholder="Username">
 							<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>

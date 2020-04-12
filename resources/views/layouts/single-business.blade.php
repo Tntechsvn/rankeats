@@ -70,22 +70,31 @@
 					<div class="clear"></div>	
 					
 					<div class="col-lg-6 map">
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.0280704153997!2d-71.05816368426183!3d42.3632410428928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3708f2d8f5e8b%3A0x76e5ba9980db682e!2s63%20Salem%20St%2C%20Boston%2C%20MA%2002113%2C%20Hoa%20K%E1%BB%B3!5e0!3m2!1svi!2s!4v1585540921075!5m2!1svi!2s" width="800" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-						<div class="m-t-20">
-							{!!$info_business->location->state!!}
-							{!!$info_business->location->city!!}
-							
-						</div>
+						<div id="map" style="height: 300px;"></div>
+						<div>{{$info_business->location->address}},{{$info_business->location->city}},{{$info_business->location->state}}</div>
 					</div>
 					<div class="col-lg-6 hours">
 						<div>
-							<p><span class="bold">Mon</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Tue</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Wed</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Thu</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Fri</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Sat</span> 11:30 am - 9:30 pm</p>
-							<p><span class="bold">Sun</span> 11:30 am - 9:30 pm</p>
+							@php 
+								$days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+							@endphp
+
+							@for($i=0;$i<=6;$i++)
+								@php
+									$open_from = '';
+									$open_till ='';
+
+									foreach($info_business->business_hour as $val){
+										if($val -> business_days == $days[$i]){
+											$open_from = $val->open_from ?? 'close';
+											$open_till = $val->open_till ?? 'close';
+										}
+									}
+
+								@endphp
+								<p><span class="bold">{{$days[$i]}}</span> {{$open_from}} - {{$open_till}}</p>
+							@endfor
+							
 						</div>
 					</div>
 				</div>
@@ -118,7 +127,10 @@
 					    	<p>
 					    		<i class="fas fa-clock"></i>
 					    		<span class="bold">Business Opening :</span>
-					    		<span>20/3/2020</span>
+					    		@php
+									$day_opening = date("Y-m-d",strtotime($info_business->day_opening))
+								@endphp
+					    		<span>{{$day_opening}}</span>
 					    	</p>
 					    	<p>
 					    		<i class="fas fa-shipping-fast"></i>
@@ -454,7 +466,7 @@
 				</div>
 				<div class="modal-footer" style="text-align: center;">
 					<div class="verify">
-						<a href="javascript:;" class="btn btn-primary noverify" style="width: 80px;">NO</a>
+						<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
 						<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 					</div>
 					<div class="firstWindow hidden" style="width: 100%">
@@ -481,6 +493,24 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+		<input type="hidden" name="business_id" value="">
+		<input type="hidden" name="city_id" value="">
+		<input type="hidden" name="unvoted" value="{{route('ajax_unvoted')}}">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<p class="message">You voted for business21; 0/1 votes remain.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				<button type="submit" class="btn btn-success unvote_submit">Yes</button>
 			</div>
 		</div>
 
@@ -603,4 +633,55 @@
 	});
 
 </script>
+<!--knight test map-->
+<script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+      
+							
+		var address_business = '{{$info_business->location->address}}'+','+'{{$info_business->location->city}}'+','+'{{$info_business->location->state}}';
+      var map;
+      var service;
+      var infowindow;
+
+      function initMap() {
+        var usa = new google.maps.LatLng(37.09024, -95.712891);
+
+        infowindow = new google.maps.InfoWindow();
+
+        map = new google.maps.Map(
+            document.getElementById('map'), {center: usa, zoom: 15});
+
+        var request = {
+          query: address_business,
+          fields: ['name', 'geometry'],
+        };
+
+        service = new google.maps.places.PlacesService(map);
+
+        service.findPlaceFromQuery(request, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
+            }
+
+            map.setCenter(results[0].geometry.location);
+          }
+        });
+      }
+
+      function createMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
+    </script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&libraries=places&callback=initMap" async defer></script>
 @stop

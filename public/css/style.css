@@ -42,6 +42,9 @@ p {
 	margin: 0;
 	padding: 0;
 }
+.navbar-fixed-top, .navbar-fixed-bottom {
+	z-index: 9999;
+}
 #preview-avatar .dt-close {
 	position: relative;
     width: 100px;
@@ -301,8 +304,7 @@ LOGIN
 	border: solid #ddd 14px;
 }
 .user-logo {
-	margin-top: 27px;
-	margin-bottom: 54px;
+	margin: 30px 0;
 	text-align: center;
 	display: block;
 }
@@ -1569,14 +1571,23 @@ span.select2{
 .pr-dtl p {display: inline-block;font-size: 14px;margin: 0 0 0 0;position: relative;top: 7px;left: 15px;}
 .pr-dtl p i {font-style: normal;}
 .pr-dtl {margin: 0 0 0 15px; display: inline-block;}
-.pr-dtlr {float: right;margin: 10px 0 0 15px;}
+.pr-dtlr {
+	float: right;
+	margin: 10px 0 0 15px;
+	max-width: 170px;
+	width: 100%;
+}
 .pr-dtlr p {color: #000;font-size: 14px;/* margin: 3px 0 5px 0; */min-height: auto !important;}
 .pr-dtail ul li {color: #777;font-size: 14px;margin: 5px 9px 0 0;}
 .pr-dtail ul li:first-child {color: #000;}
 .imbx-detail > p {font-size: 15px;color: #000;margin: 5px 0 15px 15px;}
 .imbx-detail > a {color: #fff;}
 .pr-dtl ul li i {font-size: 24px; margin: 5px 0 0 0; color: #ffbc05;}
-.pr-dtail {margin: -20px 0 0 0;}
+.pr-dtail {
+	margin: -20px 0 0 0;
+	max-width: 350px;
+	width: 100%;
+}
 a.btn.btn-warning.vote_now {
     color: #fff;
     padding: 6px 20px;
@@ -2325,6 +2336,13 @@ width: 30% !important;
 	}
 	.line {
 		margin: 0;
+	}
+	.pr-dtail{
+		max-width: 100%;
+	}
+	.pr-dtlr {
+		float: none;
+    	max-width: 100%;
 	}
 	.create-advertise .clear{
 		clear: none;
