@@ -153,6 +153,25 @@ class BusinessController extends Controller
             return redirect()->back();
         }
     }
+    public function deleteBusiness(Request $request){
+        $Arr_list_business = explode(',', $request->list_id);
+
+        foreach($Arr_list_business as $business_id){
+            $business_del = Business::findOrFail($business_id);
+            if($business_del){
+                $business_del -> delete();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'business does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Delete business success',
+        ], 200);
+    }
 
 
 }

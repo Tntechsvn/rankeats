@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
+use App\Http\Controllers\ShareController;
 class Review extends Model
 {
 	/*Knight*/
@@ -23,7 +24,9 @@ class Review extends Model
 
 	public function update_review($request,$user_id){
 		if($request -> description){
-			$this -> description = $request -> description;
+			$ShareController = new ShareController;
+        	$description = $ShareController->badWordFilter($request -> description);
+			$this -> description = $description;
 		}
 		if($user_id){
 			$this -> user_id = $user_id;

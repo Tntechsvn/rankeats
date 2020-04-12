@@ -201,6 +201,14 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'getEditBusiness',
 				'uses' => 'BusinessController@getEditBusiness'
 			]);
+			Route::post('/send-email-manager-business', [
+				'as' => 'SendEmailManagerBusiness',
+				'uses' => 'MailController@SendEmailManagerBusiness'
+			]);
+			Route::post('delete-business', [
+				'as' => 'deleteBusiness',
+				'uses' => 'BusinessController@deleteBusiness',
+			]);
 			
 		});
 		Route::prefix("reviews")->group(function(){
@@ -304,6 +312,21 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			Route::post('/edit/{city_id}', [
 				'as' => 'postEditCity',
 				'uses' => 'LocationController@postEditCity'
+			]);
+		
+		});
+		Route::prefix("language-reviews")->group(function(){
+			Route::get('/', [
+				'as' => 'getListLanguageReviews',
+				'uses' => 'LanguageController@getListLanguageReviews'
+			]);
+			Route::post('/create', [
+				'as' => 'postCreateLanguageReview',
+				'uses' => 'LanguageController@postCreateLanguageReview'
+			]);
+			Route::post('/delete', [
+				'as' => 'postDeleteLanguageReview',
+				'uses' => 'LanguageController@postDeleteLanguageReview'
 			]);
 		
 		});
