@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
-@yield('title', config('adminlte.title', 'AdminLTE 3'))
+@yield('title', config('adminlte.title', 'Admin RankEat'))
 @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
     <meta name="csrf-token" content="{{csrf_token()}}">
     @if(! config('adminlte.enabled_laravel_mix'))

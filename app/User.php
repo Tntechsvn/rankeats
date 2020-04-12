@@ -8,9 +8,10 @@ use Illuminate\Notifications\Notifiable;
 use App\Http\Controllers\ShareController;
 use Carbon\Carbon;
 use App\Location;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

@@ -115,6 +115,27 @@ class UserController extends Controller
 			return redirect()->back();
 		}
     }
+    /*function delete user*/
+    public function deleteUser(Request $request){
+        $Arr_list_users = explode(',', $request->list_id);
+
+        foreach($Arr_list_users as $user_id){
+            $user_del = User::findOrFail($user_id);
+            if($user_del){
+                $user_del -> delete();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Delete user success',
+        ], 200);
+    }
+
     /*====================================user frond-end=====================================================*/
     public function postSignUp(Request $request){
         $this-> Validate($request,[
@@ -174,12 +195,23 @@ class UserController extends Controller
         /*update user*/
         $response = $edit_info_user->update_user($request);
         $data = $response->getData();
+        // if($data->success){
+        //     session()->put('success',$data->message);
+        //     return redirect()->back();
+        // }else{
+        //     session()->put('error',$data->message);
+        //     return redirect()->back();
+        // }
         if($data->success){
-            session()->put('success',$data->message);
-            return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'message' =>  "Your info updated successfully."
+            ]);
         }else{
-            session()->put('error',$data->message);
-            return redirect()->back();
+            return response()->json([
+                'success' => false,
+                'message' => $data->message
+            ]);
         }
 
     }
@@ -192,10 +224,18 @@ class UserController extends Controller
            
             $user = User::findorfail(Auth::user()->id);
             $user -> update_user($request);
-            return redirect()->back();
+            // return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'message' =>  "Your password updated successfully."
+            ]);
         }else{
-            session()->put('err_old_password','The password is also incorrect');
-            return redirect()->back();
+            // session()->put('err_old_password','The password is also incorrect');
+            // return redirect()->back();
+            return response()->json([
+                'success' => false,
+                'message' => 'The password is also incorrect'
+            ]);
         }
 
     }
@@ -205,11 +245,15 @@ class UserController extends Controller
         $response = $user -> update_user($request);
         $data = $response->getData();
         if($data->success){
-            session()->put('success',$data->message);
-            return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'message' =>  "Your image updated successfully."
+            ]);
         }else{
-            session()->put('error',$data->message);
-            return redirect()->back();
+            return response()->json([
+                'success' => false,
+                'message' => $data->message
+            ]);
         }
 
     }

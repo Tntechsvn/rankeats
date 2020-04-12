@@ -2275,6 +2275,48 @@ width: 30% !important;
 	float: right;
 	margin: 0 10px;
 }
+.funny {
+	text-align: center;
+}
+.funny div {
+    display: inline-block;
+    margin: 5px 20px;
+}
+.funny button {
+	display: block;
+    width: 100px;
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: 1px solid #ec5a2f;
+    margin-top: 10px;
+    color: #000;
+    font-weight: bold;
+}
+.funny button:hover {
+	color: #fff;
+	background-color: #ec5a2f;
+}
+.funny .active {
+	color: #fff;
+	background-color: #ec5a2f;
+}
+.setting-page .nav-tabs a.active {
+	background-color: #fff;
+}
+
+.output-success {
+	border-left: 6px solid #80D651;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+.output-error {
+	border-left: 6px solid #7f7f84;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+
+
+
 
 
 /*responsive*/
@@ -2343,6 +2385,12 @@ width: 30% !important;
 	.pr-dtlr {
 		float: none;
     	max-width: 100%;
+	}
+	.food-main .imbx {
+		display: block;
+	}
+	.pr-dtl,.pr-dtlr {
+		margin: 0;
 	}
 	.create-advertise .clear{
 		clear: none;

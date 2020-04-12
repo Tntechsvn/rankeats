@@ -36,12 +36,6 @@
             <span>Luke's Lobster Back Bay</span>
           </a>
         </div>
-        <div>
-          <a href="javascript:;">
-            <img src="images/lobster.png" alt="">
-            <span>Luke's Lobster Back Bay</span>
-          </a>
-        </div>
       @endif
       </div>
       @include('layouts.form-search')
@@ -132,8 +126,12 @@
               <input type="hidden" name="keyword"  value="" />
               <div class="form-group">
                 <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;" placeholder="City or State">
-                <input  type="hidden" id="city_search_cate" name="city" value="@if(isset($city)){{$city}}@endif">
-                <input  type="hidden" id="state_search_cate" name="state" value="@if(isset($state)){{$state}}@endif">
+                <div id="LocationListcate"></div>
+                <div class="input_hidden1">
+                  <input type="hidden" name="city" id="city_searech_cate" value="@if(isset($city)){{$city}}@endif">
+                  <input type="hidden" name="state" id="state_searech_cate" value="@if(isset($state_search)){{$state_search}}@endif">
+                </div>
+
                 <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
               </div>
             </form>
@@ -157,4 +155,50 @@
       modal.show();
     });
   </script>
+  <script>
+  $(document).ready(function(){
+
+    $('#location_search_cate').keyup(function(){ 
+      $('#city_searech_cate').val('');
+      $('#state_searech_cate').val('');
+      var query = $(this).val();
+      if(query != '')
+      {
+        var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('fetchCityState') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+            $('#LocationListcate').fadeIn();  
+            $('#LocationListcate').html(data);
+          }
+        });
+      }
+    });
+
+    $(document).on('click', '.location_name', function(e){
+      $('#city_searech_cate').remove();
+      $('#state_searech_cate').remove();
+      $('#location_search_cate').val($(this).text());  
+      $('#LocationListcate').fadeOut();
+      
+
+      $('#restaurant_name').val($(this).text());  
+      $('#emailList').fadeOut();
+      var arr = [];
+      var arr2 = [];
+
+      arr.push($(this).data('city'));
+      var selected_values = arr.join(",");
+
+      arr2.push($(this).data('state'));
+      var selected_values2 = arr2.join(",");
+
+      $( ".input_hidden1" ).append( '<input type="hidden" name="city" id="city_searech_cate" value="'+selected_values+'">' );
+      $( ".input_hidden1" ).append( '<input type="hidden" name="state" id="state_searech_cate" value="'+selected_values2+'">' );
+
+    });
+  });
+</script>
 @stop

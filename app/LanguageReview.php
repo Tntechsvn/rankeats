@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ReviewReaction extends Model
+class LanguageReview extends Model
 {
-    public $timestamps = false;
+    //
 }

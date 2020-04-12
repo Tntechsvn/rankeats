@@ -19,6 +19,8 @@ use App\City;
 use App\Country;
 use App\Review_rating;
 use DB;
+use App\ReviewReaction;
+use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
 
     public function __construct(){
@@ -114,6 +116,7 @@ class HomeController extends Controller{
         ->where(function($query) use ($keyword,$city,$state_search){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
         })
+        ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
@@ -123,7 +126,8 @@ class HomeController extends Controller{
         ->where(function($query) use ($keyword,$city,$state_search){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
         })
-        ->where('status','=',1)
+        ->whereNotNull('businesses.activated_on')
+        ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
@@ -342,7 +346,8 @@ public function ajax_unvoted(Request $request){
     ->where('business_id','=',$request->business_id)
     ->delete();
     return response()->json([
-        'message' => "You have not voted yet, 1/1 votes remain.!!!"
+        'message' => "You have not voted yet, 1/1 votes remain.!!!",
+        'city_id' => $city_id
     ]);
 }
 public function vote_ajax(Request $request){
@@ -393,7 +398,8 @@ public function vote_ajax(Request $request){
             $new_vote -> save();
 
             return response()->json([
-                'success' => true
+                'success' => true,
+                'city_id' => $city_id
             ]);
         }
         
@@ -447,7 +453,11 @@ public function voteReviewEat_ajax(Request $request){
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
-                $new_review -> description = $request -> description;
+
+                $ShareController = new ShareController;
+                $description = $ShareController->badWordFilter($request -> description);
+                $new_review -> description = $description;
+
                 if($new_review -> save()){
                     /*update review rating*/
                     $review_rating = new Review_rating;
@@ -492,7 +502,11 @@ public function voteReviewEat_ajax(Request $request){
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
-                $new_review -> description = $request -> description;
+                
+                $ShareController = new ShareController;
+                $description = $ShareController->badWordFilter($request -> description);
+                $new_review -> description = $description;
+
                 if($new_review -> save()){
                     /*update review rating*/
                     $review_rating = new Review_rating;
@@ -577,6 +591,34 @@ public function ajaxcitystate(Request $request){
 
 }
 
+public function reaction_review(Request $request){
 
+    $user = Auth::user();
+    if(!$user){
+        return response()->json([
+            'success' => false,
+            'message' => "You need to login!!!"
+        ]);
+    }else{
+
+        $reaction = ReviewReaction::where('user_id','=',$user->id)->where('review_id','=',$request->review_id)->first();
+        if($reaction){
+            $reaction_update = ReviewReaction::where('user_id',$user->id)
+                                                ->where('review_id',$request->review_id)
+                                                ->update(['type' => $request->type]);
+        }else{
+            $new_reaction = new ReviewReaction;
+            $new_reaction -> user_id = $user->id;
+            $new_reaction -> review_id = $request->review_id;
+            $new_reaction -> type = $request->type;
+            $new_reaction -> save();
+        }
+        return response()->json([
+            'success' => true
+        ]);  
+    }
+
+    
+}
 
 }

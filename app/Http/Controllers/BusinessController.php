@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Storage;
 use App\Category;
+use App\Country;
 use App\Myconst;
 use App\Business;
 use App\Http\Controllers\ShareController;
@@ -19,10 +20,13 @@ class BusinessController extends Controller
      *
      * @return void
      */
-   /* public function __construct()
+    public function __construct()
     {
-        $this->middleware('auth');
-    }*/
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+
+        view()->share(['state'=>$state]);
+    }
 
     public function postCreateBusiness(Request $request){
     	$this-> Validate($request,[
@@ -124,8 +128,8 @@ class BusinessController extends Controller
 		return redirect()->back();
     }
     public function getEditBusiness($id_business){
-    	$business = Business::findOrfail($id_business);
-    	return $business;
+        $info_business = Business::findOrfail($id_business);
+    	return view('admin.business.getEditBusiness',compact('info_business'));
     }
     public function postEditBusiness(Request $request){
         $user = Auth::user();
@@ -148,6 +152,25 @@ class BusinessController extends Controller
             session()->put('error',$data->message);
             return redirect()->back();
         }
+    }
+    public function deleteBusiness(Request $request){
+        $Arr_list_business = explode(',', $request->list_id);
+
+        foreach($Arr_list_business as $business_id){
+            $business_del = Business::findOrFail($business_id);
+            if($business_del){
+                $business_del -> delete();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'business does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Delete business success',
+        ], 200);
     }
 
 

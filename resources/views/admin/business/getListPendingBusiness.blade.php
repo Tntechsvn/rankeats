@@ -66,29 +66,66 @@
               			@foreach($list_business as $data)
               				    				
               			<tr>
-              				<td>
+              				<td style="width: 5%">
               					<div class="icheck-primary">
               						<input type="checkbox" value="" class="check" id="check{{$data->id}}" data-row-id="{{$data->id}}">
               						<label for="check{{$data->id}}"></label>
               					</div>
               				</td>
               				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"><img src="{{asset('').'/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"style="width: 7%"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 45px;"></td>
               				@else
-              				<td class="mailbox-subject">
-              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
+              				<td class="mailbox-subject" style="width: 7%">
+              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 45px;">
               				</td>
               				@endif
               				<td>{{$data -> name}}</td>
               				<td style="width: 15%">{{$data -> email}}</td>              				
               				<td style="width: 20%">{{$data -> location->address}}</td>  
-              				<td>{{$data -> created_at}}</td>
-              				<td>
+              				<td style="width: 10%">{{$data -> created_at}}</td>
+              				<td  style="width: 25%">
+                        <a class="btn btn-danger del_business" data-id="{{$data->id }}" onclick="delBusinessFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>
                         <a href="{{route('approvedBusinesses',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this business?">A</button></a>
-              					{{--<a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>--}}
+              					<a href="{{route('getEditBusiness',$data->id)}}"><button class="btn btn-success btnEdit" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>
               					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="{{$data->permalink()}}" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#sentmail-popup{{$data->id }}" href="javascript:;"><i class="fa fa-envelope" style="color: #fff"></i></a>
               				</td>
               			</tr>
+                    <!-- sent-email -->
+                    <div id="sentmail-popup{{$data->id}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <form action="{{route('SendEmailManagerBusiness')}}" method="post" accept-charset="utf-8">
+                          @csrf
+                          <input type="hidden" name="business_id" value="{{$data->id}}">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
+                              <h2 style="text-align: center;">Sent message to manager business</h2>
+                            </div>
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <input class="form-control" type="text" name="subject" value="" placeholder="Subject">
+                                <span class="bg-danger color-palette">{{$errors -> first('subject')}}</span>
+                              </div>
+                              <div class="form-group">
+                                <textarea class="form-control" name="message" placeholder="Message"></textarea>
+                                <span class="bg-danger color-palette">{{$errors -> first('message')}}</span>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <div class="firstWindow" style="width: 100%">
+                                <button type="submit" class="btn btn-default " data-dismiss="modal" >Cancel</button>
+                                <button type="submit" class="btn btn-primary " >send</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+
+                      </div>
+                    </div>
+                    <!-- end sent-email -->
               			@endforeach
               			@else
               			<tr>
@@ -116,6 +153,36 @@
 @stop
 @section('adminlte_js')
 <script>
+  function delBusinessFunction() {
+    var r = confirm("You want to delete business?");
+    if (r == true) {
+      $(document).on('click', '.del_business',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
+
+        var link = "{{route('deleteBusiness')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
+
 	$(function () {
     	 //Enable check and uncheck all functionality
 		    $('.checkbox-toggle').click(function () {
@@ -147,7 +214,7 @@
 			var checked = confirm(WRN_PROFILE_DELETE);
 			if(checked == true) {
 				var selected_values = arr.join(",");
-				var link = "";
+				var link = "{{route('deleteBusiness')}}";
 				$.ajax({
 					headers:{
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -156,14 +223,14 @@
 					url: link,
 					data: 'list_id='+selected_values,
 					success:function(data){
-						console.log(data);
-						if(data == "Success"){
-							window.location.reload();
-							alert('Delete Success');
-						}else{
-							alert('Delete Errors');
-						}
-					}
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
 				});
 			}
 		});

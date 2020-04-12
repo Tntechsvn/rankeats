@@ -110,10 +110,10 @@
               					</div>
               				</td>
               				@if($data->url_avatar != null)	              				
-              				<td class="mailbox-subject"><img src="{{asset('').'/storage/'.$data->url_avatar}}" style="width: 50px;"></td>
+              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_avatar}}" style="width: 50px;"></td>
               				@else
               				<td class="mailbox-subject">
-              					<img src="{{asset('').'/vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 50px;">
+              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 50px;">
               				</td>
               				@endif
               				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
@@ -124,6 +124,7 @@
               				<td>
               					<a href="{{route('getEditUser',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>
                         <a href="{{$data -> business()->first()->permalink()}}"><button class="btn btn-warning" ><i class="fa fa-home" style="color: white;"></i></button></a>
+                         <a class="btn btn-danger del_user" data-id="{{$data->id }}" onclick="delUserFunction()"><i class="far fa-trash-alt" style="color: #fff;"></i></a>
               				</td>
               			</tr>
               			@endforeach
@@ -153,58 +154,88 @@
 @stop
 @section('adminlte_js')
 <script>
-	$(function () {
-    	 //Enable check and uncheck all functionality
-		    $('.checkbox-toggle').click(function () {
-		      var clicks = $(this).data('clicks')
-		      if (clicks) {
-		        //Uncheck all checkboxes
-		        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
-		        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
-		      } else {
-		        //Check all checkboxes
-		        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
-		        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
-		      }
-		      $(this).data('clicks', !clicks)
-		    })
+  function delUserFunction() {
+    var r = confirm("You want to delete user?");
+    if (r == true) {
+      $(document).on('click', '.del_user',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
 
-		//multi delete
-		$(".delete").click(function(){
-			var arr = [];
-			$(".check:checked").each(function() {
-				arr.push($(this).data('row-id'));
-			});
-			if(arr.length <= 0 ) {
-				alert("Please select the item you want to delete.");
-				return;
-			} else {
-				WRN_PROFILE_DELETE = "Are You Sure You Want To Delete"+(arr.length > 1 ? "these" : "this") + " row?";
-			}
-			var checked = confirm(WRN_PROFILE_DELETE);
-			if(checked == true) {
-				var selected_values = arr.join(",");
-				var link = "";
-				$.ajax({
-					headers:{
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					type:'post',
-					url: link,
-					data: 'list_id='+selected_values,
-					success:function(data){
-						console.log(data);
-						if(data == "Success"){
-							window.location.reload();
-							alert('Delete Restaurant Directory Success');
-						}else{
-							alert('You Cannot Delete This Category');
-						}
-					}
-				});
-			}
-		});
-	});
+        var link = "{{route('deleteUser')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
+
+  $(function () {
+       //Enable check and uncheck all functionality
+        $('.checkbox-toggle').click(function () {
+          var clicks = $(this).data('clicks')
+          if (clicks) {
+            //Uncheck all checkboxes
+            $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+            $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+          } else {
+            //Check all checkboxes
+            $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+            $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+          }
+          $(this).data('clicks', !clicks)
+        })
+
+    //multi delete
+    $(".delete").click(function(){
+      var arr = [];
+      $(".check:checked").each(function() {
+        arr.push($(this).data('row-id'));
+      });
+      if(arr.length <= 0 ) {
+        alert("Please select the item you want to delete.");
+        return;
+      } else {
+        WRN_PROFILE_DELETE = "Are You Sure You Want To Delete"+(arr.length > 1 ? "these" : "this") + " row?";
+      }
+      var checked = confirm(WRN_PROFILE_DELETE);
+      if(checked == true) {
+        var selected_values = arr.join(",");
+        var link = "{{route('deleteUser')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      }
+    });
+  });
 </script>
 <script type="text/javascript">
 	/*paginate ********************** //*/
