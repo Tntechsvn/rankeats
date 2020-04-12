@@ -198,7 +198,8 @@ class LocationController extends Controller
             $start = 1;
             $record = $count_record;
         }
-        $list_state = State::all();
+        $Country = Country::where('code','=','US')->first();
+        $list_state = $Country->states()->get();
         return view('admin.city.getListCity',compact('data_city','start', 'record', 'total_record','keyword','list_state'));
 
     }

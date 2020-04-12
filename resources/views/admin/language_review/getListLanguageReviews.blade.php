@@ -3,11 +3,11 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-    <h1>Cities</h1>
-    <p>Manage business Cities</p>
+    <h1>Langguage Reviews</h1>
+    <p>Manage Langguage Reviews</p>
     <div class="card-header">    	
     	<div class="card-tools">
-    		<form action="{{route('getListCity')}}" method="get">
+    		<form action="{{route('getListLanguageReviews')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
 	    			
 	    				<input type="text" name="keyword" id='keyword' value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
@@ -29,32 +29,22 @@
             <!-- general form elements -->
             <div class="card ">
             	<div class="card-header">
-                <h3 class="card-title">Add New City</h3>               
+                <h3 class="card-title">Add New Langguage Reviews</h3>               
                 
               </div>
               <!-- form start -->
-              <form role="form" action="{{route('postCreateCity')}}" method="post" enctype="multipart/form-data">
+              <form role="form" action="{{route('postCreateLanguageReview')}}" method="post" enctype="multipart/form-data">
               	{{csrf_field()}}
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Country</label>
-                    <select id="">
-                      <option value="US" selected>United States</option>
-                    </select>
+                    <label for="exampleInputEmail1">Bad Word</label>
+                    <input type="text" class="form-control" name="bad_word" placeholder="Enter Bad Word">
+                    <span class="errors">{{$errors -> first('bad_word')}}</span>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">State</label>
-                    <select name="state_id" id="">
-                      @foreach($list_state as $state)
-                      <option value="{{$state->id}}"> {{$state->name}}</option>
-                      @endforeach
-                    </select>
-                    <span class="errors">{{$errors -> first('state_id')}}</span>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">City</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter city name">
-                    <span class="errors">{{$errors -> first('name')}}</span>
+                    <label for="exampleInputEmail1">Replace Word</label>
+                    <input type="text" class="form-control" name="replace_word" placeholder="Enter country name">
+                    <span class="errors">{{$errors -> first('replace_word')}}</span>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -71,13 +61,7 @@
           <div class="col-md-7">
             <div class="card">
               <div class="card-header">
-              		<!-- Check all button -->
-                	<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i></button>
-              		<div class="btn-group">
-              			<button type="button" class="btn btn-default btn-sm delete">
-              				<i class="far fa-trash-alt"></i>
-              			</button>
-              		</div>
+              		
 
                 <div class="card-tools">
                 	{{$start}}-{{$record}}/{{$total_record}}
@@ -96,26 +80,21 @@
               	<table class="table table-hover ">
               		<thead>
               			<tr>
-              				<th></th>            				
-              				<th>state Name</th>
-                      <th>City Name</th>
+              				<th>Bad Word</th>              				
+              				<th>Replace Word</th>
               				<th>Created At</th>
+              				<th>Manage</th>
               			</tr>
               		</thead>
               		<tbody>              			
-              			@if(count($data_city) > 0)
-              			@foreach($data_city as $data)
+              			@if(count($data_lang) > 0)
+              			@foreach($data_lang as $data)
               				    				
               			<tr>
-              				<td>
-              					<div class="icheck-primary">
-              						<input type="checkbox" value="" class="check" id="check{{$data->id}}" data-row-id="{{$data->id}}">
-              						<label for="check{{$data->id}}"></label>
-              					</div>
-              				</td>
-              				<td>{{$data -> state->name}}</td>
-              				<td><a href="{{route('getEditCity',['city_id'=>$data->id])}}">{{$data -> name}}</a></td>
+              				<td>{{$data -> bad_word}}</td>
+              				<td>{{$data -> replace_word}}</td>
               				<td>{{$data -> created_at}}</td>
+              				<td><a class="btn btn-danger del_lang" data-id="{{$data->id }}" onclick="delLangFunction()"><i class="fas fa-times" style="color: #fff;"></i></a></td>
               			</tr>
               			@endforeach
               			@else
@@ -132,7 +111,7 @@
             <!-- /.card-body -->
               <div class="card-header">
                 <div class="card-tools">                	
-                	{!!$data_city -> appends(request()->except('page')) -> links()!!}
+                	{!!$data_lang -> appends(request()->except('page')) -> links()!!}
                 </div>
               </div>
           </div>
@@ -144,58 +123,35 @@
 @stop
 @section('adminlte_js')
 <script>
-	$(function () {
-    	 //Enable check and uncheck all functionality
-		    $('.checkbox-toggle').click(function () {
-		      var clicks = $(this).data('clicks')
-		      if (clicks) {
-		        //Uncheck all checkboxes
-		        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
-		        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
-		      } else {
-		        //Check all checkboxes
-		        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
-		        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
-		      }
-		      $(this).data('clicks', !clicks)
-		    })
+  function delLangFunction() {
+    var r = confirm("You want to delete langguage?");
+    if (r == true) {
+      $(document).on('click', '.del_lang',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
 
-		//multi delete
-		$(".delete").click(function(){
-			var arr = [];
-			$(".check:checked").each(function() {
-				arr.push($(this).data('row-id'));
-			});
-			if(arr.length <= 0 ) {
-				alert("Please select the item you want to delete.");
-				return;
-			} else {
-				WRN_PROFILE_DELETE = "Are You Sure You Want To Delete"+(arr.length > 1 ? "these" : "this") + " row?";
-			}
-			var checked = confirm(WRN_PROFILE_DELETE);
-			if(checked == true) {
-				var selected_values = arr.join(",");
-				var link = "";
-				$.ajax({
-					headers:{
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					type:'post',
-					url: link,
-					data: 'list_id='+selected_values,
-					success:function(data){
-						console.log(data);
-						if(data == "Success"){
-							window.location.reload();
-							alert('Delete Restaurant Directory Success');
-						}else{
-							alert('You Cannot Delete This Category');
-						}
-					}
-				});
-			}
-		});
-	});
+        var link = "{{route('postDeleteLanguageReview')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
 </script>
 <script type="text/javascript">
 	/*paginate ********************** //*/
