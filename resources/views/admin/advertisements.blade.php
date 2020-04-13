@@ -271,3 +271,36 @@
 	</section>
 
 @stop
+@section('adminlte_js')
+<script>
+  function delLangFunction() {
+    var r = confirm("You want to delete advertisements?");
+    if (r == true) {
+      $(document).on('click', '.del_lang',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
+
+        var link = "{{route('deleteAdv')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
+</script>
+@stop

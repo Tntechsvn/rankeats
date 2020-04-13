@@ -338,7 +338,11 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			]);
 		
 		});
-
+		
+		Route::post('/delete-adv', [
+				'as' => 'deleteAdv',
+				'uses' => 'AdminController@deleteAdv'
+			]);
 		/*thienvu*/
 		Route::get('advertisements', [
 			'as' => 'advertisements',
