@@ -10,7 +10,7 @@
     		<form action="{{route('getListCity')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
 	    			
-	    				<input type="text" name="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
+	    				<input type="text" name="keyword" id='keyword' value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 	    				<div class="input-group-append">
 	    					<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
 	    				</div>
@@ -36,6 +36,12 @@
               <form role="form" action="{{route('postCreateCity')}}" method="post" enctype="multipart/form-data">
               	{{csrf_field()}}
                 <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Country</label>
+                    <select id="">
+                      <option value="US" selected>United States</option>
+                    </select>
+                  </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">State</label>
                     <select name="state_id" id="">
