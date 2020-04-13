@@ -256,8 +256,12 @@ return [
             'icon'    => 'fas fa-fw fa-comment',
             'submenu' => [
                 [
-                    'text' => 'List Reviews',
-                    'route'  => 'getListReviews',
+                    'text' => 'List Business Reviews',
+                    'route'  => 'getListBusinessReviews',
+                ],
+                [
+                    'text' => 'List Eats Reviews',
+                    'route'  => 'getListEatReviews',
                 ],
             ],
         ],

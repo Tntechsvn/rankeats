@@ -212,9 +212,17 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			
 		});
 		Route::prefix("reviews")->group(function(){
-			Route::get('/', [
-				'as' => 'getListReviews',
-				'uses' => 'ReviewsController@getListReviews'
+			Route::get('/list-business-reviews', [
+				'as' => 'getListBusinessReviews',
+				'uses' => 'ReviewsController@getListBusinessReviews'
+			]);
+			Route::get('/list-eat-reviews', [
+				'as' => 'getListEatReviews',
+				'uses' => 'ReviewsController@getListEatReviews'
+			]);
+			Route::post('delete-review', [
+				'as' => 'deleteReview',
+				'uses' => 'ReviewsController@deleteReview',
 			]);
 		});
 		Route::prefix("payments-plans")->group(function(){
