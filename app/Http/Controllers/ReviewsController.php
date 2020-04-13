@@ -49,6 +49,15 @@ class ReviewsController extends Controller
         return view('admin.reviews.getListReviews', compact('start', 'record', 'total_record','list_reviews','keyword'));
 	}
     public function postReviewFrontEnd(Request $request){
+        $ShareController = new ShareController;
+        $description = $ShareController->badWordFilter($request -> description);
+        if($description){
+            return response()->json([
+                'success' => false,
+                'data' => $description,
+                'message' => 'Please correct the words '.$description,
+            ]);
+        }
         // dd($request->toArray());
         $user_id = Auth::user()->id;
         $reviews = new Review;        

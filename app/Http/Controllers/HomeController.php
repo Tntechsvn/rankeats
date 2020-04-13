@@ -346,12 +346,13 @@ public function ajax_unvoted(Request $request){
     ->where('business_id','=',$request->business_id)
     ->delete();
     return response()->json([
-        'message' => "You have 1 vote remaining!!!",
+        'message' => "You have not voted yet, 1/1 votes remain.!!!",
         'city_id' => $city_id
     ]);
 }
 public function vote_ajax(Request $request){
     $user = Auth::user();
+    
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
     // $vote = Vote::select('*')
@@ -407,6 +408,16 @@ public function vote_ajax(Request $request){
 }
 /*knight*/
 public function voteReviewEat_ajax(Request $request){
+     $ShareController = new ShareController;
+     $description = $ShareController->badWordFilter($request -> description);
+     if($description){
+        return response()->json([
+            'success' => false,
+            'data' => $description,
+            'message' => 'Please correct the words '.$description,
+        ]);
+    }
+
     $Category_type = $request -> Category_type;
     $user = Auth::user();
     $user_id = $user->id;
@@ -452,10 +463,7 @@ public function voteReviewEat_ajax(Request $request){
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
-
-                $ShareController = new ShareController;
-                $description = $ShareController->badWordFilter($request -> description);
-                $new_review -> description = $description;
+                $new_review -> description = $request -> description;
 
                 if($new_review -> save()){
                     /*update review rating*/
@@ -500,11 +508,8 @@ public function voteReviewEat_ajax(Request $request){
                 /*reviews eats*/
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
-                $new_review -> business_id = $request -> business;
-                
-                $ShareController = new ShareController;
-                $description = $ShareController->badWordFilter($request -> description);
-                $new_review -> description = $description;
+                $new_review -> business_id = $request -> business;                
+                $new_review -> description = $request -> description;
 
                 if($new_review -> save()){
                     /*update review rating*/

@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
 use App\Http\Controllers\ShareController;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Review extends Model
 {
+	use SoftDeletes;
 	/*Knight*/
     public function business(){
 		return $this->belongsTo('App\Business', 'business_id', 'id');
@@ -24,9 +26,7 @@ class Review extends Model
 
 	public function update_review($request,$user_id){
 		if($request -> description){
-			$ShareController = new ShareController;
-        	$description = $ShareController->badWordFilter($request -> description);
-			$this -> description = $description;
+			$this -> description = $request -> description;
 		}
 		if($user_id){
 			$this -> user_id = $user_id;

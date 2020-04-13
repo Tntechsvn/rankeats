@@ -35,8 +35,14 @@ class ShareController extends Controller
     }
     public function badWordFilter($data){
         $originals = LanguageReview::pluck('bad_word')->toArray();
-        $replacements = LanguageReview::pluck('replace_word')->toArray();
-        $data = str_ireplace($originals, $replacements, $data);
-        return $data;
+        $data = explode(" ",$data);
+        $data_intersect = array_intersect($data,$originals);
+        if($data_intersect){
+            $result = '"'.implode(',',$data_intersect).'"';
+        }else{
+             $result = null;
+        }
+        
+        return $result;
     }
 }
