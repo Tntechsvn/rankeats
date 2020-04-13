@@ -14,7 +14,7 @@
 		<div class="col-md-4"> 
 			<div class="single recent">
 				<h3 class="side-title">Featured</h3>
-				<a class="pull-link" href="featured"><span class="fa fa-arrow-right"></span> See All Featured</a>
+				<a class="pull-link" href="javascript:;"><span class="fa fa-arrow-right"></span> See All Featured</a>
 
 			</div>
 		</div>

@@ -346,7 +346,7 @@ public function ajax_unvoted(Request $request){
     ->where('business_id','=',$request->business_id)
     ->delete();
     return response()->json([
-        'message' => "You have not voted yet, 1/1 votes remain.!!!",
+        'message' => "You have 1 vote remaining!!!",
         'city_id' => $city_id
     ]);
 }

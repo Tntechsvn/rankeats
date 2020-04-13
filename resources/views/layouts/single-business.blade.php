@@ -474,6 +474,7 @@
 						</div>
 						<div class="form-group reviewBox">
 							<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
+							<span class="e-lang" style="color: red;font-size: 11px;"></span>
 						</div>
 					</div>
 
