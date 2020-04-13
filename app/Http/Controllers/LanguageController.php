@@ -48,11 +48,10 @@ class LanguageController extends Controller
     public function postCreateLanguageReview(Request $request){
     	 $this-> Validate($request,[
             'bad_word' => 'required|unique:language_reviews,bad_word',
-            'replace_word' =>'required',
         ]);
     	$new_lang = new LanguageReview;
     	$new_lang -> bad_word = $request -> bad_word;
-    	$new_lang -> replace_word = $request -> replace_word;
+    	$new_lang -> replace_word = null;
     	if($new_lang -> save()){
     		session()->put('success','create success');
     		return redirect()->back();

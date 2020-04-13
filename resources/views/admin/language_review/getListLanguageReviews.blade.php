@@ -41,11 +41,11 @@
                     <input type="text" class="form-control" name="bad_word" placeholder="Enter Bad Word">
                     <span class="errors">{{$errors -> first('bad_word')}}</span>
                   </div>
-                  <div class="form-group">
+                  {{--<div class="form-group">
                     <label for="exampleInputEmail1">Replace Word</label>
                     <input type="text" class="form-control" name="replace_word" placeholder="Enter country name">
                     <span class="errors">{{$errors -> first('replace_word')}}</span>
-                  </div>
+                  </div>--}}
                 </div>
                 <!-- /.card-body -->
 
@@ -80,8 +80,7 @@
               	<table class="table table-hover ">
               		<thead>
               			<tr>
-              				<th>Bad Word</th>              				
-              				<th>Replace Word</th>
+              				<th>Bad Word</th>
               				<th>Created At</th>
               				<th>Manage</th>
               			</tr>
@@ -92,7 +91,6 @@
               				    				
               			<tr>
               				<td>{{$data -> bad_word}}</td>
-              				<td>{{$data -> replace_word}}</td>
               				<td>{{$data -> created_at}}</td>
               				<td><a class="btn btn-danger del_lang" data-id="{{$data->id }}" onclick="delLangFunction()"><i class="fas fa-times" style="color: #fff;"></i></a></td>
               			</tr>

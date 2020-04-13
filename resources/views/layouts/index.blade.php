@@ -124,15 +124,14 @@
           <div class="modal-body">
             <form method="get" action="{{route('search')}}" class="form-inline">
               <input type="hidden" name="keyword"  value="" />
-              <div class="form-group">
-                <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;" placeholder="City or State">
-                <div id="LocationListcate"></div>
-                <div class="input_hidden1">
+              <div class="input_hidden1">
                   <input type="hidden" name="city" id="city_searech_cate" value="@if(isset($city)){{$city}}@endif">
                   <input type="hidden" name="state" id="state_searech_cate" value="@if(isset($state_search)){{$state_search}}@endif">
                 </div>
-
+              <div class="form-group">
+                <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;" placeholder="City or State">
                 <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
+                <div id="LocationListcate"></div>
               </div>
             </form>
           </div>
@@ -182,10 +181,7 @@
       $('#state_searech_cate').remove();
       $('#location_search_cate').val($(this).text());  
       $('#LocationListcate').fadeOut();
-      
 
-      $('#restaurant_name').val($(this).text());  
-      $('#emailList').fadeOut();
       var arr = [];
       var arr2 = [];
 
