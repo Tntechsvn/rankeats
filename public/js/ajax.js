@@ -161,10 +161,10 @@ $(document).on('click','.yesforvote',function(e){
             timer: 2000
           });
       }else{
-        swal({
-          title: res.message,
-          timer: 2000
-        });
+        modal.find('.e-lang').html("*"+res.message);
+        // swal({
+        //   title: res.message,
+        // });
       }
     }
   });

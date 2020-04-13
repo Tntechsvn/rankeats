@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Storage;
 use App\Category;
-
+use App\LanguageReview;
 class ShareController extends Controller
 {
     
@@ -32,5 +32,17 @@ class ShareController extends Controller
             return $folder . '/' . $fileName;
         }
         
+    }
+    public function badWordFilter($data){
+        $originals = LanguageReview::pluck('bad_word')->toArray();
+        $data = explode(" ",$data);
+        $data_intersect = array_intersect($data,$originals);
+        if($data_intersect){
+            $result = '"'.implode(',',$data_intersect).'"';
+        }else{
+             $result = null;
+        }
+        
+        return $result;
     }
 }

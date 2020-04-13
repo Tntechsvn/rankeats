@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Review_rating extends Model
 {
+    use SoftDeletes;
+    
     public function business(){
 		return $this->belongsTo('App\Business', 'id_rate_from', 'id');
 	}

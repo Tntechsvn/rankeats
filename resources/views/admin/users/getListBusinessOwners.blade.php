@@ -50,7 +50,7 @@
                 <div class="modal-footer">
                   <div class="firstWindow" style="width: 100%">
                     <button type="submit" class="btn btn-default " data-dismiss="modal" >Cancel</button>
-                    <button type="submit" class="btn btn-primary " >Save</button>
+                    <button type="submit" class="btn btn-primary " >send</button>
                   </div>
                 </div>
               </div>

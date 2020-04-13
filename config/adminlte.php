@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Admin RankEats',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -30,12 +30,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Admin</b>RankEats',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image-xl',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'RankEats',
 
     /*
     |--------------------------------------------------------------------------
@@ -256,8 +256,12 @@ return [
             'icon'    => 'fas fa-fw fa-comment',
             'submenu' => [
                 [
-                    'text' => 'List Reviews',
-                    'route'  => 'getListReviews',
+                    'text' => 'List Business Reviews',
+                    'route'  => 'getListBusinessReviews',
+                ],
+                [
+                    'text' => 'List Eats Reviews',
+                    'route'  => 'getListEatReviews',
                 ],
             ],
         ],
@@ -289,6 +293,12 @@ return [
                     'route'  => 'getCreatePage',
                 ],
             ],
+        ],
+        [
+            'text'    => 'Language Reviews',
+            'icon'    => 'fas fa-fw fa fa-file',
+            'route'  => 'getListLanguageReviews',
+           
         ],
         /*[
             'text'    => 'multilevel',

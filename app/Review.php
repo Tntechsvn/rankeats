@@ -5,8 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
+use App\Http\Controllers\ShareController;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Review extends Model
 {
+	use SoftDeletes;
 	/*Knight*/
     public function business(){
 		return $this->belongsTo('App\Business', 'business_id', 'id');

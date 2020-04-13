@@ -8,8 +8,11 @@ use Carbon\Carbon;
 use App\Location;
 use Auth;
 use DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Business extends Model
 {
+    use SoftDeletes;
+    
 	/*knight*/
 	public function business_category(){
 		return $this -> belongsToMany('App\Category','businesses_categories','business_id','cate_id');
