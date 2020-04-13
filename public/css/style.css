@@ -884,6 +884,7 @@ Profile
 	border: 6px solid #FFFFFF;
 	position: absolute;
 	top: 0;
+	object-fit: cover;
 }
 .profile-info {
 	position: relative;
@@ -2345,6 +2346,19 @@ width: 30% !important;
 	.howitwork {
 		height: auto;
 	}
+	.businessrank {
+		width: 100%;
+	    margin-bottom: 30px;
+	}
+	.eatrank {
+		width: 100%;
+		margin-left: 0 !important;
+	}
+	.col-lg-6.hours {
+	    padding: 0;
+	    margin-top: 20px;
+	}
+
 }
 @media(max-width: 640px){
 	.banner-image {
@@ -2367,14 +2381,22 @@ width: 30% !important;
 		margin-left: 0;
 		margin-right: 0;
 	}
-	.profile-usermenu {
-    	margin-right: -15px;
-	}
+	
 }
 
 @media(max-width: 767px){
 	.create-advertise > div {
 		margin-bottom: 15px;
+	}
+	.profile-usermenu {
+	    margin-right: -15px;
+	}
+	.content-right-profile > .tab-content {
+		margin-left: -15px;
+	}
+	.table-full {
+		width: 700px !important;
+		overflow-x: scroll;
 	}
 	.line {
 		margin: 0;
@@ -2557,6 +2579,9 @@ width: 30% !important;
 	.front-search {
 	    padding: 15px 0px;
 	}
+	.modal-dialog {
+	    width: 300px;
+	}
 }
 @media(max-width: 375px){
 	.front-search h1{
@@ -2589,5 +2614,8 @@ width: 30% !important;
 	.underMap {
 		margin-bottom: 10px;
     	text-align: center;
+	}
+	.reiview.description .tap-pane li {
+		margin-bottom: 5px;
 	}
 }
