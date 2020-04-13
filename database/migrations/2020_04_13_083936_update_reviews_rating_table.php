@@ -19,7 +19,6 @@ class UpdateReviewsRatingTable extends Migration
             });
         }
     }
-
     /**
      * Reverse the migrations.
      *
