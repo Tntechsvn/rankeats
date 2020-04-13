@@ -110,12 +110,13 @@ class HomeController extends Controller{
             $text_city_state = $state_search;
         }
         /*fix search*/
-        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city')
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at')
         ->JoinBusinessesCategory()->JoinCategory()
         ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
         })
+        ->whereNull('advertisements.deleted_at')
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')->take(2)->get();

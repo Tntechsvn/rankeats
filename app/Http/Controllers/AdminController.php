@@ -36,22 +36,43 @@ class AdminController extends Controller
 
     public function advertisements(){
     	// $ads = Advertisement::with('business')->get();
-    	$ads_pending_home = Advertisement::home()->pending()->get();
-    	$ads_pending_search = Advertisement::search()->pending()->get();
-    	$ads_pending_feature = Advertisement::feature()->pending()->get();
+    	$ads_pending_home = Advertisement::select('advertisements.*')->home()->pending()->get();
 
-    	$ads_active_home = Advertisement::home()->active()->get();
-    	$ads_active_search = Advertisement::search()->active()->get();
-    	$ads_active_feature = Advertisement::feature()->active()->get();
+    	$ads_pending_search = Advertisement::select('advertisements.*')->search()->pending()->get();
+    	$ads_pending_feature = Advertisement::select('advertisements.*')->feature()->pending()->get();
 
-    	$ads_expired_home = Advertisement::home()->expired()->get();
-    	$ads_expired_search = Advertisement::search()->expired()->get();
-    	$ads_expired_feature = Advertisement::feature()->expired()->get();
+    	$ads_active_home = Advertisement::select('advertisements.*')->home()->active()->get();
+    	$ads_active_search = Advertisement::select('advertisements.*')->search()->active()->get();
+    	$ads_active_feature = Advertisement::select('advertisements.*')->feature()->active()->get();
+
+    	$ads_expired_home = Advertisement::select('advertisements.*')->home()->expired()->get();
+    	$ads_expired_search = Advertisement::select('advertisements.*')->search()->expired()->get();
+    	$ads_expired_feature = Advertisement::select('advertisements.*')->feature()->expired()->get();
     	return view('admin.advertisements', compact(
     			'ads_pending_home', 'ads_pending_search', 'ads_pending_feature',
     			'ads_active_home', 'ads_active_search', 'ads_active_feature',
     			'ads_expired_home', 'ads_expired_search', 'ads_expired_feature'
     		));
     }
+    public function deleteAdv(Request $request){
+        $Arr_list = explode(',', $request->list_id);
+
+        foreach($Arr_list as $adv_id){
+            $adv_del = Advertisement::findOrFail($adv_id);
+            if($adv_del){
+                $adv_del -> delete();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Advertisement does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Delete advertisement success',
+        ], 200);
+    }
+    
     
 }

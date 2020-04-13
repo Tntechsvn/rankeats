@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use Carbon\Carbon;
 use App\PlanDetail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Advertisement extends Model
 {
+	use SoftDeletes;
 	// defaul query status 1
 	public function newQuery($excludeDeleted = true) {
         return parent::newQuery($excludeDeleted)
