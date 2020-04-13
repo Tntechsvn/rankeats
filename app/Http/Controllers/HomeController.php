@@ -352,7 +352,6 @@ public function ajax_unvoted(Request $request){
 }
 public function vote_ajax(Request $request){
     $user = Auth::user();
-    
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
     // $vote = Vote::select('*')
