@@ -243,7 +243,7 @@
 						</div>
 						<div class="col-lg-10" style="margin-left: -15px;">
 							<div class="content-right p-b-20">
-							<h4>{{$data->user->name}}</h4>
+							<h4>{{$data->user->name ?? ""}}</h4>
 							<span class="review-date">{{$data -> created_at}}</span>
 							<div class="star-view clear p-b-10">
 								@for($i = 1;$i <= $data->rate;$i++)

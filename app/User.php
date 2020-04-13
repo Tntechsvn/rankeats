@@ -205,4 +205,6 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
     /*end Knight*/
+
+
 }
