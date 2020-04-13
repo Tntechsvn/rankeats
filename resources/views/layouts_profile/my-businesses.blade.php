@@ -235,7 +235,6 @@
 					<div id="reviewforbusiness" class="tab-pane">
 					
 					@foreach($info_business->review_rating()->where('type_rate','=',1)->get() as $data)
-					@dump($data->user_id)
 					<div class="row m-b-20">
 						<div class="col-lg-2">
 							<div class="avata">
