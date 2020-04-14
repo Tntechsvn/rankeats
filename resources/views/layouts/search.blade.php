@@ -59,8 +59,18 @@
 								<p>{{$data->location->state}}</p>
 								<p>{{$data->location->city}}</p>
 							</div>
-							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
-							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
+							@php
+								$str = $data->description; //Tạo chuỗi
+								$str = strip_tags($str);
+								if(strlen($str)>100) { //Đếm kí tự chuỗi $str, 100 ở đây là chiều dài bạn cần quy định
+									$strCut = substr($str, 0, 50); //Cắt 100 kí tự đầu
+									$str = substr($strCut, 0, strrpos($strCut, ' ')); //Tránh trường hợp cắt dang dở như "nội d... Read More"
+									$so = strlen($str);
+									$str1 = substr($data->description, $so, 100000000);
+									$str = $str.' <a href="javascript:;" class="m-l-10 readmore">read more</a><span class="hidden show_readmore">'.$str1.'</span>';
+								}
+							@endphp
+							<p class="description">{!!$str!!}</p>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
 				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
@@ -117,8 +127,19 @@
 								<p>{{$data->location->state}}</p>
 								<p>{{$data->location->city}}</p>
 							</div>
-							<p>{{$data->description}}{{-- <a href="javascript:;" class="m-l-10">read more</a> --}}</p>
-							{{-- <a href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="vote btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$data->id}}" >Vote</a> --}}
+							@php
+								$str = $data->description; //Tạo chuỗi
+								$str = strip_tags($str);
+								if(strlen($str)>100) { //Đếm kí tự chuỗi $str, 100 ở đây là chiều dài bạn cần quy định
+									$strCut = substr($str, 0, 50); //Cắt 100 kí tự đầu
+									$str = substr($strCut, 0, strrpos($strCut, ' ')); //Tránh trường hợp cắt dang dở như "nội d... Read More"
+									$so = strlen($str);
+									$str1 = substr($data->description, $so, 100000000);
+									$str = $str.' <a href="javascript:;" class="m-l-10 readmore">read more</a><span class="hidden show_readmore">'.$str1.'</span>';
+								}
+							@endphp
+							<p class="description">{!!$str!!}</p>
+							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
 				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
@@ -375,6 +396,10 @@
 		$(this).closest('form').find('.okverify').removeClass('hidden');
 		$(this).closest('.modal-footer').find('.verify').addClass('hidden');
 		$(this).closest('.modal-footer').find('.firstWindow').removeClass('hidden');
+	});
+	$(document).on('click','.readmore',function(){
+		$(this).addClass('hidden');
+		$(this).closest('.description').find('.show_readmore').removeClass('hidden');
 	});
 
 </script>
