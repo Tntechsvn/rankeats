@@ -36,14 +36,13 @@ class AdminController extends Controller
 
     public function advertisements(){
     	// $ads = Advertisement::with('business')->get();
-    	$ads_pending_home = Advertisement::select('advertisements.*')->home()->pending()->get();
+    	$ads_pending_home = Advertisement::select('advertisements.*')->home()->GetPending()->get();
+    	$ads_pending_search = Advertisement::select('advertisements.*')->search()->GetPending()->get();
+    	$ads_pending_feature = Advertisement::select('advertisements.*')->feature()->GetPending()->get();
 
-    	$ads_pending_search = Advertisement::select('advertisements.*')->search()->pending()->get();
-    	$ads_pending_feature = Advertisement::select('advertisements.*')->feature()->pending()->get();
-
-    	$ads_active_home = Advertisement::select('advertisements.*')->home()->active()->get();
-    	$ads_active_search = Advertisement::select('advertisements.*')->search()->active()->get();
-    	$ads_active_feature = Advertisement::select('advertisements.*')->feature()->active()->get();
+    	$ads_active_home = Advertisement::select('advertisements.*')->home()->GetActive()->get();
+    	$ads_active_search = Advertisement::select('advertisements.*')->search()->GetActive()->get();
+    	$ads_active_feature = Advertisement::select('advertisements.*')->feature()->GetActive()->get();
 
     	$ads_expired_home = Advertisement::select('advertisements.*')->home()->expired()->get();
     	$ads_expired_search = Advertisement::select('advertisements.*')->search()->expired()->get();
@@ -74,5 +73,25 @@ class AdminController extends Controller
         ], 200);
     }
     
+    public function approvedAdv(Request $request){
+        $Arr_list = explode(',', $request->list_id);
+
+        foreach($Arr_list as $adv_id){
+            $adv = Advertisement::findOrFail($adv_id);
+            if($adv){
+                $adv -> status = 2; 
+                $adv -> save();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Advertisement does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Approve advertisement success',
+        ], 200);
+    }
     
 }

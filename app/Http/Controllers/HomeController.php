@@ -20,6 +20,7 @@ use App\Country;
 use App\Review_rating;
 use DB;
 use App\ReviewReaction;
+use Carbon\Carbon;
 use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
 
@@ -110,7 +111,7 @@ class HomeController extends Controller{
             $text_city_state = $state_search;
         }
         /*fix search*/
-        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at')
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date')
         ->JoinBusinessesCategory()->JoinCategory()
         ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){            
@@ -119,6 +120,9 @@ class HomeController extends Controller{
         ->whereNull('advertisements.deleted_at')
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
+        ->where('advertisements.active_date', '<=', Carbon::now())
+        ->where('advertisements.expiration_date', '>=', Carbon::now())
+        ->where('advertisements.status','=',2)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
 
@@ -204,8 +208,12 @@ public function sign_up(){
     return view('layouts.register',compact('state'));
 }
 public function sign_in(){
-
-    return view('layouts.login');
+    if(Auth::check()){
+        return redirect()->back();
+    }else{
+        return view('layouts.login');
+    }
+    
 }
 
 public function forgot_password(){

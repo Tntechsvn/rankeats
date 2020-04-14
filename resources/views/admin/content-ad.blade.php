@@ -1,14 +1,39 @@
 <tr>
-
+	@php
+		$date = date("d-m-Y",strtotime($ad->created_at));
+	@endphp
 	<td>{{$ad->id}}</td>
+	<td>{{$date}}</td>	
 	<td>{{$ad->business->user->name}}</td>
 	<td>{{$ad->business->name}}</td>
 	<td>{{$ad->city->name ?? ""}}</td>
 	<td>{{$ad->state->name ?? ""}}</td>
 	<td>{{$ad->plan_detail->pd_days}} days</td>
-	<td><img src="{{$ad->image_url}}" width="60"></td>
+	<td>
+		<div id = "gallery">
+		<div class = "row text-center">
+			<div class = "col-md-4">
+				<a href = "{{$ad->image_url}}"  data-toggle = "lightbox" data-gallery="gallery">
+					<img src = "{{$ad->image_url}}" class= "imggallery" width="60">
+				</a>
+			</div>
+		</div>
+	</div>
+	</td>
+	<td>
+		@if($ad->checkStatus() > 3)
+			<span class="bg-danger ">FULL</span>
+		@elseif($ad->checkStatus() < 3)
+			<span class="bg-success ">OPEN</span>
+		@else
+			<span class="bg-warning ">PENDING</span>
+		@endif
+	</td>
 	<td>
 		<a class="btn btn-danger del_lang" data-id="{{$ad->id }}" onclick="delLangFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>
+		@if($ad->status == 1)
+		<a  class="btn btn-primary btnApprove" data-approve="{{$ad->id }}" onclick="approveFunction()" style="color: #fff;">A </a>
+		@endif
 		<a class="btn btn-warning" data-toggle="modal" data-target="#sentmail-popup{{$ad->id }}" href="javascript:;"><i class="fa fa-envelope" style="color: #fff"></i></a>
 	</td>
 	<!-- sent-email -->

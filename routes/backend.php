@@ -343,6 +343,10 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'deleteAdv',
 				'uses' => 'AdminController@deleteAdv'
 			]);
+		Route::post('/approve-adv', [
+				'as' => 'approvedAdv',
+				'uses' => 'AdminController@approvedAdv'
+			]);
 		/*thienvu*/
 		Route::get('advertisements', [
 			'as' => 'advertisements',
