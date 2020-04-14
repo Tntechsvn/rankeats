@@ -59,7 +59,18 @@
 								<p>{{$data->total_vote}} <i>reviews</i></p>
 							</div>
 							<p>{{$data->location->address}}</p>
-							<p>{{$data->description}}<a href="javascript:;" class="m-l-10">read more</a></p>
+							@php
+								$str = $data->description; //Tạo chuỗi
+								$str = strip_tags($str);
+								if(strlen($str)>100) { //Đếm kí tự chuỗi $str, 100 ở đây là chiều dài bạn cần quy định
+									$strCut = substr($str, 0, 50); //Cắt 100 kí tự đầu
+									$str = substr($strCut, 0, strrpos($strCut, ' ')); //Tránh trường hợp cắt dang dở như "nội d... Read More"
+									$so = strlen($str);
+									$str1 = substr($data->description, $so, 100000000);
+									$str = $str.' <a href="javascript:;" class="m-l-10 readmore">read more</a><span class="hidden show_readmore">'.$str1.'</span>';
+								}
+							@endphp
+							<p class="description">{!!$str!!}</p>
 						</div>					
 					</div>
 				@endforeach
@@ -71,5 +82,10 @@
 </div>
 @endsection
 @section('script')
-	
+	<script type="text/javascript">
+		$(document).on('click','.readmore',function(){
+			$(this).addClass('hidden');
+			$(this).closest('.description').find('.show_readmore').removeClass('hidden');
+		});
+	</script>
 @stop
