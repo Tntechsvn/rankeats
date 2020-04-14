@@ -144,7 +144,7 @@
 				    				<p>
 							    		<i class="fas fa-user"></i>
 							    		<span class="bold">Name :</span>
-							    		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
+							    		<span class="bold" style="color: #0073bb">{{$data->user->name ?? ""}}</span>
 							    	</p>
 
 							    	<p>{{$data->review->description}}</p>
