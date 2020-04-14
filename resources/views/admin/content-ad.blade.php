@@ -36,6 +36,7 @@
 		@endif
 		<a class="btn btn-warning" data-toggle="modal" data-target="#sentmail-popup{{$ad->id }}" href="javascript:;"><i class="fa fa-envelope" style="color: #fff"></i></a>
 	</td>
+	
 	<!-- sent-email -->
 	<div id="sentmail-popup{{$ad->id}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
 		<div class="modal-dialog">
