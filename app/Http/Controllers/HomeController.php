@@ -114,8 +114,12 @@ class HomeController extends Controller{
         $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date')
         ->JoinBusinessesCategory()->JoinCategory()
         ->JoinAdvertisement()->JoinState()->JoinCity()
-        ->where(function($query) use ($keyword,$city,$state_search){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+        ->where(function($query) use ($keyword,$city,$state_search){  
+             if($city != ''){        
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+            }else{
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+            }
         })
         ->whereNull('advertisements.deleted_at')
         ->whereNotNull('businesses.activated_on')
@@ -128,8 +132,12 @@ class HomeController extends Controller{
 
         $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
-        ->where(function($query) use ($keyword,$city,$state_search){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
+        ->where(function($query) use ($keyword,$city,$state_search){    
+            if($city != ''){
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+            }else{
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+            }
         })
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
