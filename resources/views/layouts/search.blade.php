@@ -23,7 +23,7 @@
 
 					<div class="food-main">
 						<div class="imbx">
-							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt=""  style="width: 140px;height: 140px;object-fit: cover;"></a>
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
@@ -63,7 +63,7 @@
 				@foreach($data_business as $key => $data)
 					<div class="food-main">
 						<div class="imbx">
-							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 140px;height: 140px;object-fit: cover;"></a>
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
@@ -301,8 +301,8 @@
 				<div class="modal-body">
 					<div id="reviewforbusiness" class="tab-pane">
 					
-					
-				</div>
+						<h1 class="no-results hidden" style="text-align: center; "></h1>
+					</div>
 				</div>
 			</div>
 

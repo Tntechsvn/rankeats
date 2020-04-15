@@ -268,7 +268,26 @@ $(document).on('click','.funnyy',function(){
 // review popup
 
 $(document).on('click','.review-popup',function(){
-  var url = $('input[name=review_popup]').val();
+  var url = $('input[name=review_search]').val();
   id = $(this).data('id');
   target = $('#review-popup');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      id: id
+    },
+    success:function(res){
+      if(res.success == true){
+          target.modal('show');
+          target.find('#reviewforbusiness').html(res.data);
+      }else{
+        target.modal('show');
+        target.find('.no-results').removeClass('hidden').html(res.message);
+      }
+    }
+  });
 });

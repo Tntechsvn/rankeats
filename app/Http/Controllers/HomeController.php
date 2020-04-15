@@ -653,7 +653,22 @@ public function reaction_review(Request $request){
 
     public function review_search(Request $request)
     {
-        
+        $business = Business::find($request->id);
+        // dd($business);
+        $reviews = $business->review_rating()->where('type_rate','=',1)->get();
+        if(count($reviews) == 0){
+            return response()->json([
+            'success' => false,
+            'message' => "Not review for Business"
+        ]);
+        }
+        $data = "";
+        $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        $data .= (string) $view;
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
 }
