@@ -30,28 +30,26 @@ class BusinessController extends Controller
 
     public function postCreateBusiness(Request $request){
     	$this-> Validate($request,[
-    		'search' => 'required',
-			'email' => 'email|unique:businesses,email',
-			'name' => 'required',
-			'phone' =>'required',
-			'category_id' => 'required',
+            'name' => 'required',
+    		'email' => 'email|unique:businesses,email',
+            'phone' =>'required',
+            'day_opening' => 'required',
+            'address' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'zipcode' => 'required',
 		]);
-		$user = Auth::user();
-		if($user -> business()->count() >= 1){
-			session()->put('error','error');
-			return redirect()->back();
+		$user = Auth::user();		
+		$business = new Business();
+		$response = $business -> update_business($request,$user);
+		$data = $response->getData();
+		if($data->success){
+			session()->put('success',$data->message);
+			return redirect()->route('myprofile');
 		}else{
-			$business = new Business();
-			$response = $business -> update_business($request,$user);
-			$data = $response->getData();
-			if($data->success){
-				session()->put('success',$data->message);
-				return redirect()->route('myprofile');
-			}else{
-				session()->put('error',$data->message);
-				return redirect()->back();
-			}
-		}	
+			session()->put('error',$data->message);
+			return redirect()->back();
+		}
 
     }
     public function getListApprovedBusinesses(Request $request){

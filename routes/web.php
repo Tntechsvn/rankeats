@@ -65,7 +65,7 @@
 			'as' => 'business_review',
 			'uses' => 'HomeController@business_review'
 		]);
-		Route::get('/my-businesses', [
+		Route::get('/my-businesses/{business_id}', [
 			'as' => 'my_businesses',
 			'uses' => 'HomeController@my_businesses'
 		]);

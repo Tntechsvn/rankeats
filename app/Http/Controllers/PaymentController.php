@@ -39,7 +39,7 @@ use PayPal\Api\ShippingAddress;
 use PayPal\Api\CreateProfileResponse;
 
 use App\Http\Controllers\ShareController;
-
+use Carbon\Carbon;
 class PaymentController extends Controller
 {
     private $_api_context;
@@ -84,6 +84,10 @@ class PaymentController extends Controller
     }
 
     public function submitPayment(Request $request) {
+        if(Auth::user()->role_id != 3){
+            session()->put('error',"Business accounts can purchase advertising packages");
+            return redirect()->back();
+        }
         $pd = PlanDetail::find($request->pd_id);
         if($request->image !=null){
             $base64String = $request->image;

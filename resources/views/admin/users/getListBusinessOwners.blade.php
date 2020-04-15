@@ -117,9 +117,9 @@
               				</td>
               				@endif
               				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
-              				<td>{{$data -> business()->first()->name}}</td>
-                      <td>{{$data -> business()->first()->location->state}}</td>
-                      <td>{{$data -> business()->first()->location->city}}</td>
+              				<td>{{$data -> business()->first()->name ?? ''}}</td>
+                      <td>{{$data ->location->state ?? ''}}</td>
+                      <td>{{$data ->location->city ?? ''}}</td>
 
               				<td>
               					<a href="{{route('getEditUser',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>

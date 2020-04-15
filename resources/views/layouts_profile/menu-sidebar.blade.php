@@ -23,7 +23,12 @@
 		<li class="">
 			<a class="dropdown"  href="javascript:;"><i class="fas fa-plus-circle"></i>My Business<span class="caret" style="float: right;margin-top: 8px;"></span></a>
 			<ul class="nav menudropdown">
-				<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses')}}"><i class="fas fa-caret-right"></i>My Business</a></li>
+				{{--<li class="{{ Route::currentRouteNamed('add_business') ? 'active' : '' }}"><a class="" href="{{route('add_business')}}"><i class="fas fa-caret-right"></i> Add Business</a></li>
+				@foreach(Auth::user()->business as $data_business)
+				<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>$data_business->id])}}"><i class="fas fa-caret-right"></i>{{$data_business->name}}</a></li>
+				@endforeach--}}
+				<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>Auth::user()->business()->first()->id])}}"><i class="fas fa-caret-right"></i>{{Auth::user()->business()->first()->name}}</a></li>
+
 				{{-- <li class="{{ Route::currentRouteNamed('menu-management') ? 'active' : '' }}"><a class="" href="{{route('menu-management')}}"><i class="fas fa-caret-right"></i> Menu</a></li> --}}
 				{{-- <li class="{{ Route::currentRouteNamed('review-management') ? 'active' : '' }}"><a class="" href="{{route('review-management')}}"><i class="fas fa-caret-right"></i> Reviews</a></li> --}}
 				<li class="{{ Route::currentRouteNamed('create_advertise') ? 'active' : '' }}"><a class="" href="{{route('create_advertise')}}"><i class="fas fa-caret-right"></i> Advertisement</a></li>

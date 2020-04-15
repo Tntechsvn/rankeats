@@ -75,14 +75,14 @@
 								@endphp
 								<div class="input-group"> <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-calendar-alt"></i></span>
 									<input type="text" class="form-control datepicker" name="day_opening" placeholder="YYYY/mm/dd" value="{{$date}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<span class="bg-danger color-palette">{{$errors -> first('day_opening')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Address</p>
 								<div class="input-group" style="width: 100%">
 									<input type="text" class="form-control " name="address" value="{{$info_business->location->address}}">
-									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 								</div>
 							</div>
 							<div class="" style="display: flex;justify-content: space-between;">
@@ -115,6 +115,7 @@
 								                @endif
 							                @endif							               
 							            </select>
+							            <span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
@@ -177,7 +178,7 @@
 							<div class="form-group">
 								<a data-toggle="modal" data-target="#sentmail-popup" href="javascript:;" class="btn btn-success" style="color: #fff">Email followwer</a>
 								<a href="{{$info_business->permalink()}}" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
-								<button type="submit" class="btn btn-primary" style="color: #fff" > Success</button>
+								<button type="submit" class="btn btn-primary" style="color: #fff" > Update</button>
 							</div>
 							
 						</form>

@@ -20,6 +20,7 @@ use App\Country;
 use App\Review_rating;
 use DB;
 use App\ReviewReaction;
+use Carbon\Carbon;
 use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
 
@@ -86,10 +87,10 @@ class HomeController extends Controller{
                     if($row->city_name){
                         $text = $row->city_name.', '.$row->state_name;
                     }else{
-                        $text = $row->state_name;
+                        $text = $row->city_name;
                     }
 
-                    $output .= '<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
+                    $output .= '<li class="location_name form-search-val" data-city="" data-state="'.$row->state_name.'">'.$row->state_name.'</li>'.'<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
                 }
             }else{
                 $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
@@ -101,30 +102,42 @@ class HomeController extends Controller{
     }
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $city = $request -> city ? $request -> city : $request -> state;
+        $city = $request -> city ? $request -> city : '';
         $state_search = $request -> state ? $request -> state : '';
 
-        if($city){
+        if($city != ''){
             $text_city_state = $city.', '.$state_search;
         }else{
             $text_city_state = $state_search;
         }
         /*fix search*/
-        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city')
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date')
         ->JoinBusinessesCategory()->JoinCategory()
         ->JoinAdvertisement()->JoinState()->JoinCity()
-        ->where(function($query) use ($keyword,$city,$state_search){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+        ->where(function($query) use ($keyword,$city,$state_search){  
+             if($city != ''){        
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+            }else{
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+            }
         })
+        ->whereNull('advertisements.deleted_at')
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
+        ->where('advertisements.active_date', '<=', Carbon::now())
+        ->where('advertisements.expiration_date', '>=', Carbon::now())
+        ->where('advertisements.status','=',2)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
 
         $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
-        ->where(function($query) use ($keyword,$city,$state_search){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('state','LIKE', '%'.$state_search.'%');
+        ->where(function($query) use ($keyword,$city,$state_search){    
+            if($city != ''){
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+            }else{
+                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+            }
         })
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
@@ -203,8 +216,12 @@ public function sign_up(){
     return view('layouts.register',compact('state'));
 }
 public function sign_in(){
-
-    return view('layouts.login');
+    if(Auth::check()){
+        return redirect()->back();
+    }else{
+        return view('layouts.login');
+    }
+    
 }
 
 public function forgot_password(){
@@ -257,8 +274,7 @@ public function create_business(){
 }
 
 public function add_business(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.add_business',compact('info_business'));
+    return view('layouts_profile.add_business');
 }
 public function business_management(){
     return view('layouts_profile.business-management');
@@ -567,9 +583,16 @@ public function business_rank(){
     return view('layouts_profile.business-rank',compact('info_business'));
 }
 
-public function my_businesses(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.my-businesses',compact('info_business'));
+public function my_businesses(Request $request){
+    $new = new Business;
+    $check =  $new ->checkListMyBusiness($request->business_id);
+    if($check){
+        $info_business = Business::findOrfail($request->business_id);
+        return view('layouts_profile.my-businesses',compact('info_business'));
+    }else{
+        session()->put('error','You do not own this business');
+        return redirect()->back();
+    }
 }
 
 public function ajaxcitystate(Request $request){
