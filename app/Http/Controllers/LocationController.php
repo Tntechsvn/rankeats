@@ -177,13 +177,15 @@ class LocationController extends Controller
     /*city*/
     public function getListCity(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $data_city = City::select('cities.*')
+        $data_city = City::select('cities.*','countries.code')
+        ->join('states','states.id','=','cities.state_id')
+        ->join('countries','countries.id','=','states.country_id')
         ->where(function($query) use ($keyword){            
-            $query->where('name', 'LIKE', '%'.$keyword.'%');
+            $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
         })
+        ->where('countries.code','=','US')
         ->orderBy('name', 'asc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-
         $total_record =  $data_city ->total();
         $count_record = count($data_city);
         if(isset($request -> page)){

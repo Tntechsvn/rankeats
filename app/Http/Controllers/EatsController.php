@@ -9,6 +9,10 @@ use App\Category;
 use App\Myconst;
 use App\Business;
 use App\Location;
+use App\businesses_category;
+use App\Review;
+use App\Review_rating;
+use App\Vote;
 use App\Http\Controllers\ShareController;
 use Validator;
 class EatsController extends Controller
@@ -116,6 +120,44 @@ class EatsController extends Controller
         $data_eat -> update_category($request);
         return redirect()->back();
     }
+    public function deleteEat(Request $request){
+        $Arr_list_Eat = explode(',', $request->list_id);
+
+        foreach($Arr_list_Eat as $eat_id){
+            $eat_del = Category::findOrFail($eat_id);
+            if($eat_del){
+                /*delete businesses_categories*/
+                $del_businesses_categories = businesses_category::where('cate_id','=',$eat_del ->id)->delete();
+                /*delete review rating*/
+                $list_review_rating = Review_rating::where('category_id','=',$eat_del ->id)->get();
+                if(count($list_review_rating) > 0){
+                    foreach ($list_review_rating as $review_rating) {
+                        /*delete rivew*/
+                        $del_review = Review::findorfail($review_rating->review_id);
+                        if($del_review){
+                            $del_review ->delete();
+                        }
+
+                        $del_review_rating = $review_rating ->delete();
+                    }
+                }
+                /*delete vote*/
+                $del_vote = Vote::where('category_id','=',$eat_del->id)->delete();
+
+                $eat_del -> delete();
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Eat does not exist',
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Delete eat success',
+        ], 200);
+    }
+
     /**************************Front-end*****************************************/
     public function postCreateEatsFrontEnd(Request $request){
         $this-> Validate($request,[

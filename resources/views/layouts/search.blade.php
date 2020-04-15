@@ -29,8 +29,8 @@
 							<div class="pr-dtl">
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
-								<p>City: {{$data->city}}</p>
-								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p>
+								<p>City: {{$data->location->city}}</p>
+								<p>State: {{$data->location->state}} - Zip: {{$data->location->code}}</p>
 								<p>Phone: {{$data->phone}}</p>
 								<ul class="star-rate">
 									@php
