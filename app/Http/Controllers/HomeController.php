@@ -87,10 +87,10 @@ class HomeController extends Controller{
                     if($row->city_name){
                         $text = $row->city_name.', '.$row->state_name;
                     }else{
-                        $text = $row->state_name;
+                        $text = $row->city_name;
                     }
 
-                    $output .= '<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
+                    $output .= '<li class="location_name form-search-val" data-city="" data-state="'.$row->state_name.'">'.$row->state_name.'</li>'.'<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
                 }
             }else{
                 $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
@@ -102,10 +102,10 @@ class HomeController extends Controller{
     }
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $city = $request -> city ? $request -> city : $request -> state;
+        $city = $request -> city ? $request -> city : '';
         $state_search = $request -> state ? $request -> state : '';
 
-        if($city){
+        if($city != ''){
             $text_city_state = $city.', '.$state_search;
         }else{
             $text_city_state = $state_search;
