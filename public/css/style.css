@@ -2291,6 +2291,9 @@ width: 30% !important;
     padding: 7px 0;
     line-height: 20px;
 }
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
 .results-all .vote {
 	margin: 0 10px;
     position: absolute;

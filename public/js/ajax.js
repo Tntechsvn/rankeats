@@ -264,3 +264,11 @@ $(document).on('click','.funnyy',function(){
     }
   });
 });
+
+// review popup
+
+$(document).on('click','.review-popup',function(){
+  var url = $('input[name=review_popup]').val();
+  id = $(this).data('id');
+  target = $('#review-popup');
+});

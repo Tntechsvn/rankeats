@@ -27,7 +27,6 @@
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
-								<span class="top-results">{{$key+1}}</span>
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
 								<p>City: {{$data->city}}</p>
@@ -50,7 +49,7 @@
 									@endphp
 									
 								</ul>
-								<span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span>
+								<a href="javascript:;" class="review-popup"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
 							</div>
 						</div>					
 					</div>
@@ -91,7 +90,7 @@
 									@endphp
 									
 								</ul>
-								<a href="javascript:;"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
 							</div>
 							
 							@if(Auth::check())
@@ -290,10 +289,29 @@
 
 	</div>
 </div>
+<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
 
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
+					<h3 class="title m-b-20">Review business</h3>
+				</div>
+				<div class="modal-body">
+					<div id="reviewforbusiness" class="tab-pane">
+					
+					
+				</div>
+				</div>
+			</div>
+
+	</div>
+</div>
 
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
 <input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
+<input type="hidden" name="review_search" value="{{route('review_search')}}">
 @endsection
 
 @section('script')
