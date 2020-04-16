@@ -39,7 +39,7 @@
 								<div  class="dt-imgs">										
 									<div class="dt-close">
 										<div id="previews">@if($data_eat->url_img !=null)<div class="gallerythumb">
-											<img class="thumb" src="{{'http://localhost/rankeats/public/storage/'.$data_eat->url_img}}" class="pic" >
+											<img class="thumb" src="{{asset('').'storage/'.$data_eat->url_img}}" class="pic" >
 											<div class="deletethumb tsm"><i class="fas fa-times-circle"></i></div>
 											<input type="hidden" name="id_img[]" value="{{$data_eat->url_img}}">
 										</div>@endif</div>

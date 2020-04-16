@@ -89,18 +89,6 @@
 
 	            				@endforeach
 							>{{$data_cate->category_name}}</option>
-<<<<<<< HEAD
-	            	@endforeach
-	            </select>
-          	</div>
-		</form>
-	  </div>
-	  <div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		<button class="btn btn-primary" name="submit">Submit</button>
-	  </div>
-	  </form>
-=======
 		            	@endforeach
 		            </select>
 	          	</div>
@@ -111,7 +99,6 @@
 		  	</div>
 
 	  	</form>
->>>>>>> origin/Knight
 	</div>
   </div>
 </div>

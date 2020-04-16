@@ -274,8 +274,7 @@ public function create_business(){
 }
 
 public function add_business(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.add_business',compact('info_business'));
+    return view('layouts_profile.add_business');
 }
 public function business_management(){
     return view('layouts_profile.business-management');
@@ -584,9 +583,16 @@ public function business_rank(){
     return view('layouts_profile.business-rank',compact('info_business'));
 }
 
-public function my_businesses(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.my-businesses',compact('info_business'));
+public function my_businesses(Request $request){
+    $new = new Business;
+    $check =  $new ->checkListMyBusiness($request->business_id);
+    if($check){
+        $info_business = Business::findOrfail($request->business_id);
+        return view('layouts_profile.my-businesses',compact('info_business'));
+    }else{
+        session()->put('error','You do not own this business');
+        return redirect()->back();
+    }
 }
 
 public function ajaxcitystate(Request $request){
