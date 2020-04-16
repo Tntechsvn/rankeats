@@ -95,12 +95,12 @@
 							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
-				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
+				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;" data-id="{{$data->id}}" data-name="{{$data->name}}">Voted</a>
+				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}">My Vote</a>
 				    			@endif
 			    			@else
-			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
+			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
 			    			@endif
 						</div>					
 					</div>
