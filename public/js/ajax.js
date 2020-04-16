@@ -116,21 +116,12 @@ $(document).on('click','.vote_now',function(){
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
-          var vote_id = '.vote-'+business+'-'+res.city_id;
-          $('#main').find('.unvote').removeClass('btn-danger').addClass('vote_now').addClass('btn-success').removeClass('unvote').html('Vote');
-          $('#main').find(vote_id).removeClass('btn-success').addClass('btn-danger').addClass('unvote').html('Voted');
-          $this.html('Voted');
-          $this.removeClass('btn-success').addClass('unvote').removeClass('vote_now').addClass('btn-danger');
+          var vote_id = '.vote-'+res.id_voted +'-'+res.city_id;
+          $('#main').find(vote_id).removeClass('unvote').addClass('vote_now').html('Vote');
+          $this.html('My Vote');
+          $this.addClass('unvote').removeClass('vote_now');
       }else{
-        // swal({
-        //   title: res.message,
-        //   timer: 2000
-        // });;
-        // var unvote_modal = $('#un_vote');
-        // unvote_modal.find('.message').html(res.message);
-        // unvote_modal.find('input[name=business_id]').val(res.business_id);
-        // unvote_modal.find('input[name=city_id]').val(res.city_id);
-        // unvote_modal.modal('show');
+        
       }
     }
   });
