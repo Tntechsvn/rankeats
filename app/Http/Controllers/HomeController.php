@@ -130,7 +130,7 @@ class HomeController extends Controller{
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
 
-        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state',DB::raw('businesses.total_rate / businesses.total_vote AS rate'),)
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
@@ -142,6 +142,7 @@ class HomeController extends Controller{
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')
+        ->orderBy('rate','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
