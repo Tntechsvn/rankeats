@@ -242,6 +242,15 @@ class Business extends Model
         }
         return "No Rank";
     }
+    public function checkListMyBusiness($id_business){
+        $array_id_business = Auth::user()->business()->pluck('id')->toArray();
+        if(in_array($id_business, $array_id_business)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     /*end knight*/
 
     /*Thienvu*/

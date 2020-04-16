@@ -17,6 +17,7 @@
 			</div>
 		</div>
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
+			@if(count($data_business_sponsored) > 0)
 			<div class="results-sponsored">
 				<h3 class="title">Sponsored Results</h3>
 				<div class="clear"></div>
@@ -55,7 +56,7 @@
 								</div>
 							</div>
 							<div class="pr-dtlr">
-								<p>{{$data->business_phone}}</p>
+								<p>{{$data->phone}}</p>
 								<p>{{$data->location->state}}</p>
 								<p>{{$data->location->city}}</p>
 							</div>
@@ -84,6 +85,7 @@
 					</div>
 				@endforeach
 			</div>
+			@endif
 			<h3 class="title">All Results</h3>
 			<div class="clear"></div>
 			<div class="results-all">
@@ -123,7 +125,7 @@
 								</div>
 							</div>
 							<div class="pr-dtlr">
-								<p>{{$data->business_phone}}</p>
+								<p>{{$data->phone}}</p>
 								<p>{{$data->location->state}}</p>
 								<p>{{$data->location->city}}</p>
 							</div>
