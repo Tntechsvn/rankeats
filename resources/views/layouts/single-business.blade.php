@@ -2,7 +2,7 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner">
+	<div class="banner" style="background-image: url('images/promo.jpg');">
 		<img src="images/promo.jpg" alt="" class="fade">
 	</div>
 	<div class="container" style="background-color: #fff;">

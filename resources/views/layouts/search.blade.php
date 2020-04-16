@@ -2,19 +2,17 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner">
+	<div class="banner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
 		<img src="images/promo.jpg" alt="" class="fade">
+
+		<div class="col-lg-12 inform-results">
+			<h1>Search Results For "{{ (isset($keyword)) ? $keyword : 'All Eats'}}"</h1>
+		</div>
 	</div>
 	<div class="container">
 
 		<div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
 			@include('layouts.form-search')
-		</div>
-		<div class="col-lg-12 inform-results">
-			<h1>You are searching for with the keyword of "@if(isset($keyword)){{$keyword}}@else{{'All Eats'}}@endif"</h1>
-			<div class="img">
-				<img src="@if($category_search){{$category_search -> UrlImgCategory}}@endif">
-			</div>
 		</div>
 		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
 			@if(count($data_business_sponsored) > 0)
@@ -22,13 +20,18 @@
 				<h3 class="title">Sponsored Results</h3>
 				<div class="clear"></div>
 				@foreach($data_business_sponsored as $data)
+
 					<div class="food-main">
 						<div class="imbx">
-							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt=""  style="width: 140px;height: 140px;object-fit: cover;"></a>
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
+								<p>City: {{$data->location->city}}</p>
+								<p>State: {{$data->location->state}} - Zip: {{$data->location->code}}</p>
+								<p>Phone: {{$data->phone}}</p>
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
@@ -44,43 +47,10 @@
 											$x++;
 										}
 									@endphp
-									<span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$data->total_vote}} <i>reviews</i></span>
+									
 								</ul>
-								<div class="pr-dtail">
-									<ul class="p-t-15">
-										<li>$$$.</li>
-										@foreach($data->business_category as $val)
-										<li>,{{$val->category_name}}</li>
-										@endforeach
-									</ul>
-								</div>
+								<a href="javascript:;" class="review-popup"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
 							</div>
-							<div class="pr-dtlr">
-								<p>{{$data->phone}}</p>
-								<p>{{$data->location->state}}</p>
-								<p>{{$data->location->city}}</p>
-							</div>
-							@php
-								$str = $data->description; //Tạo chuỗi
-								$str = strip_tags($str);
-								if(strlen($str)>100) { //Đếm kí tự chuỗi $str, 100 ở đây là chiều dài bạn cần quy định
-									$strCut = substr($str, 0, 50); //Cắt 100 kí tự đầu
-									$str = substr($strCut, 0, strrpos($strCut, ' ')); //Tránh trường hợp cắt dang dở như "nội d... Read More"
-									$so = strlen($str);
-									$str1 = substr($data->description, $so, 100000000);
-									$str = $str.' <a href="javascript:;" class="m-l-10 readmore">read more</a><span class="hidden show_readmore">'.$str1.'</span>';
-								}
-							@endphp
-							<p class="description">{!!$str!!}</p>
-							@if(Auth::check())
-				    			@if(Auth::user()->check_vote($data->business_id))
-				    			<a href="javascript:;"  class="btn btn-success vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
-				    			@else
-				    			<a href="javascript:;" class="btn btn-danger unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" style="color: #fff;" data-id="{{$data->id}}" data-name="{{$data->name}}">Voted</a>
-				    			@endif
-			    			@else
-			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="color: #fff;">Vote</a>
-			    			@endif
 						</div>					
 					</div>
 				@endforeach
@@ -90,14 +60,19 @@
 			<div class="clear"></div>
 			<div class="results-all">
 				
-				@foreach($data_business as $data)
+				@foreach($data_business as $key => $data)
 					<div class="food-main">
 						<div class="imbx">
-							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 140px;height: 140px;object-fit: cover;"></a>
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
+								<span class="top-results">{{$key+1}}</span>
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
+								<p>City: {{$data->city}}</p>
+								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p>
+								<p>Phone: {{$data->phone}}</p>
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
@@ -113,34 +88,10 @@
 											$x++;
 										}
 									@endphp
-									<span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$data->total_vote}} <i>reviews</i></span>
+									
 								</ul>
-								<div class="pr-dtail">
-									<ul class="p-t-15">
-										<li>$$$.</li>
-										@foreach($data->business_category as $val)
-										<li>{{$val->category_name}}</li>
-										@endforeach
-									</ul>
-								</div>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
 							</div>
-							<div class="pr-dtlr">
-								<p>{{$data->phone}}</p>
-								<p>{{$data->location->state}}</p>
-								<p>{{$data->location->city}}</p>
-							</div>
-							@php
-								$str = $data->description; //Tạo chuỗi
-								$str = strip_tags($str);
-								if(strlen($str)>100) { //Đếm kí tự chuỗi $str, 100 ở đây là chiều dài bạn cần quy định
-									$strCut = substr($str, 0, 50); //Cắt 100 kí tự đầu
-									$str = substr($strCut, 0, strrpos($strCut, ' ')); //Tránh trường hợp cắt dang dở như "nội d... Read More"
-									$so = strlen($str);
-									$str1 = substr($data->description, $so, 100000000);
-									$str = $str.' <a href="javascript:;" class="m-l-10 readmore">read more</a><span class="hidden show_readmore">'.$str1.'</span>';
-								}
-							@endphp
-							<p class="description">{!!$str!!}</p>
 							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
@@ -338,10 +289,29 @@
 
 	</div>
 </div>
+<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
 
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
+					<h3 class="title m-b-20">Review business</h3>
+				</div>
+				<div class="modal-body">
+					<div id="reviewforbusiness" class="tab-pane">
+					
+						<h1 class="no-results hidden" style="text-align: center; "></h1>
+					</div>
+				</div>
+			</div>
+
+	</div>
+</div>
 
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
 <input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
+<input type="hidden" name="review_search" value="{{route('review_search')}}">
 @endsection
 
 @section('script')

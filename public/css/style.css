@@ -1565,11 +1565,11 @@ span.select2{
 
 /* ranket css-start */
 .imbx {display: inline-block;vertical-align: top;width: 20%;margin: 13px 0 0 0;}
-.imbx-detail {display: inline-block; vertical-align: middle; width: 79%;}
+.imbx-detail {display: inline-block; position: relative; width: 79%;}
 .pr-dtl h4 {margin: 12px 0 5px 0;padding: 0;color: #0073bb;font-weight: 700;}
 .pr-dtl ul {padding: 0;margin: 0 0 9px 0;display: inline-block;/* vertical-align: middle; */}
 .pr-dtl ul li {display: inline-block;vertical-align: middle;}
-.pr-dtl p {display: inline-block;font-size: 14px;margin: 0 0 0 0;position: relative;top: 7px;left: 15px;}
+/*.pr-dtl p {display: inline-block;font-size: 14px;margin: 0 0 0 0;position: relative;top: 7px;left: 15px;}*/
 .pr-dtl p i {font-style: normal;}
 .pr-dtl {margin: 0 0 0 15px; display: inline-block;}
 .pr-dtlr {
@@ -1772,7 +1772,7 @@ input#location_search {
 }
 .banner {
 	height: 400px;
-	background-image: url('../images/promo.jpg'); 
+	/*background-image: url('../images/promo.jpg'); */
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -1979,17 +1979,19 @@ li.active a {
 .verify a {
 	color: #fff;
 }
+
 .inform-results {
 	text-align: center;
+	color: #fff;
+	height: 400px;
+	display: table;
+}
+.inform-results h1 {
+	font-size: 40px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
-.inform-results .img {
-	width: 150px;
-	margin: 30px auto;
-}
-.inform-results .img img {
-	width: 100%;
-}
 .banner img {
 	width: 100%;
 	display: none;
@@ -2253,6 +2255,9 @@ input[type=number]::-webkit-outer-spin-button {
 .datepicker{
 z-index: 1050 !important;
 }
+.datepicker-months, .datepicker-years {
+	min-width: 200px;
+}
 #ui-datepicker-div {
 width: 30% !important;
 }
@@ -2271,10 +2276,29 @@ width: 30% !important;
 	font-size: 15px;
 }
 
-.results-sponsored .vote,
+.top-results {
+	background-color: #0d59b7;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50%;
+    display: table-cell;
+    width: 35px;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    padding: 7px 0;
+    line-height: 20px;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
 .results-all .vote {
-	float: right;
 	margin: 0 10px;
+    position: absolute;
+    right: -10px;
+    bottom: 10px;
 }
 .funny {
 	text-align: center;

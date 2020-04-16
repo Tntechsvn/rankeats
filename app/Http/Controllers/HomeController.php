@@ -130,7 +130,7 @@ class HomeController extends Controller{
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
 
-        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state')
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state',DB::raw('businesses.total_rate / businesses.total_vote AS rate'),)
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
@@ -142,6 +142,7 @@ class HomeController extends Controller{
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
         ->groupBy('businesses_categories.business_id')
+        ->orderBy('rate','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 //return $data_business;
         $category_search = Category::where('category_name','=',$keyword)->first();
@@ -647,5 +648,27 @@ public function reaction_review(Request $request){
 
     
 }
+
+// review popup
+
+    public function review_search(Request $request)
+    {
+        $business = Business::find($request->id);
+        // dd($business);
+        $reviews = $business->review_rating()->where('type_rate','=',1)->get();
+        if(count($reviews) == 0){
+            return response()->json([
+            'success' => false,
+            'message' => "Not review for Business"
+        ]);
+        }
+        $data = "";
+        $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        $data .= (string) $view;
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 
 }
