@@ -89,6 +89,7 @@
 
 	            				@endforeach
 							>{{$data_cate->category_name}}</option>
+
 		            	@endforeach
 		            </select>
 	          	</div>
