@@ -113,6 +113,10 @@ Route::post('/create-business', [
 	'uses' => 'BusinessController@postCreateBusiness'
 ]);
 
+Route::post('/delete-eat-business', [
+	'as' => 'deleteEatBusiness',
+	'uses' => 'BusinessController@deleteEatBusiness'
+]);
 
 /*end Knight*/
 /***************end front end******************/
@@ -150,6 +154,10 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			Route::get('approve-eat/{eat_id}', [
 				'as' => 'approvedEat',
 				'uses' => 'EatsController@approvedEat'
+			]);
+			Route::post('/delete-eat', [
+				'as' => 'deleteEat',
+				'uses' => 'EatsController@deleteEat'
 			]);
 		});
 		/*users*/

@@ -45,8 +45,8 @@
 									<td>{{$val->review_rating()->where('id_rate_from','=',$info_business->id)->count()}}</td>
 									<td>{{$info_business->email}}</td>
 									<td>{{$val->RankEatState}}</td>
-									<td>{{$val->RankEatCity}}</td>
-									<td><i class="fas fa-trash"></i></td>
+									<td>{{$val->RankEatCity}}</td>									
+									<td><a class=" del_lang" data-id="{{$val->id }}" data-business="{{$info_business->id}}" onclick="delLangFunction()"><i class="fas fa-trash"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>
@@ -104,6 +104,41 @@
 </div>
 @endsection
 @section('script')
+<script>
+  function delLangFunction() {
+    var r = confirm("You want to delete eat business?");
+    if (r == true) {
+      $(document).on('click', '.del_lang',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
+        var business_id = $(this).data('business');
+        var link = "{{route('deleteEatBusiness')}}";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: {
+          		list_id:selected_values,
+          		business_id:business_id
+      		},
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
+</script>
+
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){

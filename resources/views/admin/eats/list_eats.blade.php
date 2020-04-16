@@ -190,7 +190,7 @@
 			var checked = confirm(WRN_PROFILE_DELETE);
 			if(checked == true) {
 				var selected_values = arr.join(",");
-				var link = "";
+				var link = "{{route('deleteEat')}}";
 				$.ajax({
 					headers:{
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -199,14 +199,14 @@
 					url: link,
 					data: 'list_id='+selected_values,
 					success:function(data){
-						console.log(data);
-						if(data == "Success"){
-							window.location.reload();
-							alert('Delete Success');
-						}else{
-							alert('Delete errors');
-						}
-					}
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
 				});
 			}
 		});
