@@ -330,7 +330,6 @@ public function single_business(Request $request){
        ->whereNull('users.deleted_at')
        ->orderBy('review_ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
-    //$list_review_eats = review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
     $list_review_eats = $info_business-> Review_rating()
        ->join('users','users.id','=','review_ratings.user_id')
        ->where('type_rate','=',2)
