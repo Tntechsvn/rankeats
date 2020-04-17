@@ -32,13 +32,14 @@
 									<td width="40%">Email</td>
 									<td width="20%" colspan="2">
 										<div style="width: 100%;line-height: 30px;border-bottom: 1px solid #e1e1e1;">Rank</div>
-										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$info_business->location->city}}</div>
-										<div style="width: 50%;float: left;line-height: 30px;">{{$info_business->location->state}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$info_business->location->city ?? ''}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;">{{$info_business->location->state ?? ''}}</div>
 									</td>
 									<td width="10%">Action</td>
 								</tr>
 							</thead>
-							<tbody class="content-table">								
+							<tbody class="content-table">
+								@if($info_business)								
 								@foreach($info_business->business_category as $val)
 								<tr>
 									<td>{{$val->category_name}}</td>
@@ -49,6 +50,7 @@
 									<td><a class=" del_lang" data-id="{{$val->id }}" data-business="{{$info_business->id}}" onclick="delLangFunction()"><i class="fas fa-trash"></i></a></td>
 								</tr>
 								@endforeach
+								@endif
 							</tbody>
 						</table>
 					</div>
@@ -76,7 +78,7 @@
 				<div class="form-group">
 					Select Business
 		            <select class="test" name="business" data-parsley-required>
-	                	<option value="{{$info_business->id}}" selected="selected" >{{$info_business->name}}</option>
+	                	<option value="{{$info_business->id ?? ''}}" selected="selected" >{{$info_business->name ?? 'Select Business'}}</option>
 		            </select>
 	          	</div>
 				<div class="form-group">
@@ -84,10 +86,12 @@
 		            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required>
 		            	@foreach($category as $data_cate)
 		            		<option value="{{$data_cate->id}}"
+		            			@if($info_business)
 		            			@foreach($info_business->business_category as $val)
 		            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
 
 	            				@endforeach
+	            				@endif
 							>{{$data_cate->category_name}}</option>
 
 		            	@endforeach

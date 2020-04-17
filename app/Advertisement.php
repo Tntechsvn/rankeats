@@ -65,45 +65,45 @@ class Advertisement extends Model
 
 	// home
 	public function scopeHome($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->where('plan_details.pd_plan_id', 1);
+			->where('plan_details.pd_plan_id', 1)->whereNull('businesses.deleted_at');
 	}
 	// search
 	public function scopeSearch($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->whereIn('plan_details.pd_plan_id', [2,4]);
+			->whereIn('plan_details.pd_plan_id', [2,4])->whereNull('businesses.deleted_at');
 	}
 	// state
 	public function scopeSearchState($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->where('plan_details.pd_plan_id', 4);
+			->where('plan_details.pd_plan_id', 4)->whereNull('businesses.deleted_at');
 	}
 	// city
 	public function scopeSearchCity($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->where('plan_details.pd_plan_id', 2);
+			->where('plan_details.pd_plan_id', 2)->whereNull('businesses.deleted_at');
 	}
 	// feature
 	public function scopeFeature($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->whereIn('plan_details.pd_plan_id', [5,7]);
+			->whereIn('plan_details.pd_plan_id', [5,7])->whereNull('businesses.deleted_at');
 	}
 	// state feature
 	public function scopeFeatureState($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->where('plan_details.pd_plan_id', 7);
+			->where('plan_details.pd_plan_id', 7)->whereNull('businesses.deleted_at');
 	}
 	// city feature
 	public function scopeFeatureCity($query) {
-		return $query->with('business')
+		return $query->join('businesses','businesses.id','=','advertisements.business_id')
 			->join('plan_details', 'plan_details.id', '=', 'advertisements.plan_detail_id')
-			->where('plan_details.pd_plan_id', 5);
+			->where('plan_details.pd_plan_id', 5)->whereNull('businesses.deleted_at');
 	}
 
 	public function scopePending($query) {
@@ -130,6 +130,6 @@ class Advertisement extends Model
 			return asset('storage').'/'.$this->image;
 	}
 	public function checkStatus(){
-		return $this->where('business_id',$this->business_id)->where('plan_detail_id',$this->plan_detail_id)->Active()->count();
+		return $this->Active()->count();
 	}
 }

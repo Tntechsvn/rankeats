@@ -43,7 +43,7 @@ class AdminController extends Controller
     	$ads_active_home = Advertisement::select('advertisements.*')->home()->GetActive()->get();
     	$ads_active_search = Advertisement::select('advertisements.*')->search()->GetActive()->get();
     	$ads_active_feature = Advertisement::select('advertisements.*')->feature()->GetActive()->get();
-
+        
     	$ads_expired_home = Advertisement::select('advertisements.*')->home()->expired()->get();
     	$ads_expired_search = Advertisement::select('advertisements.*')->search()->expired()->get();
     	$ads_expired_feature = Advertisement::select('advertisements.*')->feature()->expired()->get();

@@ -2,10 +2,10 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
+	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
 		<img src="images/promo.jpg" alt="" class="fade">
 
-		<div class="col-lg-12 inform-results">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inform-results">
 			<h1>Search Results For "{{ (isset($keyword)) ? $keyword : 'All Eats'}}"</h1>
 		</div>
 	</div>
@@ -14,7 +14,7 @@
 		<div class="col-sm-12 col-xs-12 " style="margin-top:30px;text-align: center;">
 			@include('layouts.form-search')
 		</div>
-		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search p-t-20 p-b-20" style="margin-top:30px;">
+		<div class="col-sm-12 col-xs-12  col-md-8 col-lg-8 content-search" style="margin-top:30px;">
 			@if(count($data_business_sponsored) > 0)
 			<div class="results-sponsored">
 				<h3 class="title">Sponsored Results</h3>
@@ -49,7 +49,12 @@
 									@endphp
 									
 								</ul>
-								<a href="javascript:;" class="review-popup"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
+								@php
+									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
+										       ->where('type_rate','=',1)
+										       ->whereNull('users.deleted_at')->count();
+								@endphp
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 						</div>					
 					</div>
@@ -90,7 +95,12 @@
 									@endphp
 									
 								</ul>
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$data->total_vote}} <i>reviews</i></span></a>
+								@php
+									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
+										       ->where('type_rate','=',1)
+										       ->whereNull('users.deleted_at')->count();
+								@endphp
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							
 							@if(Auth::check())
@@ -113,9 +123,9 @@
 				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26361000.332878!2d-113.75050573534398!3d36.242031228413545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2zSG9hIEvhu7M!5e0!3m2!1svi!2s!4v1586315585512!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 			</div>
 			<div>
-				<h4>Is the EAT for a business you’re looking for missing?</h4>
+				<h4 style="font-size: 14px;" class="p-t-15">Is the EAT for a business you’re looking for missing?</h4>
 				<div class="underMap" style="margin-top:10px;">
-					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;" class="btn btn-primary" >Add EAT </a>
+					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;background-color: #0d59b7;width: 100px;height: 35px;" class="btn bold" >Add EAT </a>
 				</div>
 				
 			</div>
@@ -289,18 +299,19 @@
 
 	</div>
 </div>
-<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
-	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
+<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
+	<div class="modal-dialog" style="max-width: 850px;width: 100%;">
 
 		<!-- Modal content-->
 			<div class="modal-content">
-				<div class="modal-header">
+				{{-- <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
-					<h3 class="title m-b-20">Review business</h3>
-				</div>
-				<div class="modal-body">
-					<div id="reviewforbusiness" class="tab-pane">
 					
+				</div> --}}
+				<div class="modal-body">
+					<h3 class="title m-b-20">Reviews</h3>
+					<div id="reviewforbusiness" class="tab-pane">
+						
 						<h1 class="no-results hidden" style="text-align: center; "></h1>
 					</div>
 				</div>

@@ -84,6 +84,11 @@ class PaymentController extends Controller
     }
 
     public function submitPayment(Request $request) {
+        $info_business = Auth::user()->business()->first();
+        if(!$info_business){
+            session()->put('error',"You don't have a business yet, please add a new business then return");
+            return redirect()->back();
+        }
         if(Auth::user()->role_id != 3){
             session()->put('error',"Business accounts can purchase advertising packages");
             return redirect()->back();

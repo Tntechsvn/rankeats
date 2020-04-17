@@ -299,10 +299,12 @@ public function create_advertise(){
 public function eat_reviews(Request $request){
         $user_id = Auth::id();
         /*list reviews for business*/
-        $list_review_eats = Review_rating::where('user_id','=',$user_id)
-        ->where('type_rate','=',2)
-        ->orderBy('created_at', 'desc')
-        ->paginate(Myconst::PAGINATE_ADMIN);
+        $list_review_eats = Review_rating::where('review_ratings.user_id','=',$user_id)
+       ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+       ->where('type_rate','=',2)
+       ->whereNull('businesses.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
 
         return view('layouts_profile.eat-review',compact('list_review_eats'));
    
@@ -311,17 +313,30 @@ public function eat_reviews(Request $request){
 public function business_review(){
        $user_id = Auth::id();
        /*list reviews for business*/
-       $list_reviews = Review_rating::where('user_id','=',$user_id)
+       $list_reviews = Review_rating::where('review_ratings.user_id','=',$user_id)
+       ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
        ->where('type_rate','=',1)
-       ->orderBy('created_at', 'desc')
+       ->whereNull('businesses.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
     return view('layouts_profile.business-review',compact('list_reviews'));
 }
 /*single_restaurent*/
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
-    $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
-    $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+    $list_reviews = $info_business->Review_rating()
+       ->join('users','users.id','=','review_ratings.user_id')
+       ->where('type_rate','=',1)
+       ->whereNull('users.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
+    $list_review_eats = $info_business-> Review_rating()
+       ->join('users','users.id','=','review_ratings.user_id')
+       ->where('type_rate','=',2)
+       ->whereNull('users.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
+
     return view('layouts.single-business',compact('info_business','list_reviews','list_review_eats'));
 }
 public function ajax_bookmark(Request $request){
@@ -644,7 +659,10 @@ public function reaction_review(Request $request){
     {
         $business = Business::find($request->id);
         // dd($business);
-        $reviews = $business->review_rating()->where('type_rate','=',1)->get();
+        $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+                                             ->where('type_rate','=',1)
+                                             ->whereNull('users.deleted_at')
+                                             ->get();
         if(count($reviews) == 0){
             return response()->json([
             'success' => false,

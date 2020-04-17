@@ -6,9 +6,9 @@
 <div class="promo">
   <div class="container">
     <div class="front-search">
-      {{-- <h1>Find The Best, Eat The Best</h1> --}}
+      
       <div class="banner-image">
-      @if($ads_active_home)
+      @if(count($ads_active_home))
         @foreach($ads_active_home as $ad)
         <div>
           <a href="{{$ad->business->permalink()}}">
@@ -18,24 +18,7 @@
         </div>
         @endforeach
       @else
-        <div>
-          <a href="javascript:;">
-            <img src="images/oyster.png" alt="">
-            <span>Neptune Oyster</span>
-          </a>
-        </div>
-        <div>
-          <a href="javascript:;">
-            <img src="images/prozlab.png" alt="">
-            <span>FrozLab</span>
-          </a>
-        </div>
-        <div>
-          <a href="javascript:;">
-            <img src="images/lobster.png" alt="">
-            <span>Luke's Lobster Back Bay</span>
-          </a>
-        </div>
+        <h1>Find The Best, Eat The Best</h1>
       @endif
       </div>
       @include('layouts.form-search')

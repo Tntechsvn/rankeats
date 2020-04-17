@@ -1,13 +1,13 @@
 
 $(function () {
 	function before_ajax() {
-	    $('body').prepend('<div class="loading"><div class="spinner">\
+    $('body').prepend('<div class="loading"><div class="spinner">\
 	              <i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>\
 	            </div></div>');
-  	}
-  	function after_ajax() {
-    	$('body').find('.loading').remove();
-  	}
+	}
+	function after_ajax() {
+  	$('body').find('.loading').remove();
+	}
   	// $(document).ajaxStart(function(){
    //  	before_ajax();
    // 	});
@@ -16,7 +16,14 @@ $(function () {
    //   	after_ajax();
    // 	});
 });
-
+function before_ajax() {
+    $('body').prepend('<div class="loading"><div class="spinner">\
+                <i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>\
+              </div></div>');
+  }
+  function after_ajax() {
+    $('body').find('.loading').remove();
+  }
 // sign-in
 $(document).on('click','.signin-popup',function(e){
 	e.preventDefault();
@@ -79,8 +86,8 @@ $(document).on('click','.unvote_submit',function(e){
     success:function(res){
       modall.modal('hide');
       var vote_id = '.vote-'+business_id+'-'+res.city_id;
-      $('#main').find(vote_id).removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
-      $('#businessreview').find('.unvote').removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
+      $('#main').find(vote_id).removeClass('unvote').addClass('vote_now').html('Vote');
+      $('#businessreview').find('.unvote').removeClass('unvote').addClass('vote_now').html('Vote');
       swal({
         title: res.message,
         timer: 4000
@@ -259,6 +266,7 @@ $(document).on('click','.funnyy',function(){
 // review popup
 
 $(document).on('click','.review-popup',function(){
+  before_ajax();
   var url = $('input[name=review_search]').val();
   id = $(this).data('id');
   target = $('#review-popup');
@@ -273,9 +281,11 @@ $(document).on('click','.review-popup',function(){
     },
     success:function(res){
       if(res.success == true){
+          after_ajax();
           target.modal('show');
           target.find('#reviewforbusiness').html(res.data);
       }else{
+        after_ajax();
         target.modal('show');
         target.find('.no-results').removeClass('hidden').html(res.message);
       }

@@ -1,13 +1,11 @@
 
 
 @foreach($reviews as $review)
-<div class="row m-b-20">
-	<div class="col-lg-2">
-		<div class="avata">
-			<img src="{{($review->user->url_avatar) ? asset('').'storage/'.($review->user->url_avatar) : 'images/avatar-default.png'}}" alt=""  style="width: 80px;height: 80px;object-fit: cover;border-radius: 50%;">
-		</div>
+<div class="list-review m-b-20">
+	<div class="avata">
+		<img src="{{($review->user->url_avatar) ? asset('').'storage/'.($review->user->url_avatar) : 'images/avatar-default.png'}}" alt=""  style="width: 63px;height: 63px;object-fit: cover;border-radius: 50%;">
 	</div>
-	<div class="col-lg-10" style="margin-left: -15px;">
+	<div class="info" style="">
 		<div class="content-right p-b-20">
 		<h4>{{$review->user->name ?? ""}}</h4>
 		<span class="review-date">{{$review -> created_at}}</span>
@@ -23,3 +21,4 @@
 	</div>
 </div>
 @endforeach
+{{-- {!!$reviews -> appends(request()->except('page')) -> links()!!} --}}
