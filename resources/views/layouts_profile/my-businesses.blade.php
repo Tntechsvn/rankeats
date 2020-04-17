@@ -1,5 +1,11 @@
 @extends('layouts_home.master')
 @section('content')
+
+@php 
+	$reviews = $info_business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+										       ->where('type_rate','=',1)
+										       ->whereNull('users.deleted_at')->get();
+@endphp
 <div id="main">
 	<div class="container profile-header">
 		<div class="profile-header-inner">
@@ -127,7 +133,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<i class="fas fa-star"></i> Reviews: <a href="javascript" data-toggle="modal" data-target="#review-popup">{{$info_business->review()->count()}} reviews </a>
+								<i class="fas fa-star"></i> Reviews: <a href="javascript" data-toggle="modal" data-target="#review-popup">{{$reviews->count()}} reviews </a>
 							</div>
 							<div class="form-group">
 								<span>Time open - close</span>
@@ -235,7 +241,7 @@
 				<div class="modal-body">
 					<div id="reviewforbusiness" class="tab-pane">
 					
-					@foreach($info_business->review_rating()->where('type_rate','=',1)->get() as $data)
+					@foreach( $reviews as $data)
 					<div class="row m-b-20">
 						<div class="col-lg-2">
 							<div class="avata">

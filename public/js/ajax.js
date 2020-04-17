@@ -1,13 +1,13 @@
 
 $(function () {
 	function before_ajax() {
-	    $('body').prepend('<div class="loading"><div class="spinner">\
+    $('body').prepend('<div class="loading"><div class="spinner">\
 	              <i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>\
 	            </div></div>');
-  	}
-  	function after_ajax() {
-    	$('body').find('.loading').remove();
-  	}
+	}
+	function after_ajax() {
+  	$('body').find('.loading').remove();
+	}
   	// $(document).ajaxStart(function(){
    //  	before_ajax();
    // 	});
@@ -16,7 +16,14 @@ $(function () {
    //   	after_ajax();
    // 	});
 });
-
+function before_ajax() {
+    $('body').prepend('<div class="loading"><div class="spinner">\
+                <i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>\
+              </div></div>');
+  }
+  function after_ajax() {
+    $('body').find('.loading').remove();
+  }
 // sign-in
 $(document).on('click','.signin-popup',function(e){
 	e.preventDefault();
@@ -79,8 +86,8 @@ $(document).on('click','.unvote_submit',function(e){
     success:function(res){
       modall.modal('hide');
       var vote_id = '.vote-'+business_id+'-'+res.city_id;
-      $('#main').find(vote_id).removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
-      $('#businessreview').find('.unvote').removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
+      $('#main').find(vote_id).removeClass('unvote').addClass('vote_now').html('Vote');
+      $('#businessreview').find('.unvote').removeClass('unvote').addClass('vote_now').html('Vote');
       swal({
         title: res.message,
         timer: 4000
@@ -116,21 +123,12 @@ $(document).on('click','.vote_now',function(){
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
-          var vote_id = '.vote-'+business+'-'+res.city_id;
-          $('#main').find('.unvote').removeClass('btn-danger').addClass('vote_now').addClass('btn-success').removeClass('unvote').html('Vote');
-          $('#main').find(vote_id).removeClass('btn-success').addClass('btn-danger').addClass('unvote').html('Voted');
-          $this.html('Voted');
-          $this.removeClass('btn-success').addClass('unvote').removeClass('vote_now').addClass('btn-danger');
+          var vote_id = '.vote-'+res.id_voted +'-'+res.city_id;
+          $('#main').find(vote_id).removeClass('unvote').addClass('vote_now').html('Vote');
+          $this.html('My Vote');
+          $this.addClass('unvote').removeClass('vote_now');
       }else{
-        // swal({
-        //   title: res.message,
-        //   timer: 2000
-        // });;
-        // var unvote_modal = $('#un_vote');
-        // unvote_modal.find('.message').html(res.message);
-        // unvote_modal.find('input[name=business_id]').val(res.business_id);
-        // unvote_modal.find('input[name=city_id]').val(res.city_id);
-        // unvote_modal.modal('show');
+        
       }
     }
   });
@@ -260,6 +258,36 @@ $(document).on('click','.funnyy',function(){
           title: res.message,
           timer: 2000
         });
+      }
+    }
+  });
+});
+
+// review popup
+
+$(document).on('click','.review-popup',function(){
+  before_ajax();
+  var url = $('input[name=review_search]').val();
+  id = $(this).data('id');
+  target = $('#review-popup');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      id: id
+    },
+    success:function(res){
+      if(res.success == true){
+          after_ajax();
+          target.modal('show');
+          target.find('#reviewforbusiness').html(res.data);
+      }else{
+        after_ajax();
+        target.modal('show');
+        target.find('.no-results').removeClass('hidden').html(res.message);
       }
     }
   });

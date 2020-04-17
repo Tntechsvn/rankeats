@@ -190,9 +190,9 @@
 				    		<div style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote($info_business->id))
-							    		<a  href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn btn-warning @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
+							    		<a style="color: #fff;" href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn vote @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
 							    	@else
-							    		<a  href="javascript:;"  class="btn btn-danger unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Voted</a>
+							    		<a  href="javascript:;"  class="btn unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Voted</a>
 							    	@endif
 						    	@else
 

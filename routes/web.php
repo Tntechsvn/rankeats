@@ -152,5 +152,9 @@
 		'as' => 'reaction_review',
 		'uses' => 'HomeController@reaction_review'
 	]);
+	Route::post('/review-search', [
+		'as' => 'review_search',
+		'uses' => 'HomeController@review_search'
+	]);
 	
 // end hungpro

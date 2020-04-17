@@ -388,55 +388,44 @@ public function vote_ajax(Request $request){
     
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
-    // $vote = Vote::select('*')
-    // ->where('user_id','=',$user->id)
-    // ->where('type_vote','=',1)
-    // ->where('city_id','=',$city_id)
-    // ->first();
-    // if($vote){
-    //     // $business_voted = Business::find($vote->business_id);
-    //     return response()->json([
-    //         'success' => false,
-    //         // 'message' => "You voted for <b>".$business_voted->name."</b>, 0/1 votes remain.",
-    //         // 'business_id' => $business_voted->id,
-    //         // 'city_id' => $city_id
-    //     ]);
-    // }else{
-        $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
-        if($check_vote_city ){
-             $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->delete();
-             $new_vote = new Vote;
-             $new_vote -> user_id = $user->id;
-             $new_vote -> business_id = $data_business->id;
-             $new_vote -> state_id = $data_business->location->IdState;
-             $new_vote -> city_id = $city_id;
+    
+    $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
+    if($check_vote_city ){
+        $id_voted = $check_vote_city->business_id;
+         $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->delete();
+         $new_vote = new Vote;
+         $new_vote -> user_id = $user->id;
+         $new_vote -> business_id = $data_business->id;
+         $new_vote -> state_id = $data_business->location->IdState;
+         $new_vote -> city_id = $city_id;
 
-             /*vote = 1 vote cho business bằng 2 vote cho eat*/
-             $new_vote -> type_vote = 1;
-             $new_vote -> save();
+         /*vote = 1 vote cho business bằng 2 vote cho eat*/
+         $new_vote -> type_vote = 1;
+         $new_vote -> save();
 
-             return response()->json([
-                'success' => true
-            ]);
+         return response()->json([
+            'success' => true,
+            'city_id' => $city_id,
+            'id_voted' => $id_voted
+        ]);
 
-        }else{
-            $new_vote = new Vote;
-            $new_vote -> user_id = $user->id;
-            $new_vote -> business_id = $data_business->id;
-            $new_vote -> state_id = $data_business->location->IdState;
-            $new_vote -> city_id = $city_id;
-            
-            /*vote = 1 vote cho business bằng 2 vote cho eat*/
-            $new_vote -> type_vote = 1;
-            $new_vote -> save();
-
-            return response()->json([
-                'success' => true,
-                'city_id' => $city_id
-            ]);
-        }
+    }else{
+        $new_vote = new Vote;
+        $new_vote -> user_id = $user->id;
+        $new_vote -> business_id = $data_business->id;
+        $new_vote -> state_id = $data_business->location->IdState;
+        $new_vote -> city_id = $city_id;
         
-    // }
+        /*vote = 1 vote cho business bằng 2 vote cho eat*/
+        $new_vote -> type_vote = 1;
+        $new_vote -> save();
+        return response()->json([
+            'success' => true,
+            'city_id' => $city_id
+        ]);
+    }
+        
+
 
 }
 /*knight*/
@@ -664,5 +653,30 @@ public function reaction_review(Request $request){
 
     
 }
+
+// review popup
+
+    public function review_search(Request $request)
+    {
+        $business = Business::find($request->id);
+        // dd($business);
+        $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+                                             ->where('type_rate','=',1)
+                                             ->whereNull('users.deleted_at')
+                                             ->get();
+        if(count($reviews) == 0){
+            return response()->json([
+            'success' => false,
+            'message' => "Not review for Business"
+        ]);
+        }
+        $data = "";
+        $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        $data .= (string) $view;
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 
 }
