@@ -146,7 +146,7 @@
 			<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
 				@csrf
 				<input type="hidden" name="business_id" value="">
-				<input type="hidden" name="category_id" value="{{$category_search->id}}">
+				<input type="hidden" name="category_id" value="{{$category_search->id ?? ""}}">
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="avata-popup " style="width: 100%;text-align: center;">

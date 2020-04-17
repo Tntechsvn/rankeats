@@ -205,7 +205,7 @@
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 					<h2 style="text-align: center;">Sent message to follwers</h2>
 				</div>
 				<div class="modal-body">
@@ -230,13 +230,13 @@
 	</div>
 </div>
 <div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
-	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
+	<div class="modal-dialog" style="max-width: 920px;width: 100%;">
 
 		<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="far fa-times-circle"></i></button>
-					<h3 class="title m-b-20">Review business</h3>
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
+					<h3 class="title">Review business</h3>
 				</div>
 				<div class="modal-body">
 					<div id="reviewforbusiness" class="tab-pane">
@@ -247,7 +247,7 @@
 						<div class="avata">
 							<img src="images/avatar-default.png" alt="" >
 							<div class="photo-img">
-								<a href="javascript:;"><i class="fas fa-camera-retro"></i> 20 photo</a>
+								<a href="javascript:;" class="show-photo"><i class="fas fa-camera-retro"></i> 20 photo</a>
 								
 							</div>
 							
@@ -260,7 +260,7 @@
 									@for($i = 1;$i <= 5;$i++)
 									<i class="fas fa-star star-rate"></i>
 									@endfor
-									<span class="review-date">04/18/2020</span>
+									<span class="review-date">{{$data -> created_at}}</span>
 								</div>
 								<div class="review-address">
 									<i class="fas fa-map-marker-alt"></i> {{$data->user->location->address ?? ""}}, {{$data->user->location->city ?? ""}}, {{$data->user->location->state ?? ""}}, {{$data->user->location->country ?? ""}} 
@@ -280,6 +280,7 @@
 		                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
 		                                    </a>       
 		                                </li>
+						    			
 									</ul>
 								</div>
 							</div>
@@ -293,21 +294,40 @@
 
 	</div>
 </div>
+<div id="photo-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
 
-{{-- 
+		<!-- Modal content-->
+		<form action="{{route('sendMailFollwers')}}" method="post" accept-charset="utf-8">
+			@csrf
+			<input type="hidden" name="business" value="{{$info_business->id}}">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+					<h3>Images of Kimberly S</h3>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<input class="form-control" type="text" name="subject" value="" placeholder="Subject">
+						<span class="bg-danger color-palette">{{$errors -> first('subject')}}</span>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" name="message" placeholder="Message"></textarea>
+						<span class="bg-danger color-palette">{{$errors -> first('message')}}</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="firstWindow" style="width: 100%">
+						<button type="submit" class="btn btn-default " data-dismiss="modal" >Cancel</button>
+						<button type="submit" class="btn btn-primary " >Save</button>
+					</div>
+				</div>
+			</div>
+		</form>
 
-<h4>{{$data->user->name ?? ""}}</h4>
-							<span class="review-date">{{$data -> created_at}}</span>
-							<div class="star-view clear p-b-10">
-								@for($i = 1;$i <= $data->rate;$i++)
-								<i class="fas fa-star star-rate"></i>
-								@endfor
-								<span class="bold p-l-20">Review business {{$data->business->name}}</span>
-							</div>
-							
-							<p>{{$data->description}}</p>
+	</div>
+</div>
 
- --}}
 @endsection
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>

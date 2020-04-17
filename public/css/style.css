@@ -2407,7 +2407,38 @@ width: 30% !important;
 .list-picture {
 	display: inline-block;
 	padding-right: 10px;
+	padding-bottom: 10px;
 }
+.review-address svg {
+    color: #0073bb;
+}
+.modal-header {
+	background-color: #0d59b7;
+}
+.modal-header h3 {
+	color: #fff;
+}
+.modal-header .title::after {
+    background-color: #fff;
+}
+.modal-header .close {
+	right: 15px;
+	top: 17px;
+	opacity: 1;
+}
+.modal-header .close svg {
+	color: #fff;
+}
+#photo-popup .modal-dialog {
+	width: 700px;
+}
+
+
+
+
+
+
+
 
 
 

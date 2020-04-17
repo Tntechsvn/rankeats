@@ -292,3 +292,11 @@ $(document).on('click','.review-popup',function(){
     }
   });
 });
+
+// photo popup
+
+$(document).on('click','.show-photo',function(){
+  var modal = $('#photo-popup');
+  modal.modal('show');
+
+});
