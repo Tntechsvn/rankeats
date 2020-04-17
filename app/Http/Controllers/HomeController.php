@@ -116,9 +116,9 @@ class HomeController extends Controller{
         ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){  
              if($city != ''){        
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }
         })
         ->whereNull('advertisements.deleted_at')
@@ -130,13 +130,13 @@ class HomeController extends Controller{
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results*/
 
-        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state',DB::raw('businesses.total_rate / businesses.total_vote AS rate'),)
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state',DB::raw('businesses.total_rate / businesses.total_vote AS rate'))
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
         ->whereNotNull('businesses.activated_on')
@@ -299,10 +299,12 @@ public function create_advertise(){
 public function eat_reviews(Request $request){
         $user_id = Auth::id();
         /*list reviews for business*/
-        $list_review_eats = Review_rating::where('user_id','=',$user_id)
-        ->where('type_rate','=',2)
-        ->orderBy('created_at', 'desc')
-        ->paginate(Myconst::PAGINATE_ADMIN);
+        $list_review_eats = Review_rating::where('review_ratings.user_id','=',$user_id)
+       ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+       ->where('type_rate','=',2)
+       ->whereNull('businesses.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
 
         return view('layouts_profile.eat-review',compact('list_review_eats'));
    
@@ -311,17 +313,30 @@ public function eat_reviews(Request $request){
 public function business_review(){
        $user_id = Auth::id();
        /*list reviews for business*/
-       $list_reviews = Review_rating::where('user_id','=',$user_id)
+       $list_reviews = Review_rating::where('review_ratings.user_id','=',$user_id)
+       ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
        ->where('type_rate','=',1)
-       ->orderBy('created_at', 'desc')
+       ->whereNull('businesses.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
     return view('layouts_profile.business-review',compact('list_reviews'));
 }
 /*single_restaurent*/
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
-    $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
-    $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+    $list_reviews = $info_business->Review_rating()
+       ->join('users','users.id','=','review_ratings.user_id')
+       ->where('type_rate','=',1)
+       ->whereNull('users.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
+    $list_review_eats = $info_business-> Review_rating()
+       ->join('users','users.id','=','review_ratings.user_id')
+       ->where('type_rate','=',2)
+       ->whereNull('users.deleted_at')
+       ->orderBy('review_ratings.created_at', 'desc')
+       ->paginate(Myconst::PAGINATE_ADMIN);
+
     return view('layouts.single-business',compact('info_business','list_reviews','list_review_eats'));
 }
 public function ajax_bookmark(Request $request){
