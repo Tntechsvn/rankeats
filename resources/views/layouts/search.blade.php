@@ -110,7 +110,7 @@
 				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}">My Vote</a>
 				    			@endif
 			    			@else
-			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
+			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal-vote" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
 			    			@endif
 						</div>					
 					</div>
@@ -125,7 +125,7 @@
 			<div>
 				<h4 style="font-size: 14px;" class="p-t-15">Is the EAT for a business you’re looking for missing?</h4>
 				<div class="underMap" style="margin-top:10px;">
-					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;background-color: #0d59b7;width: 100px;height: 35px;" class="btn bold" >Add EAT </a>
+					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal-addeat" @endif data-toggle="modal" style="color:#fff;background-color: #0d59b7;width: 100px;height: 35px;" class="btn bold" >Add EAT </a>
 				</div>
 				
 			</div>
@@ -261,7 +261,7 @@
 	</div>
 </div>
 
-<div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+<div id="loginModal-addeat" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -272,6 +272,25 @@
 			</div>
 			<div class="modal-body">
 				<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="loginModal-vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">&nbsp;</h4>
+			</div>
+			<div class="modal-body">
+				<p>Must be logged in to vote, <a href="{{route('sign_in')}}">Login Here</a></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
