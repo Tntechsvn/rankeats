@@ -403,7 +403,6 @@ public function vote_ajax(Request $request){
         /*vote = 1 vote cho business bằng 2 vote cho eat*/
         $new_vote -> type_vote = 1;
         $new_vote -> save();
-        dd($city_id);
         return response()->json([
             'success' => true,
             'city_id' => $city_id
