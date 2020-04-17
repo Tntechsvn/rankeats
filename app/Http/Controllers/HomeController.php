@@ -403,7 +403,6 @@ public function vote_ajax(Request $request){
         /*vote = 1 vote cho business bằng 2 vote cho eat*/
         $new_vote -> type_vote = 1;
         $new_vote -> save();
-        dd($city_id);
         return response()->json([
             'success' => true,
             'city_id' => $city_id
@@ -645,7 +644,10 @@ public function reaction_review(Request $request){
     {
         $business = Business::find($request->id);
         // dd($business);
-        $reviews = $business->review_rating()->where('type_rate','=',1)->get();
+        $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+                                             ->where('type_rate','=',1)
+                                             ->whereNull('users.deleted_at')
+                                             ->get();
         if(count($reviews) == 0){
             return response()->json([
             'success' => false,
