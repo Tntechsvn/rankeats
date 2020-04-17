@@ -250,12 +250,12 @@
 				    		<div class="p-t-15" style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
-					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+					    				<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
 					    			@else
-					    			<a href="javascript:;" class="btn btn-danger" style="color: #fff;">Voted</a>
+						    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}">My Vote</a>
 					    			@endif
 				    			@else
-				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-success" style="color: #fff;">Vote</a>
+			    					<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
 				    			@endif
 				    			{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 				    		</div>

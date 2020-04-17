@@ -79,8 +79,8 @@ $(document).on('click','.unvote_submit',function(e){
     success:function(res){
       modall.modal('hide');
       var vote_id = '.vote-'+business_id+'-'+res.city_id;
-      $('#main').find(vote_id).removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
-      $('#businessreview').find('.unvote').removeClass('btn-danger').removeClass('unvote').addClass('btn-success').addClass('vote_now').html('Vote');
+      $('#main').find(vote_id).removeClass('unvote').addClass('vote_now').html('Vote');
+      $('#businessreview').find('.unvote').removeClass('unvote').addClass('vote_now').html('Vote');
       swal({
         title: res.message,
         timer: 4000

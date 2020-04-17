@@ -2309,6 +2309,9 @@ width: 30% !important;
     bottom: 10px;
     width: 80px;
 }
+.banner-image h1 {
+	padding-top: 80px;
+}
 .funny {
 	text-align: center;
 }
@@ -2441,9 +2444,7 @@ width: 30% !important;
 		float: none;
     	max-width: 100%;
 	}
-	.food-main .imbx {
-		display: block;
-	}
+
 	.pr-dtl,.pr-dtlr {
 		margin: 0;
 	}
@@ -2588,6 +2589,9 @@ width: 30% !important;
 	#login-dp {
 		display: block;
 	}
+	.imbx-detail {
+		padding-left: 15px;
+	}
 
 }
 @media(max-width: 320px){
@@ -2624,19 +2628,6 @@ width: 30% !important;
 }
 
 @media (max-width: 414px){
-	.imbx {
-		width: 100%;
-	}
-	.imbx-detail {
-		width: 100%;
-	}
-	.pr-dtl {
-	    margin: 0;
-	}
-	.imbx-detail > p {
-	    font-size: 14px;
-	    margin: 5px 0 15px;
-	}
 	a.btn.btn-warning.vote_now {
 	    padding: 6px 20px;
 	    margin: 5px 0 10px;
@@ -2650,5 +2641,23 @@ width: 30% !important;
 	}
 	.reiview.description .tap-pane li {
 		margin-bottom: 5px;
+	}
+}
+@media(max-width: 480px){
+	.food-main .imbx {
+		display: block;
+	}
+	.imbx {
+		width: 100%;
+	}
+	.imbx-detail {
+		width: 100%;
+	}
+	.pr-dtl {
+	    margin: 0;
+	}
+	.imbx-detail > p {
+	    font-size: 14px;
+	    margin: 5px 0 15px;
 	}
 }
