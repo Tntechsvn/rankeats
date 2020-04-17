@@ -30,6 +30,7 @@ class ReviewsController extends Controller
         ->where(function($query) use ($keyword){            
             $query->where('businesses.name', 'LIKE', '%'.$keyword.'%')->orwhere('users.name', 'LIKE', '%'.$keyword.'%');
         })
+        ->whereNull('businesses.deleted_at')
         ->where('review_ratings.type_rate','=',1)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
@@ -61,6 +62,7 @@ class ReviewsController extends Controller
             $query->where('businesses.name', 'LIKE', '%'.$keyword.'%')->orwhere('users.name', 'LIKE', '%'.$keyword.'%');
         })
         ->where('review_ratings.type_rate','=',2)
+        ->whereNull('businesses.deleted_at')
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
         $total_record =  $list_reviews->total();
