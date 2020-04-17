@@ -115,7 +115,7 @@ class ReviewsController extends Controller
         }
         $user_id = Auth::user()->id;
         /*create review */
-        $check_reviews_business = Review_rating::where('id_rate_from',$request -> business_id)
+        $check_reviews_business = Review_rating::where('user_id',$user_id)->where('id_rate_from',$request -> business_id)
                                                 ->where('category_id',$request -> category_id)
                                                 ->where('type_rate',2)->count();
         if($check_reviews_business > 0){
