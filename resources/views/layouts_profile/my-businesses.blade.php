@@ -307,20 +307,14 @@
 					<h3>Images of Kimberly S</h3>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
-						<input class="form-control" type="text" name="subject" value="" placeholder="Subject">
-						<span class="bg-danger color-palette">{{$errors -> first('subject')}}</span>
+					<div class="no-photo ">
+						<img src="images/no-photo.png" alt="">
+						<p class="bold">Don't have image review</p>
 					</div>
-					<div class="form-group">
-						<textarea class="form-control" name="message" placeholder="Message"></textarea>
-						<span class="bg-danger color-palette">{{$errors -> first('message')}}</span>
-					</div>
+					
 				</div>
 				<div class="modal-footer">
-					<div class="firstWindow" style="width: 100%">
-						<button type="submit" class="btn btn-default " data-dismiss="modal" >Cancel</button>
-						<button type="submit" class="btn btn-primary " >Save</button>
-					</div>
+					<button type="button" class="btn " data-dismiss="modal">Back</button>
 				</div>
 			</div>
 		</form>

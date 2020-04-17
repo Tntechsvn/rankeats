@@ -2429,10 +2429,24 @@ width: 30% !important;
 .modal-header .close svg {
 	color: #fff;
 }
-#photo-popup .modal-dialog {
-	width: 700px;
+.modal-body .no-photo {
+	text-align: center;
+	padding-top: 40px;
 }
-
+.modal-body .no-photo p {
+	padding-top: 20px;
+}
+.modal-footer {
+    padding: 15px 0 40px;
+    text-align: center;
+    border-top: none;
+}
+#photo-popup .modal-footer button {
+	width: 100px;
+	height: 40px;
+	border: 1px solid #b7b7b7;
+	background-color: #fff;
+}
 
 
 
