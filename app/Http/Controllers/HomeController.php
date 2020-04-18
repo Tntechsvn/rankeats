@@ -116,9 +116,9 @@ class HomeController extends Controller{
         ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){  
              if($city != ''){        
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }
         })
         ->whereNull('advertisements.deleted_at')
@@ -134,9 +134,9 @@ class HomeController extends Controller{
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
         ->whereNotNull('businesses.activated_on')

@@ -32,7 +32,7 @@ class Category extends Model
         if($this->url_img != null){
             return asset('').'storage/'.$this->url_img;
         }else{
-            return 'images/avatar.jpg';
+            return 'images/promo.jpg';
         }
     }
     /*rank business for state*/

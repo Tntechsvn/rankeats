@@ -64,7 +64,7 @@
 			<h3 class="title">All Results</h3>
 			<div class="clear"></div>
 			<div class="results-all">
-				
+				@if(count($data_business))
 				@foreach($data_business as $key => $data)
 					<div class="food-main">
 						<div class="imbx">
@@ -115,6 +115,9 @@
 						</div>					
 					</div>
 				@endforeach
+				@else
+					<h4 style="text-align: center;padding-bottom: 20px;">No Result<h4>
+				@endif
 				{!!$data_business -> appends(request()->except('page')) -> links()!!}
 			</div>
 		</div>
@@ -143,6 +146,7 @@
 			<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
 				@csrf
 				<input type="hidden" name="business_id" value="">
+				<input type="hidden" name="category_id" value="{{$category_search->id}}">
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
