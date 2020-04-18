@@ -105,9 +105,9 @@
 							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
-				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
+				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}">My Vote</a>
+				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
@@ -288,6 +288,8 @@
 <div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
 		<input type="hidden" name="business_id" value="">
+		<input type="hidden" name="category_id" value="">
+
 		{{-- <input type="hidden" name="city_id" value=""> --}}
 		<input type="hidden" name="unvoted" value="{{route('ajax_unvoted')}}">
 		<!-- Modal content-->
