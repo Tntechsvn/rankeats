@@ -31,6 +31,7 @@ class ReviewsController extends Controller
             $query->where('businesses.name', 'LIKE', '%'.$keyword.'%')->orwhere('users.name', 'LIKE', '%'.$keyword.'%');
         })
         ->whereNull('businesses.deleted_at')
+        ->whereNull('users.deleted_at')
         ->where('review_ratings.type_rate','=',1)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
@@ -63,6 +64,7 @@ class ReviewsController extends Controller
         })
         ->where('review_ratings.type_rate','=',2)
         ->whereNull('businesses.deleted_at')
+        ->whereNull('users.deleted_at')
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
         $total_record =  $list_reviews->total();
@@ -111,13 +113,46 @@ class ReviewsController extends Controller
                 'message' => 'Please correct the words '.$description,
             ]);
         }
-        // dd($request->toArray());
         $user_id = Auth::user()->id;
-        $reviews = new Review;        
-        $response = $reviews -> update_review($request,$user_id);
+        /*create review */
+        $check_reviews_business = Review_rating::where('user_id',$user_id)->where('id_rate_from',$request -> business_id)
+                                                ->where('category_id',$request -> category_id)
+                                                ->where('type_rate',2)->count();
+        if($check_reviews_business > 0){
+            return response()->json([
+                'success' => true,
+                'message' =>  'You have already rated this EAT',
+            ]);
+        }
+
+        $reviews_business = new Review;        
+        $response = $reviews_business -> update_review($request,$user_id);
         $data = $response->getData();
+
+        /*create review eat*/
+        if($request -> category_id){
+               $review_eat = new Review;
+               $review_eat -> user_id = $user_id;
+               $review_eat -> business_id = $request -> business_id;
+               $review_eat -> description = $request -> description;
+
+               if($review_eat -> save()){
+                /*update review rating*/
+                $review_rating = new Review_rating;
+                $review_rating -> user_id = $user_id;
+                $review_rating -> review_id = $review_eat -> id;
+                $review_rating -> id_rate_from = $review_eat -> business_id;
+                $review_rating -> category_id = $request -> category_id;
+                $review_rating -> type_rate = 2;
+                $review_rating -> rate = $request -> rate;
+                $review_rating -> save();
+            }
+        }
+       
+        /*end create reviews*/
         $info_business = Business::findOrfail($request -> business_id);
         $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
+
         if($data->success){
             session()->put('success',$data->message);
             $response = "";

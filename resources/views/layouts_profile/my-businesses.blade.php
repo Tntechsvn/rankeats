@@ -205,7 +205,7 @@
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 					<h2 style="text-align: center;">Sent message to follwers</h2>
 				</div>
 				<div class="modal-body">
@@ -230,51 +230,103 @@
 	</div>
 </div>
 <div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
-	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
+	<div class="modal-dialog" style="max-width: 920px;width: 100%;">
 
 		<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
-					<h3 class="title m-b-20">Review business</h3>
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
+					<h3 class="title">Review business</h3>
 				</div>
 				<div class="modal-body">
 					<div id="reviewforbusiness" class="tab-pane">
 					
 					@foreach( $reviews as $data)
-					<div class="row m-b-20">
-						<div class="col-lg-2">
-							<div class="avata">
-								<img src="images/avatar-default.png" alt="" style="width: 80px;">
-							</div>
-						</div>
-						<div class="col-lg-10" style="margin-left: -15px;">
-							<div class="content-right p-b-20">
-							<h4>{{$data->user->name ?? ""}}</h4>
-							<span class="review-date">{{$data -> created_at}}</span>
-							<div class="star-view clear p-b-10">
-								@for($i = 1;$i <= $data->rate;$i++)
-								<i class="fas fa-star star-rate"></i>
-								@endfor
-								<span class="bold p-l-20">Review business {{$data->business->name}}</span>
+					{{-- @dump($data) --}}
+					<div class="list-review m-b-20">
+						<div class="avata">
+							<img src="images/avatar-default.png" alt="" >
+							<div class="photo-img">
+								<a href="javascript:;" class="show-photo"><i class="fas fa-camera-retro"></i> 20 photo</a>
+								
 							</div>
 							
-							<p>{{$data->description}}</p>
 						</div>
+						<div class="info">
+							<div class="content-right p-b-20">
+								<h4>{{$data->user->name ?? ""}}</h4>
+							
+								<div class="star-view clear p-b-10">
+									@for($i = 1;$i <= 5;$i++)
+									<i class="fas fa-star star-rate"></i>
+									@endfor
+									<span class="review-date">{{$data -> created_at}}</span>
+								</div>
+								<div class="review-address">
+									<i class="fas fa-map-marker-alt"></i> {{$data->user->location->address ?? ""}}, {{$data->user->location->city ?? ""}}, {{$data->user->location->state ?? ""}}, {{$data->user->location->country ?? ""}} 
+								</div>
+								<p>{{$data->description}}</p>
+								<div class="picture-review">
+									<ul id="lightgalleryphoto" style="padding-left: 0">
+										<li class="list-picture" data-responsive="" data-src="images/pizza.jpg">
+		                                    <a href="images/pizza.jpg" class="lightbox">
+		                                        
+		                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+		                                    </a>       
+		                                </li>
+						    			<li class="list-picture" data-responsive="" data-src="images/pizza.jpg">
+		                                    <a href="images/pizza.jpg" class="lightbox">
+		                                        
+		                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+		                                    </a>       
+		                                </li>
+						    			
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 					@endforeach
+					<div class="clear"></div>
 				</div>
 				</div>
 			</div>
 
 	</div>
 </div>
+<div id="photo-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
 
+		<!-- Modal content-->
+		<form action="{{route('sendMailFollwers')}}" method="post" accept-charset="utf-8">
+			@csrf
+			<input type="hidden" name="business" value="{{$info_business->id}}">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+					<h3>Images of Kimberly S</h3>
+				</div>
+				<div class="modal-body">
+					<div class="no-photo ">
+						<img src="images/no-photo.png" alt="">
+						<p class="bold">Don't have image review</p>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn " data-dismiss="modal">Back</button>
+				</div>
+			</div>
+		</form>
+
+	</div>
+</div>
 
 @endsection
 @section('script')
+<script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
+	$("#lightgalleryphoto").lightGallery();
 	$('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
         startDate: '0d',
@@ -304,6 +356,7 @@
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+
 			$('.test1').fSelect();
 			$('.timepic').timepicker({
 		        timeFormat: 'H:mm',

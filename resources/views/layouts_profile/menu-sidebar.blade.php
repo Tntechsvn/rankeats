@@ -5,14 +5,12 @@
 	<li class="{{ Route::currentRouteNamed('eat_reviews') ? 'active' : '' }}">
 		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews ({{Auth::user()->review_rating()->where('type_rate','=','2')->count()}})</a>
 	</li>
-	@if(Auth::user()->check_role_business())
 	<li class="{{ Route::currentRouteNamed('business_rank') ? 'active' : '' }}">
 		<a href="{{route('business_rank')}}"><i class="fa fa-comments"></i>Business Ranks</a>
 	</li>
 	<li class="{{ Route::currentRouteNamed('eat_rank') ? 'active' : '' }}">
 		<a href="{{route('eat_rank')}}"><i class="fa fa-comments"></i>EAT Ranks</a>
 	</li>
-	@endif
 	<li class="{{ Route::currentRouteNamed('bookmark') ? 'active' : '' }}">
 		<a href="{{route('bookmark')}}"><i class="fa fa-bookmark"></i>Bookmarks ({{Auth::user()->bookmark->count()}})</a>
 	</li>

@@ -64,7 +64,7 @@
 			<h3 class="title">All Results</h3>
 			<div class="clear"></div>
 			<div class="results-all">
-				
+				@if(count($data_business))
 				@foreach($data_business as $key => $data)
 					<div class="food-main">
 						<div class="imbx">
@@ -105,16 +105,19 @@
 							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
-				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}">Vote</a>
+				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}">My Vote</a>
+				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
 				    			@endif
 			    			@else
-			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
+			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal-vote" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
 			    			@endif
 						</div>					
 					</div>
 				@endforeach
+				@else
+					<h4 style="text-align: center;padding-bottom: 20px;">No Result<h4>
+				@endif
 				{!!$data_business -> appends(request()->except('page')) -> links()!!}
 			</div>
 		</div>
@@ -125,7 +128,7 @@
 			<div>
 				<h4 style="font-size: 14px;" class="p-t-15">Is the EAT for a business you’re looking for missing?</h4>
 				<div class="underMap" style="margin-top:10px;">
-					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal" @endif data-toggle="modal" style="color:#fff;background-color: #0d59b7;width: 100px;height: 35px;" class="btn bold" >Add EAT </a>
+					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal-addeat" @endif data-toggle="modal" style="color:#fff;background-color: #0d59b7;width: 100px;height: 35px;" class="btn bold" >Add EAT </a>
 				</div>
 				
 			</div>
@@ -143,6 +146,7 @@
 			<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
 				@csrf
 				<input type="hidden" name="business_id" value="">
+				<input type="hidden" name="category_id" value="{{$category_search->id ?? ""}}">
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
@@ -261,7 +265,7 @@
 	</div>
 </div>
 
-<div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+<div id="loginModal-addeat" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -280,10 +284,31 @@
 
 	</div>
 </div>
+<div id="loginModal-vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">&nbsp;</h4>
+			</div>
+			<div class="modal-body">
+				<p>Must be logged in to vote, <a href="{{route('sign_in')}}">Login Here</a></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
 
 <div id="un_vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
 		<input type="hidden" name="business_id" value="">
+		<input type="hidden" name="category_id" value="">
+
 		{{-- <input type="hidden" name="city_id" value=""> --}}
 		<input type="hidden" name="unvoted" value="{{route('ajax_unvoted')}}">
 		<!-- Modal content-->

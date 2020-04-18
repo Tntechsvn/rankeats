@@ -74,6 +74,7 @@ $(document).on('click','.unvote_submit',function(e){
   var modall = $(this).closest('#un_vote');
   var url = modall.find('input[name=unvoted]').val();
   var business_id = modall.find('input[name=business_id]').val();
+  var category_id = modall.find('input[name=category_id]').val();
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -81,7 +82,8 @@ $(document).on('click','.unvote_submit',function(e){
     type:'POST',
     url: url,
     data: {
-      business_id: business_id
+      business_id: business_id,
+      category_id:category_id,
     },
     success:function(res){
       modall.modal('hide');
@@ -98,9 +100,12 @@ $(document).on('click','.unvote_submit',function(e){
 
 $(document).on('click','.unvote',function(){
   var business_id = $(this).data('id');
+  var category_id = $(this).data('category_id');
+
   var business_name = $(this).data('name');
   var modal = $('#un_vote');
   modal.find('input[name=business_id]').val(business_id);
+  modal.find('input[name=category_id]').val(category_id);
   modal.find('.message').html('You voted for '+business_name+', do you want to change your vote? 0/1 votes remain.');
   modal.modal('show');
 });
@@ -109,6 +114,7 @@ $(document).on('click','.vote_now',function(){
   var $this = $(this);
   var url = $('input[name=vote-ajax]').val();
   var business = $(this).data('id');
+  var category_id = $(this).data('category_id');
   var modal_target = $('#voteModal');
   $.ajax({
     headers: {
@@ -117,7 +123,8 @@ $(document).on('click','.vote_now',function(){
     type:'POST',
     url: url,
     data: {
-      business: business
+      business: business,
+      category_id:category_id,
     },
     success:function(res){
       if(res.success == true){
@@ -291,4 +298,12 @@ $(document).on('click','.review-popup',function(){
       }
     }
   });
+});
+
+// photo popup
+
+$(document).on('click','.show-photo',function(){
+  var modal = $('#photo-popup');
+  modal.modal('show');
+
 });

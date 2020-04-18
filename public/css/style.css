@@ -43,7 +43,7 @@ p {
 	padding: 0;
 }
 .navbar-fixed-top, .navbar-fixed-bottom {
-	z-index: 9999;
+	z-index: 999;
 }
 #preview-avatar .dt-close {
 	position: relative;
@@ -1767,9 +1767,9 @@ input#location_search {
 	float: left;
 }
 
-.content-right .review-date {
+/*.content-right .review-date {
 	float: right;
-}
+}*/
 .content-right {
 	border-bottom: 1px solid #ecf0f5;
 }
@@ -2265,9 +2265,11 @@ input[type=number]::-webkit-outer-spin-button {
     color: #fff;
     border-radius: 3px;
 }
-
+.content-right-profile .datepicker{
+	z-index: 1000 !important;
+}
 .datepicker{
-z-index: 1050 !important;
+	z-index: 1050 !important;
 }
 .datepicker-months, .datepicker-years {
 	min-width: 200px;
@@ -2372,12 +2374,90 @@ width: 30% !important;
 	display: block;
 	clear: both;
 }
-#reviewforbusiness .list-review > div {
-	display: inline-block;
+#reviewforbusiness .list-review {
+	position: relative;
 }
+
 #reviewforbusiness .list-review .avata {
-	margin-right: 15px;
+	position: absolute;
+	left: 20px;
+	top: 10px;
 }
+#reviewforbusiness .list-review .avata img {
+	width: 64px;
+	height: 64px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+#reviewforbusiness .list-review .avata .photo-img {
+	padding-top: 15px;
+}
+#reviewforbusiness .list-review .info {
+	padding-left: 140px;
+}
+#reviewforbusiness .list-review .star-view svg {
+	position: relative;
+	top: 0;
+	right: 0;
+}
+#reviewforbusiness .list-review .review-date {
+	padding-left: 10px;
+}
+
+.list-picture {
+	display: inline-block;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+.review-address svg {
+    color: #0073bb;
+}
+.modal-header {
+	background-color: #0d59b7;
+}
+.modal-header h3 {
+	color: #fff;
+}
+.modal-header .title::after {
+    background-color: #fff;
+}
+.modal-header .close {
+	right: 15px;
+	top: 17px;
+	opacity: 1;
+}
+.modal-header .close svg {
+	color: #fff;
+}
+.modal-body .no-photo {
+	text-align: center;
+	padding-top: 40px;
+}
+.modal-body .no-photo p {
+	padding-top: 20px;
+}
+.modal-footer {
+    padding: 15px 0 40px;
+    text-align: center;
+    border-top: none;
+}
+#photo-popup .modal-footer button {
+	width: 100px;
+	height: 40px;
+	border: 1px solid #b7b7b7;
+	background-color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /*responsive*/
 

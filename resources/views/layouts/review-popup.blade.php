@@ -7,17 +7,17 @@
 	</div>
 	<div class="info" style="">
 		<div class="content-right p-b-20">
-		<h4>{{$review->user->name ?? ""}}</h4>
-		<span class="review-date">{{$review -> created_at}}</span>
-		<div class="star-view clear p-b-10">
-			@for($i = 1;$i <= $review->rate;$i++)
-			<i class="fas fa-star star-rate"></i>
-			@endfor
-			<span class="bold p-l-20">Review business {{$review->business->name}}</span>
+			<h4>{{$review->user->name ?? ""}}</h4>
+			<span class="review-date">{{$review -> created_at}}</span>
+			<div class="star-view clear p-b-10">
+				@for($i = 1;$i <= $review->rate;$i++)
+				<i class="fas fa-star star-rate"></i>
+				@endfor
+				<span class="bold p-l-20">Review business {{$review->business->name}}</span>
+			</div>
+			
+			<p>{{$review->description}}</p>
 		</div>
-		
-		<p>{{$review->description}}</p>
-	</div>
 	</div>
 </div>
 @endforeach

@@ -116,9 +116,9 @@ class HomeController extends Controller{
         ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){  
              if($city != ''){        
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('cities.name','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->Where('states.name','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }
         })
         ->whereNull('advertisements.deleted_at')
@@ -134,9 +134,9 @@ class HomeController extends Controller{
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', 'LIKE', '%'.$keyword.'%')->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
         ->whereNotNull('businesses.activated_on')
@@ -371,6 +371,7 @@ public function ajax_unvoted(Request $request){
     $user = Auth::user();
     $data_business = Business::find($request->business_id);
     $city_id = $data_business->location->IdCity;
+    /*delete vote business*/
     $delete_vote = Vote::select('*')
     ->where('user_id','=',$user->id)
     ->where('type_vote','=',1)
@@ -387,6 +388,53 @@ public function vote_ajax(Request $request){
     
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
+    $cate_id = $request -> category_id;
+
+    /**/
+    $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+    if($check_vote_city_eat ){
+        $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
+
+        $new_vote = new Vote;
+        $new_vote -> user_id = $user->id;
+        $new_vote -> business_id = $data_business->id;
+        $new_vote -> category_id = $cate_id;
+        if($data_business->location->IdState){
+            $new_vote -> state_id = $data_business->location->IdState;
+        }else{
+            $new_vote -> state_id = null;
+        }
+        if($city_id){
+            $new_vote -> city_id = $city_id;
+        }else{
+            $new_vote -> city_id = null;
+        }
+        /*vote = 1 vote cho business bằng 2 vote cho eat*/
+        $new_vote -> type_vote = 2;
+        $new_vote -> save();
+    }else{
+
+        $new_vote = new Vote;
+        $new_vote -> user_id = $user->id;
+        $new_vote -> business_id = $data_business->id;
+        $new_vote -> category_id = $cate_id;
+        if($data_business->location->IdState){
+            $new_vote -> state_id = $data_business->location->IdState;
+        }else{
+            $new_vote -> state_id = null;
+        }
+
+        if($city_id){
+            $new_vote -> city_id = $city_id;
+        }else{
+            $new_vote -> city_id = null;
+        }
+
+        /*vote = 1 vote cho business bằng 2 vote cho eat*/
+        $new_vote -> type_vote = 2;
+        $new_vote -> save();
+    }
+            /**/
     
     $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
     if($check_vote_city ){
