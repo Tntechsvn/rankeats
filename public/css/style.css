@@ -1668,7 +1668,7 @@ input#location_search {
     left: 0;
     height: 46px;
     background-color: #0d59b7;
-    z-index: 999;
+    z-index: 998;
     text-align: center;
     padding: 13px 0;
     color: #fff;
@@ -1681,7 +1681,7 @@ input#location_search {
     left: 0;
     height: 46px;
     background-color: #0d59b7;
-    z-index: 999;
+    z-index: 998;
     text-align: center;
     padding: 13px 0;
     color: #fff;

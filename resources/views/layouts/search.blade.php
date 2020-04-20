@@ -155,7 +155,7 @@
 						</div>
 					</div>
 					<div class="modal-body">
-						<p>Would you like to write a review for this EAT?</p>
+						<p style="text-align: center;">Would you like to write a review for this EAT?</p>
 						<div class="okverify hidden">
 							<div class="popup-star">
 								<label class="customstar star-1">							
