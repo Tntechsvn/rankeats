@@ -323,6 +323,7 @@ $(document).on('click','.show-photo',function(){
       if(res.success == true){
           modal.find('#has-photo').html(res.data);
           modal.modal('show');
+          $('.lightgalleryphoto').lightGallery();
       }else{
         modal.find('.no-photo').removeClass('hidden');
         modal.modal('show');

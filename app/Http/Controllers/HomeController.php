@@ -11,6 +11,7 @@ use App\PlanDetail;
 use App\Advertisement;
 use View;
 use Auth;
+use App\User;
 use App\Bookmark;
 use App\Vote;
 use App\Page;
@@ -178,7 +179,15 @@ class HomeController extends Controller{
     }
 
     public function myprofile(){
-        return view('layouts_profile.myprofile');
+        $user = Auth::user();
+        $list_reviews = Review_rating::where('review_ratings.user_id','=',$user->id)
+               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+               ->where('type_rate','=',1)
+               ->whereNull('businesses.deleted_at')
+               ->orderBy('review_ratings.created_at', 'desc')
+               ->paginate(Myconst::PAGINATE_ADMIN);
+        $data_business = $user->businesses()->paginate(Myconst::PAGINATE_ADMIN);
+        return view('layouts_profile.myprofile',compact('user','list_reviews','data_business'));
     }
 
     public function mysetting(){
@@ -282,8 +291,9 @@ public function business_management(){
     return view('layouts_profile.business-management');
 }
 public function bookmark(){
+    $user = Auth::user();
     $data_business = Auth::user()->businesses()->paginate(Myconst::PAGINATE_ADMIN);
-    return view('layouts_profile.bookmark',compact('data_business'));
+    return view('layouts_profile.bookmark',compact('data_business','user'));
 }
 
 public function my_eat(){
@@ -292,12 +302,14 @@ public function my_eat(){
 }
 /*create_advertise*/
 public function create_advertise(){
+    $user = Auth::user();
     $business_id = Auth::user()->business()->first()->id;
     $plan_details = new PlanDetail;
     $advertisement = Advertisement::where('business_id','=',$business_id)->get();
-    return view('layouts_profile.create-advertise',compact('plan_details','advertisement'));
+    return view('layouts_profile.create-advertise',compact('plan_details','advertisement','user'));
 }
 public function eat_reviews(Request $request){
+    $user = Auth::user();
         $user_id = Auth::id();
         /*list reviews for business*/
         $list_review_eats = Review_rating::where('review_ratings.user_id','=',$user_id)
@@ -307,11 +319,12 @@ public function eat_reviews(Request $request){
        ->orderBy('review_ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
 
-        return view('layouts_profile.eat-review',compact('list_review_eats'));
+        return view('layouts_profile.eat-review',compact('list_review_eats','user'));
    
     
 }
 public function business_review(){
+     $user = Auth::user();
        $user_id = Auth::id();
        /*list reviews for business*/
        $list_reviews = Review_rating::where('review_ratings.user_id','=',$user_id)
@@ -320,7 +333,7 @@ public function business_review(){
        ->whereNull('businesses.deleted_at')
        ->orderBy('review_ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
-    return view('layouts_profile.business-review',compact('list_reviews'));
+    return view('layouts_profile.business-review',compact('list_reviews','user'));
 }
 /*single_restaurent*/
 public function single_business(Request $request){
@@ -660,21 +673,24 @@ public function getRankBusiness(){
 /*end knight*/
 
 public function eat_rank(){
+    $user = Auth::user();
     $list_vote_eat = Auth::user()->votes()->where('type_vote',2)->get();
-    return view('layouts_profile.eat-rank',compact('list_vote_eat'));
+    return view('layouts_profile.eat-rank',compact('list_vote_eat','user'));
 }
 public function business_rank(){
+    $user = Auth::user();
     $list_vote_business = Auth::user()->votes()->where('type_vote',1)->get();
 
-    return view('layouts_profile.business-rank',compact('list_vote_business'));
+    return view('layouts_profile.business-rank',compact('list_vote_business','user'));
 }
 
 public function my_businesses(Request $request){
+    $user = Auth::user();
     $new = new Business;
     $check =  $new ->checkListMyBusiness($request->business_id);
     if($check){
         $info_business = Business::findOrfail($request->business_id);
-        return view('layouts_profile.my-businesses',compact('info_business'));
+        return view('layouts_profile.my-businesses',compact('info_business','user'));
     }else{
         session()->put('error','You do not own this business');
         return redirect()->back();
@@ -789,6 +805,27 @@ public function reaction_review(Request $request){
             ]);
         }
 
+    }
+
+
+    public function userProfile($id)
+    {
+        $user = User::find($id);
+        
+        // dd($target_user);
+        if ($user) {
+            $list_reviews = Review_rating::where('review_ratings.user_id','=',$id)
+               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+               ->where('type_rate','=',1)
+               ->whereNull('businesses.deleted_at')
+               ->orderBy('review_ratings.created_at', 'desc')
+               ->paginate(Myconst::PAGINATE_ADMIN);
+            
+            $data_business = $user->businesses()->paginate(Myconst::PAGINATE_ADMIN);
+            return view('layouts_profile.myprofile', compact('user','list_reviews','data_business'));
+        }else {
+            return abort(404);
+        }
     }
 
 }

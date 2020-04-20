@@ -269,7 +269,7 @@
 				    		<div class="p-t-15" style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
-					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote" style="color: #fff;" >Vote</a>
+					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote" style="color: #fff;background-color: #5cb85c;" >Vote</a>
 					    			@else
 					    			<a href="javascript:;" data-target="#vote_review" data-toggle="modal" class="btn vote" style="color: #fff;background-color: #b7b7b7;">My vote</a>
 					    			@endif

@@ -4,8 +4,8 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
-			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
+			<div class="col-md-3 profile-pic-lg"><img src="{{$user->UrlAvatarUser}}" class="img-circle" width="200" height="200" alt="{{$user->name}}"></div>
+			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{$user->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
 
@@ -19,22 +19,105 @@
 			</div>
 
 			<div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 content-search content-right-profile">
-
+				{{-- <p>{{$target_user->count_review()}}</p> --}}
 				<div class="page-title-small">
-					<h1>Recent Reviews by {{Auth::user()->name}}</h1>
+					<h1>Recent Reviews by {{$user->name}}</h1>
 				</div>
 
 				<div class="col-white">
-					<div class="col-note">{{Auth::user()->name}} haven’t wrote any reviews yet!</div>
+					
+					@if($list_reviews->total() >0)
+					    	@foreach($list_reviews as $data)
+							<div class="list-review">
+								<div class="review-gr">
+									<h4 class="m-b-10"><a href="{{$data->business->permalink()}}">{{$data->business->name}}</a></h4>
+									<p><i class="fas fa-calendar-alt"></i>{{$data->created_at}}</p>
+									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
+									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
+									@if($data->review->ListImageReview)
+								    	@foreach($data->review->ListImageReview as $val)
+								    	<img src="{{$val['url']}}" width="210px" height="145px;">
+								    	@endforeach
+							    	@endif
+									<p>{{$data->review->description}}</p>
+									
+									<div class="edit">
+										<a href="" ><i class="fas fa-pencil-alt"></i></a>
+										<a href="" ><i class="fas fa-scroll"></i></a>
+									</div>
+								</div>
+								
+
+							</div>
+							@endforeach
+						@else
+							<div class="col-note">{{$user->name}} haven’t wrote any reviews yet!</div>
+						@endif
 				</div>
 
 				<div class="col-profile-bottom">
 					<div class="page-title-small">
-						<h1>Recent Bookmarks by {{Auth::user()->name}}</h1>
+						<h1>Recent Bookmarks by {{$user->name}}</h1>
 					</div>
 
 					<div class="col-desc "> 
-						<div class="col-note">{{Auth::user()->name}} haven’t bookmarked any business listings yet!.</div>
+						@if(count($data_business) > 0)
+				@foreach($data_business as $data)			
+				<div class="food-main">
+						<div class="imbx">
+							<a href="{{$data->permalink()}}"><img class="" src="{{$data->UrlAvatarBusiness}}" alt="" style="width: 100%;"></a>
+						</div>					
+						<div class="imbx-detail">
+							<div class="pr-dtl">
+								<h4><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<ul class="star-rate">
+									@php
+										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
+										for($x=1;$x<=$data->RateBusiness;$x++) {
+											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+										}
+										if (strpos($data->RateBusiness,'.') && $val != 0) {
+											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+											$x++;
+										}
+										while ($x<=5) {
+											echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+											$x++;
+										}
+									@endphp
+								</ul>
+								<div class="pr-dtail">
+									<ul class="p-t-15">
+										<li>$$$.</li>
+										@foreach($data->business_category as $val)
+										<li>{{$val->category_name}}</li>
+										@endforeach
+									</ul>
+								</div>
+							</div>
+							<div class="pr-dtlr">
+								<p>{{$data->business_phone}}</p>
+								<p>{{$data->total_vote}} <i>reviews</i></p>
+							</div>
+							<p>{{$data->location->address}}</p>
+							@php
+								$str = $data->description; //Tạo chuỗi
+								$str = strip_tags($str);
+								if(strlen($str)>100) { //Đếm kí tự chuỗi $str, 100 ở đây là chiều dài bạn cần quy định
+									$strCut = substr($str, 0, 50); //Cắt 100 kí tự đầu
+									$str = substr($strCut, 0, strrpos($strCut, ' ')); //Tránh trường hợp cắt dang dở như "nội d... Read More"
+									$so = strlen($str);
+									$str1 = substr($data->description, $so, 100000000);
+									$str = $str.' <a href="javascript:;" class="m-l-10 readmore">read more</a><span class="hidden show_readmore">'.$str1.'</span>';
+								}
+							@endphp
+							<p class="description">{!!$str!!}</p>
+						</div>					
+					</div>
+				@endforeach
+				@else
+				<h4 style="text-align: center;">You not yet add any bookmark</h4>
+				@endif
 					</div>
 
 				</div>

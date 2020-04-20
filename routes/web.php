@@ -160,5 +160,13 @@
 		'as' => 'show-photo',
 		'uses' => 'HomeController@show_photo'
 	]);
+
+
+//view user
+Route::group(['prefix' => 'user'], function(){
+	Route::get('/{id}', ['as' => 'user.profile', 'uses' => 'HomeController@userProfile']);
+	Route::get('/{id}/profile', ['as' => 'user.profile', 'uses' => 'HomeController@userProfile']);
+	Route::get('/{id}/profile', ['as' => 'user.profile', 'uses' => 'HomeController@userProfile']);
 	
+});
 // end hungpro

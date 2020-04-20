@@ -70,6 +70,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function review_rating(){
         return $this -> hasMany('App\Review_rating', 'user_id', 'id');
     }
+
+
+    public function count_review_business(){
+        $count_review = $this -> review_rating()->where('type_rate','=','1')->count();
+        return $count_review;
+    }
+
+    public function count_review_eat(){
+        $count_review = $this -> review_rating()->where('type_rate','=','2')->count();
+        return $count_review;
+    }
+
+    public function count_bookmark(){
+        return $this -> bookmark->count();
+    }
+
+
+
+
     public function update_user($request){
         if($request -> address){
             if($this -> address != null){

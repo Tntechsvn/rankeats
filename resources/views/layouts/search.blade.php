@@ -395,9 +395,9 @@
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function){
-		$('.lightgalleryphoto').lightGallery();
-	}
+	// $(document).ready(function){
+	// 	$('.lightgalleryphoto').lightGallery();
+	// }
 	$("#add_eat_state").change(function(){
 		var name_state = $(this).val();
 
