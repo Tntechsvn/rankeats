@@ -9,6 +9,7 @@ use App\Myconst;
 use App\Business;
 use App\Review_rating;
 use View;
+use App\Media;
 class ReviewsController extends Controller
 {
     /**
@@ -131,12 +132,29 @@ class ReviewsController extends Controller
 
         /*create review eat*/
         if($request -> category_id){
-               $review_eat = new Review;
-               $review_eat -> user_id = $user_id;
-               $review_eat -> business_id = $request -> business_id;
-               $review_eat -> description = $request -> description;
+            /*img review eat*/
+            if($request -> image !=null){
+                foreach($request -> image as $img){
+                    $base64String = $img;
+                    $ShareController = new ShareController;
+                    $media = new Media;
+                    $media -> type_media = 'image';
+                    $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                    $media -> id_user = $user_id;
+                    $media -> type = 2;
+                    $media -> save();
+                    $arr_image_gallery[] = $media -> id;
+                }
+            }else{
+                $arr_image_gallery[] = null;
+            }
+           $review_eat = new Review;
+           $review_eat -> user_id = $user_id;
+           $review_eat -> business_id = $request -> business_id;
+           $review_eat -> description = $request -> description;
+           $review_eat -> list_id_image =  $arr_image_gallery;
 
-               if($review_eat -> save()){
+           if($review_eat -> save()){
                 /*update review rating*/
                 $review_rating = new Review_rating;
                 $review_rating -> user_id = $user_id;

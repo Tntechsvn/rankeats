@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Review extends Model
 {
 	use SoftDeletes;
+	protected $casts = [
+		'list_id_image' => 'array'
+	];
+
 	/*Knight*/
     public function business(){
 		return $this->belongsTo('App\Business', 'business_id', 'id');
@@ -34,6 +38,23 @@ class Review extends Model
 		if($request -> business_id){
 			$this -> business_id = $request -> business_id;
 		}
+		 /*img review eat*/
+            if($request -> image !=null){
+                foreach($request -> image as $img){
+                    $base64String = $img;
+                    $ShareController = new ShareController;
+                    $media = new Media;
+                    $media -> type_media = 'image';
+                    $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                    $media -> id_user = $user_id;
+                    $media -> type = 1;
+                    $media -> save();
+                    $arr_image_gallery[] = $media -> id;
+                }
+            }else{
+                $arr_image_gallery[] = null;
+            }
+        $this -> list_id_image = $arr_image_gallery;
 		if($this -> save()){
 			/*update review rating*/
 			$review_rating = new Review_rating;
