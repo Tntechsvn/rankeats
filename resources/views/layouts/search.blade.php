@@ -347,7 +347,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
-				<h3 class="bold">{{$category_search->category_name}} Reviews for <span></span> </h3>
+				<h3 class="bold">{{$category_search->category_name ?? ""}} Reviews for <span></span> </h3>
 			</div>
 			<div class="modal-body">
 				
