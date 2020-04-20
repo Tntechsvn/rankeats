@@ -1692,6 +1692,13 @@ input#location_search {
 .lightbox img {
 	object-fit: cover;
 }
+.lightgalleryphoto {
+	padding: 10px 0 0 ;
+}
+.lightgalleryphoto li{
+	display: inline-block;
+	margin: 0 10px 10px 0;
+}
 .input-group-btn{
 	float: left;
 }

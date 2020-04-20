@@ -26,11 +26,11 @@
 
 				<p>{{$data->review->description}}</p>
 				<div class="picture-review">
-					<ul id="lightgalleryphoto" style="padding-left: 0">
+					<ul id="lightgalleryphoto" class="lightgalleryphoto" style="padding-left: 0">
 						@if($data->review->ListImageReview)
 							@foreach($data->review->ListImageReview as $val)
-								<li class="list-picture" data-responsive="" data-src="images/pizza.jpg">
-									<a href="javascript:;" class="lightbox">
+								<li class="list-picture" data-responsive="" data-src="{{$val['url']}}">
+									<a href="{{$val['url']}}" class="lightbox">
 										<img width="210" height="145" src="{{$val['url']}}" class="pic" >
 									</a>       
 								</li>

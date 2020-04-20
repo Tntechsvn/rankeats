@@ -7,7 +7,18 @@
     		<span class="bold">Name :</span>
     		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
     	</p>
-
+    	@if($data->review->ListImageReview)
+    		<ul class="lightgalleryphoto">
+		    	@foreach($data->review->ListImageReview as $val)
+		    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+                    <a href="{{$val['url']}}" class="lightbox">
+                        
+                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+                    </a>       
+                </li>
+		    	@endforeach
+	    	</ul>
+    	@endif
     	<p>{{$data->review->description}}</p>
 		<ul class="star-rate">
     		@php
@@ -46,5 +57,5 @@
 
 {!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 <div class="p-t-15" style="text-align: right;">
-	<a href="javascript:;" class="btn vote unvote" style="color: #fff;">Voted</a>
+	<a href="javascript:;" class="btn vote unvote" style="color: #fff;">My Vote</a>
 </div>

@@ -147,9 +147,16 @@
 							    		<span class="bold" style="color: #0073bb">{{$data->user->name ?? ""}}</span>
 							    	</p>
 							    	@if($data->review->ListImageReview)
-								    	@foreach($data->review->ListImageReview as $val)
-								    	<img src="{{$val['url']}}" width="210px" height="145px;">
-								    	@endforeach
+								    	<ul class="lightgalleryphoto">
+									    	@foreach($data->review->ListImageReview as $val)
+									    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+							                    <a href="{{$val['url']}}" class="lightbox">
+							                        
+							                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+							                    </a>       
+							                </li>
+									    	@endforeach
+								    	</ul>
 							    	@endif
 
 							    	<p>{{$data->review->description}}</p>
@@ -269,7 +276,6 @@
 				    			@else
 				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a>
 				    			@endif
-				    			{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 				    		</div>
 					    </div>
 					    <div class="tab-pane" id="picture">
@@ -587,6 +593,7 @@
 			});
 			$('.test').fSelect();
 			$("#lightgalleryphoto").lightGallery();
+			$('.lightgalleryphoto').lightGallery();
 
 			$(document).on('click','.check-bookmark',function(){
 				var $this = $(this);
