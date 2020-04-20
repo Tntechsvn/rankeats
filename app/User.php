@@ -102,7 +102,6 @@ class User extends Authenticatable implements MustVerifyEmail
         }else{
             $address = null;
         }
-        
 
         if($request -> image !=null){
            $base64String = $request->image;
