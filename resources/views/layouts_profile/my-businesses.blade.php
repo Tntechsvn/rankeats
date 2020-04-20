@@ -242,7 +242,7 @@
 					<div id="reviewforbusiness" class="tab-pane">
 					
 					@foreach( $reviews as $data)
-					{{-- @dump($data) --}}
+					{{--@dump($data)--}}
 					<div class="list-review m-b-20">
 						<div class="avata">
 							<img src="{{$data->user->UrlAvatarUser}}" alt="" >
@@ -265,22 +265,19 @@
 								<div class="review-address">
 									<i class="fas fa-map-marker-alt"></i> {{$data->user->location->address ?? ""}}, {{$data->user->location->city ?? ""}}, {{$data->user->location->state ?? ""}}, {{$data->user->location->country ?? ""}} 
 								</div>
-								<p>{{$data->description}}</p>
+
+								<p>{{$data->review->description}}</p>
 								<div class="picture-review">
 									<ul id="lightgalleryphoto" style="padding-left: 0">
-										<li class="list-picture" data-responsive="" data-src="images/pizza.jpg">
-		                                    <a href="images/pizza.jpg" class="lightbox">
-		                                        
-		                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
-		                                    </a>       
-		                                </li>
-						    			<li class="list-picture" data-responsive="" data-src="images/pizza.jpg">
-		                                    <a href="images/pizza.jpg" class="lightbox">
-		                                        
-		                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
-		                                    </a>       
-		                                </li>
-						    			
+										@if($data->review->ListImageReview)
+											@foreach($data->review->ListImageReview as $val)
+												<li class="list-picture" data-responsive="" data-src="images/pizza.jpg">
+													<a href="javascript:;" class="lightbox">
+														<img width="210" height="145" src="{{$val['url']}}" class="pic" >
+													</a>       
+												</li>
+											@endforeach
+										@endif
 									</ul>
 								</div>
 							</div>

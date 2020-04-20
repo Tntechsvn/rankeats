@@ -44,7 +44,7 @@
 								<tr>
 									<td>{{$data->business->name}}</td>
 									<td>{{$data->created_at}}</td>
-									<td>{{$data->category->category_name}}</td>
+									<td>{{$data->category->category_name ?? ''}}</td>
 									<td>{{$data->business->location->city ?? ''}}</td>
 									<td>{{$data->business->location->state ?? ''}}</td>
 									<td width="8%">{{$data->business->business_category()->where('id',$data->category->id)->first()->RankEatState ?? ''}}</td>

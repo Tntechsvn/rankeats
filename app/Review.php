@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Review extends Model
 {
 	use SoftDeletes;
+	protected $casts = [
+		'list_id_image' => 'array'
+	];
+
 	/*Knight*/
     public function business(){
 		return $this->belongsTo('App\Business', 'business_id', 'id');
@@ -34,6 +38,24 @@ class Review extends Model
 		if($request -> business_id){
 			$this -> business_id = $request -> business_id;
 		}
+		 /*img review eat*/
+            if($request -> image !=null){
+                foreach($request -> image as $img){
+                    $base64String = $img;
+                    $ShareController = new ShareController;
+                    $media = new Media;
+                    $media -> type_media = 'image';
+                    $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                    $media -> id_user = $user_id;
+                    /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                    $media -> type = 1;
+                    $media -> save();
+                    $arr_image_gallery[] = $media -> id;
+                }
+            }else{
+                $arr_image_gallery[] = null;
+            }
+        $this -> list_id_image = $arr_image_gallery;
 		if($this -> save()){
 			/*update review rating*/
 			$review_rating = new Review_rating;
@@ -55,6 +77,24 @@ class Review extends Model
 				'message' => 'Add New Review Success',
 			], 200);
 		}		
+	}
+	public function getListImageReviewAttribute(){
+		if($this -> list_id_image != null){
+			$lst_id_gallery = $this -> list_id_image;
+			foreach ($lst_id_gallery as $value) {
+				$data_img_gallery = Media::find($value);
+				if($data_img_gallery !=null){
+					$item['url']= asset('').'storage/'.$data_img_gallery -> url;
+					$item['id']= $data_img_gallery -> id;
+					$list_id_gallery[] = $item;
+				}else{
+					$list_id_gallery = null;
+				}
+			}
+		}else{
+			$list_id_gallery = null;
+		}
+		return $list_id_gallery;
 	}
 	/*end knight*/
 
