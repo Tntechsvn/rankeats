@@ -47,6 +47,7 @@ class Review extends Model
                     $media -> type_media = 'image';
                     $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
                     $media -> id_user = $user_id;
+                    /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
                     $media -> type = 1;
                     $media -> save();
                     $arr_image_gallery[] = $media -> id;
@@ -76,6 +77,24 @@ class Review extends Model
 				'message' => 'Add New Review Success',
 			], 200);
 		}		
+	}
+	public function getListImageReviewAttribute(){
+		if($this -> list_id_image != null){
+			$lst_id_gallery = $this -> list_id_image;
+			foreach ($lst_id_gallery as $value) {
+				$data_img_gallery = Media::find($value);
+				if($data_img_gallery !=null){
+					$item['url']= asset('').'storage/'.$data_img_gallery -> url;
+					$item['id']= $data_img_gallery -> id;
+					$list_id_gallery[] = $item;
+				}else{
+					$list_id_gallery = null;
+				}
+			}
+		}else{
+			$list_id_gallery = null;
+		}
+		return $list_id_gallery;
 	}
 	/*end knight*/
 

@@ -146,6 +146,11 @@
 							    		<span class="bold">Name :</span>
 							    		<span class="bold" style="color: #0073bb">{{$data->user->name ?? ""}}</span>
 							    	</p>
+							    	@if($data->review->ListImageReview)
+								    	@foreach($data->review->ListImageReview as $val)
+								    	<img src="{{$val['url']}}" width="210px" height="145px;">
+								    	@endforeach
+							    	@endif
 
 							    	<p>{{$data->review->description}}</p>
 
@@ -223,6 +228,11 @@
 							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$data->business->location->city}} (12)</label>
 							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
 							    	</div>
+							    	@if($data->review->ListImageReview)
+								    	@foreach($data->review->ListImageReview as $val)
+								    	<img src="{{$val['url']}}" width="210px" height="145px;">
+								    	@endforeach
+							    	@endif
 
 							    	<p>{{$data->review->description}}</p>
 

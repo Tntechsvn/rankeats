@@ -116,6 +116,7 @@ class ReviewsController extends Controller
         }
         $user_id = Auth::user()->id;
         /*create review */
+        /*check đã review món chưa, nếu rồi thì trả về đã review*/
         $check_reviews_business = Review_rating::where('user_id',$user_id)->where('id_rate_from',$request -> business_id)
                                                 ->where('category_id',$request -> category_id)
                                                 ->where('type_rate',2)->count();
@@ -141,6 +142,7 @@ class ReviewsController extends Controller
                     $media -> type_media = 'image';
                     $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
                     $media -> id_user = $user_id;
+                    /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
                     $media -> type = 2;
                     $media -> save();
                     $arr_image_gallery[] = $media -> id;

@@ -21,6 +21,7 @@ use App\Review_rating;
 use DB;
 use App\ReviewReaction;
 use Carbon\Carbon;
+use App\Media;
 use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
 
@@ -391,48 +392,50 @@ public function vote_ajax(Request $request){
     $cate_id = $request -> category_id;
 
     /**/
-    $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
-    if($check_vote_city_eat ){
-        $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
+    if($cate_id){
+        $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+        if($check_vote_city_eat ){
+            $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
 
-        $new_vote = new Vote;
-        $new_vote -> user_id = $user->id;
-        $new_vote -> business_id = $data_business->id;
-        $new_vote -> category_id = $cate_id;
-        if($data_business->location->IdState){
-            $new_vote -> state_id = $data_business->location->IdState;
+            $new_vote = new Vote;
+            $new_vote -> user_id = $user->id;
+            $new_vote -> business_id = $data_business->id;
+            $new_vote -> category_id = $cate_id;
+            if($data_business->location->IdState){
+                $new_vote -> state_id = $data_business->location->IdState;
+            }else{
+                $new_vote -> state_id = null;
+            }
+            if($city_id){
+                $new_vote -> city_id = $city_id;
+            }else{
+                $new_vote -> city_id = null;
+            }
+            /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            $new_vote -> type_vote = 2;
+            $new_vote -> save();
         }else{
-            $new_vote -> state_id = null;
-        }
-        if($city_id){
-            $new_vote -> city_id = $city_id;
-        }else{
-            $new_vote -> city_id = null;
-        }
-        /*vote = 1 vote cho business bằng 2 vote cho eat*/
-        $new_vote -> type_vote = 2;
-        $new_vote -> save();
-    }else{
 
-        $new_vote = new Vote;
-        $new_vote -> user_id = $user->id;
-        $new_vote -> business_id = $data_business->id;
-        $new_vote -> category_id = $cate_id;
-        if($data_business->location->IdState){
-            $new_vote -> state_id = $data_business->location->IdState;
-        }else{
-            $new_vote -> state_id = null;
-        }
+            $new_vote = new Vote;
+            $new_vote -> user_id = $user->id;
+            $new_vote -> business_id = $data_business->id;
+            $new_vote -> category_id = $cate_id;
+            if($data_business->location->IdState){
+                $new_vote -> state_id = $data_business->location->IdState;
+            }else{
+                $new_vote -> state_id = null;
+            }
 
-        if($city_id){
-            $new_vote -> city_id = $city_id;
-        }else{
-            $new_vote -> city_id = null;
-        }
+            if($city_id){
+                $new_vote -> city_id = $city_id;
+            }else{
+                $new_vote -> city_id = null;
+            }
 
-        /*vote = 1 vote cho business bằng 2 vote cho eat*/
-        $new_vote -> type_vote = 2;
-        $new_vote -> save();
+            /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            $new_vote -> type_vote = 2;
+            $new_vote -> save();
+        }
     }
             /**/
     
@@ -731,10 +734,16 @@ public function reaction_review(Request $request){
     public function show_photo(Request $request)
     {
         $user_id = $request->user_id;
+        $data_img = Media::where('id_user',$user_id )->where('type',2)->get();
+        foreach ($data_img as $value) {
+            $item['url']= asset('').'storage/'.$value -> url;
+            $list_id_gallery[] = $item;
+        }
+        //return
 
         return response()->json([
             'success' => false,
-            'id' => $user_id
+            'id' => $list_id_gallery
         ]);
 
         // $business = Business::find($request->id);
