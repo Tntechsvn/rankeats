@@ -42,6 +42,8 @@
 
 						</div>
 						@endforeach
+					@else
+					<h4 style="text-align: center;">You not yet add any Eat review.</h4>
 					@endif
 
 						{!!$list_review_eats -> appends(request()->except('page')) -> links()!!}

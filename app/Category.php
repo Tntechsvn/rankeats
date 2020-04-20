@@ -44,7 +44,7 @@ class Category extends Model
         $get_all_vote_business_state = Vote::select('votes.*',  DB::raw('COUNT(votes.category_id) AS "So luong"'))
         ->where('type_vote','=',2)
         ->where('state_id','=',$state_id)
-        ->where('business_id','=',$id_business)
+        ->where('category_id','=',$this ->id)
         ->groupBy('category_id')
         ->orderBy('So luong', 'desc' )
         ->get();
@@ -66,7 +66,7 @@ class Category extends Model
         $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.category_id) AS "So luong"'))
         ->where('type_vote','=',2)
         ->where('city_id','=',$city_id)
-        ->where('business_id','=',$id_business)
+        ->where('category_id','=',$this ->id)
         ->groupBy('category_id')
         ->orderBy('So luong', 'desc' )
         ->get();

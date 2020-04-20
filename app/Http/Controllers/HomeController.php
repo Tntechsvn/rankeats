@@ -628,12 +628,13 @@ public function getRankBusiness(){
 /*end knight*/
 
 public function eat_rank(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.eat-rank',compact('info_business'));
+    $list_vote_eat = Auth::user()->votes()->where('type_vote',2)->get();
+    return view('layouts_profile.eat-rank',compact('list_vote_eat'));
 }
 public function business_rank(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.business-rank',compact('info_business'));
+    $list_vote_business = Auth::user()->votes()->where('type_vote',1)->get();
+
+    return view('layouts_profile.business-rank',compact('list_vote_business'));
 }
 
 public function my_businesses(Request $request){

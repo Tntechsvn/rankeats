@@ -20,7 +20,8 @@
 
 			<div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 content-search content-right-profile">
 				<h3 class="title">My Bookmarks</h3>
-				<div class="clear"></div>	
+				<div class="clear"></div>
+				@if(count($data_business) > 0)
 				@foreach($data_business as $data)			
 				<div class="food-main">
 						<div class="imbx">
@@ -74,6 +75,9 @@
 						</div>					
 					</div>
 				@endforeach
+				@else
+				<h4 style="text-align: center;">You not yet add any bookmark</h4>
+				@endif
 				{!!$data_business -> appends(request()->except('page')) -> links()!!}
 			</div>
 		</div>
