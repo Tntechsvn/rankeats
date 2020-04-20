@@ -185,7 +185,8 @@
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 3) active @endif" data-type="3" data-review="{{$data->review->id}}">Cool</button>
 				    				</div>
 				    			</div>
-								@endforeach								
+								@endforeach	
+								{!!$list_reviews -> appends(request()->except('page')) -> links()!!}							
 				    		@endif
 				    		<div style="text-align: right;">
 				    			@if(Auth::check())
@@ -201,6 +202,7 @@
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
 				    		
+
 				    		<!-- end Knight modan review-->
 					    </div>
 					    <div class="tab-pane" id="eatrank">
@@ -526,11 +528,11 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
-				<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+				<p>Must be logged in to Vote, <a href="{{route('sign_in')}}">Login Here</a></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

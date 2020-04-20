@@ -1686,6 +1686,9 @@ input#location_search {
     padding: 13px 0;
     color: #fff;
 }
+.firstWindow {
+	padding: 0 15px;
+}
 .input-group-btn{
 	float: left;
 }
