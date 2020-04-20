@@ -1668,7 +1668,7 @@ input#location_search {
     left: 0;
     height: 46px;
     background-color: #0d59b7;
-    z-index: 999;
+    z-index: 998;
     text-align: center;
     padding: 13px 0;
     color: #fff;
@@ -1681,10 +1681,23 @@ input#location_search {
     left: 0;
     height: 46px;
     background-color: #0d59b7;
-    z-index: 999;
+    z-index: 998;
     text-align: center;
     padding: 13px 0;
     color: #fff;
+}
+.firstWindow {
+	padding: 0 15px;
+}
+.lightbox img {
+	object-fit: cover;
+}
+.lightgalleryphoto {
+	padding: 10px 0 0 ;
+}
+.lightgalleryphoto li{
+	display: inline-block;
+	margin: 0 10px 10px 0;
 }
 .input-group-btn{
 	float: left;
@@ -2447,6 +2460,19 @@ width: 30% !important;
 	border: 1px solid #b7b7b7;
 	background-color: #fff;
 }
+#photo-popup .modal-footer button:hover {
+	background-color: #0d59b7;
+	color: #fff;
+}
+.has-photo li {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+#has-photo {
+	padding: 0;
+}
+
 
 
 

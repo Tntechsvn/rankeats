@@ -17,6 +17,9 @@ class Business extends Model
 	public function business_category(){
 		return $this -> belongsToMany('App\Category','businesses_categories','business_id','cate_id');
 	}
+    public function business_cate(){
+        return $this -> hasMany('App\businesses_category', 'business_id', 'id');
+    }
 	public function user(){
         return $this -> belongsTo('App\User', 'user_id', 'id');
     }

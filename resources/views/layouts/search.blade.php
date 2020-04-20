@@ -51,10 +51,13 @@
 								</ul>
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
-										       ->where('type_rate','=',1)
-										       ->whereNull('users.deleted_at')->count();
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_search->id)
+                                             ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
+                                             ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 						</div>					
 					</div>
@@ -97,12 +100,14 @@
 								</ul>
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
-										       ->where('type_rate','=',1)
-										       ->whereNull('users.deleted_at')->count();
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_search->id)
+                                             ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
+                                             ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
-							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
 				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
@@ -148,14 +153,14 @@
 				<input type="hidden" name="business_id" value="">
 				<input type="hidden" name="category_id" value="{{$category_search->id ?? ""}}">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div style="padding: 15px;border-bottom: 1px solid #e5e5e5;">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
 							<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
 							<p class="bold">{{Auth::user()->name}}</p>
 						</div>
 					</div>
 					<div class="modal-body">
-						<p>Would you like to write a review for this EAT?</p>
+						<p style="text-align: center;">Would you like to write a review for this EAT?</p>
 						<div class="okverify hidden">
 							<div class="popup-star">
 								<label class="customstar star-1">							
@@ -179,6 +184,19 @@
 									<span class="starimg "></span>
 								</label>
 							</div>
+							<div class="form-group choose-img">
+								<div class="form-group"  style="text-align: center;">
+									<div  class="dt-imgs">
+										<div class="dt-close" style="position:relative;">
+											<div id="previews" class="preview-img" style="width: 250px;position: relative;"></div>
+										</div>
+									</div>
+								</div>
+								<label for="image_restaurant" class="choose_img" style="width: 100%;">
+									<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;display: block;"><i class="fas fa-paperclip"></i> Choose image...</span>
+									<input id="image_restaurant" class="hidden" type="file" value="" accept="image/*" multiple>
+								</label>
+							</div>
 							<div class="form-group reviewBox">
 								<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
 								<span class="e-lang" style="color: red;font-size: 11px;"></span>
@@ -191,7 +209,7 @@
 							<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
 							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 						</div>
-						<div class="firstWindow hidden" style="width: 100%">
+						<div class="firstWindow hidden" style="width: 100%;padding: 0 15px;">
 							<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
 						</div>
 					</div>
@@ -206,7 +224,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">Add EAT</h4>
 			</div>
 			<div class="modal-body">
@@ -271,7 +289,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
@@ -290,7 +308,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
@@ -326,32 +344,60 @@
 </div>
 <div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
 	<div class="modal-dialog" style="max-width: 850px;width: 100%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
+				<h3 class="bold">{{$category_search->category_name}} Reviews for <span></span> </h3>
+			</div>
+			<div class="modal-body">
+				
+				<div id="reviewforbusiness" class="tab-pane">
 
-		<!-- Modal content-->
-			<div class="modal-content">
-				{{-- <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
-					
-				</div> --}}
-				<div class="modal-body">
-					<h3 class="title m-b-20">Reviews</h3>
-					<div id="reviewforbusiness" class="tab-pane">
-						
-						<h1 class="no-results hidden" style="text-align: center; "></h1>
-					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+<div id="photo-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+				<h3>Images of Kimberly S</h3>
+			</div>
+			<div class="modal-body">
+				<div class="has-photo">
+					<ul id="has-photo" class="lightgalleryphoto">
+					    
+		    		</ul>
+				</div>
+				<div class="no-photo hidden">
+					<img src="images/no-photo.png" alt="">
+					<p class="bold">Don't have image review</p>
+				</div>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn bold" data-dismiss="modal">Back</button>
+			</div>
+		</div>
 
 	</div>
 </div>
-
+<input type="hidden" name="show-photo" value="{{route('show-photo')}}">
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
 <input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
 <input type="hidden" name="review_search" value="{{route('review_search')}}">
 @endsection
 
 @section('script')
+<script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
+	$(document).ready(function){
+		$('.lightgalleryphoto').lightGallery();
+	}
 	$("#add_eat_state").change(function(){
 		var name_state = $(this).val();
 
@@ -379,15 +425,6 @@
 			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 
 		});
-
-		// $(document).on('click','.vote_now', function(){
-		// 	var user = $('input[name=user]').val();
-		// 	var modal_login = $('#loginModal');
-		// 	console.log(user);
-		// 	if(user == ""){
-		// 		modal_login.show();
-		// 	}
-		// });
 	});
 
 	// show form add eat
@@ -411,4 +448,35 @@
 	});
 
 </script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var images = function(input, imgPreview) {
+				if (input.files) {
+					var arr = [];
+					var filesAmount = input.files.length;
+					for (i = 0; i < filesAmount; i++) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').appendTo(imgPreview);
+						}
+						reader.readAsDataURL(input.files[i]);
+					}
+				}
+			};
+
+			$('#image_restaurant').on('change', function() {
+				images(this, '#previews');
+			});
+			/*clear the file list when image is clicked*/
+			$(document).on('click','.deletetimg',function(){
+				if(confirm("You want to delete it?"))
+				{
+					$(this).closest('#previews').html('');
+					$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+				}
+				else
+					return false;
+			});
+		});
+	</script>
 @stop

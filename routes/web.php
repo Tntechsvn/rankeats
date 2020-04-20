@@ -156,5 +156,9 @@
 		'as' => 'review_search',
 		'uses' => 'HomeController@review_search'
 	]);
+	Route::post('/show-photo', [
+		'as' => 'show-photo',
+		'uses' => 'HomeController@show_photo'
+	]);
 	
 // end hungpro

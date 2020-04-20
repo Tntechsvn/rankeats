@@ -21,6 +21,7 @@ use App\Review_rating;
 use DB;
 use App\ReviewReaction;
 use Carbon\Carbon;
+use App\Media;
 use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
 
@@ -391,48 +392,50 @@ public function vote_ajax(Request $request){
     $cate_id = $request -> category_id;
 
     /**/
-    $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
-    if($check_vote_city_eat ){
-        $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
+    if($cate_id){
+        $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+        if($check_vote_city_eat ){
+            $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
 
-        $new_vote = new Vote;
-        $new_vote -> user_id = $user->id;
-        $new_vote -> business_id = $data_business->id;
-        $new_vote -> category_id = $cate_id;
-        if($data_business->location->IdState){
-            $new_vote -> state_id = $data_business->location->IdState;
+            $new_vote = new Vote;
+            $new_vote -> user_id = $user->id;
+            $new_vote -> business_id = $data_business->id;
+            $new_vote -> category_id = $cate_id;
+            if($data_business->location->IdState){
+                $new_vote -> state_id = $data_business->location->IdState;
+            }else{
+                $new_vote -> state_id = null;
+            }
+            if($city_id){
+                $new_vote -> city_id = $city_id;
+            }else{
+                $new_vote -> city_id = null;
+            }
+            /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            $new_vote -> type_vote = 2;
+            $new_vote -> save();
         }else{
-            $new_vote -> state_id = null;
-        }
-        if($city_id){
-            $new_vote -> city_id = $city_id;
-        }else{
-            $new_vote -> city_id = null;
-        }
-        /*vote = 1 vote cho business bằng 2 vote cho eat*/
-        $new_vote -> type_vote = 2;
-        $new_vote -> save();
-    }else{
 
-        $new_vote = new Vote;
-        $new_vote -> user_id = $user->id;
-        $new_vote -> business_id = $data_business->id;
-        $new_vote -> category_id = $cate_id;
-        if($data_business->location->IdState){
-            $new_vote -> state_id = $data_business->location->IdState;
-        }else{
-            $new_vote -> state_id = null;
-        }
+            $new_vote = new Vote;
+            $new_vote -> user_id = $user->id;
+            $new_vote -> business_id = $data_business->id;
+            $new_vote -> category_id = $cate_id;
+            if($data_business->location->IdState){
+                $new_vote -> state_id = $data_business->location->IdState;
+            }else{
+                $new_vote -> state_id = null;
+            }
 
-        if($city_id){
-            $new_vote -> city_id = $city_id;
-        }else{
-            $new_vote -> city_id = null;
-        }
+            if($city_id){
+                $new_vote -> city_id = $city_id;
+            }else{
+                $new_vote -> city_id = null;
+            }
 
-        /*vote = 1 vote cho business bằng 2 vote cho eat*/
-        $new_vote -> type_vote = 2;
-        $new_vote -> save();
+            /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            $new_vote -> type_vote = 2;
+            $new_vote -> save();
+        }
     }
             /**/
     
@@ -497,13 +500,7 @@ public function voteReviewEat_ajax(Request $request){
     ->first();
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
-    if($vote){
-        // return redirect()->back();
-        return response()->json([
-            'success' => false,
-            'message' => "You have already voted!!!"
-        ]);
-    }else{
+
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
             $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
@@ -529,10 +526,28 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> type_vote = 2;
                 $new_vote -> save();
                 /*reviews eats*/
+                 /*img review eat*/
+                if($request -> image !=null){
+                    foreach($request -> image as $img){
+                        $base64String = $img;
+                        $ShareController = new ShareController;
+                        $media = new Media;
+                        $media -> type_media = 'image';
+                        $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                        $media -> id_user = $user_id;
+                        /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                        $media -> type = 2;
+                        $media -> save();
+                        $arr_image_gallery[] = $media -> id;
+                    }
+                }else{
+                    $arr_image_gallery[] = null;
+                }
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
                 $new_review -> description = $request -> description;
+                $new_review -> list_id_image = $arr_image_gallery;
 
                 if($new_review -> save()){
                     /*update review rating*/
@@ -575,10 +590,27 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> type_vote = 2;
                 $new_vote -> save();
                 /*reviews eats*/
+                 if($request -> image !=null){
+                    foreach($request -> image as $img){
+                        $base64String = $img;
+                        $ShareController = new ShareController;
+                        $media = new Media;
+                        $media -> type_media = 'image';
+                        $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                        $media -> id_user = $user_id;
+                        /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                        $media -> type = 2;
+                        $media -> save();
+                        $arr_image_gallery[] = $media -> id;
+                    }
+                }else{
+                    $arr_image_gallery[] = null;
+                }
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;                
                 $new_review -> description = $request -> description;
+                $new_review -> list_id_image = $arr_image_gallery;
 
                 if($new_review -> save()){
                     /*update review rating*/
@@ -606,7 +638,7 @@ public function voteReviewEat_ajax(Request $request){
             ]);
         }
         
-    }
+
 
 }
 public function getRankBusiness(){
@@ -628,12 +660,13 @@ public function getRankBusiness(){
 /*end knight*/
 
 public function eat_rank(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.eat-rank',compact('info_business'));
+    $list_vote_eat = Auth::user()->votes()->where('type_vote',2)->get();
+    return view('layouts_profile.eat-rank',compact('list_vote_eat'));
 }
 public function business_rank(){
-    $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.business-rank',compact('info_business'));
+    $list_vote_business = Auth::user()->votes()->where('type_vote',1)->get();
+
+    return view('layouts_profile.business-rank',compact('list_vote_business'));
 }
 
 public function my_businesses(Request $request){
@@ -706,10 +739,14 @@ public function reaction_review(Request $request){
     public function review_search(Request $request)
     {
         $business = Business::find($request->id);
+        $category_id = $request->category_id;
+        $category_name = Category::find($category_id)->category_name;
         // dd($business);
         $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
-                                             ->where('type_rate','=',1)
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
                                              ->get();
         if(count($reviews) == 0){
             return response()->json([
@@ -718,12 +755,40 @@ public function reaction_review(Request $request){
         ]);
         }
         $data = "";
-        $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        $view = View::make('layouts.review-popup', ['reviews' => $reviews, 'business' => $business,'category_name' => $category_name ]);
         $data .= (string) $view;
         return response()->json([
             'success' => true,
             'data' => $data
         ]);
+    }
+// show photo popup
+
+    public function show_photo(Request $request)
+    {
+        $user_id = $request->user_id;
+        $data_img = Media::where('id_user',$user_id )->where('type',2)->get();
+        if($data_img->count() > 0){
+            $data = "";
+            foreach ($data_img as $value) {
+                $item= asset('').'storage/'.$value -> url;
+                $data .= '<li class="" data-responsive="" data-src="'.$item.'">
+                                <a href="'.$item.'" class="lightbox">
+                                    
+                                    <img width="210" height="145" src="'.$item.'" class="pic" >
+                                </a>       
+                            </li>';
+            }
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        }else{
+            return response()->json([
+                'success' => false
+            ]);
+        }
+
     }
 
 }

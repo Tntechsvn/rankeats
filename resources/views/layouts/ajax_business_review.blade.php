@@ -7,7 +7,18 @@
     		<span class="bold">Name :</span>
     		<span class="bold" style="color: #0073bb">{{$data->user->name}}</span>
     	</p>
-
+    	@if($data->review->ListImageReview)
+    		<ul class="lightgalleryphoto">
+		    	@foreach($data->review->ListImageReview as $val)
+		    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+                    <a href="{{$val['url']}}" class="lightbox">
+                        
+                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+                    </a>       
+                </li>
+		    	@endforeach
+	    	</ul>
+    	@endif
     	<p>{{$data->review->description}}</p>
 		<ul class="star-rate">
     		@php
@@ -27,8 +38,24 @@
 			@endphp
 		</ul>
 	</div>
+	<div class="funny funny-{{$data->review->id}}">
+
+		<div class="hungry">
+			<img src="images/hungry.png" alt="">
+			<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 1) active @endif" data-type="1" data-review="{{$data->review->id}}">Hungry</button>
+		</div>
+		<div class="useful">
+			<img src="images/useful.png" alt="">
+			<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 2) active @endif" data-type="2" data-review="{{$data->review->id}}">Useful</button>
+		</div>
+		<div class="cool">
+			<img src="images/cool.png" alt="">
+			<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 3) active @endif" data-type="3" data-review="{{$data->review->id}}">Cool</button>
+		</div>
+	</div>
 @endforeach	
+
+{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 <div class="p-t-15" style="text-align: right;">
-	<a href="javascript:;" class="btn btn-danger" style="color: #fff;">Voted</a>
-	{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+	<a href="javascript:;" class="btn vote unvote" style="color: #fff;">My Vote</a>
 </div>

@@ -9,6 +9,7 @@ use App\Myconst;
 use App\Business;
 use App\Review_rating;
 use View;
+use App\Media;
 class ReviewsController extends Controller
 {
     /**
@@ -115,6 +116,7 @@ class ReviewsController extends Controller
         }
         $user_id = Auth::user()->id;
         /*create review */
+        /*check đã review món chưa, nếu rồi thì trả về đã review*/
         $check_reviews_business = Review_rating::where('user_id',$user_id)->where('id_rate_from',$request -> business_id)
                                                 ->where('category_id',$request -> category_id)
                                                 ->where('type_rate',2)->count();
@@ -131,12 +133,30 @@ class ReviewsController extends Controller
 
         /*create review eat*/
         if($request -> category_id){
-               $review_eat = new Review;
-               $review_eat -> user_id = $user_id;
-               $review_eat -> business_id = $request -> business_id;
-               $review_eat -> description = $request -> description;
+            /*img review eat*/
+            if($request -> image !=null){
+                foreach($request -> image as $img){
+                    $base64String = $img;
+                    $ShareController = new ShareController;
+                    $media = new Media;
+                    $media -> type_media = 'image';
+                    $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                    $media -> id_user = $user_id;
+                    /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                    $media -> type = 2;
+                    $media -> save();
+                    $arr_image_gallery[] = $media -> id;
+                }
+            }else{
+                $arr_image_gallery[] = null;
+            }
+           $review_eat = new Review;
+           $review_eat -> user_id = $user_id;
+           $review_eat -> business_id = $request -> business_id;
+           $review_eat -> description = $request -> description;
+           $review_eat -> list_id_image =  $arr_image_gallery;
 
-               if($review_eat -> save()){
+           if($review_eat -> save()){
                 /*update review rating*/
                 $review_rating = new Review_rating;
                 $review_rating -> user_id = $user_id;
@@ -151,7 +171,7 @@ class ReviewsController extends Controller
        
         /*end create reviews*/
         $info_business = Business::findOrfail($request -> business_id);
-        $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
+        $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->orderBy('created_at','desc')->paginate(Myconst::PAGINATE_ADMIN);
 
         if($data->success){
             session()->put('success',$data->message);

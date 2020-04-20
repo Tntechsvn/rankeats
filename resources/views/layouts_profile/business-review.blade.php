@@ -32,6 +32,11 @@
 									<p><i class="fas fa-calendar-alt"></i>{{$data->created_at}}</p>
 									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
+									@if($data->review->ListImageReview)
+								    	@foreach($data->review->ListImageReview as $val)
+								    	<img src="{{$val['url']}}" width="210px" height="145px;">
+								    	@endforeach
+							    	@endif
 									<p>{{$data->review->description}}</p>
 									
 									<div class="edit">
@@ -43,7 +48,10 @@
 
 							</div>
 							@endforeach
+						@else
+							<h4 style="text-align: center;">You not yet add any Business review.</h4>
 						@endif
+
 
 						{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 					</div>
