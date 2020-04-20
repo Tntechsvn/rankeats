@@ -275,7 +275,9 @@ $(document).on('click','.funnyy',function(){
 $(document).on('click','.review-popup',function(){
   before_ajax();
   var url = $('input[name=review_search]').val();
-  id = $(this).data('id');
+  var id = $(this).data('id');
+  var name = $(this).data('name');
+  var category_id = $(this).data('category-search');
   target = $('#review-popup');
   $.ajax({
     headers: {
@@ -284,9 +286,11 @@ $(document).on('click','.review-popup',function(){
     type:'POST',
     url: url,
     data: {
-      id: id
+      id: id,
+      category_id: category_id
     },
     success:function(res){
+      target.find('.modal-header h3 span').html(name);
       if(res.success == true){
           after_ajax();
           target.modal('show');
@@ -317,10 +321,10 @@ $(document).on('click','.show-photo',function(){
     },
     success:function(res){
       if(res.success == true){
+          modal.find('#has-photo').html(res.data);
           modal.modal('show');
       }else{
         modal.find('.no-photo').removeClass('hidden');
-        console.log(res.id);
         modal.modal('show');
         
       }

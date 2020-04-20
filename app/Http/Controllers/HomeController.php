@@ -710,10 +710,14 @@ public function reaction_review(Request $request){
     public function review_search(Request $request)
     {
         $business = Business::find($request->id);
+        $category_id = $request->category_id;
+        $category_name = Category::find($category_id)->category_name;
         // dd($business);
         $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
-                                             ->where('type_rate','=',1)
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
                                              ->get();
         if(count($reviews) == 0){
             return response()->json([
@@ -722,7 +726,7 @@ public function reaction_review(Request $request){
         ]);
         }
         $data = "";
-        $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        $view = View::make('layouts.review-popup', ['reviews' => $reviews, 'business' => $business,'category_name' => $category_name ]);
         $data .= (string) $view;
         return response()->json([
             'success' => true,
@@ -735,36 +739,27 @@ public function reaction_review(Request $request){
     {
         $user_id = $request->user_id;
         $data_img = Media::where('id_user',$user_id )->where('type',2)->get();
-        foreach ($data_img as $value) {
-            $item['url']= asset('').'storage/'.$value -> url;
-            $list_id_gallery[] = $item;
+        if($data_img->count() > 0){
+            $data = "";
+            foreach ($data_img as $value) {
+                $item= asset('').'storage/'.$value -> url;
+                $data .= '<li class="" data-responsive="" data-src="'.$item.'">
+                                <a href="'.$item.'" class="lightbox">
+                                    
+                                    <img width="210" height="145" src="'.$item.'" class="pic" >
+                                </a>       
+                            </li>';
+            }
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        }else{
+            return response()->json([
+                'success' => false
+            ]);
         }
-        //return
 
-        return response()->json([
-            'success' => false,
-            'id' => $list_id_gallery
-        ]);
-
-        // $business = Business::find($request->id);
-        // // dd($business);
-        // $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
-        //                                      ->where('type_rate','=',1)
-        //                                      ->whereNull('users.deleted_at')
-        //                                      ->get();
-        // if(count($reviews) == 0){
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => "Not review for Business"
-        //     ]);
-        // }
-        // $data = "";
-        // $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
-        // $data .= (string) $view;
-        // return response()->json([
-        //     'success' => true,
-        //     'data' => $data
-        // ]);
     }
 
 }

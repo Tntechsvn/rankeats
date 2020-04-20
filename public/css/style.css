@@ -1689,6 +1689,9 @@ input#location_search {
 .firstWindow {
 	padding: 0 15px;
 }
+.lightbox img {
+	object-fit: cover;
+}
 .input-group-btn{
 	float: left;
 }
