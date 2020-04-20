@@ -23,6 +23,7 @@
 					<div>
 						<h3 class="title m-b-20">Business Ranks</h3>
 						<div class="clear"></div>
+						@if(count($list_vote_business) > 0)
 						<table style="width: 100%" class="table-full">
 							<thead class="head-table">
 								<tr>
@@ -32,22 +33,28 @@
 									<td width="20%">State</td>
 									<td colspan="2" width="20%">
 										<div style="width: 100%;line-height: 30px;border-bottom: 1px solid #e1e1e1;">Rank</div>
-										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$info_business->location->city ?? ''}}</div>
-										<div style="width: 50%;float: left;line-height: 30px;">{{$info_business->location->state ?? ''}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">City</div>
+										<div style="width: 50%;float: left;line-height: 30px;">State</div>
 									</td>
 								</tr>
 							</thead>
 							<tbody class="content-table">
+								@foreach($list_vote_business as $data)
 								<tr>
-									<td>{{$info_business->name ?? ''}}</td>
-									<td></td>
-									<td>{{$info_business->location->city ?? ''}}</td>
-									<td>{{$info_business->location->state ?? ''}}</td>
-									<td width="10%">{{$info_business->RankBusinessCity ?? ''}}</td>
-									<td width="10%">{{$info_business->RankBusinessState ?? ''}}</td>
+									<td>{{$data->business->name ?? ''}}</td>
+									<td>{{$data->created_at}}</td>
+									<td>{{$data->business->location->city ?? ''}}</td>
+									<td>{{$data->business->location->state ?? ''}}</td>
+									<td width="10%">{{$data->business->RankBusinessCity ?? ''}}</td>
+									<td width="10%">{{$data->business->RankBusinessState ?? ''}}</td>
 								</tr>
+								@endforeach
 							</tbody>
 						</table>
+						@else
+						<h4 style="text-align: center;">You not yet vote any Business.</h4>
+						@endif
+						
 					</div>
 				</div>
 			</div>

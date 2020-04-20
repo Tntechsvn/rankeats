@@ -43,7 +43,10 @@
 
 							</div>
 							@endforeach
+						@else
+							<h4 style="text-align: center;">You not yet add any Business review.</h4>
 						@endif
+
 
 						{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
 					</div>
