@@ -296,8 +296,9 @@ public function bookmark(){
 }
 
 public function my_eat(){
+    $user = Auth::user();
     $info_business = Auth::user()->business()->first();
-    return view('layouts_profile.my-eat',compact('info_business'));
+    return view('layouts_profile.my-eat',compact('info_business','user'));
 }
 /*create_advertise*/
 public function create_advertise(){

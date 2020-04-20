@@ -34,11 +34,20 @@
 									<p><i class="fas fa-calendar-alt"></i>{{$data->created_at}}</p>
 									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
+									
 									@if($data->review->ListImageReview)
-								    	@foreach($data->review->ListImageReview as $val)
-								    	<img src="{{$val['url']}}" width="210px" height="145px;">
-								    	@endforeach
+										<ul class="lightgalleryphoto">
+									    	@foreach($data->review->ListImageReview as $val)
+									    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+			                                    <a href="{{$val['url']}}" class="lightbox">
+			                                        
+			                                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+			                                    </a>       
+			                                </li>
+									    	@endforeach
+								    	</ul>
 							    	@endif
+								    
 									<p>{{$data->review->description}}</p>
 									
 									<div class="edit">
@@ -130,4 +139,17 @@
 	<!--container--> 
 
 </div>
+@endsection
+@section('script')
+	<script src="lightbox/js/lightgallery-all.min.js"></script>
+	<script type="text/javascript">
+		$('.lightgalleryphoto').lightGallery();
+
+		$(document).on('click','.readmore',function(){
+			$(this).addClass('hidden');
+			$(this).closest('.description').find('.show_readmore').removeClass('hidden');
+		});
+
+		
+	</script>
 @endsection
