@@ -36,7 +36,7 @@
 								<div class="form-group"  style="text-align: center;">
 									<div  class="dt-imgs">
 										<div class="dt-close" style="position:relative;">
-											<div id="previews" class="preview-img" style="width: 250px;">@if($info_business ->url_img != null)<img class='thumb' src="{{asset('').'storage/'.$info_business ->url_img}}" style='width:100%;'><div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>@endif</div>
+											<div id="previews" class="preview-img" style="width: 250px;position: relative;">@if($info_business ->url_img != null)<img class='thumb' src="{{asset('').'storage/'.$info_business ->url_img}}" style='width:100%;'><div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>@endif</div>
 										</div>
 									</div>
 								</div>
@@ -238,16 +238,16 @@
 					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
 					<h3 class="title">Review business</h3>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="max-height: 800px;overflow-y: scroll;">
 					<div id="reviewforbusiness" class="tab-pane">
 					
 					@foreach( $reviews as $data)
 					{{-- @dump($data) --}}
 					<div class="list-review m-b-20">
 						<div class="avata">
-							<img src="images/avatar-default.png" alt="" >
+							<img src="{{$data->user->UrlAvatarUser}}" alt="" >
 							<div class="photo-img">
-								<a href="javascript:;" class="show-photo"><i class="fas fa-camera-retro"></i> 20 photo</a>
+								<a href="javascript:;" class="show-photo" data-id="{{$data->user->id}}"><i class="fas fa-camera-retro"></i> 20 photo</a>
 								
 							</div>
 							
@@ -260,7 +260,7 @@
 									@for($i = 1;$i <= 5;$i++)
 									<i class="fas fa-star star-rate"></i>
 									@endfor
-									<span class="review-date">{{$data -> created_at}}</span>
+									<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 								</div>
 								<div class="review-address">
 									<i class="fas fa-map-marker-alt"></i> {{$data->user->location->address ?? ""}}, {{$data->user->location->city ?? ""}}, {{$data->user->location->state ?? ""}}, {{$data->user->location->country ?? ""}} 
@@ -298,35 +298,62 @@
 	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
 
 		<!-- Modal content-->
-		<form action="{{route('sendMailFollwers')}}" method="post" accept-charset="utf-8">
-			@csrf
-			<input type="hidden" name="business" value="{{$info_business->id}}">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
-					<h3>Images of Kimberly S</h3>
-				</div>
-				<div class="modal-body">
-					<div class="no-photo ">
-						<img src="images/no-photo.png" alt="">
-						<p class="bold">Don't have image review</p>
-					</div>
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn " data-dismiss="modal">Back</button>
-				</div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+				<h3>Images of Kimberly S</h3>
 			</div>
-		</form>
+			<div class="modal-body">
+				<div class="has-photo">
+					<ul id="has-photo">
+					    			
+		    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+                            <a href="images/pizza.jpg" class="lightbox">
+                                
+                                <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+                            </a>       
+                        </li>
+		    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+                            <a href="images/pizza.jpg" class="lightbox">
+                                
+                                <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+                            </a>       
+                        </li>
+		    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+                            <a href="images/pizza.jpg" class="lightbox">
+                                
+                                <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+                            </a>       
+                        </li>
+		    			<li class="" data-responsive="" data-src="images/pizza.jpg">
+                            <a href="images/pizza.jpg" class="lightbox">
+                                
+                                <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+                            </a>       
+                        </li>
+		    			
+		    		</ul>
+				</div>
+				<div class="no-photo hidden">
+					<img src="images/no-photo.png" alt="">
+					<p class="bold">Don't have image review</p>
+				</div>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn bold" data-dismiss="modal">Back</button>
+			</div>
+		</div>
 
 	</div>
 </div>
-
+<input type="hidden" name="show-photo" value="{{route('show-photo')}}">
 @endsection
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
 	$("#lightgalleryphoto").lightGallery();
+	$("#has-photo").lightGallery();
 	$('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
         startDate: '0d',

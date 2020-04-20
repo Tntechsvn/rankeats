@@ -725,5 +725,36 @@ public function reaction_review(Request $request){
             'data' => $data
         ]);
     }
+// show photo popup
+
+    public function show_photo(Request $request)
+    {
+        $user_id = $request->user_id;
+
+        return response()->json([
+            'success' => false,
+            'id' => $user_id
+        ]);
+
+        // $business = Business::find($request->id);
+        // // dd($business);
+        // $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+        //                                      ->where('type_rate','=',1)
+        //                                      ->whereNull('users.deleted_at')
+        //                                      ->get();
+        // if(count($reviews) == 0){
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => "Not review for Business"
+        //     ]);
+        // }
+        // $data = "";
+        // $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        // $data .= (string) $view;
+        // return response()->json([
+        //     'success' => true,
+        //     'data' => $data
+        // ]);
+    }
 
 }

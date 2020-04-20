@@ -304,6 +304,26 @@ $(document).on('click','.review-popup',function(){
 
 $(document).on('click','.show-photo',function(){
   var modal = $('#photo-popup');
-  modal.modal('show');
-
+  var url = $('input[name=show-photo]').val();
+  var user_id = $(this).data('id');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      user_id: user_id
+    },
+    success:function(res){
+      if(res.success == true){
+          modal.modal('show');
+      }else{
+        modal.find('.no-photo').removeClass('hidden');
+        console.log(res.id);
+        modal.modal('show');
+        
+      }
+    }
+  });
 });

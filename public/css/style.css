@@ -2447,8 +2447,18 @@ width: 30% !important;
 	border: 1px solid #b7b7b7;
 	background-color: #fff;
 }
-
-
+#photo-popup .modal-footer button:hover {
+	background-color: #0d59b7;
+	color: #fff;
+}
+.has-photo li {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+#has-photo {
+	padding: 0;
+}
 
 
 

@@ -148,7 +148,7 @@
 				<input type="hidden" name="business_id" value="">
 				<input type="hidden" name="category_id" value="{{$category_search->id ?? ""}}">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div style="padding: 15px;border-bottom: 1px solid #e5e5e5;">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
 							<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
 							<p class="bold">{{Auth::user()->name}}</p>
@@ -179,6 +179,19 @@
 									<span class="starimg "></span>
 								</label>
 							</div>
+							<div class="form-group choose-img">
+								<div class="form-group"  style="text-align: center;">
+									<div  class="dt-imgs">
+										<div class="dt-close" style="position:relative;">
+											<div id="previews" class="preview-img" style="width: 250px;position: relative;"></div>
+										</div>
+									</div>
+								</div>
+								<label for="image_restaurant" class="choose_img" style="width: 100%;">
+									<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;display: block;"><i class="fas fa-paperclip"></i> Choose image...</span>
+									<input id="image_restaurant" class="hidden" type="file" value="" accept="image/*" multiple>
+								</label>
+							</div>
 							<div class="form-group reviewBox">
 								<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
 								<span class="e-lang" style="color: red;font-size: 11px;"></span>
@@ -191,7 +204,7 @@
 							<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
 							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 						</div>
-						<div class="firstWindow hidden" style="width: 100%">
+						<div class="firstWindow hidden" style="width: 100%;padding: 0 15px;">
 							<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
 						</div>
 					</div>
@@ -379,15 +392,6 @@
 			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 
 		});
-
-		// $(document).on('click','.vote_now', function(){
-		// 	var user = $('input[name=user]').val();
-		// 	var modal_login = $('#loginModal');
-		// 	console.log(user);
-		// 	if(user == ""){
-		// 		modal_login.show();
-		// 	}
-		// });
 	});
 
 	// show form add eat
@@ -411,4 +415,35 @@
 	});
 
 </script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var images = function(input, imgPreview) {
+				if (input.files) {
+					var arr = [];
+					var filesAmount = input.files.length;
+					for (i = 0; i < filesAmount; i++) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').appendTo(imgPreview);
+						}
+						reader.readAsDataURL(input.files[i]);
+					}
+				}
+			};
+
+			$('#image_restaurant').on('change', function() {
+				images(this, '#previews');
+			});
+			/*clear the file list when image is clicked*/
+			$(document).on('click','.deletetimg',function(){
+				if(confirm("You want to delete it?"))
+				{
+					$(this).closest('#previews').html('');
+					$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+				}
+				else
+					return false;
+			});
+		});
+	</script>
 @stop
