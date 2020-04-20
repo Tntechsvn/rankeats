@@ -190,13 +190,13 @@
 				    		<div style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote($info_business->id))
-							    		<a style="color: #fff;" href="javascript:;" @if(!Auth::check()) data-target="#loginModal" @endif class="btn vote @if(Auth::check()) vote_now @endif" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
+							    		<a style="color: #fff;" href="javascript:;" class="btn vote vote_now" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
 							    	@else
-							    		<a  href="javascript:;"  class="btn unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Voted</a>
+							    		<a  href="javascript:;"  class="btn unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}" >My vote</a>
 							    	@endif
 						    	@else
 
-				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-success" style="color: #fff;">Vote</a>
+				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a>
 				    			@endif
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
@@ -250,12 +250,12 @@
 				    		<div class="p-t-15" style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
-					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-success" style="color: #fff;">Vote</a>
+					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote" style="color: #fff;" >Vote</a>
 					    			@else
-					    			<a href="javascript:;" class="btn btn-danger" style="color: #fff;">Voted</a>
+					    			<a href="javascript:;" data-target="#vote_review" data-toggle="modal" class="btn vote" style="color: #fff;background-color: #b7b7b7;">My vote</a>
 					    			@endif
 				    			@else
-				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-success" style="color: #fff;">Vote</a>
+				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a>
 				    			@endif
 				    			{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 				    		</div>
@@ -335,8 +335,8 @@
     <!-- Modal content-->
 	<div class="modal-content">
 	  <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h4 class="modal-title bold">EAT Rank/Reviews</h4>
+		<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
+		<h3 class="modal-title bold">EAT Rank / Reviews</h3>
 	  </div>
 	  <div class="modal-body">
 		<form class="" action="" method="post">
@@ -412,6 +412,19 @@
 							<span class="starimg "></span>
 						</label>
 					</div>
+					<div class="form-group choose-img">
+						<div class="form-group"  style="text-align: center;">
+							<div  class="dt-imgs">
+								<div class="dt-close" style="position:relative;">
+									<div id="previews-eat" class="preview-img" style="width: 250px;position: relative;"></div>
+								</div>
+							</div>
+						</div>
+						<label for="image_eat" class="choose_img" style="width: 100%;">
+							<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;display: block;"><i class="fas fa-paperclip"></i> Choose image...</span>
+							<input id="image_eat" class="hidden" type="file" value="" accept="image/*" multiple>
+						</label>
+					</div>
 					<div class="form-group reviewBox">
 						<textarea class="form-control" placeholder="Write Your Review" name="description" style="height: 150px;"></textarea>
 					</div>
@@ -441,14 +454,14 @@
 			@csrf
 			<input type="hidden" name="business_id" value="">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div style="padding: 15px;border-bottom: 1px solid #e5e5e5;">
 					<div class="avata-popup " style="width: 100%;text-align: center;">
 						<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
 						<p class="bold">{{Auth::user()->name}}</p>
 					</div>
 				</div>
 				<div class="modal-body">
-					<p>Would you like to write a review for this EAT?</p>
+					<p style="text-align: center;">Would you like to write a review for this Business?</p>
 					<div class="okverify hidden">
 						<div class="popup-star">
 							<label class="customstar star-1">							
@@ -472,6 +485,19 @@
 								<span class="starimg "></span>
 							</label>
 						</div>
+						<div class="form-group choose-img">
+						<div class="form-group"  style="text-align: center;">
+							<div  class="dt-imgs">
+								<div class="dt-close" style="position:relative;">
+									<div id="previews-business" class="preview-img" style="width: 250px;position: relative;"></div>
+								</div>
+							</div>
+						</div>
+						<label for="image_business" class="choose_img" style="width: 100%;">
+							<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;display: block;"><i class="fas fa-paperclip"></i> Choose image...</span>
+							<input id="image_business" class="hidden" type="file" value="" accept="image/*" multiple>
+						</label>
+					</div>
 						<div class="form-group reviewBox">
 							<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
 							<span class="e-lang" style="color: red;font-size: 11px;"></span>
@@ -621,15 +647,6 @@
 			$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 
 		});
-
-		// $(document).on('click','.vote_now', function(){
-		// 	var user = $('input[name=user]').val();
-		// 	var modal_login = $('#loginModal');
-		// 	console.log(user);
-		// 	if(user == ""){
-		// 		modal_login.show();
-		// 	}
-		// });
 	});
 
 	// show form add eat
@@ -700,4 +717,39 @@
       }
     </script>
  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&libraries=places&callback=initMap" async defer></script>
+
+ 	<script type="text/javascript">
+		$(document).ready(function() {
+			var images = function(input, imgPreview) {
+				if (input.files) {
+					var arr = [];
+					var filesAmount = input.files.length;
+					for (i = 0; i < filesAmount; i++) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							$('<div class="dt-close" style="position:relative;"><input type="hidden" name="image[]" value='+event.target.result+'  /></div>').appendTo(imgPreview);
+						}
+						reader.readAsDataURL(input.files[i]);
+					}
+				}
+			};
+
+			$('#image_business').on('change', function() {
+				images(this, '#previews-business');
+			});
+			$('#image_eat').on('change', function() {
+				images(this, '#previews-eat');
+			});
+			/*clear the file list when image is clicked*/
+			// $(document).on('click','.deletetimg',function(){
+			// 	if(confirm("You want to delete it?"))
+			// 	{
+			// 		$(this).closest('#previews').html('');
+			// 		$("#image_restaurant").val(null);/* xóa tên của file trong input*/
+			// 	}
+			// 	else
+			// 		return false;
+			// });
+		});
+	</script>
 @stop
