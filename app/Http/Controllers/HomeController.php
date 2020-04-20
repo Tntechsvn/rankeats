@@ -500,13 +500,7 @@ public function voteReviewEat_ajax(Request $request){
     ->first();
     $data_business = Business::find($request->business);
     $city_id = $data_business->location->IdCity;
-    if($vote){
-        // return redirect()->back();
-        return response()->json([
-            'success' => false,
-            'message' => "You have already voted!!!"
-        ]);
-    }else{
+
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
             $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
@@ -532,10 +526,28 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> type_vote = 2;
                 $new_vote -> save();
                 /*reviews eats*/
+                 /*img review eat*/
+                if($request -> image !=null){
+                    foreach($request -> image as $img){
+                        $base64String = $img;
+                        $ShareController = new ShareController;
+                        $media = new Media;
+                        $media -> type_media = 'image';
+                        $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                        $media -> id_user = $user_id;
+                        /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                        $media -> type = 2;
+                        $media -> save();
+                        $arr_image_gallery[] = $media -> id;
+                    }
+                }else{
+                    $arr_image_gallery[] = null;
+                }
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;
                 $new_review -> description = $request -> description;
+                $new_review -> list_id_image = $arr_image_gallery;
 
                 if($new_review -> save()){
                     /*update review rating*/
@@ -578,10 +590,27 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> type_vote = 2;
                 $new_vote -> save();
                 /*reviews eats*/
+                 if($request -> image !=null){
+                    foreach($request -> image as $img){
+                        $base64String = $img;
+                        $ShareController = new ShareController;
+                        $media = new Media;
+                        $media -> type_media = 'image';
+                        $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                        $media -> id_user = $user_id;
+                        /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                        $media -> type = 2;
+                        $media -> save();
+                        $arr_image_gallery[] = $media -> id;
+                    }
+                }else{
+                    $arr_image_gallery[] = null;
+                }
                 $new_review = new Review;
                 $new_review -> user_id = $user_id;
                 $new_review -> business_id = $request -> business;                
                 $new_review -> description = $request -> description;
+                $new_review -> list_id_image = $arr_image_gallery;
 
                 if($new_review -> save()){
                     /*update review rating*/
@@ -609,7 +638,7 @@ public function voteReviewEat_ajax(Request $request){
             ]);
         }
         
-    }
+
 
 }
 public function getRankBusiness(){
