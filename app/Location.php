@@ -3,16 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Controllers\ShareController;
 class Location extends Model
 {
     /*knight*/
 	public function update_location($request){
-		if($request -> latitude){
-			$this -> latitude = $request -> latitude;
-		}
-		if($request -> longitude){
-			$this -> longitude = $request -> longitude;
+		$address_business = $request -> address.','.$request -> city.','.$request -> state;
+		$ShareController = new ShareController;	
+		$location = $ShareController->geocode($address_business);
+		if($location){
+			$this -> latitude = $location[0];
+			$this -> longitude = $location[1];
 		}
 		
 		$this -> address = $request -> address;
