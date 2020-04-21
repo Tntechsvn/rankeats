@@ -81,6 +81,8 @@
 								<p>City: {{$data->city}}</p>
 								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p>
 								<p>Phone: {{$data->phone}}</p>
+								<input type="hidden" name="" class="latitude" data-latitude="{{$data->location->latitude}}">
+								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
@@ -128,7 +130,7 @@
 		</div>
 		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30">
 			<div class="map_img">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26361000.332878!2d-113.75050573534398!3d36.242031228413545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2zSG9hIEvhu7M!5e0!3m2!1svi!2s!4v1586315585512!5m2!1svi!2s" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+				<div id="map"></div>
 			</div>
 			<div>
 				<h4 style="font-size: 14px;" class="p-t-15">Is the EAT for a business you’re looking for missing?</h4>
@@ -151,7 +153,7 @@
 			<form action="{{route('postReviewFrontEnd')}}" method="post" accept-charset="utf-8">
 				@csrf
 				<input type="hidden" name="business_id" value="">
-				<input type="hidden" name="category_id" value="{{$category_search->id ?? ""}}">
+				<input type="hidden" name="category_id" value="{{$category_search->id ?? ''}}">
 				<div class="modal-content">
 					<div style="padding: 15px;border-bottom: 1px solid #e5e5e5;">
 						<div class="avata-popup " style="width: 100%;text-align: center;">
@@ -395,9 +397,9 @@
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function){
-		$('.lightgalleryphoto').lightGallery();
-	}
+	// $(document).ready(function){
+	// 	$('.lightgalleryphoto').lightGallery();
+	// }
 	$("#add_eat_state").change(function(){
 		var name_state = $(this).val();
 
@@ -479,4 +481,102 @@
 			});
 		});
 	</script>
+	<!-- map -->
+<script>
+      var map;
+      function initMap() {
+      	var zoom_df = 3;
+		var lat_df = $('.latitude').data('latitude');
+		if(lat_df){
+			zoom_df = 13;
+			lat_df = lat_df;
+		}else{
+			lat_df = 37.09024;
+		}
+		var long_df = $('.longitude').data('longitude');
+		if(long_df){
+			zoom_df = 13;
+			long_df = long_df;
+		}else{
+			long_df =  -95.712891;
+		}
+      	/*mảng location*/
+      	var features = [];
+        $('.results-all').find('.food-main').each(function () {
+        	var lat = $(this).find('.latitude').data('latitude');
+        	var long = $(this).find('.longitude').data('longitude');
+
+        	data = {
+        		'position': new google.maps.LatLng(lat, long),
+        		'type': 'info',
+        	}
+        	features.push(data);
+        });
+
+        map = new google.maps.Map(
+            document.getElementById('map'),
+            {center: new google.maps.LatLng(lat_df, long_df), zoom: zoom_df});
+
+        var iconBase =
+            'https://maps.gstatic.com/mapfiles/api-3/images/';
+
+        var icons = {
+          parking: {
+            icon: iconBase + 'spotlight-poi2.png'
+          },
+          library: {
+            icon: iconBase + 'spotlight-poi2.png'
+          },
+          info: {
+            icon: iconBase + 'spotlight-poi2.png'
+          }
+        };
+
+        /*var features = [
+           {
+            position: new google.maps.LatLng(-33.91725, 151.23011),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91872, 151.23089),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91784, 151.23094),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91682, 151.23149),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91790, 151.23463),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91666, 151.23468),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.916988, 151.233640),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.916365282092855, 151.22937399734496),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.91665018901448, 151.2282474695587),
+            type: 'parking'
+          }
+        ];*/
+
+        // Create markers.
+        for (var i = 0; i < features.length; i++) {
+          var marker = new google.maps.Marker({
+            position: features[i].position,
+            icon: icons[features[i].type].icon,
+            map: map
+          });
+        };
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
+    </script>
 @stop

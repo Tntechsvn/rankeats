@@ -12,7 +12,7 @@
 		</div>
 		<div class="info">
 			<div class="content-right p-b-20">
-				<h4>{{$data->user->name ?? ""}}</h4>
+				<h4><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a></h4>
 			
 				<div class="star-view clear p-b-10">
 					@for($i = 1;$i <= 5;$i++)
@@ -26,7 +26,7 @@
 
 				<p>{{$data->review->description}}</p>
 				<div class="picture-review">
-					<ul id="lightgalleryphoto" class="lightgalleryphoto" style="padding-left: 0">
+					<ul class="lightgalleryphoto" style="padding-left: 0">
 						@if($data->review->ListImageReview)
 							@foreach($data->review->ListImageReview as $val)
 								<li class="list-picture" data-responsive="" data-src="{{$val['url']}}">

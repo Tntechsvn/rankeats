@@ -178,7 +178,7 @@ $(document).on('click','.yesforvote',function(e){
 
 // end
 
-$(document).on('change','select[name=state]', function(){
+/*$(document).on('change','select[name=state]', function(){
   var val = $(this).val();
   var form = $(this).closest('form');
   // var val = 1;
@@ -202,7 +202,7 @@ $(document).on('change','select[name=state]', function(){
       }
     }
   });
-});
+});*/
 
 
 // vote+review single
@@ -323,6 +323,7 @@ $(document).on('click','.show-photo',function(){
       if(res.success == true){
           modal.find('#has-photo').html(res.data);
           modal.modal('show');
+          $('.lightgalleryphoto').lightGallery();
       }else{
         modal.find('.no-photo').removeClass('hidden');
         modal.modal('show');
