@@ -72,8 +72,8 @@
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
-								<span class="top-results">{{$key+1}}</span>
-								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
+								<span class="top-results" class="stt" data-stt="{{$key+1}}">{{$key+1}}</span>
+								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}" class="business_name" data-business-name="{{$data->name}}" >{{$data->name}}</a></h4>
 								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
 								<p>City: {{$data->city}}</p>
 								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p>
@@ -450,9 +450,9 @@
 	</script>
 	<!-- map -->
 <script>
-      var map;
-      function initMap() {
-      	var zoom_df = 3;
+	var map;
+	function initMap() {
+		var zoom_df = 3;
 		var lat_df = $('.latitude').data('latitude');
 		if(lat_df){
 			zoom_df = 13;
@@ -467,83 +467,77 @@
 		}else{
 			long_df =  -95.712891;
 		}
-      	/*mảng location*/
-      	var features = [];
-        $('.results-all').find('.food-main').each(function () {
-        	var lat = $(this).find('.latitude').data('latitude');
-        	var long = $(this).find('.longitude').data('longitude');
+		/*mảng location*/
+		var features = [];
+		$('.results-all').find('.food-main').each(function () {
+			var lat = $(this).find('.latitude').data('latitude');
+			var long = $(this).find('.longitude').data('longitude');
+			var business_name = $(this).find('.business_name').data('business-name');
+			var labels = $(this).find('.stt').data('stt');
+			data = {
+				'position': new google.maps.LatLng(lat, long),
+				'type': 'info',
+				'placeName': business_name,
+				'labels':'1',
+			}
+			features.push(data);
+		});
 
-        	data = {
-        		'position': new google.maps.LatLng(lat, long),
-        		'type': 'info',
-        	}
-        	features.push(data);
-        });
+		map = new google.maps.Map(
+			document.getElementById('map'),
+			{center: new google.maps.LatLng(lat_df, long_df), zoom: zoom_df});
 
-        map = new google.maps.Map(
-            document.getElementById('map'),
-            {center: new google.maps.LatLng(lat_df, long_df), zoom: zoom_df});
+		var iconBase =
+		'https://maps.gstatic.com/mapfiles/api-3/images/';
 
-        var iconBase =
-            'https://maps.gstatic.com/mapfiles/api-3/images/';
+		var icons = {
+			parking: {
+				icon: iconBase + 'spotlight-poi2.png'
+			},
+			library: {
+				icon: iconBase + 'spotlight-poi2.png'
+			},
+			info: {
+				icon: iconBase + 'spotlight-poi2.png'
+			}
+		};
 
-        var icons = {
-          parking: {
-            icon: iconBase + 'spotlight-poi2.png'
-          },
-          library: {
-            icon: iconBase + 'spotlight-poi2.png'
-          },
-          info: {
-            icon: iconBase + 'spotlight-poi2.png'
-          }
-        };
 
-        /*var features = [
-           {
-            position: new google.maps.LatLng(-33.91725, 151.23011),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.91872, 151.23089),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.91784, 151.23094),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.91682, 151.23149),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.91790, 151.23463),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.91666, 151.23468),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.916988, 151.233640),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
-            type: 'parking'
-          }, {
-            position: new google.maps.LatLng(-33.916365282092855, 151.22937399734496),
-            type: 'parking'
-          }, {
-            position: new google.maps.LatLng(-33.91665018901448, 151.2282474695587),
-            type: 'parking'
-          }
-        ];*/
 
         // Create markers.
         for (var i = 0; i < features.length; i++) {
-          var marker = new google.maps.Marker({
-            position: features[i].position,
-            icon: icons[features[i].type].icon,
-            map: map
-          });
-        };
-      }
-    </script>
-    <script async defer
+        	var contentString = '<h3>'+features[i].placeName +'</h3>';
+
+        	const infowindow = new google.maps.InfoWindow({
+        		content: contentString
+        	});
+
+        	const marker = new google.maps.Marker({
+        		position: features[i].position,
+        		icon: icons[features[i].type].icon,
+        		label: features[i].labels,
+        		map: map,
+        		
+        	});
+        	marker.addListener('mouseover', function() {
+        		infowindow.open(map, this);
+        	});
+
+			// assuming you also want to hide the infowindow when user mouses-out
+			marker.addListener('mouseout', function() {
+				infowindow.close();
+			});
+
+
+        	/*marker.addListener('hover', function() {
+        		infowindow.open(map, marker);
+
+        	});*/
+        };        
+    }
+
+</script>
+<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
-    </script>
+</script>
 @stop
