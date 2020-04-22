@@ -75,7 +75,7 @@
 						</div>					
 						<div class="imbx-detail">
 							<div class="pr-dtl">
-								<span class="top-results" class="stt" data-stt="{{$key+1}}">{{$key+1}}</span>
+								<span class="top-results stt" data-stt="{{$key+1}}">{{$key+1}}</span>
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}" class="business_name" data-business-name="{{$data->name}}" >{{$data->name}}</a></h4>
 								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
 								<p>City: {{$data->city}}</p>
@@ -83,6 +83,7 @@
 								<p>Phone: {{$data->phone}}</p>
 								<input type="hidden" name="" class="latitude" data-latitude="{{$data->location->latitude}}">
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
+								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
@@ -506,12 +507,14 @@
 			var lat = $(this).find('.latitude').data('latitude');
 			var long = $(this).find('.longitude').data('longitude');
 			var business_name = $(this).find('.business_name').data('business-name');
-			var labels = $(this).find('.stt').data('stt');
+			var labels = String($(this).find('.stt').data('stt'));
+			var icon_stt = String($(this).find('.img_stt').data('img-stt'));
 			data = {
 				'position': new google.maps.LatLng(lat, long),
 				'type': 'info',
 				'placeName': business_name,
-				'labels':'1',
+				'labels':labels,
+				'icon_stt':icon_stt,
 			}
 			features.push(data);
 		});
@@ -519,24 +522,6 @@
 		map = new google.maps.Map(
 			document.getElementById('map'),
 			{center: new google.maps.LatLng(lat_df, long_df), zoom: zoom_df});
-
-		var iconBase =
-		'https://maps.gstatic.com/mapfiles/api-3/images/';
-
-		var icons = {
-			parking: {
-				icon: iconBase + 'spotlight-poi2.png'
-			},
-			library: {
-				icon: iconBase + 'spotlight-poi2.png'
-			},
-			info: {
-				icon: iconBase + 'spotlight-poi2.png'
-			}
-		};
-
-
-
         // Create markers.
         for (var i = 0; i < features.length; i++) {
         	var contentString = '<h3>'+features[i].placeName +'</h3>';
@@ -547,8 +532,23 @@
 
         	const marker = new google.maps.Marker({
         		position: features[i].position,
-        		icon: icons[features[i].type].icon,
-        		label: features[i].labels,
+        		//icon: features[i].icon_stt,
+        		//label: features[i].labels,
+        		icon:{
+        			url: features[i].icon_stt,
+        			size: new google.maps.Size(40, 45),
+        			origin: new google.maps.Point(0, 0),
+        			anchor: new google.maps.Point(0, 45),
+        			scaledSize: new google.maps.Size(40, 45),
+        			labelOrigin: new google.maps.Point(20, 20)
+        		},
+        		label: {
+        			text: features[i].labels,
+        			fontWeight: 'bold',
+        			fontSize: '18px',
+        			fontFamily: '"Courier New", Courier,Monospace',
+        			color: 'white'
+        		},
         		map: map,
         		
         	});
@@ -560,11 +560,8 @@
 			marker.addListener('mouseout', function() {
 				infowindow.close();
 			});
-
-
         	/*marker.addListener('hover', function() {
         		infowindow.open(map, marker);
-
         	});*/
         };        
     }
