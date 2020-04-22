@@ -1,7 +1,7 @@
 @extends('layouts_home.master')
 @section('content')
 
-<div id="main" class="">
+<div id="main" class="search-page">
 	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
 		<img src="images/promo.jpg" alt="" class="fade">
 

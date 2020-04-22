@@ -2488,6 +2488,9 @@ width: 30% !important;
 .star-view ul li {
     display: inline-block;
 }
+#reviewforbusiness .list-picture {
+	display: inline-block;
+}
 
 
 
