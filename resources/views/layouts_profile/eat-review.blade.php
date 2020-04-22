@@ -4,8 +4,8 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
-			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if($user->url_avatar != null){{asset('').'storage/'.$user->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{$user->name}}"></div>
+			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{$user->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
 
@@ -32,16 +32,22 @@
 								<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 								<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
 								@if($data->review->ListImageReview)
-									@foreach($data->review->ListImageReview as $val)
-									<img src="{{$val['url']}}" width="210px" height="145px;">
-									@endforeach
+									<ul class="lightgalleryphoto col-30">
+										@foreach($data->review->ListImageReview as $val)
+									    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+			                                    <a href="{{$val['url']}}" class="lightbox">
+			                                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+			                                    </a>       
+			                                </li>
+										@endforeach
+							    	</ul>
 								@endif
 								<p>{{$data->review->description}}</p>
 								
-								<div class="edit">
+								{{-- <div class="edit">
 									<a href="javascript:;" ><i class="fas fa-pencil-alt"></i></a>
 									<a href="javascript:;" ><i class="fas fa-scroll"></i></a>
-								</div>
+								</div> --}}
 							</div>
 							
 
@@ -63,6 +69,6 @@
 @section('script')
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
-		
+		$('.lightgalleryphoto').lightGallery();
 	</script>
 @stop

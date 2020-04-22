@@ -1,5 +1,15 @@
 @extends('layouts_home.master')
 @section('content')
+
+
+@php
+  $target_modal = "";
+  if(Auth::user()){
+    $target_modal = "#adver-pop";
+  }else{
+    $target_modal = "#loginModal";
+  }
+@endphp
 <div id="main">
   <div class="container" style="padding: 30px 0;">
       <div class="create-advertise">
@@ -23,7 +33,7 @@
                       </select>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                      <a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
+                      <a data-toggle="modal" data-target="{{$target_modal}}" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
                     </div>
                     <div class="clear"></div>
                   </div>
@@ -55,7 +65,7 @@
                       </select>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                      <a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
+                      <a data-toggle="modal" data-target="{{$target_modal}}" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
                     </div>
                     <div class="clear"></div>
                   </div>
@@ -119,7 +129,7 @@
                       </select>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                      <a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
+                      <a data-toggle="modal" data-target="{{$target_modal}}" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
                     </div>
                     <div class="clear"></div>
                   </div>
@@ -150,7 +160,7 @@
                       </select>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                      <a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
+                      <a data-toggle="modal" data-target="{{$target_modal}}" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
                     </div>
                     <div class="clear"></div>
                   </div>
@@ -217,7 +227,7 @@
                       </select>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6 col-xs-6">
-                      <a data-toggle="modal" data-target="#adver-pop" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
+                      <a data-toggle="modal" data-target="{{$target_modal}}" type="submit" class="btn btn-primary btn-lg seletedplan" >Advertise</a>
                     </div>
                     <div class="clear"></div>
                   </div>
@@ -295,7 +305,7 @@
 	</form>
   </div>
 </div>
-@if(!Auth())
+
 <div id="loginModal" class="modal fade in" role="dialog">
   <div class="modal-dialog">
 
@@ -306,7 +316,7 @@
 		<h4 class="modal-title">&nbsp;</h4>
 	  </div>
 	  <div class="modal-body">
-		<p>Must be logged in to advertise <a href="{{route('sign_in')}}">Login Here</a></p>
+		<p>Business must be logged in to advertise <a href="{{route('sign_in')}}">Login Here</a></p>
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -315,7 +325,7 @@
     
   </div>
 </div>
-@endif
+
 
 @auth
 <div id="adver-pop" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
@@ -327,8 +337,8 @@
       <input type="hidden" name="title" value="">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
-          <h2>play home</h2>
+          <button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+          <h3>play home</h3>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -394,8 +404,34 @@
 <script type="text/javascript" src="js/fSelect.js"></script>
   <script type="text/javascript">
 
+$('.state ').change(function(){
+  var val = $(this).val();
+  var form = $(this).closest('form');
+  // var val = 1;
+  form.find('select.city').html('');
+  var url = $('input[name=ajaxcitystate]').val();
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: {
+      id: val
+    },
+    success:function(res){
+      if(res.success == true){
+          form.find('select.city').html(res.data);
+          form.find('select.city').fSelect('reload');
+      }else{
+        
+      }
+    }
+  });
+});
+
     $(document).ready(function(){
-      $('.test').fSelect();
+      
       $('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         startDate: '0d',
@@ -424,11 +460,12 @@
   <script type="text/javascript">
     
     $(document).on('click','.seletedplan',function(){
+      $('.test').fSelect();
       var modal = $('#adver-pop');
       var title = $(this).closest('.parent-plan').find('.plan-title').html();
       var value = $(this).closest('.plan-body').find('.planvalue').val();
       var text_val = $(this).closest('.plan-body').find('.planvalue option:selected').text();
-      modal.find('.modal-header h2').html(title); 
+      modal.find('.modal-header h3').html(title); 
       modal.find('input[name=title]').val(title);
       modal.find('input[name=pd_id]').val(value);
       modal.find('input[name=show-val]').val(text_val);

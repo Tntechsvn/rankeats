@@ -1,3 +1,21 @@
+
+@if(Route::current()->getPrefix() == '/user')
+	
+<ul class="nav">
+	<li class="{{ Route::currentRouteNamed('user.business_review') ? 'active' : '' }}">
+		<a href="{{route('user.business_review',$user->id)}}"><i class="fa fa-comments"></i>Bussiness Reviews ({{$user->count_review_business()}})</a>
+	</li>
+	<li class="{{ Route::currentRouteNamed('user.eat_reviews') ? 'active' : '' }}">
+		<a href="{{route('user.eat_reviews',$user->id)}}"><i class="fa fa-comments"></i>EAT Reviews ({{$user->count_review_eat()}})</a>
+	</li>
+	<li class="{{ Route::currentRouteNamed('user.business_rank') ? 'active' : '' }}">
+		<a href="{{route('user.business_rank',$user->id)}}"><i class="fa fa-comments"></i>Business Ranks</a>
+	</li>
+	<li class="{{ Route::currentRouteNamed('user.eat_rank') ? 'active' : '' }}">
+		<a href="{{route('user.eat_rank',$user->id)}}"><i class="fa fa-comments"></i>EAT Ranks</a>
+	</li>
+</ul>
+@else
 <ul class="nav">
 	<li class="{{ Route::currentRouteNamed('business_review') ? 'active' : '' }}">
 		<a href="{{route('business_review')}}"><i class="fa fa-comments"></i>Bussiness Reviews ({{$user->count_review_business()}})</a>
@@ -35,3 +53,4 @@
 	@endauth
 	
 </ul>
+@endif

@@ -86,6 +86,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this -> bookmark->count();
     }
 
+    public function count_photo(){
+        return Media::where('id_user',$this->id )->where('type',2)->count(); 
+    }
+
 
 
 

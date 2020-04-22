@@ -279,6 +279,8 @@ $(document).on('click','.review-popup',function(){
   var name = $(this).data('name');
   var category_id = $(this).data('category-search');
   target = $('#review-popup');
+  target.find('#reviewforbusiness').html("");
+  target.find('.no-results').addClass("hidden");
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -298,7 +300,7 @@ $(document).on('click','.review-popup',function(){
       }else{
         after_ajax();
         target.modal('show');
-        target.find('.no-results').removeClass('hidden').html(res.message);
+        target.find('.no-results').removeClass('hidden').html(res.message+" "+name);
       }
     }
   });
@@ -310,6 +312,10 @@ $(document).on('click','.show-photo',function(){
   var modal = $('#photo-popup');
   var url = $('input[name=show-photo]').val();
   var user_id = $(this).data('id');
+  var name = $(this).data('name');
+  modal.find('#has-photo').html("");
+  modal.find('.no-photo').addClass("hidden");
+
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -322,6 +328,7 @@ $(document).on('click','.show-photo',function(){
     success:function(res){
       if(res.success == true){
           modal.find('#has-photo').html(res.data);
+          modal.find('.modal-header h3').html('Images of '+name);
           modal.modal('show');
           $('.lightgalleryphoto').lightGallery();
       }else{

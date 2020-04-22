@@ -61,7 +61,7 @@
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
 <script src="js/parsley.min.js"></script> 
-
+<script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript" src="js/sweetalert.min.js"></script>   
 {{-- <script src="js/wow.min.js"></script>  --}}
 {{-- <script src="js/jquery.raty.js"></script> --}}

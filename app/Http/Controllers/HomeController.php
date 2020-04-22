@@ -324,7 +324,7 @@ public function eat_reviews(Request $request){
     
 }
 public function business_review(){
-     $user = Auth::user();
+        $user = Auth::user();
        $user_id = Auth::id();
        /*list reviews for business*/
        $list_reviews = Review_rating::where('review_ratings.user_id','=',$user_id)
@@ -757,17 +757,19 @@ public function reaction_review(Request $request){
         $business = Business::find($request->id);
         $category_id = $request->category_id;
         $category_name = Category::find($category_id)->category_name;
-        // dd($business);
         $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
                                              ->where('type_rate','=',2)
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
                                              ->get();
+         
+    
+                                           
         if(count($reviews) == 0){
             return response()->json([
             'success' => false,
-            'message' => "Not review for Business"
+            'message' => "Don't have review for"
         ]);
         }
         $data = "";
@@ -788,8 +790,8 @@ public function reaction_review(Request $request){
             $data = "";
             foreach ($data_img as $value) {
                 $item= asset('').'storage/'.$value -> url;
-                $data .= '<li class="" data-responsive="" data-src="'.$item.'">
-                                <a href="'.$item.'" class="lightbox">
+                $data .= '<li class="" data-responsive="">
+                                <a href="javascript:;" class="lightbox">
                                     
                                     <img width="210" height="145" src="'.$item.'" class="pic" >
                                 </a>       
@@ -809,7 +811,10 @@ public function reaction_review(Request $request){
 
 
     public function userProfile($id)
-    {
+    {   
+        if(Auth::id() == $id){
+            return redirect()->route('myprofile');
+        }
         $user = User::find($id);
         
         // dd($target_user);
@@ -823,6 +828,86 @@ public function reaction_review(Request $request){
             
             $data_business = $user->businesses()->paginate(Myconst::PAGINATE_ADMIN);
             return view('layouts_profile.myprofile', compact('user','list_reviews','data_business'));
+        }else {
+            return abort(404);
+        }
+    }
+
+    public function userBusinessReview($id)
+    {   
+        if(Auth::id() == $id){
+            return redirect()->route('business_review');
+        }
+        $user = User::find($id);
+        
+        // dd($target_user);
+        if ($user) {
+           $list_reviews = Review_rating::where('review_ratings.user_id','=',$id)
+               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+               ->where('type_rate','=',1)
+               ->whereNull('businesses.deleted_at')
+               ->orderBy('review_ratings.created_at', 'desc')
+               ->paginate(Myconst::PAGINATE_ADMIN);
+            return view('layouts_profile.business-review',compact('list_reviews','user'));
+
+        }else {
+            return abort(404);
+        }
+    }
+
+    public function userEatReviews($id)
+    {   
+        if(Auth::id() == $id){
+            return redirect()->route('eat_reviews');
+        }
+        $user = User::find($id);
+        
+        // dd($target_user);
+        if ($user) {
+           $list_review_eats = Review_rating::where('review_ratings.user_id','=',$id)
+                                               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+                                               ->where('type_rate','=',2)
+                                               ->whereNull('businesses.deleted_at')
+                                               ->orderBy('review_ratings.created_at', 'desc')
+                                               ->paginate(Myconst::PAGINATE_ADMIN);
+
+            return view('layouts_profile.eat-review',compact('list_review_eats','user'));
+            
+        }else {
+            return abort(404);
+        }
+    }
+
+    public function userBusinessRank($id)
+    {   
+        if(Auth::id() == $id){
+            return redirect()->route('business_rank');
+        }
+        $user = User::find($id);
+        
+        // dd($target_user);
+        if ($user) {
+           $list_vote_business = $user->votes()->where('type_vote',1)->get();
+
+            return view('layouts_profile.business-rank',compact('list_vote_business','user'));
+            
+        }else {
+            return abort(404);
+        }
+    }
+
+    public function userEatRank($id)
+    {   
+        if(Auth::id() == $id){
+            return redirect()->route('eat_rank');
+        }
+        $user = User::find($id);
+        
+        // dd($target_user);
+        if ($user) {
+            $list_vote_eat = $user->votes()->where('type_vote',2)->get();
+            return view('layouts_profile.eat-rank',compact('list_vote_eat','user'));
+            
         }else {
             return abort(404);
         }
