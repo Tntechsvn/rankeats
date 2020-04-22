@@ -32,7 +32,7 @@
 								<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 								<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
 								@if($data->review->ListImageReview)
-									<ul class="lightgalleryphoto">
+									<ul class="lightgalleryphoto col-30">
 										@foreach($data->review->ListImageReview as $val)
 									    	<li class="" data-responsive="" data-src="{{$val['url']}}">
 			                                    <a href="{{$val['url']}}" class="lightbox">

@@ -769,7 +769,7 @@ public function reaction_review(Request $request){
         if(count($reviews) == 0){
             return response()->json([
             'success' => false,
-            'message' => "Not review for Business"
+            'message' => "Don't have review for"
         ]);
         }
         $data = "";

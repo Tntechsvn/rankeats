@@ -2092,7 +2092,6 @@ input[type=number]::-webkit-outer-spin-button {
     border-bottom: 1px solid #e1e1e1;
 }
 .review-gr {
-	padding-right: 50px;
 	position: relative;
 	border-bottom: 1px solid #e7e7e7;
 }
@@ -2417,11 +2416,6 @@ width: 30% !important;
 	padding-left: 10px;
 }
 
-.list-picture {
-	display: inline-block;
-	padding-right: 10px;
-	padding-bottom: 10px;
-}
 .review-address svg {
     color: #0073bb;
 }
@@ -2473,10 +2467,20 @@ width: 30% !important;
 	padding: 0;
 }
 
-
-
-
-
+.myprofile-review .list-review .star-rate {
+    position: relative;
+    top: 0;
+    right: 0;
+}
+.col-30 li {
+	width: 30%;
+}
+.col-30 li a {
+	width: 100%;
+}
+.col-30 li a img.pic {
+	width: 100%;
+}
 
 
 
