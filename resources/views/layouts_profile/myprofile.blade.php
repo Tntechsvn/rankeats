@@ -29,18 +29,33 @@
 					@if($list_reviews->total() >0)
 				    	@foreach($list_reviews as $data)
 							<div class="list-review">
-								<div class="info">
+								<div class="info review-gr">
 									<div class="content-right p-b-20">
-										<h4><a href="{{route('user.profile',$data->user->id)}}" class="" style="font-size: 18px;">{{$data->user->name ?? ""}}</a></h4>
+										<h4><a href="{{$data->business->permalink()}}" class="" style="font-size: 18px;">{{$data->business->name ?? ""}}</a></h4>
 									
 										<div class="star-view clear p-b-10">
-											@for($i = 1;$i <= 5;$i++)
-											<i class="fas fa-star star-rate"></i>
-											@endfor
-											<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
+											<ul class="">
+											@php
+												$val =  (int) substr(strrchr($data->rate,'.'),1);
+												for($x=1;$x<=$data->rate;$x++) {
+													echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+												}
+												if (strpos($data->rate,'.') && $val != 0) {
+													echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+												while ($x<=5) {
+													echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+											@endphp
+											
+										</ul>
+										<span class="review-date" style="padding-left: 10px;">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 										</div>
+										<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 										<div class="review-address">
-											<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
+											<i class="fas fa-map-marker-alt"></i>  {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
 										</div>
 
 										<p>{{$data->review->description}}</p>

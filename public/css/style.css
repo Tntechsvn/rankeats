@@ -2481,7 +2481,13 @@ width: 30% !important;
 .col-30 li a img.pic {
 	width: 100%;
 }
-
+.star-view ul {
+    float: left;
+    padding: 0;
+}
+.star-view ul li {
+    display: inline-block;
+}
 
 
 
