@@ -855,7 +855,7 @@ Profile
 	background: #FFFFFF;
 	display: block;
 	overflow: hidden;
-	padding: 35px 15px 15px 15px;
+	padding: 0 15px 15px 15px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -1352,7 +1352,7 @@ Sidebar
 }
 #map {
 	width: 100%;
-	height: 250px;
+	height: 500px;
 	margin-bottom: 7px;
 }
 #map-big {
@@ -1685,6 +1685,19 @@ input#location_search {
     text-align: center;
     padding: 13px 0;
     color: #fff;
+}
+.firstWindow {
+	padding: 0 15px;
+}
+.lightbox img {
+	object-fit: cover;
+}
+.lightgalleryphoto {
+	padding: 10px 0 0 ;
+}
+.lightgalleryphoto li{
+	display: inline-block;
+	margin: 0 10px 10px 0;
 }
 .input-group-btn{
 	float: left;

@@ -147,9 +147,16 @@
 							    		<span class="bold" style="color: #0073bb">{{$data->user->name ?? ""}}</span>
 							    	</p>
 							    	@if($data->review->ListImageReview)
-								    	@foreach($data->review->ListImageReview as $val)
-								    	<img src="{{$val['url']}}" width="210px" height="145px;">
-								    	@endforeach
+								    	<ul class="lightgalleryphoto">
+									    	@foreach($data->review->ListImageReview as $val)
+									    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+							                    <a href="{{$val['url']}}" class="lightbox">
+							                        
+							                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+							                    </a>       
+							                </li>
+									    	@endforeach
+								    	</ul>
 							    	@endif
 
 							    	<p>{{$data->review->description}}</p>
@@ -190,7 +197,8 @@
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 3) active @endif" data-type="3" data-review="{{$data->review->id}}">Cool</button>
 				    				</div>
 				    			</div>
-								@endforeach								
+								@endforeach	
+								{!!$list_reviews -> appends(request()->except('page')) -> links()!!}							
 				    		@endif
 				    		<div style="text-align: right;">
 				    			@if(Auth::check())
@@ -206,6 +214,7 @@
 						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 						    	</div>
 				    		
+
 				    		<!-- end Knight modan review-->
 					    </div>
 					    <div class="tab-pane" id="eatrank">
@@ -260,14 +269,13 @@
 				    		<div class="p-t-15" style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
-					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote" style="color: #fff;" >Vote</a>
+					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote" style="color: #fff;background-color: #5cb85c;" >Vote</a>
 					    			@else
 					    			<a href="javascript:;" data-target="#vote_review" data-toggle="modal" class="btn vote" style="color: #fff;background-color: #b7b7b7;">My vote</a>
 					    			@endif
 				    			@else
 				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a>
 				    			@endif
-				    			{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
 				    		</div>
 					    </div>
 					    <div class="tab-pane" id="picture">
@@ -536,11 +544,11 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
-				<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+				<p>Must be logged in to Vote, <a href="{{route('sign_in')}}">Login Here</a></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -585,6 +593,7 @@
 			});
 			$('.test').fSelect();
 			$("#lightgalleryphoto").lightGallery();
+			$('.lightgalleryphoto').lightGallery();
 
 			$(document).on('click','.check-bookmark',function(){
 				var $this = $(this);

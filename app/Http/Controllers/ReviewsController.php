@@ -171,7 +171,7 @@ class ReviewsController extends Controller
        
         /*end create reviews*/
         $info_business = Business::findOrfail($request -> business_id);
-        $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->paginate(Myconst::PAGINATE_ADMIN);
+        $list_reviews = $info_business->review_rating()->where('type_rate','=',1)->orderBy('created_at','desc')->paginate(Myconst::PAGINATE_ADMIN);
 
         if($data->success){
             session()->put('success',$data->message);

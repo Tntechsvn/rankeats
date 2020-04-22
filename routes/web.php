@@ -160,5 +160,16 @@
 		'as' => 'show-photo',
 		'uses' => 'HomeController@show_photo'
 	]);
+
+
+//view user
+Route::group(['prefix' => 'user'], function(){
+	Route::get('/{id}', ['as' => 'user.profile', 'uses' => 'HomeController@userProfile']);
+	Route::get('/{id}/profile', ['as' => 'user.profile', 'uses' => 'HomeController@userProfile']);
+	Route::get('/{id}/business-review', ['as' => 'user.business_review', 'uses' => 'HomeController@userBusinessReview']);
+	Route::get('/{id}/eat-reviews', ['as' => 'user.eat_reviews', 'uses' => 'HomeController@userEatReviews']);
+	Route::get('/{id}/business-rank', ['as' => 'user.business_rank', 'uses' => 'HomeController@userBusinessRank']);
+	Route::get('/{id}/eat-rank', ['as' => 'user.eat_rank', 'uses' => 'HomeController@userEatRank']);
 	
+});
 // end hungpro

@@ -51,10 +51,13 @@
 								</ul>
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
-										       ->where('type_rate','=',1)
-										       ->whereNull('users.deleted_at')->count();
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_search->id)
+                                             ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
+                                             ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 						</div>					
 					</div>
@@ -99,12 +102,14 @@
 								</ul>
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
-										       ->where('type_rate','=',1)
-										       ->whereNull('users.deleted_at')->count();
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_search->id)
+                                             ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
+                                             ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
-							
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id))
 				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
@@ -221,7 +226,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">Add EAT</h4>
 			</div>
 			<div class="modal-body">
@@ -286,7 +291,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
@@ -305,7 +310,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
@@ -341,32 +346,60 @@
 </div>
 <div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
 	<div class="modal-dialog" style="max-width: 850px;width: 100%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
+				<h3 class="bold">{{$category_search->category_name ?? ""}} Reviews for <span></span> </h3>
+			</div>
+			<div class="modal-body">
+				
+				<div id="reviewforbusiness" class="tab-pane">
 
-		<!-- Modal content-->
-			<div class="modal-content">
-				{{-- <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" style="position: absolute;right: 0;top: 0;"><i class="fas fa-times-circle"></i></button>
-					
-				</div> --}}
-				<div class="modal-body">
-					<h3 class="title m-b-20">Reviews</h3>
-					<div id="reviewforbusiness" class="tab-pane">
-						
-						<h1 class="no-results hidden" style="text-align: center; "></h1>
-					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+<div id="photo-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+				<h3>Images of Kimberly S</h3>
+			</div>
+			<div class="modal-body">
+				<div class="has-photo">
+					<ul id="has-photo" class="">
+					    
+		    		</ul>
+				</div>
+				<div class="no-photo hidden">
+					<img src="images/no-photo.png" alt="">
+					<p class="bold">Don't have image review</p>
+				</div>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn bold" data-dismiss="modal">Back</button>
+			</div>
+		</div>
 
 	</div>
 </div>
-
+<input type="hidden" name="show-photo" value="{{route('show-photo')}}">
 <input type="hidden" name="vote-ajax" value="{{route('vote_ajax')}}">
 <input type="hidden" name="postReviewFrontEnd" value="{{route('postReviewFrontEnd')}}">
 <input type="hidden" name="review_search" value="{{route('review_search')}}">
 @endsection
 
 @section('script')
+<script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
+	// $(document).ready(function){
+	// 	$('.lightgalleryphoto').lightGallery();
+	// }
 	$("#add_eat_state").change(function(){
 		var name_state = $(this).val();
 

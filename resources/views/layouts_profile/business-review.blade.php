@@ -33,16 +33,22 @@
 									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
 									@if($data->review->ListImageReview)
-								    	@foreach($data->review->ListImageReview as $val)
-								    	<img src="{{$val['url']}}" width="210px" height="145px;">
-								    	@endforeach
-							    	@endif
+										<ul class="lightgalleryphoto">
+											@foreach($data->review->ListImageReview as $val)
+										    	<li class="" data-responsive="" data-src="{{$val['url']}}">
+				                                    <a href="{{$val['url']}}" class="lightbox">
+				                                        <img width="210" height="145" src="{{$val['url']}}" class="pic" >
+				                                    </a>       
+				                                </li>
+											@endforeach
+								    	</ul>
+									@endif
 									<p>{{$data->review->description}}</p>
 									
-									<div class="edit">
+									{{-- <div class="edit">
 										<a href="" ><i class="fas fa-pencil-alt"></i></a>
 										<a href="" ><i class="fas fa-scroll"></i></a>
-									</div>
+									</div> --}}
 								</div>
 								
 
@@ -65,6 +71,6 @@
 @section('script')
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
-		
+		$('.lightgalleryphoto').lightGallery();
 	</script>
 @stop

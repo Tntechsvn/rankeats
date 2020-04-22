@@ -1,9 +1,27 @@
+
+@if(Route::current()->getPrefix() == '/user')
+	
+<ul class="nav">
+	<li class="{{ Route::currentRouteNamed('user.business_review') ? 'active' : '' }}">
+		<a href="{{route('user.business_review',$user->id)}}"><i class="fa fa-comments"></i>Bussiness Reviews ({{$user->count_review_business()}})</a>
+	</li>
+	<li class="{{ Route::currentRouteNamed('user.eat_reviews') ? 'active' : '' }}">
+		<a href="{{route('user.eat_reviews',$user->id)}}"><i class="fa fa-comments"></i>EAT Reviews ({{$user->count_review_eat()}})</a>
+	</li>
+	<li class="{{ Route::currentRouteNamed('user.business_rank') ? 'active' : '' }}">
+		<a href="{{route('user.business_rank',$user->id)}}"><i class="fa fa-comments"></i>Business Ranks</a>
+	</li>
+	<li class="{{ Route::currentRouteNamed('user.eat_rank') ? 'active' : '' }}">
+		<a href="{{route('user.eat_rank',$user->id)}}"><i class="fa fa-comments"></i>EAT Ranks</a>
+	</li>
+</ul>
+@else
 <ul class="nav">
 	<li class="{{ Route::currentRouteNamed('business_review') ? 'active' : '' }}">
-		<a href="{{route('business_review')}}"><i class="fa fa-comments"></i>Bussiness Reviews ({{Auth::user()->review_rating()->where('type_rate','=','1')->count()}})</a>
+		<a href="{{route('business_review')}}"><i class="fa fa-comments"></i>Bussiness Reviews ({{$user->count_review_business()}})</a>
 	</li>
 	<li class="{{ Route::currentRouteNamed('eat_reviews') ? 'active' : '' }}">
-		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews ({{Auth::user()->review_rating()->where('type_rate','=','2')->count()}})</a>
+		<a href="{{route('eat_reviews')}}"><i class="fa fa-comments"></i>EAT Reviews ({{$user->count_review_eat()}})</a>
 	</li>
 	<li class="{{ Route::currentRouteNamed('business_rank') ? 'active' : '' }}">
 		<a href="{{route('business_rank')}}"><i class="fa fa-comments"></i>Business Ranks</a>
@@ -12,8 +30,9 @@
 		<a href="{{route('eat_rank')}}"><i class="fa fa-comments"></i>EAT Ranks</a>
 	</li>
 	<li class="{{ Route::currentRouteNamed('bookmark') ? 'active' : '' }}">
-		<a href="{{route('bookmark')}}"><i class="fa fa-bookmark"></i>Bookmarks ({{Auth::user()->bookmark->count()}})</a>
+		<a href="{{route('bookmark')}}"><i class="fa fa-bookmark"></i>Bookmarks ({{$user->count_bookmark()}})</a>
 	</li>
+	@auth
 	@if(Auth::user()->check_role_business())
 		@if(!Auth::user()->check_business() && Auth::user()->check_role_business())
 		<li class="{{ Route::currentRouteNamed('add_business') ? 'active' : '' }}"><a class="" href="{{route('add_business')}}"><i class="fas fa-caret-right"></i> Add Business</a></li>
@@ -21,14 +40,8 @@
 		<li class="">
 			<a class="dropdown"  href="javascript:;"><i class="fas fa-plus-circle"></i>My Business<span class="caret" style="float: right;margin-top: 8px;"></span></a>
 			<ul class="nav menudropdown">
-				{{--<li class="{{ Route::currentRouteNamed('add_business') ? 'active' : '' }}"><a class="" href="{{route('add_business')}}"><i class="fas fa-caret-right"></i> Add Business</a></li>
-				@foreach(Auth::user()->business as $data_business)
-				<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>$data_business->id])}}"><i class="fas fa-caret-right"></i>{{$data_business->name}}</a></li>
-				@endforeach--}}
 				<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>Auth::user()->business()->first()->id])}}"><i class="fas fa-caret-right"></i>{{Auth::user()->business()->first()->name}}</a></li>
 
-				{{-- <li class="{{ Route::currentRouteNamed('menu-management') ? 'active' : '' }}"><a class="" href="{{route('menu-management')}}"><i class="fas fa-caret-right"></i> Menu</a></li> --}}
-				{{-- <li class="{{ Route::currentRouteNamed('review-management') ? 'active' : '' }}"><a class="" href="{{route('review-management')}}"><i class="fas fa-caret-right"></i> Reviews</a></li> --}}
 				<li class="{{ Route::currentRouteNamed('create_advertise') ? 'active' : '' }}"><a class="" href="{{route('create_advertise')}}"><i class="fas fa-caret-right"></i> Advertisement</a></li>
 			</ul>
 		</li>
@@ -37,5 +50,7 @@
 			<a href="{{route('my_eat')}}"><i class="fas fa-plus-circle"></i>My EATS</a>
 		</li>
 	@endif
+	@endauth
 	
 </ul>
+@endif
