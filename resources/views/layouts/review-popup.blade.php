@@ -1,11 +1,10 @@
 
 @foreach( $reviews as $data)
-	{{--@dump($data)--}}
 	<div class="list-review m-b-20">
 		<div class="avata">
 			<img src="{{$data->user->UrlAvatarUser}}" alt="" >
 			<div class="photo-img">
-				<a href="javascript:;" class="show-photo" data-id="{{$data->user->id}}"><i class="fas fa-camera-retro"></i> 20 photo</a>
+				<a href="javascript:;" class="show-photo" data-id="{{$data->user->id}}" data-name="{{$data->user->name}}"><i class="fas fa-camera-retro"></i> {{$data->user->count_photo()}} photo</a>
 				
 			</div>
 			
@@ -21,16 +20,16 @@
 					<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 				</div>
 				<div class="review-address">
-					<i class="fas fa-map-marker-alt"></i> {{$data->user->location->address ?? ""}}, {{$data->user->location->city ?? ""}}, {{$data->user->location->state ?? ""}}, {{$data->user->location->country ?? ""}} 
+					<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
 				</div>
 
 				<p>{{$data->review->description}}</p>
 				<div class="picture-review">
-					<ul class="lightgalleryphoto" style="padding-left: 0">
+					<ul class="" style="padding-left: 0">
 						@if($data->review->ListImageReview)
 							@foreach($data->review->ListImageReview as $val)
 								<li class="list-picture" data-responsive="" data-src="{{$val['url']}}">
-									<a href="{{$val['url']}}" class="lightbox">
+									<a href="javascript:;" class="lightbox">
 										<img width="210" height="145" src="{{$val['url']}}" class="pic" >
 									</a>       
 								</li>

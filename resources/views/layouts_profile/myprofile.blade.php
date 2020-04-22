@@ -50,10 +50,10 @@
 								    
 									<p>{{$data->review->description}}</p>
 									
-									<div class="edit">
+									{{-- <div class="edit">
 										<a href="" ><i class="fas fa-pencil-alt"></i></a>
 										<a href="" ><i class="fas fa-scroll"></i></a>
-									</div>
+									</div> --}}
 								</div>
 								
 
@@ -141,7 +141,7 @@
 </div>
 @endsection
 @section('script')
-	<script src="lightbox/js/lightgallery-all.min.js"></script>
+	
 	<script type="text/javascript">
 		$('.lightgalleryphoto').lightGallery();
 

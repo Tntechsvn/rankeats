@@ -98,13 +98,14 @@
     
     @endforeach
     <div class="modal fade in" id="myModal" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="max-width: 500px;width: 100%;">
         <div class="modal-content">
-          <div class="modal-header">
-            <a class="close" data-dismiss="modal" aria-label="close">&times;</a>
-            <h4 class="modal-title">Enter the area you want to search for the best <span class="search-name"></span></h4>
+          <div class="modal-header" style="padding: 25px;">
+            <button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+            
           </div>
           <div class="modal-body">
+            <h4 class="modal-title p-b-20" style="text-align: center;">Enter the area you want to search for the best <span class="search-name"></span></h4>
             <form method="get" action="{{route('search')}}" class="form-inline">
               <input type="hidden" name="keyword"  value="" />
               <div class="input_hidden1">
@@ -112,7 +113,7 @@
                   <input type="hidden" name="state" id="state_searech_cate" value="@if(isset($state_search)){{$state_search}}@endif">
                 </div>
               <div class="form-group">
-                <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;" placeholder="City or State">
+                <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;width: 340px;" placeholder="City or State">
                 <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
                 <div id="LocationListcate"></div>
               </div>

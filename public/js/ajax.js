@@ -310,6 +310,7 @@ $(document).on('click','.show-photo',function(){
   var modal = $('#photo-popup');
   var url = $('input[name=show-photo]').val();
   var user_id = $(this).data('id');
+  var name = $(this).data('name');
   $.ajax({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -322,6 +323,7 @@ $(document).on('click','.show-photo',function(){
     success:function(res){
       if(res.success == true){
           modal.find('#has-photo').html(res.data);
+          modal.find('.modal-header h3').html('Images of '+name);
           modal.modal('show');
           $('.lightgalleryphoto').lightGallery();
       }else{

@@ -371,7 +371,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="has-photo">
-					<ul id="has-photo" class="lightgalleryphoto">
+					<ul id="has-photo" class="">
 					    
 		    		</ul>
 				</div>
