@@ -160,13 +160,29 @@ class EatsController extends Controller
 
     /**************************Front-end*****************************************/
     public function postCreateEatsFrontEnd(Request $request){
-        $this-> Validate($request,[
+        
+        // $this-> Validate($request,[
+        //     'category_name' => 'required|unique:categories,category_name',
+        //     'address' => 'required',
+        //     'business_name' => 'required',
+        //     'state' => 'required',
+        //     'zipcode' => 'required',
+        // ]);
+        $validator = Validator::make($request->all(), [
             'category_name' => 'required|unique:categories,category_name',
             'address' => 'required',
             'business_name' => 'required',
             'state' => 'required',
             'zipcode' => 'required',
         ]);
+        if($validator->fails()){
+            if($validator->errors()->first('category_name') != null){
+                return response()->json([
+                    "state" => "error",
+                    "message" => "Sorry, the EAT for this business has already been added."
+                ]);
+            }
+        }
         /*create category*/
         $update_category = new Category;
         $id_category = $update_category -> update_category($request)->id;
@@ -191,7 +207,11 @@ class EatsController extends Controller
             // business_category
             $business->business_category()->sync($id_category);
         }
-        return redirect()->back();
+        // return redirect()->back();
+        return response()->json([
+            "state" => "success",
+            "message" => "the EAT for this business add success!"
+        ],200);
     }
     public function createBusinessCategory(Request $request){
        

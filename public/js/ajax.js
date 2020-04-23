@@ -340,3 +340,31 @@ $(document).on('click','.show-photo',function(){
     }
   });
 });
+
+// add eat search page
+
+$(document).on('click','.submit_addeat_search', function(e){
+  e.preventDefault();
+  var modal = $(this).closest('#eatModal');
+  var form = $(this).closest('form');
+  var url = form.attr('action');
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: form.serialize(),
+    success:function(res){
+      if(res.state == 'error'){
+        swal({
+          title: res.message,
+          timer: 3000
+        });
+      }else{
+        swal({
+          title: res.message,
+          timer: 3000
+        });
+        modal.modal('hide');
+      }
+    }
+  });
+});

@@ -235,7 +235,7 @@
 				{{-- &nbsp;
 				<a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a> --}}
 				<div class="rankerShow" style="display:none;">
-					<form action="" method="post" data-parsley-validate>
+					<form action="{{route('postCreateEatsFrontEnd')}}" method="post" data-parsley-validate>
 						@csrf
 						<div class="form-group m-t-15">
 							<label for="eat_item">EAT</label>
@@ -276,7 +276,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary submit_addeat_search">Submit</button>
 						</div>
 					</form>
 
