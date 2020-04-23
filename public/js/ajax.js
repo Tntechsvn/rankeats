@@ -127,6 +127,7 @@ $(document).on('click','.vote_now',function(){
       category_id:category_id,
     },
     success:function(res){
+      console.log(res);
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');

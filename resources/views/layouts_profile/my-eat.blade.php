@@ -69,8 +69,8 @@
     <!-- Modal content-->
 	<div class="modal-content">
 	  	<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">ADD EATS</h4>
+			<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+			<h3 class="modal-title">ADD EATS</h3>
 	  	</div>
 	  	<form action="{{route('createBusinessCategory')}}" method="post" accept-charset="utf-8" data-parsley-validate>
 	  		<div class="modal-body">

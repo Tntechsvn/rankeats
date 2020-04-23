@@ -392,9 +392,10 @@ public function ajax_unvoted(Request $request){
     /*delete vote business*/
     $delete_vote = Vote::select('*')
     ->where('user_id','=',$user->id)
-    ->where('type_vote','=',1)
+    ->where('type_vote','=',2)
     ->where('city_id','=',$city_id)
     ->where('business_id','=',$request->business_id)
+    ->where('category_id','=',$request->category_id)
     ->delete();
     return response()->json([
         'message' => "You have 1 vote remaining!!!",
@@ -411,7 +412,9 @@ public function vote_ajax(Request $request){
     /**/
     if($cate_id){
         $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+
         if($check_vote_city_eat ){
+            $id_voted = $check_vote_city_eat->business_id;
             $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
 
             $new_vote = new Vote;
@@ -432,18 +435,18 @@ public function vote_ajax(Request $request){
             $new_vote -> type_vote = 2;
             $new_vote -> save();
             /*kiểm tra xem đã vote cho nhà hàng chưa*/
-            $check_vote_business  = Vote::where('user_id','=',$user->id)->where('business_id','=',$data_business -> id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
-            if(!$check_vote_business){
-                $new_vote_business = new Vote;
-                $new_vote_business -> user_id = $user->id;
-                $new_vote_business -> business_id = $data_business->id;
-                $new_vote_business -> state_id = $data_business->location->IdState;
-                $new_vote_business -> city_id = $city_id;
+            // $check_vote_business  = Vote::where('user_id','=',$user->id)->where('business_id','=',$data_business -> id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
+            // if(!$check_vote_business){
+            //     $new_vote_business = new Vote;
+            //     $new_vote_business -> user_id = $user->id;
+            //     $new_vote_business -> business_id = $data_business->id;
+            //     $new_vote_business -> state_id = $data_business->location->IdState;
+            //     $new_vote_business -> city_id = $city_id;
 
-                /*vote = 1 vote cho business bằng 2 vote cho eat*/
-                $new_vote_business -> type_vote = 1;
-                $new_vote_business -> save();
-            }
+            //     /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            //     $new_vote_business -> type_vote = 1;
+            //     $new_vote_business -> save();
+            // }
             return response()->json([
                     'success' => true,
                     'city_id' => $city_id,
@@ -472,18 +475,18 @@ public function vote_ajax(Request $request){
             $new_vote -> save();
             
              /*kiểm tra xem đã vote cho nhà hàng chưa*/
-            $check_vote_business  = Vote::where('user_id','=',$user->id)->where('business_id','=',$data_business -> id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
-            if(!$check_vote_business){
-                $new_vote_business = new Vote;
-                $new_vote_business -> user_id = $user->id;
-                $new_vote_business -> business_id = $data_business->id;
-                $new_vote_business -> state_id = $data_business->location->IdState;
-                $new_vote_business -> city_id = $city_id;
+            // $check_vote_business  = Vote::where('user_id','=',$user->id)->where('business_id','=',$data_business -> id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
+            // if(!$check_vote_business){
+            //     $new_vote_business = new Vote;
+            //     $new_vote_business -> user_id = $user->id;
+            //     $new_vote_business -> business_id = $data_business->id;
+            //     $new_vote_business -> state_id = $data_business->location->IdState;
+            //     $new_vote_business -> city_id = $city_id;
 
-                /*vote = 1 vote cho business bằng 2 vote cho eat*/
-                $new_vote_business -> type_vote = 1;
-                $new_vote_business -> save();
-            }
+            //     /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            //     $new_vote_business -> type_vote = 1;
+            //     $new_vote_business -> save();
+            // }
             return response()->json([
                 'success' => true,
                 'city_id' => $city_id
@@ -492,16 +495,7 @@ public function vote_ajax(Request $request){
         }
     }
             /**/
-    
-    $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
-    if($check_vote_city ){
-        $id_voted = $check_vote_city->business_id;
-         $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->delete();
-         
 
-    }else{
-       
-    }
         
 
 
