@@ -82,6 +82,13 @@ class Business extends Model
             $join->on('categories.id','=','businesses_categories.cate_id');
         });
     }
+     /*join businesses_categories*/
+    public function scopeJoinReviewRating($query)
+    {
+        return $query->leftjoin('review_ratings', function($join){
+            $join->on('businesses.id','=','review_ratings.id_rate_from');
+        });
+    }
 
     public function update_business($request,$user){
         if($request -> address){
