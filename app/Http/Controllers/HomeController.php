@@ -116,6 +116,8 @@ class HomeController extends Controller{
         }else{
             $text_city_state = $state_search;
         }
+        $category_search = Category::where('category_name','=',$keyword)->first();
+
         /*fix search*/
         $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date')
         ->JoinBusinessesCategory()->JoinCategory()
@@ -134,11 +136,9 @@ class HomeController extends Controller{
         ->where('advertisements.expiration_date', '>=', Carbon::now())
         ->where('advertisements.status','=',2)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
-        /*list all Results*/
+        /*list all Results FROM review_ratings WHERE type_rate = 2*/
 
-        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','review_ratings.type_rate', DB::raw(' COUNT(`id_rate_from`) as Soluong '))
-       /* $data_business = Business::raw('select categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','review_ratings.type_rate', 'COUNT(`id_rate_from`) as Soluong from review_ratings where type_rate = 2 from categories where id = 1') ->paginate(Myconst::PAGINATE_ADMIN);*/
-
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','review_ratings.type_rate','review_ratings.category_id', DB::raw('  SUM(`rate`)/COUNT(`id_rate_from`) as total_rate_eat '))
         ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()->JoinReviewRating()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
@@ -147,14 +147,21 @@ class HomeController extends Controller{
                 $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
+        ->where(function($query){ 
+                $query->whereNull('review_ratings.type_rate')->orwhere('review_ratings.type_rate','=', 2);
+        })
+        ->where(function($query) use ($category_search){ 
+                $query->whereNull('review_ratings.category_id')->orwhere('review_ratings.category_id','=',$category_search->id);
+        })
+        //->where('review_ratings.category_id','=',$category_search->id)
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
+        ->whereNotNull('businesses.activated_on')
         ->groupBy('businesses.id')       
-        ->orderBy('Soluong','desc')
+        ->orderBy('total_rate_eat','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-
-        return $data_business;
-        $category_search = Category::where('category_name','=',$keyword)->first();
+        //return $data_business;
+        
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
     }
     public function getbusinessCate($arr_id){
