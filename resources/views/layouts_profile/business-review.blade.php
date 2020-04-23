@@ -29,11 +29,30 @@
 							<div class="list-review">
 								<div class="review-gr">
 									<h4 class="m-b-10"><a href="{{$data->business->permalink()}}">{{$data->business->name}}</a></h4>
-									<p><i class="fas fa-calendar-alt"></i>{{$data->created_at}}</p>
+									<div class="star-view clear p-b-10">
+										<ul class="">
+											@php
+												$val =  (int) substr(strrchr($data->rate,'.'),1);
+												for($x=1;$x<=$data->rate;$x++) {
+													echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+												}
+												if (strpos($data->rate,'.') && $val != 0) {
+													echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+												while ($x<=5) {
+													echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+													$x++;
+												}
+											@endphp
+											
+										</ul>
+										<span class="review-date" style="padding-left: 10px;">{{date('m-d-Y', strtotime($data->created_at))}}</span>
+									</div>
 									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
-									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address}}</p>
+									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} </p>
 									@if($data->review->ListImageReview)
-										<ul class="lightgalleryphoto">
+										<ul class="lightgalleryphoto col-30">
 											@foreach($data->review->ListImageReview as $val)
 										    	<li class="" data-responsive="" data-src="{{$val['url']}}">
 				                                    <a href="{{$val['url']}}" class="lightbox">

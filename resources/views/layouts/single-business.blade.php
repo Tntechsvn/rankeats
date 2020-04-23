@@ -201,8 +201,8 @@
 								{!!$list_reviews -> appends(request()->except('page')) -> links()!!}							
 				    		@endif
 				    		<div style="text-align: right;">
-				    			@if(Auth::check())
-					    			@if(Auth::user()->check_vote($info_business->id))
+				    			{{-- @if(Auth::check())
+					    			@if(Auth::user()->check_vote($info_business->id,null))
 							    		<a style="color: #fff;" href="javascript:;" class="btn vote vote_now" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
 							    	@else
 							    		<a  href="javascript:;"  class="btn unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}" >My vote</a>
@@ -210,8 +210,8 @@
 						    	@else
 
 				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a>
-				    			@endif
-						    		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+				    			@endif --}}
+						    		<a href="javascript:;" data-toggle="modal" data-target="#voteModal" class="btn btn-primary" style="color: #fff;">Write Review</a>
 						    	</div>
 				    		
 
@@ -464,7 +464,7 @@
 
 @if(Auth::check())
 <!-- Knight modan review-->
-<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="false"> 
+{{-- <div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="false"> 
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -529,6 +529,74 @@
 						<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 					</div>
 					<div class="firstWindow hidden" style="width: 100%">
+						<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+	</div>
+</div> --}}
+<div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="false"> 
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<form action="" method="post" accept-charset="utf-8">
+			@csrf
+			<input type="hidden" name="business_id" value="{{$info_business->id}}">
+			<div class="modal-content">
+				<div style="padding: 15px;border-bottom: 1px solid #e5e5e5;">
+					<div class="avata-popup " style="width: 100%;text-align: center;">
+						<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
+						<p class="bold">{{Auth::user()->name}}</p>
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="okverify">
+						<div class="popup-star">
+							<label class="customstar star-1">							
+								<input type="radio" name="rate" value="1" checked="checked">
+								<span class="starimg checkstar" ></span>
+							</label>
+							<label class="customstar star-2">							
+								<input type="radio" name="rate" value="2">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-3">							
+								<input type="radio" name="rate" value="3">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-4">							
+								<input type="radio" name="rate" value="4">
+								<span class="starimg" ></span>
+							</label>
+							<label class="customstar star-5">							
+								<input type="radio" name="rate" value="5">
+								<span class="starimg "></span>
+							</label>
+						</div>
+						<div class="form-group choose-img">
+						<div class="form-group"  style="text-align: center;">
+							<div  class="dt-imgs">
+								<div class="dt-close" style="position:relative;">
+									<div id="previews-business" class="preview-img" style="width: 250px;position: relative;"></div>
+								</div>
+							</div>
+						</div>
+						<label for="image_business" class="choose_img" style="width: 100%;">
+							<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;display: block;"><i class="fas fa-paperclip"></i> Choose image...</span>
+							<input id="image_business" class="hidden" type="file" value="" accept="image/*" multiple>
+						</label>
+					</div>
+						<div class="form-group reviewBox">
+							<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
+							<span class="e-lang" style="color: red;font-size: 11px;"></span>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<div class="firstWindow " style="width: 100%">
 						<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
 					</div>
 				</div>

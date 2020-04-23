@@ -112,7 +112,7 @@
 								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							@if(Auth::check())
-				    			@if(Auth::user()->check_vote($data->business_id))
+				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
 				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
 				    			@else
 				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
@@ -129,7 +129,7 @@
 				{!!$data_business -> appends(request()->except('page')) -> links()!!}
 			</div>
 		</div>
-		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30">
+		<div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 m-t-30" style="padding-bottom: 100px;">
 			<div class="map_img">
 				<div id="map"></div>
 			</div>
@@ -352,11 +352,12 @@
 				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
 				<h3 class="bold">{{$category_search->category_name ?? ""}} Reviews for <span></span> </h3>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" style="min-height: 200px">
 				
 				<div id="reviewforbusiness" class="tab-pane">
 
 				</div>
+				<h3 class="no-results hidden" style="text-align: center;font-size: 24px;"></h3>
 			</div>
 		</div>
 	</div>
