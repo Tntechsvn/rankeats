@@ -104,6 +104,10 @@ class HomeController extends Controller{
     }
     public function search(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
+        if($keyword == "" || $keyword == null){
+            session()->put('error','Please enter the keyword to search for EAT');
+            return redirect()->back();
+        }
         $city = $request -> city ? $request -> city : '';
         $state_search = $request -> state ? $request -> state : '';
 
