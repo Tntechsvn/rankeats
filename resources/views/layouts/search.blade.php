@@ -101,18 +101,14 @@
 									->whereNull('users.deleted_at')
 									->orderBy('review_ratings.created_at', 'desc')
 									->count();
-									if($total_review > 0){
-									$total_rate_eat = $total_rate/$total_review;
-								}else{
-								$total_rate_eat  = 0;
-							}
+									
 									
 
-										$val =  (int) substr(strrchr($total_rate_eat,'.'),1);
-										for($x=1;$x<=$total_rate_eat;$x++) {
+										$val =  (int) substr(strrchr($data-> total_rate_eat,'.'),1);
+										for($x=1;$x<=$data-> total_rate_eat;$x++) {
 											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
 										}
-										if (strpos($total_rate_eat,'.') && $val != 0) {
+										if (strpos($data-> total_rate_eat,'.') && $val != 0) {
 											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
 											$x++;
 										}
