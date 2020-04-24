@@ -127,7 +127,6 @@ $(document).on('click','.vote_now',function(){
       category_id:category_id,
     },
     success:function(res){
-      console.log(res);
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
@@ -161,11 +160,11 @@ $(document).on('click','.yesforvote',function(e){
       if(res.success == true){
           modal.modal('hide');
           target.html(res.data);
-
           swal({
             title: res.message,
             timer: 2000
           });
+          window.location.reload();
       }else{
         modal.find('.e-lang').html("*"+res.message);
         // swal({
@@ -347,6 +346,11 @@ $(document).on('click','.submit_addeat_search', function(e){
   e.preventDefault();
   var modal = $(this).closest('#eatModal');
   var form = $(this).closest('form');
+  var parsley = $(this).closest('form').parsley();
+  if(parsley.isValid() != true){
+      parsley.validate();
+      return false;
+  }
   var url = form.attr('action');
   $.ajax({
     type: 'POST',

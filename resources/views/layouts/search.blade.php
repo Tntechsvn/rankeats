@@ -213,7 +213,8 @@
 							<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
 						</div>
 						<div class="firstWindow hidden" style="width: 100%;padding: 0 15px;">
-							<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
+							<button type="reset" class="btn btn-primary cancelforvote" >Cancel</button>
+							<button type="submit" class="btn btn-primary yesforvote" >Submit</button>
 						</div>
 					</div>
 				</div>
@@ -228,7 +229,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
-				<h4 class="modal-title">Add EAT</h4>
+				<h3 class="modal-title">Add EAT</h3>
 			</div>
 			<div class="modal-body">
 				<a href="javascript:;"  style="color:#fff;" class="btn btn-primary rankerBtn">Ranker</a>
@@ -402,6 +403,16 @@
 	// $(document).ready(function){
 	// 	$('.lightgalleryphoto').lightGallery();
 	// }
+
+	$(document).on('click','.cancelforvote',function(){
+		// e.preventDefault();
+		var form = $(this).closest('form');
+		$(this).closest('#voteModal').modal('hide');
+		form.find('.starimg').removeClass('checkstar');
+		form.find('.star-1 .starimg').addClass('checkstar');
+		form.reset();
+		
+	});
 	$("#add_eat_state").change(function(){
 		var name_state = $(this).val();
 

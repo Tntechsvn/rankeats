@@ -110,14 +110,16 @@
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
+									
 								</div>
+								<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
+									
 								</div>
+								<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
 							</div>
 							<div class="form-group">
 								<input type="text" class="form-control" name="name" placeholder="Username" value="{{old('name')}}">
@@ -244,8 +246,6 @@
 			}
 			
 		});
-
-
 
 	</script>
 

@@ -41,15 +41,17 @@
 							</thead>
 							<tbody class="content-table">
 								@foreach($list_vote_eat as $data)
+								@if($data->business)
 								<tr>
-									<td>{{$data->business->name}}</td>
+									<td>{{$data->business->name ?? ''}}</td>
 									<td>{{$data->created_at}}</td>
 									<td>{{$data->category->category_name ?? ''}}</td>
 									<td>{{$data->business->location->city ?? ''}}</td>
 									<td>{{$data->business->location->state ?? ''}}</td>
-									<td width="8%">{{$data->eatrankstate()}}</td>
-									<td width="8%">{{$data->eatrankcity()}}</td>
+									<td width="8%">{{$data->eatrankstate() ?? ''}}</td>
+									<td width="8%">{{$data->eatrankcity()??''}}</td>
 								</tr>
+								@endif
 								@endforeach	
 							</tbody>
 							@else

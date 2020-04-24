@@ -58,7 +58,7 @@ class Review extends Model
         $this -> list_id_image = $arr_image_gallery;
 		if($this -> save()){
 			/*update review rating*/
-			$review_rating = new Review_rating;
+			$review_rating = new Review_Business_Rating;
 			$review_rating -> user_id = $user_id;
 			$review_rating -> review_id = $this -> id;
 			$review_rating -> id_rate_from = $this -> business_id;

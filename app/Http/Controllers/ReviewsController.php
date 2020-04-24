@@ -10,6 +10,7 @@ use App\Business;
 use App\Review_rating;
 use View;
 use App\Media;
+use App\Review_Business_Rating;
 class ReviewsController extends Controller
 {
     /**
@@ -91,6 +92,8 @@ class ReviewsController extends Controller
             $review_del = Review::findOrFail($review_id);
             if($review_del){
                 $del_review_rate = Review_rating::where('review_id','=',$review_id)->delete();
+                $del_review_rate_business = Review_Business_Rating::where('review_id','=',$review_id)->delete();
+
                 $review_del -> delete();
             }else{
                 return response()->json([

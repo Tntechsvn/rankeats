@@ -70,20 +70,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function review_rating(){
         return $this -> hasMany('App\Review_rating', 'user_id', 'id');
     }
-
+    public function Review_Business_Rating(){
+        return $this -> hasMany('App\Review_Business_Rating', 'user_id', 'id');
+    }
 
     public function count_review_business(){
-        $count_review = $this -> review_rating()->where('type_rate','=','1')->count();
+        $count_review = $this -> Review_Business_Rating()->join('businesses','businesses.id','=','review__business__ratings.id_rate_from')->whereNull('businesses.deleted_at')->where('type_rate','=','1')->count();
         return $count_review;
     }
 
     public function count_review_eat(){
-        $count_review = $this -> review_rating()->where('type_rate','=','2')->count();
+        $count_review = $this -> review_rating()->join('businesses','businesses.id','=','review_ratings.id_rate_from')->whereNull('businesses.deleted_at')->where('type_rate','=','2')->count();
         return $count_review;
     }
 
     public function count_bookmark(){
-        return $this -> bookmark->count();
+        return $this -> bookmark()->join('businesses','businesses.id','=','bookmarks.business_id')->whereNull('businesses.deleted_at')->count();
     }
 
     public function count_photo(){

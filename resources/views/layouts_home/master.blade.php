@@ -172,5 +172,13 @@
     });
   });
 </script>
+
+@if(session('SweetAlert'))
+<script type="text/javascript">
+  
+   swal("{{session('SweetAlert')}}");
+</script>
+@endif
+<?php Session::forget('SweetAlert')?>
 </body>
 </html> 
