@@ -23,6 +23,7 @@ use DB;
 use App\ReviewReaction;
 use Carbon\Carbon;
 use App\Media;
+use App\Review_Business_Rating;
 use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
 
@@ -147,21 +148,18 @@ class HomeController extends Controller{
                 $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
-        ->where(function($query){ 
+       ->where(function($query){ 
                 $query->whereNull('review_ratings.type_rate')->orwhere('review_ratings.type_rate','=', 2);
         })
         ->where(function($query) use ($category_search){ 
                 $query->whereNull('review_ratings.category_id')->orwhere('review_ratings.category_id','=',$category_search->id);
         })
-        //->where('review_ratings.category_id','=',$category_search->id)
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
         ->whereNotNull('businesses.activated_on')
         ->groupBy('businesses.id')       
         ->orderBy('total_rate_eat','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-        //return $data_business;
-        
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
     }
     public function getbusinessCate($arr_id){
@@ -194,11 +192,11 @@ class HomeController extends Controller{
 
     public function myprofile(){
         $user = Auth::user();
-        $list_reviews = Review_rating::where('review_ratings.user_id','=',$user->id)
-               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+        $list_reviews = Review_Business_Rating::where('review__business__ratings.user_id','=',$user->id)
+               ->join('businesses','businesses.id','=','review__business__ratings.id_rate_from')
                ->where('type_rate','=',1)
                ->whereNull('businesses.deleted_at')
-               ->orderBy('review_ratings.created_at', 'desc')
+               ->orderBy('review__business__ratings.created_at', 'desc')
                ->paginate(Myconst::PAGINATE_ADMIN);
         $data_business = $user->businesses()->paginate(Myconst::PAGINATE_ADMIN);
         return view('layouts_profile.myprofile',compact('user','list_reviews','data_business'));
@@ -262,6 +260,7 @@ public function review_management(){
     /*list reviews for business*/
     $list_reviews = Review::select('reviews.*')
     ->where('business_id','=',$business_id)
+    ->whereNull('businesses.deleted_at')
     ->orderBy('created_at', 'desc')
     ->paginate(Myconst::PAGINATE_ADMIN);
     return view('layouts_profile.review-management',compact('list_reviews'));
@@ -342,22 +341,22 @@ public function business_review(){
         $user = Auth::user();
        $user_id = Auth::id();
        /*list reviews for business*/
-       $list_reviews = Review_rating::where('review_ratings.user_id','=',$user_id)
-       ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+       $list_reviews = Review_Business_Rating::where('review__business__ratings.user_id','=',$user_id)
+       ->join('businesses','businesses.id','=','review__business__ratings.id_rate_from')
        ->where('type_rate','=',1)
        ->whereNull('businesses.deleted_at')
-       ->orderBy('review_ratings.created_at', 'desc')
+       ->orderBy('review__business__ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
     return view('layouts_profile.business-review',compact('list_reviews','user'));
 }
 /*single_restaurent*/
 public function single_business(Request $request){
     $info_business = Business::findOrfail($request -> id_business);
-    $list_reviews = $info_business->Review_rating()
-       ->join('users','users.id','=','review_ratings.user_id')
+    $list_reviews = $info_business->Review_Business_Rating()
+       ->join('users','users.id','=','review__business__ratings.user_id')
        ->where('type_rate','=',1)
        ->whereNull('users.deleted_at')
-       ->orderBy('review_ratings.created_at', 'desc')
+       ->orderBy('review__business__ratings.created_at', 'desc')
        ->paginate(Myconst::PAGINATE_ADMIN);
     $list_review_eats = $info_business-> Review_rating()
        ->join('users','users.id','=','review_ratings.user_id')
@@ -699,7 +698,7 @@ public function eat_rank(){
 }
 public function business_rank(){
     $user = Auth::user();
-    $list_vote_business = Auth::user()->votes()->where('type_vote',1)->get();
+    $list_vote_business = Auth::user()->votes()->groupBy('business_id')->get();
 
     return view('layouts_profile.business-rank',compact('list_vote_business','user'));
 }
@@ -839,11 +838,11 @@ public function reaction_review(Request $request){
         
         // dd($target_user);
         if ($user) {
-            $list_reviews = Review_rating::where('review_ratings.user_id','=',$id)
-               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+            $list_reviews = Review_Business_Rating::where('review__business__ratings.user_id','=',$id)
+               ->join('businesses','businesses.id','=','review__business__ratings.id_rate_from')
                ->where('type_rate','=',1)
                ->whereNull('businesses.deleted_at')
-               ->orderBy('review_ratings.created_at', 'desc')
+               ->orderBy('review__business__ratings.created_at', 'desc')
                ->paginate(Myconst::PAGINATE_ADMIN);
             
             $data_business = $user->businesses()->paginate(Myconst::PAGINATE_ADMIN);
@@ -862,11 +861,11 @@ public function reaction_review(Request $request){
         
         // dd($target_user);
         if ($user) {
-           $list_reviews = Review_rating::where('review_ratings.user_id','=',$id)
-               ->join('businesses','businesses.id','=','review_ratings.id_rate_from')
+           $list_reviews = Review_Business_Rating::where('review__business__ratings.user_id','=',$id)
+               ->join('businesses','businesses.id','=','review__business__ratings.id_rate_from')
                ->where('type_rate','=',1)
                ->whereNull('businesses.deleted_at')
-               ->orderBy('review_ratings.created_at', 'desc')
+               ->orderBy('review__business__ratings.created_at', 'desc')
                ->paginate(Myconst::PAGINATE_ADMIN);
             return view('layouts_profile.business-review',compact('list_reviews','user'));
 

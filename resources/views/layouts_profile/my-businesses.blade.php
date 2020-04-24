@@ -2,7 +2,7 @@
 @section('content')
 
 @php 
-	$reviews = $info_business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+	$reviews = $info_business->Review_Business_Rating()->join('users','users.id','=','review__business__ratings.user_id')
 										       ->where('type_rate','=',1)
 										       ->whereNull('users.deleted_at')->get();
 @endphp

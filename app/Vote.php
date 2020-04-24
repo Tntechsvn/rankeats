@@ -18,19 +18,25 @@ class Vote extends Model
     }
 
     public function eatrankstate(){
-    	$rank_eat = $this->business->business_category()->where('id', $this->category_id)->first();
-        if($rank_eat){
-        	return $rank_eat->RankEatState;
+        if($this->business){
+            $rank_eat = $this->business->business_category()->where('id', $this->category_id)->first();
+            if($rank_eat){
+                return $rank_eat->RankEatState;
+            }
+            return "No Rank";
         }
-        return "No Rank";
+    	
     }
 
     public function eatrankcity(){
-    	$rank_eat = $this->business->business_category()->where('id', $this->category_id)->first();
-        if($rank_eat){
-        	return $rank_eat->RankEatCity;
+       if($this->business){
+            $rank_eat = $this->business->business_category()->where('id', $this->category_id)->first();
+            if($rank_eat){
+                return $rank_eat->RankEatCity;
+            }
+            return "No Rank";
         }
-        return "No Rank";
+    	
     }
 
 

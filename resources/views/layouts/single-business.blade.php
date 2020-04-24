@@ -24,7 +24,7 @@
 				</div>
 				<div class="location-res">
 					<div class="businessrank" style="float: left;">
-						<h3 class="title m-b-20">Business Rank: 50</h3>
+						<h3 class="title m-b-20">Business Rank</h3>
 						<div class="clear"></div>
 						<table>
 							<thead>
