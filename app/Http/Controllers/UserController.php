@@ -172,7 +172,7 @@ class UserController extends Controller
         if($data->success){
             $user ->sendEmailVerificationNotification();
             //session()->put('success',$data->message);
-            return redirect()->route('sign_in')-> with('message','Please verify your email before signing in');
+            return redirect()->back()-> with('SweetAlert','Your business has been submitted for approval. You will be contacted soon for confirmation');
         }else{
             session()->put('error',$data->message);
             return redirect()->back();

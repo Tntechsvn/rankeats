@@ -269,7 +269,7 @@
 				    		<div class="p-t-15" style="text-align: right;">
 				    			@if(Auth::check())
 					    			@if(Auth::user()->check_vote_eat($info_business->id))
-					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote" style="color: #fff;background-color: #5cb85c;" >Vote</a>
+					    			<a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn vote single-eatreview" style="color: #fff;background-color: #5cb85c;" >Vote</a>
 					    			@else
 					    			<a href="javascript:;" data-target="#vote_review" data-toggle="modal" class="btn vote" style="color: #fff;background-color: #b7b7b7;">My vote</a>
 					    			@endif
@@ -380,10 +380,7 @@
 			<div class="tab-content" style="overflow: unset;">
 			    <div class="tab-pane active" id="vote">
 			    	<p>Which area(s) dose "business name" have the best "Eat item"?</p>
-			    	{{-- <div class="form-group">
-			    		Country
-		    			<input type="text" class="form-control" name="location_country" value="" >
-			    	</div> --}}
+			    	
 			    	<div class="form-group">
 			    		State
 		    			<select class="test state"  name="state">
@@ -396,7 +393,7 @@
 			    	</div>
 			    	<div class="form-group">
 			    		City
-		    			<select class="city" name="city">
+		    			<select class="city test" name="city">
 			                <option value="" selected="selected">Select City</option>
 			            </select>
 			            <span class="errors e-city"></span>
@@ -597,7 +594,8 @@
 				</div>
 				<div class="modal-footer" style="text-align: center;">
 					<div class="firstWindow " style="width: 100%">
-						<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
+						<button type="reset" class="btn btn-primary cancelforvote" >Cancel</button>
+						<button type="submit" class="btn btn-primary yesforvote" >Submit</button>
 					</div>
 				</div>
 			</div>
@@ -654,14 +652,51 @@
 	<script src="lightbox/js/lightgallery-all.min.js"></script>
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
+		$('.test').fSelect();
+		$('.state ').change(function(){
+		  var val = $(this).val();
+		  var form = $(this).closest('form');
+		  // var val = 1;
+		  form.find('select.city').html('');
+		  var url = $('input[name=ajaxcitystate]').val();
+		  $.ajax({
+		    headers: {
+		      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    },
+		    type:'POST',
+		    url: url,
+		    data: {
+		      id: val
+		    },
+		    success:function(res){
+		      if(res.success == true){
+		          form.find('select.city').html(res.data);
+		          form.find('select.city').fSelect('reload');
+		      }else{
+		        
+		      }
+		    }
+		  });
+		});
+		$(document).on('click','.cancelforvote',function(){
+		// e.preventDefault();
+			var form = $(this).closest('form');
+			$(this).closest('#voteModal').modal('hide');
+			form.find('.starimg').removeClass('checkstar');
+			form.find('.star-1 .starimg').addClass('checkstar');
+			form.reset();
+			
+		});
 		$(document).ready(function(){
 			$(document).on('click','.starimg',function(){
 				$(this).closest('.popup-star').find('.starimg').addClass('checkstar');
 				$(this).closest('.customstar').nextAll().find('.starimg').removeClass('checkstar');
 			});
-			$('.test').fSelect();
+			
 			$("#lightgalleryphoto").lightGallery();
 			$('.lightgalleryphoto').lightGallery();
+
+			
 
 			$(document).on('click','.check-bookmark',function(){
 				var $this = $(this);
