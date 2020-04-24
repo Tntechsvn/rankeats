@@ -85,12 +85,34 @@
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
 								<ul class="star-rate">
+									
+
 									@php
-										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
-										for($x=1;$x<=$data->total_rate_eat;$x++) {
+									$total_rate = (int)$data->review_rating()->join('users','users.id','=','review_ratings.user_id')
+									->where('type_rate','=',2)
+									->where('category_id','=',$category_search->id)
+									->whereNull('users.deleted_at')
+									->orderBy('review_ratings.created_at', 'desc')
+									->sum('rate');
+
+									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
+									->where('type_rate','=',2)
+									->where('category_id','=',$category_search->id)
+									->whereNull('users.deleted_at')
+									->orderBy('review_ratings.created_at', 'desc')
+									->count();
+									if($total_review > 0){
+									$total_rate_eat = $total_rate/$total_review;
+								}else{
+								$total_rate_eat  = 0;
+							}
+									
+
+										$val =  (int) substr(strrchr($total_rate_eat,'.'),1);
+										for($x=1;$x<=$total_rate_eat;$x++) {
 											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
 										}
-										if (strpos($data->total_rate_eat,'.') && $val != 0) {
+										if (strpos($total_rate_eat,'.') && $val != 0) {
 											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
 											$x++;
 										}
@@ -99,16 +121,7 @@
 											$x++;
 										}
 									@endphp
-									
 								</ul>
-								@php
-									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
-                                             ->where('type_rate','=',2)
-                                             ->where('category_id','=',$category_search->id)
-                                             ->whereNull('users.deleted_at')
-                                             ->orderBy('review_ratings.created_at', 'desc')
-                                             ->count();
-								@endphp
 								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							@if(Auth::check())
