@@ -582,4 +582,35 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
 </script>
+<script type="text/javascript">
+
+    $(document).ready(function()
+    {
+        $(document).on('click', '.pagination a',function(event)
+        {
+            event.preventDefault();
+            $(this).closest('.pagination').find('li').removeClass('active');
+            $(this).closest('li').addClass('active');
+            var myurl = $(this).attr('href');
+            var page=$(this).attr('href').split('page=')[1];
+            var category_id = $(this).attr('href').split('category_id=')[1];
+            var business_id = $(this).attr('href').split('id=')[1];
+            console.log(page);
+            console.log(category_id);
+            console.log(business_id);
+            $.ajax(
+	        {
+	            url: '{{route('ajax.pagination')}}',
+	            type: "post",
+	            
+	        }).done(function(data){
+	            $("#reviewforbusiness").empty().html(data);
+	            location.hash = page;
+	        }).fail(function(jqXHR, ajaxOptions, thrownError){
+	              alert('Không có dữ liệu trả về');
+	        });
+        });
+    });
+
+</script>
 @stop

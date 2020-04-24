@@ -781,7 +781,7 @@ public function reaction_review(Request $request){
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
-                                             ->get();
+                                             ->paginate(Myconst::PAGINATE_ADMIN);
          
     
                                            
@@ -930,6 +930,19 @@ public function reaction_review(Request $request){
         }else {
             return abort(404);
         }
+    }
+
+
+
+    // phan trang
+     public function ajaxPagination(Request $request)
+    {
+        return $request->toArray();
+        $data = Item::paginate(5);
+        if ($request->ajax()) {
+            return view('ajax', compact('data'));
+        }
+        return view('base',compact('data'));
     }
 
 }
