@@ -35,6 +35,9 @@ class Business extends Model
     public function review_rating(){
         return $this -> hasMany('App\Review_rating', 'id_rate_from', 'id');
     }
+    public function Review_Business_Rating(){
+        return $this -> hasMany('App\Review_Business_Rating', 'id_rate_from', 'id');
+    }
 
     public function users(){
         return $this->belongsToMany('App\User', 'bookmarks', 'business_id', 'user_id', 'id');
@@ -218,7 +221,6 @@ class Business extends Model
         $state_id = $this->location->IdState;
 
         $get_all_vote_business_state = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
-        ->where('type_vote','=',1)
         ->where('state_id','=',$state_id)
         ->groupBy('business_id')
         ->orderBy('So luong', 'desc' )
@@ -238,7 +240,6 @@ class Business extends Model
         $city_id = $this->location->IdCity;
 
         $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
-        ->where('type_vote','=',1)
         ->where('city_id','=',$city_id)
         ->groupBy('business_id')
         ->orderBy('So luong', 'desc' )

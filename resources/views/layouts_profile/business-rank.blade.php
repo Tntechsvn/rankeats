@@ -40,6 +40,7 @@
 							</thead>
 							<tbody class="content-table">
 								@foreach($list_vote_business as $data)
+								@if($data->business)
 								<tr>
 									<td>{{$data->business->name ?? ''}}</td>
 									<td>{{$data->created_at}}</td>
@@ -48,6 +49,7 @@
 									<td width="10%">{{$data->business->RankBusinessCity ?? ''}}</td>
 									<td width="10%">{{$data->business->RankBusinessState ?? ''}}</td>
 								</tr>
+								@endif
 								@endforeach
 							</tbody>
 						</table>
