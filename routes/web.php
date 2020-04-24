@@ -160,10 +160,10 @@
 		'as' => 'show-photo',
 		'uses' => 'HomeController@show_photo'
 	]);
-	Route::post('/ajax-pagination', [
-		'as' => 'ajax.pagination',
-		'uses' => 'HomeController@ajaxPagination'
-	]);
+	// Route::post('/ajax-pagination', [
+	// 	'as' => 'ajax.pagination',
+	// 	'uses' => 'HomeController@ajaxPagination'
+	// ]);
 
 
 //view user

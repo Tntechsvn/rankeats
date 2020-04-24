@@ -595,7 +595,7 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
 </script>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 
     $(document).ready(function()
     {
@@ -625,5 +625,5 @@
         });
     });
 
-</script>
+</script> --}}
 @stop

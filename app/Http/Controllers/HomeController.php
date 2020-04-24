@@ -934,14 +934,14 @@ public function reaction_review(Request $request){
 
 
     // phan trang
-     public function ajaxPagination(Request $request)
-    {
-        return $request->toArray();
-        $data = Item::paginate(5);
-        if ($request->ajax()) {
-            return view('ajax', compact('data'));
-        }
-        return view('base',compact('data'));
-    }
+    //  public function ajaxPagination(Request $request)
+    // {
+    //     return $request->toArray();
+    //     $data = Item::paginate(5);
+    //     if ($request->ajax()) {
+    //         return view('ajax', compact('data'));
+    //     }
+    //     return view('base',compact('data'));
+    // }
 
 }
