@@ -249,38 +249,4 @@
 
 	</script>
 
-	{{--<script type="text/javascript">
-	  google.maps.event.addDomListener(window, 'load', initialize);
-	  function initialize(){
-	    var search = document.getElementById('search_rs');
-	    var autocomplete = new google.maps.places.Autocomplete(search);
-	    google.maps.event.addListener(autocomplete, 'place_changed', function(){
-	      var place = autocomplete.getPlace();
-	      if (!place.geometry) {
-	        window.alert("No details available for input: '" + place.name + "'");
-	        return;
-	      }
-	      document.getElementById('address').value = place.formatted_address;
-	      document.getElementById('longitude').value = place.geometry.location.lng();
-	      document.getElementById('latitude').value = place.geometry.location.lat();
-	      for (var i = 0; i < place.address_components.length; i++) {
-	        var addressType = place.address_components[i].types[0];
-	        switch (addressType) {
-	          case 'locality':
-	          var city = place.address_components[i].long_name;
-	          break;
-	          case 'administrative_area_level_1':
-	          var state = place.address_components[i].long_name;
-	          break;
-	          case 'country':
-	          var country = place.address_components[i].long_name;
-	          break;
-	        }
-	      }
-	      document.getElementById('city').value = city;
-	      document.getElementById('state').value = state;
-	      document.getElementById('country').value = country;     
-	    });
-	  };
-	</script>--}}
 @endsection

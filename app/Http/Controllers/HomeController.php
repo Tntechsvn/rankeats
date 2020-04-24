@@ -148,18 +148,18 @@ class HomeController extends Controller{
                 $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
-       ->where(function($query){ 
+        ->where(function($query){ 
                 $query->whereNull('review_ratings.type_rate')->orwhere('review_ratings.type_rate','=', 2);
         })
-        ->where(function($query) use ($category_search){ 
+       ->where(function($query) use ($category_search){ 
                 $query->whereNull('review_ratings.category_id')->orwhere('review_ratings.category_id','=',$category_search->id);
         })
-        ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
         ->whereNotNull('businesses.activated_on')
         ->groupBy('businesses.id')       
         ->orderBy('total_rate_eat','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
+        //return $data_business;
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
     }
     public function getbusinessCate($arr_id){

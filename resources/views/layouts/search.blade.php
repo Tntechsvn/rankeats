@@ -85,12 +85,30 @@
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
 								<ul class="star-rate">
+									
+
 									@php
-										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
-										for($x=1;$x<=$data->total_rate_eat;$x++) {
+									$total_rate = (int)$data->review_rating()->join('users','users.id','=','review_ratings.user_id')
+									->where('type_rate','=',2)
+									->where('category_id','=',$category_search->id)
+									->whereNull('users.deleted_at')
+									->orderBy('review_ratings.created_at', 'desc')
+									->sum('rate');
+
+									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
+									->where('type_rate','=',2)
+									->where('category_id','=',$category_search->id)
+									->whereNull('users.deleted_at')
+									->orderBy('review_ratings.created_at', 'desc')
+									->count();
+									
+									
+
+										$val =  (int) substr(strrchr($data-> total_rate_eat,'.'),1);
+										for($x=1;$x<=$data-> total_rate_eat;$x++) {
 											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
 										}
-										if (strpos($data->total_rate_eat,'.') && $val != 0) {
+										if (strpos($data-> total_rate_eat,'.') && $val != 0) {
 											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
 											$x++;
 										}
@@ -99,16 +117,7 @@
 											$x++;
 										}
 									@endphp
-									
 								</ul>
-								@php
-									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
-                                             ->where('type_rate','=',2)
-                                             ->where('category_id','=',$category_search->id)
-                                             ->whereNull('users.deleted_at')
-                                             ->orderBy('review_ratings.created_at', 'desc')
-                                             ->count();
-								@endphp
 								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							@if(Auth::check())
@@ -582,4 +591,35 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
 </script>
+{{-- <script type="text/javascript">
+
+    $(document).ready(function()
+    {
+        $(document).on('click', '.pagination a',function(event)
+        {
+            event.preventDefault();
+            $(this).closest('.pagination').find('li').removeClass('active');
+            $(this).closest('li').addClass('active');
+            var myurl = $(this).attr('href');
+            var page=$(this).attr('href').split('page=')[1];
+            var category_id = $(this).attr('href').split('category_id=')[1];
+            var business_id = $(this).attr('href').split('id=')[1];
+            console.log(page);
+            console.log(category_id);
+            console.log(business_id);
+            $.ajax(
+	        {
+	            url: '{{route('ajax.pagination')}}',
+	            type: "post",
+	            
+	        }).done(function(data){
+	            $("#reviewforbusiness").empty().html(data);
+	            location.hash = page;
+	        }).fail(function(jqXHR, ajaxOptions, thrownError){
+	              alert('Không có dữ liệu trả về');
+	        });
+        });
+    });
+
+</script> --}}
 @stop
