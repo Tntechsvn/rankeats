@@ -1,14 +1,14 @@
-<form method="get" action="{{route('search')}}" style="display: inline-block;">
+<form method="get" action="{{route('search')}}" style="display: inline-block;" >
 	<div class="">
 		<div class="input-group syl-cus">
 			<div class="input_dish">
-				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_items" name="keyword" placeholder="Steak, Pizza, Salmon…." value="@if(isset($keyword)){{$keyword}}@endif">
+				<input autocomplete="off" required type="text" class="form-control input-lg location_items" id="location_items" name="keyword" placeholder="Steak, Pizza, Salmon…." value="@if(isset($keyword)){{$keyword}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
 				<div id="categoryList"></div>
 			</div>
 
 			<div class="input_state">
-				<input autocomplete="off" type="text" class="form-control input-lg location_items" id="location_search" placeholder="City or State" value="@if(isset($text_city_state)){{$text_city_state}}@endif">
+				<input autocomplete="off"  type="text" class="form-control input-lg location_items" id="location_search" placeholder="City or State" value="@if(isset($text_city_state)){{$text_city_state}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
 				<div id="LocationList"></div>
 				<div class="input_hidden">
@@ -23,3 +23,19 @@
 		</div>
 	</div>
 </form>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+    var elements = document.getElementsByTagName("INPUT");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].oninvalid = function(e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Please enter the keyword to search for EAT");
+            }
+        };
+        elements[i].oninput = function(e) {
+            e.target.setCustomValidity("");
+        };
+    }
+})
+</script>

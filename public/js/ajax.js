@@ -127,6 +127,7 @@ $(document).on('click','.vote_now',function(){
       category_id:category_id,
     },
     success:function(res){
+      console.log(res);
       if(res.success == true){
           modal_target.find('input[name=business_id]').val(business);
           modal_target.modal('show');
@@ -335,6 +336,34 @@ $(document).on('click','.show-photo',function(){
         modal.find('.no-photo').removeClass('hidden');
         modal.modal('show');
         
+      }
+    }
+  });
+});
+
+// add eat search page
+
+$(document).on('click','.submit_addeat_search', function(e){
+  e.preventDefault();
+  var modal = $(this).closest('#eatModal');
+  var form = $(this).closest('form');
+  var url = form.attr('action');
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: form.serialize(),
+    success:function(res){
+      if(res.state == 'error'){
+        swal({
+          title: res.message,
+          timer: 3000
+        });
+      }else{
+        swal({
+          title: res.message,
+          timer: 3000
+        });
+        modal.modal('hide');
       }
     }
   });

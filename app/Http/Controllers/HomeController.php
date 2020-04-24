@@ -106,7 +106,7 @@ class HomeController extends Controller{
         $keyword = $request -> keyword ? $request -> keyword : '';
         if($keyword == "" || $keyword == null){
             session()->put('error','Please enter the keyword to search for EAT');
-			return redirect()->back();
+            return redirect()->back();
         }
         $city = $request -> city ? $request -> city : '';
         $state_search = $request -> state ? $request -> state : '';
@@ -116,6 +116,8 @@ class HomeController extends Controller{
         }else{
             $text_city_state = $state_search;
         }
+        $category_search = Category::where('category_name','=',$keyword)->first();
+
         /*fix search*/
         $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date')
         ->JoinBusinessesCategory()->JoinCategory()
@@ -134,10 +136,10 @@ class HomeController extends Controller{
         ->where('advertisements.expiration_date', '>=', Carbon::now())
         ->where('advertisements.status','=',2)
         ->groupBy('businesses_categories.business_id')->take(2)->get();
-        /*list all Results*/
+        /*list all Results FROM review_ratings WHERE type_rate = 2*/
 
-        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state',DB::raw('businesses.total_rate / businesses.total_vote AS rate'))
-        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','review_ratings.type_rate','review_ratings.category_id', DB::raw('  SUM(`rate`)/COUNT(`id_rate_from`) as total_rate_eat '))
+        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()->JoinReviewRating()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
                 $query->where('category_name', '=', $keyword)->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
@@ -145,12 +147,21 @@ class HomeController extends Controller{
                 $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
             }
         })
+        ->where(function($query){ 
+                $query->whereNull('review_ratings.type_rate')->orwhere('review_ratings.type_rate','=', 2);
+        })
+        ->where(function($query) use ($category_search){ 
+                $query->whereNull('review_ratings.category_id')->orwhere('review_ratings.category_id','=',$category_search->id);
+        })
+        //->where('review_ratings.category_id','=',$category_search->id)
         ->whereNotNull('businesses.activated_on')
         ->where('categories.status','=',1)
-        ->groupBy('businesses_categories.business_id')
-        ->orderBy('rate','desc')
+        ->whereNotNull('businesses.activated_on')
+        ->groupBy('businesses.id')       
+        ->orderBy('total_rate_eat','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-        $category_search = Category::where('category_name','=',$keyword)->first();
+        //return $data_business;
+        
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
     }
     public function getbusinessCate($arr_id){
@@ -392,9 +403,10 @@ public function ajax_unvoted(Request $request){
     /*delete vote business*/
     $delete_vote = Vote::select('*')
     ->where('user_id','=',$user->id)
-    ->where('type_vote','=',1)
+    ->where('type_vote','=',2)
     ->where('city_id','=',$city_id)
     ->where('business_id','=',$request->business_id)
+    ->where('category_id','=',$request->category_id)
     ->delete();
     return response()->json([
         'message' => "You have 1 vote remaining!!!",
@@ -411,7 +423,9 @@ public function vote_ajax(Request $request){
     /**/
     if($cate_id){
         $check_vote_city_eat = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+
         if($check_vote_city_eat ){
+            $id_voted = $check_vote_city_eat->business_id;
             $delete = Vote::where('user_id','=',$user->id)->where('category_id','=',$cate_id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
 
             $new_vote = new Vote;
@@ -431,6 +445,24 @@ public function vote_ajax(Request $request){
             /*vote = 1 vote cho business bằng 2 vote cho eat*/
             $new_vote -> type_vote = 2;
             $new_vote -> save();
+            /*kiểm tra xem đã vote cho nhà hàng chưa*/
+            // $check_vote_business  = Vote::where('user_id','=',$user->id)->where('business_id','=',$data_business -> id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
+            // if(!$check_vote_business){
+            //     $new_vote_business = new Vote;
+            //     $new_vote_business -> user_id = $user->id;
+            //     $new_vote_business -> business_id = $data_business->id;
+            //     $new_vote_business -> state_id = $data_business->location->IdState;
+            //     $new_vote_business -> city_id = $city_id;
+
+            //     /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            //     $new_vote_business -> type_vote = 1;
+            //     $new_vote_business -> save();
+            // }
+            return response()->json([
+                    'success' => true,
+                    'city_id' => $city_id,
+                    'id_voted' => $id_voted
+                ]);
         }else{
 
             $new_vote = new Vote;
@@ -452,45 +484,29 @@ public function vote_ajax(Request $request){
             /*vote = 1 vote cho business bằng 2 vote cho eat*/
             $new_vote -> type_vote = 2;
             $new_vote -> save();
+
+             /*kiểm tra xem đã vote cho nhà hàng chưa*/
+            // $check_vote_business  = Vote::where('user_id','=',$user->id)->where('business_id','=',$data_business -> id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
+            // if(!$check_vote_business){
+            //     $new_vote_business = new Vote;
+            //     $new_vote_business -> user_id = $user->id;
+            //     $new_vote_business -> business_id = $data_business->id;
+            //     $new_vote_business -> state_id = $data_business->location->IdState;
+            //     $new_vote_business -> city_id = $city_id;
+
+            //     /*vote = 1 vote cho business bằng 2 vote cho eat*/
+            //     $new_vote_business -> type_vote = 1;
+            //     $new_vote_business -> save();
+            // }
+            return response()->json([
+                'success' => true,
+                'city_id' => $city_id
+            ]);
+
         }
     }
             /**/
-    
-    $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->first();
-    if($check_vote_city ){
-        $id_voted = $check_vote_city->business_id;
-         $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',1)->where('city_id','=',$city_id)->delete();
-         $new_vote = new Vote;
-         $new_vote -> user_id = $user->id;
-         $new_vote -> business_id = $data_business->id;
-         $new_vote -> state_id = $data_business->location->IdState;
-         $new_vote -> city_id = $city_id;
 
-         /*vote = 1 vote cho business bằng 2 vote cho eat*/
-         $new_vote -> type_vote = 1;
-         $new_vote -> save();
-
-         return response()->json([
-            'success' => true,
-            'city_id' => $city_id,
-            'id_voted' => $id_voted
-        ]);
-
-    }else{
-        $new_vote = new Vote;
-        $new_vote -> user_id = $user->id;
-        $new_vote -> business_id = $data_business->id;
-        $new_vote -> state_id = $data_business->location->IdState;
-        $new_vote -> city_id = $city_id;
-        
-        /*vote = 1 vote cho business bằng 2 vote cho eat*/
-        $new_vote -> type_vote = 1;
-        $new_vote -> save();
-        return response()->json([
-            'success' => true,
-            'city_id' => $city_id
-        ]);
-    }
         
 
 

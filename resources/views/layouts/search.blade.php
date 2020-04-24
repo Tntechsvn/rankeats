@@ -1,7 +1,7 @@
 @extends('layouts_home.master')
 @section('content')
 
-<div id="main" class="search-page">
+<div id="main" class="">
 	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
 		<img src="images/promo.jpg" alt="" class="fade">
 
@@ -86,11 +86,11 @@
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
 								<ul class="star-rate">
 									@php
-										$val =  (int) substr(strrchr($data->RateBusiness,'.'),1);
-										for($x=1;$x<=$data->RateBusiness;$x++) {
+										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
+										for($x=1;$x<=$data->total_rate_eat;$x++) {
 											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
 										}
-										if (strpos($data->RateBusiness,'.') && $val != 0) {
+										if (strpos($data->total_rate_eat,'.') && $val != 0) {
 											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
 											$x++;
 										}
@@ -112,7 +112,7 @@
 								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							@if(Auth::check())
-				    			@if(Auth::user()->check_vote($data->business_id))
+				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
 				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
 				    			@else
 				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
@@ -235,7 +235,7 @@
 				{{-- &nbsp;
 				<a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a> --}}
 				<div class="rankerShow" style="display:none;">
-					<form action="" method="post" data-parsley-validate>
+					<form action="{{route('postCreateEatsFrontEnd')}}" method="post" data-parsley-validate>
 						@csrf
 						<div class="form-group m-t-15">
 							<label for="eat_item">EAT</label>
@@ -276,7 +276,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary submit_addeat_search">Submit</button>
 						</div>
 					</form>
 
