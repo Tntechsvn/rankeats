@@ -40,12 +40,22 @@
 						<div class="form-group">
 							<button type="submit" id="submitLogin" class="btn btn-custom btn-lg btn-block">Login</button>
 						</div>
-
+						<input type="hidden" name="redirect" value="">
 					</form>
 				</div>
 			</div>
-			<div class="small-header"> New here ? <a href="{{route('register')}}"><b>Join Us</b></a> </div>
+			<div class="small-header"> New here ? <a href="{{route('sign_up')}}"><b>Join Us</b></a> </div>
 		</div>
 	</div>
 
 @endsection
+@section('script')
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if (typeof(Storage) !== "undefined") {
+				var link = sessionStorage.getItem('link');
+				$('#formLogin').find('input[name=redirect]').val(link);
+			}
+		})
+	</script>
+@stop

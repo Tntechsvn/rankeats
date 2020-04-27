@@ -316,7 +316,7 @@
 		<h4 class="modal-title">&nbsp;</h4>
 	  </div>
 	  <div class="modal-body">
-		<p>Business must be logged in to advertise <a href="{{route('sign_in')}}">Login Here</a></p>
+		<p>Business must be logged in to advertise <a href="{{route('sign_in')}}" data-link="{{url()->full()}}" class="login-here">Login Here</a></p>
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

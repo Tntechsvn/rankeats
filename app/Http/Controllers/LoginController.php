@@ -56,7 +56,6 @@ class LoginController extends Controller
 		}
 	}
 	public function postLogin(Request $request){
-
 		$this-> Validate($request,[
 			'email' => 'required',
 			'password' => 'required',
@@ -77,7 +76,13 @@ class LoginController extends Controller
 			if($user -> role_id == 1){
 				return redirect()->route('getListEats');
 			}else{
-				return redirect()->route('index');
+				if($request->redirect == null){
+					return redirect()->route('index');
+				}else{
+
+					return redirect($request->redirect);
+				}
+				
 			}
 			
 

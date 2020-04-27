@@ -108,7 +108,7 @@
 						<ul class="nav nav-tabs" style="border-bottom: none;">
 						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info-circle"></i> Business Info</a></li>
 						    <li><a href="#businessreview" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Business Reviews</a></li>
-						    <li><a href="#eatrank" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
+						    <li><a href="#eatrank" data-toggle="tab" class="btn first-vote"><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
 						    <li><a href="#picture" data-toggle="tab" class="btn "><i class="fas fa-images"></i> Picture</a></li>
 						  </ul>
 					</div>
@@ -217,7 +217,7 @@
 
 				    		<!-- end Knight modan review-->
 					    </div>
-					    <div class="tab-pane" id="eatrank">
+					    <div class="tab-pane {{ ($list_review_eats->total() == 0) ? "nothasvote" : ""}}" id="eatrank">
 					    	@if($list_review_eats->total() >0)
 				    			@foreach($list_review_eats as $data)
 				    			<div class="list-review">
@@ -357,12 +357,12 @@
 		<h3 class="modal-title bold">EAT Rank / Reviews</h3>
 	  </div>
 	  <div class="modal-body">
-		<form class="" action="" method="post">
+		<form class="" action="" method="post" data-parsley-validate>
 			@csrf
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="form-group">
 				Choose eat
-				<select class="test choose_dish" multiple="multiple"  name="Category_type[]">
+				<select class="test choose_dish" multiple="multiple"  name="Category_type[]" data-parsley-required>
 					<optgroup>
 						@foreach($info_business->business_category as $menu)
 							<option value="{{$menu->id}}">{{$menu->category_name}}</option>
@@ -383,7 +383,7 @@
 			    	
 			    	<div class="form-group">
 			    		State
-		    			<select class="test state"  name="state">
+		    			<select class="test state"  name="state" data-parsley-required>
 			             	 <option value="" selected="selected">Select State</option>
 			              	@foreach($state as $data)
 		                	<option value="{{$data->id}}">{{$data->name}}</option>
@@ -393,7 +393,7 @@
 			    	</div>
 			    	<div class="form-group">
 			    		City
-		    			<select class="city test" name="city">
+		    			<select class="city test" name="city" data-parsley-required>
 			                <option value="" selected="selected">Select City</option>
 			            </select>
 			            <span class="errors e-city"></span>
@@ -441,7 +441,7 @@
 						</label>
 					</div>
 					<div class="form-group reviewBox">
-						<textarea class="form-control" placeholder="Write Your Review" name="description" style="height: 150px;"></textarea>
+						<textarea class="form-control" placeholder="Write Your Review" name="description" style="height: 150px;" data-parsley-required></textarea>
 					</div>
 
 				    <div>
@@ -460,80 +460,7 @@
 
 
 @if(Auth::check())
-<!-- Knight modan review-->
-{{-- <div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="false"> 
-	<div class="modal-dialog">
 
-		<!-- Modal content-->
-		<form action="" method="post" accept-charset="utf-8">
-			@csrf
-			<input type="hidden" name="business_id" value="">
-			<div class="modal-content">
-				<div style="padding: 15px;border-bottom: 1px solid #e5e5e5;">
-					<div class="avata-popup " style="width: 100%;text-align: center;">
-						<img src="{{Auth::user()->UrlAvatarUser}}" class="img-circle" style="object-fit: cover;" width="200" height="200" alt="{{Auth::user()->name}}">
-						<p class="bold">{{Auth::user()->name}}</p>
-					</div>
-				</div>
-				<div class="modal-body">
-					<p style="text-align: center;">Would you like to write a review for this Business?</p>
-					<div class="okverify hidden">
-						<div class="popup-star">
-							<label class="customstar star-1">							
-								<input type="radio" name="rate" value="1" checked="checked">
-								<span class="starimg checkstar" ></span>
-							</label>
-							<label class="customstar star-2">							
-								<input type="radio" name="rate" value="2">
-								<span class="starimg" ></span>
-							</label>
-							<label class="customstar star-3">							
-								<input type="radio" name="rate" value="3">
-								<span class="starimg" ></span>
-							</label>
-							<label class="customstar star-4">							
-								<input type="radio" name="rate" value="4">
-								<span class="starimg" ></span>
-							</label>
-							<label class="customstar star-5">							
-								<input type="radio" name="rate" value="5">
-								<span class="starimg "></span>
-							</label>
-						</div>
-						<div class="form-group choose-img">
-						<div class="form-group"  style="text-align: center;">
-							<div  class="dt-imgs">
-								<div class="dt-close" style="position:relative;">
-									<div id="previews-business" class="preview-img" style="width: 250px;position: relative;"></div>
-								</div>
-							</div>
-						</div>
-						<label for="image_business" class="choose_img" style="width: 100%;">
-							<span style="padding: 5px 20px;border: 1px solid #e1e1e1;border-radius: 5px;display: block;"><i class="fas fa-paperclip"></i> Choose image...</span>
-							<input id="image_business" class="hidden" type="file" value="" accept="image/*" multiple>
-						</label>
-					</div>
-						<div class="form-group reviewBox">
-							<textarea class="form-control" placeholder="Write Your Review" name="description"></textarea>
-							<span class="e-lang" style="color: red;font-size: 11px;"></span>
-						</div>
-					</div>
-
-				</div>
-				<div class="modal-footer" style="text-align: center;">
-					<div class="verify">
-						<a href="javascript:;" data-dismiss="modal" class="btn btn-primary noverify" style="width: 80px;">NO</a>
-						<a href="javascript:;" class="btn btn-primary yesverify" style="width: 80px;">YES</a>
-					</div>
-					<div class="firstWindow hidden" style="width: 100%">
-						<button type="submit" class="btn btn-primary yesforvote" style="width: 100%">Submit</button>
-					</div>
-				</div>
-			</div>
-		</form>
-
-	</div>
-</div> --}}
 <div id="voteModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="listdish-popup" aria-hidden="false"> 
 	<div class="modal-dialog">
 
@@ -603,6 +530,22 @@
 
 	</div>
 </div>
+{{-- check vote the first --}}
+<div id="first-vote" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<p class="message center bold p-t-20">No Eats for this business have been ranked yet, would you like to be the first?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+				<button type="submit" class="btn btn-primary okfirstvote">Yes</button>
+			</div>
+		</div>
+
+	</div>
+</div>
 @endif
 <div id="loginModal" class="modal fade in" role="dialog" tabindex="-1" aria-labelledby="popup" aria-hidden="true">
 	<div class="modal-dialog">
@@ -614,7 +557,7 @@
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
-				<p>Must be logged in to Vote, <a href="{{route('sign_in')}}">Login Here</a></p>
+				<p>Must be logged in to Vote, <a href="{{route('sign_in')}}" data-link="{{url()->full()}}" class="login-here">Login Here</a></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -652,6 +595,7 @@
 	<script src="lightbox/js/lightgallery-all.min.js"></script>
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
+
 		$('.test').fSelect();
 		$('.state ').change(function(){
 		  var val = $(this).val();
@@ -872,6 +816,23 @@
 			// 	else
 			// 		return false;
 			// });
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).on('click','.first-vote', function(){
+			var novote = $(this).closest('.description').find('.nothasvote ');
+			console.log(novote);
+			if(novote.length == 1){
+				$('#first-vote').modal('show');
+			}
+			
+		});
+
+		$(document).on('click','.okfirstvote',function(e){
+			e.preventDefault();
+			$('#first-vote').modal('hide');
+			$('#vote_review').modal('show');
+			$('.test').fSelect();
 		});
 	</script>
 @stop

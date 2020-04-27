@@ -171,6 +171,14 @@
               <div class="form-group">
                 <a href="{{$info_business->permalink()}}" class="btn btn-primary" style="color: #fff">Visit Business Page</a>
                 <button type="submit" class="btn btn-primary" style="color: #fff" >Save</button>
+                @php
+                  if($info_business->activated_on != null){
+                   $back = route('getListApprovedBusinesses');
+                  }else{
+                    $back = route('getListPendingBusiness');
+                  }
+                @endphp
+                <a href="{{$back}}" class="btn btn-primary" style="color: #fff">Cancel</a>
               </div>
               
             </form>

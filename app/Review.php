@@ -72,6 +72,7 @@ class Review extends Model
 			$update_business -> total_rate = $new_total_rate;
 			$update_business -> total_vote = $new_total_vote;
 			$update_business ->save();
+
 			return $response =  response()->json([
 				'success' => true,
 				'message' => 'Add New Review Success',

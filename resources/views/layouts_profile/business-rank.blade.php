@@ -42,7 +42,7 @@
 								@foreach($list_vote_business as $data)
 								@if($data->business)
 								<tr>
-									<td>{{$data->business->name ?? ''}}</td>
+									<td><a href="{{$data->business->permalink()}}">{{$data->business->name ?? ''}}</a></td>
 									<td>{{$data->created_at}}</td>
 									<td>{{$data->business->location->city ?? ''}}</td>
 									<td>{{$data->business->location->state ?? ''}}</td>

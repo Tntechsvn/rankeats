@@ -2491,8 +2491,12 @@ width: 30% !important;
 #reviewforbusiness .list-picture {
 	display: inline-block;
 }
-
-
+.clone {
+	display: none;
+}
+.fs-wrap .parsley-errors-list {
+	position: absolute;
+}
 
 
 
