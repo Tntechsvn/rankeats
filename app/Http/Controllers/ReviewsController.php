@@ -10,6 +10,7 @@ use App\Business;
 use App\Review_rating;
 use View;
 use App\Media;
+use App\TotalRate;
 use App\Review_Business_Rating;
 class ReviewsController extends Controller
 {
@@ -133,6 +134,8 @@ class ReviewsController extends Controller
         $reviews_business = new Review;        
         $response = $reviews_business -> update_review($request,$user_id);
         $data = $response->getData();
+        $data_business = Business::find($request->business_id);
+        $city_id = $data_business->location->IdCity;
 
         /*create review eat*/
         if($request -> category_id){
@@ -169,6 +172,37 @@ class ReviewsController extends Controller
                 $review_rating -> type_rate = 2;
                 $review_rating -> rate = $request -> rate;
                 $review_rating -> save();
+                /*total_review*/
+                $check_total_rate = TotalRate::where('business_id','=',$request -> business_id)->where('category_id','=',$request -> category_id)->count();
+                if($check_total_rate > 0){
+                    $update_total_rate = TotalRate::where('business_id','=',$request -> business_id)->where('category_id','=',$request -> category_id)->first();
+                    $new_total_rate = $update_total_rate -> total_rate + $request -> rate;
+                    $new_total_vote = $update_total_rate -> total_vote + 1;
+                    $update_total_rate -> total_rate = $new_total_rate;
+                    $update_total_rate -> total_vote = $new_total_vote;
+                    $update_total_rate -> save();
+
+                }else{
+                    foreach($data_business->business_cate as $id_cate){
+                        if($request -> category_id == $id_cate->cate_id){
+                            $rate = $request -> rate;
+                            $vote = 1;
+                        }else{
+                            $rate = 0;
+                            $vote = 0;
+                        }
+                        $total_review = new TotalRate;
+                        $total_review -> business_id = $request -> business_id;
+                        $total_review -> category_id = $id_cate->cate_id;
+                        $total_review -> city = $city_id;
+                        $total_review -> state = $data_business->location->IdState;
+                        $total_review -> type_rate = 2;
+                        $total_review -> total_rate = $rate;
+                        $total_review -> total_vote = $vote;
+                        $total_review -> save();
+                    }
+                    
+                }
             }
         }
        

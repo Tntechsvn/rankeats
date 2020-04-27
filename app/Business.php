@@ -92,6 +92,12 @@ class Business extends Model
             $join->on('businesses.id','=','review_ratings.id_rate_from');
         });
     }
+    public function scopeJoinTotalRating($query)
+    {
+        return $query->leftjoin('total_rates', function($join){
+            $join->on('businesses.id','=','total_rates.business_id');
+        });
+    }
 
     public function update_business($request,$user){
         if($request -> address){
