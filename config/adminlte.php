@@ -199,10 +199,6 @@ return [
                     'text' => 'List Eats',                    
                     'route'  => 'getListEats',
                 ],
-                [
-                    'text' => 'Pending Eats',
-                    'route'  => 'getListPendingEats',
-                ]
             ],
         ],
         [
@@ -249,6 +245,14 @@ return [
                     'text' => 'Pending Businesses',
                     'route'  => 'getListPendingBusiness',
                 ],
+                [
+                    'text' => 'Approved Eats',
+                    'route'  => 'getListApprovedEats',
+                ],
+                [
+                    'text' => 'Pending Eats',
+                    'route'  => 'getListPendingEats',
+                ]
             ],
         ],
         [

@@ -3,8 +3,8 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-    <h1>Pending Eat</h1>
-    <p>Manage pending Eat</p>
+    <h1>Approved Eat</h1>
+    <p>Manage approved Eat</p>
     <div class="card-header">    	
     	<div class="card-tools">
     		<form action="{{route('getListPendingEats')}}" method="get">
@@ -78,7 +78,7 @@
               				<td>@if($data->business_category()->first()){{$data->business_category()->first()->location->city}}@endif</td>
               				<td>{{$data -> created_at}}</td>
               				<td>
-              					<a href="{{route('approvedEat',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this eat?">Approve</button></a>
+              					<a class="btn btn-danger del_business" data-id="{{$data->id }}" onclick="delBusinessFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>
               				</td>
               			</tr>
               			@endforeach
@@ -107,6 +107,37 @@
     </section>
 @stop
 @section('adminlte_js')
+<script type="text/javascript">
+	function delBusinessFunction() {
+    var r = confirm("You want to delete Eat?");
+    if (r == true) {
+      $(document).on('click', '.del_business',function(e){
+        var arr = [];
+        arr.push($(this).data('id'));
+        var selected_values = arr.join(",");
+
+        var link = "";
+        $.ajax({
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: link,
+          data: 'list_id='+selected_values,
+          success:function(data){
+            console.log(data);
+            if(data.success){
+              window.location.reload();
+              alert(data.message);
+            }else{
+              alert(data.message);
+            }
+          }
+        });
+      });
+    }
+  }
+</script>
 <script>
 	$(function () {
     	 //Enable check and uncheck all functionality

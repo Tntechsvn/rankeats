@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\ShareController;
 use DB;
+use Auth;
 class Category extends Model
 {
   /*Knight*/
@@ -25,6 +26,7 @@ class Category extends Model
         $this->category_name = $request -> category_name;
         $this->url_img = $url_img;
         $this->description = $request->description;
+        $this->user_add = Auth::user()->id;
         $this->save();
         return $this;
     }

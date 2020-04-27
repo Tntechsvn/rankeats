@@ -151,6 +151,10 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'getListPendingEats',
 				'uses' => 'EatsController@getListPendingEats'
 			]);
+			Route::get('list-approvved-eats', [
+				'as' => 'getListApprovedEats',
+				'uses' => 'EatsController@getListApprovedEats'
+			]);
 			Route::get('approve-eat/{eat_id}', [
 				'as' => 'approvedEat',
 				'uses' => 'EatsController@approvedEat'
