@@ -63,10 +63,10 @@
                         $date = date("m-d-Y",strtotime($data -> created_at))                      
                       @endphp
                       <td>{{$date}}</td>
-                      <td>{{$data -> name_user}}</td>
+                      <td><a href="{{route('user.profile',['id'=> $data ->user_id])}}">{{$data -> name_user}}</a></td>
                       <td>{{$data -> category_name}}</td>
-                      <td>{{$data -> businesses_name}}</td>                     
-                      <td>{{$data -> business->location->State}}</td> 
+                      <td><a href="{{$data -> business->permalink()}}">{{$data -> businesses_name}}</a></td>                     
+                      <td>{{$data -> business->location->state}}</td> 
                       <td>{{$data -> business->location->city}}</td> 
                       <td>{{$data -> description}}</td>
                       <td>

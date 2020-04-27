@@ -26,8 +26,8 @@ class ReviewsController extends Controller
 
     public function getListBusinessReviews(Request $request){
 		$keyword = $request -> keyword ? $request -> keyword : '';
-        $list_reviews = Review::select('reviews.*','businesses.id','users.id','businesses.name as businesses_name','users.name as name_user','review_ratings.type_rate','review_ratings.review_id')
-        ->join('review_ratings','review_ratings.review_id','=','reviews.id')
+        $list_reviews = Review::select('reviews.*','businesses.id','users.id as user_id','businesses.name as businesses_name','users.name as name_user','review__business__ratings.type_rate','review__business__ratings.review_id')
+        ->join('review__business__ratings','review__business__ratings.review_id','=','reviews.id')
         ->join('businesses','reviews.business_id','=','businesses.id')
         ->join('users','reviews.user_id','=','users.id')
         ->where(function($query) use ($keyword){            
@@ -35,7 +35,7 @@ class ReviewsController extends Controller
         })
         ->whereNull('businesses.deleted_at')
         ->whereNull('users.deleted_at')
-        ->where('review_ratings.type_rate','=',1)
+        ->where('review__business__ratings.type_rate','=',1)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
         $total_record =  $list_reviews->total();
@@ -57,7 +57,7 @@ class ReviewsController extends Controller
 	}
     public function getListEatReviews(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $list_reviews = Review::select('reviews.*','businesses.id','users.id','businesses.name as businesses_name','users.name as name_user','review_ratings.type_rate','review_ratings.review_id','review_ratings.category_id','categories.category_name')
+        $list_reviews = Review::select('reviews.*','businesses.id','users.id as user_id','businesses.name as businesses_name','users.name as name_user','review_ratings.type_rate','review_ratings.review_id','review_ratings.category_id','categories.category_name')
         ->join('review_ratings','review_ratings.review_id','=','reviews.id')
         ->join('categories','categories.id','=','review_ratings.category_id')
         ->join('businesses','reviews.business_id','=','businesses.id')

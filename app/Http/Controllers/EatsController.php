@@ -60,6 +60,7 @@ class EatsController extends Controller
         ->where(function($query) use ($keyword){            
             $query->where('category_name', 'LIKE', '%'.$keyword.'%');
         })
+        ->where('user_add','!=',1)
         ->where('status','=',0)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
@@ -78,6 +79,32 @@ class EatsController extends Controller
             $record = $count_record;
         }
         return view('admin.eats.getListPendingEats', compact('start', 'record', 'total_record','data_category','keyword'));
+    }
+    public function getListApprovedEats(Request $request){
+        $keyword = $request -> keyword ? $request -> keyword : '';
+        $data_category = Category::select('categories.*')
+        ->where(function($query) use ($keyword){            
+            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+        })
+        ->where('user_add','!=',1)
+        ->where('status','=',1)
+        ->orderBy('created_at', 'desc')
+        ->paginate(Myconst::PAGINATE_ADMIN);
+        $total_record = Category::where('status','=',0)->count();
+        $count_record = count($data_category);
+        if(isset($request -> page)){
+            if($request -> page < 2){
+                $start = 1;             
+                $record = $count_record;
+            }else{
+                $start = ($request -> page * Myconst::PAGINATE_ADMIN - Myconst::PAGINATE_ADMIN) + 1;
+                $record = ($request -> page * Myconst::PAGINATE_ADMIN - Myconst::PAGINATE_ADMIN) + $count_record;
+            }
+        }else{
+            $start = 1;
+            $record = $count_record;
+        }
+        return view('admin.eats.getListApprovedEats', compact('start', 'record', 'total_record','data_category','keyword'));
     }
     /*approvedEat*/
     public function approvedEat($eat_id){
