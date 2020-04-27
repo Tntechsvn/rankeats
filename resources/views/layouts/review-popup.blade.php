@@ -11,7 +11,7 @@
 		</div>
 		<div class="info">
 			<div class="content-right p-b-20">
-				<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a></h4>
+				<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a> {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}</h4>
 			
 				<div class="star-view clear p-b-10">
 					<ul class="">
@@ -33,9 +33,9 @@
 					</ul>
 					<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 				</div>
-				<div class="review-address">
+				{{-- <div class="review-address">
 					<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
-				</div>
+				</div> --}}
 
 				<p>{{$data->review->description}}</p>
 				<div class="picture-review">

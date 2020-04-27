@@ -2494,7 +2494,9 @@ width: 30% !important;
 .clone {
 	display: none;
 }
-
+.fs-wrap .parsley-errors-list {
+	position: absolute;
+}
 
 
 

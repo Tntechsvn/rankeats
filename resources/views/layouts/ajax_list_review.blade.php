@@ -42,6 +42,5 @@
 	</div>
 	@endforeach	
 	<div class="p-t-15" style="text-align: right;">
-		<a href="javascript:;" class="btn btn-danger" style="color: #fff;">Voted</a>
-		{{-- <a href="javascript:;" data-toggle="modal" data-target="#vote_review" class="btn btn-primary" style="color: #fff;">Write Review</a> --}}
+		<a href="javascript:;" data-target="#vote_review" data-toggle="modal" class="btn vote" style="color: #fff;background-color: #b7b7b7;">My vote</a>
 	</div>

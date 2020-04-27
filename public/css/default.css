@@ -29,6 +29,7 @@ a {
 .bold {
 	font-weight: bold;
 }
+.center {text-align: center;}
 .m-l-10{margin-left: 10px;}
 .m-r-10{margin-right: 10px;}
 .m-r-30{margin-right: 30px;}

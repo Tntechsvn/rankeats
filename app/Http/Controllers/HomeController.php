@@ -627,11 +627,18 @@ public function voteReviewEat_ajax(Request $request){
                 }
             }
                    
+            $info_business = Business::findOrfail($request->business);
+            $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+            $data = "";
+            $view = View::make('layouts.ajax_list_review', ['list_review_eats' => $list_review_eats]);
+            $data .= (string) $view;
+            $message = 'You have voted and successfully evaluated';
             // return redirect()->back();
-            //  return response()->json([
-            //     'success' => true,
-            //     'data' => 'ok'
-            // ]);
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+                'message' =>  $message
+            ]);
 
         }else{
             foreach($Category_type as $cate_id){
