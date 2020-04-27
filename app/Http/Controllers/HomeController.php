@@ -23,6 +23,7 @@ use DB;
 use App\ReviewReaction;
 use Carbon\Carbon;
 use App\Media;
+use App\TotalRate;
 use App\Review_Business_Rating;
 use App\Http\Controllers\ShareController;
 class HomeController extends Controller{
@@ -120,8 +121,8 @@ class HomeController extends Controller{
         $category_search = Category::where('category_name','=',$keyword)->first();
 
         /*fix search*/
-        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date')
-        ->JoinBusinessesCategory()->JoinCategory()
+        $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date', DB::raw(' total_rates.total_rate/total_rates.total_vote as total_rate_eat '))
+        ->JoinBusinessesCategory()->JoinCategory()->JoinTotalRating()
         ->JoinAdvertisement()->JoinState()->JoinCity()
         ->where(function($query) use ($keyword,$city,$state_search){  
              if($city != ''){        
@@ -129,6 +130,9 @@ class HomeController extends Controller{
             }else{
                 $query->where('category_name', '=', $keyword)->Where('states.name','LIKE', '%'.$state_search.'%');
             }
+        })
+        ->where(function($query) use ($category_search){ 
+                $query->whereNull('total_rates.category_id')->orwhere('total_rates.category_id','=',$category_search->id);
         })
         ->whereNull('advertisements.deleted_at')
         ->whereNotNull('businesses.activated_on')
@@ -139,27 +143,23 @@ class HomeController extends Controller{
         ->groupBy('businesses_categories.business_id')->take(2)->get();
         /*list all Results FROM review_ratings WHERE type_rate = 2*/
 
-        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state','review_ratings.type_rate','review_ratings.category_id', DB::raw('  SUM(`rate`)/COUNT(`id_rate_from`) as total_rate_eat '))
-        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()->JoinReviewRating()
+        $data_business = Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','locations.city','locations.state', DB::raw(' total_rates.total_rate/total_rates.total_vote as total_rate_eat '))
+        ->JoinLocation()->JoinBusinessesCategory()->JoinCategory()->JoinTotalRating()
         ->where(function($query) use ($keyword,$city,$state_search){    
             if($city != ''){
-                $query->where('category_name', '=', $keyword)->where('city','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('locations.city','LIKE', '%'.$city.'%')->orwhere('category_name', '=', $keyword)->where('locations.state','LIKE', '%'.$state_search.'%');
             }else{
-                $query->where('category_name', '=', $keyword)->where('state','LIKE', '%'.$state_search.'%');
+                $query->where('category_name', '=', $keyword)->where('locations.state','LIKE', '%'.$state_search.'%');
             }
         })
-        ->where(function($query){ 
-                $query->whereNull('review_ratings.type_rate')->orwhere('review_ratings.type_rate','=', 2);
-        })
        ->where(function($query) use ($category_search){ 
-                $query->whereNull('review_ratings.category_id')->orwhere('review_ratings.category_id','=',$category_search->id);
+                $query->whereNull('total_rates.category_id')->orwhere('total_rates.category_id','=',$category_search->id);
         })
         ->where('categories.status','=',1)
         ->whereNotNull('businesses.activated_on')
         ->groupBy('businesses.id')       
         ->orderBy('total_rate_eat','desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-        //return $data_business;
         return view('layouts.search',compact('data_business','data_business_sponsored','keyword','city','state_search','text_city_state','category_search'));
     }
     public function getbusinessCate($arr_id){
@@ -591,6 +591,39 @@ public function voteReviewEat_ajax(Request $request){
                     $review_rating -> type_rate = 2;
                     $review_rating -> rate = $request -> rate;
                     $review_rating -> save();
+                    /*total_review*/
+                    $check_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->count();
+                    if($check_total_rate > 0){
+                        $update_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->first();
+                        $new_total_rate = $update_total_rate -> total_rate + $request -> rate;
+                        $new_total_vote = $update_total_rate -> total_vote + 1;
+                        $update_total_rate -> total_rate = $new_total_rate;
+                        $update_total_rate -> total_vote = $new_total_vote;
+                        $update_total_rate -> save();
+
+                    }else{
+                       foreach($data_business->business_cate as $id_cate){
+                        if($cate_id == $id_cate->cate_id){
+                            $rate = $request -> rate;
+                            $vote = 1;
+                        }else{
+                            $rate = 0;
+                            $vote = 0;
+                        }
+                        $total_review = new TotalRate;
+                        $total_review -> business_id = $request -> business;
+                        $total_review -> category_id = $id_cate->cate_id;
+                        $total_review -> city = $city_id;
+                        $total_review -> state = $data_business->location->IdState;
+                        $total_review -> type_rate = 2;
+                        $total_review -> total_rate = $rate;
+                        $total_review -> total_vote = $vote;
+                        $total_review -> save();
+                    }
+                    }
+                    
+
+
                 }
             }
                    
@@ -654,6 +687,36 @@ public function voteReviewEat_ajax(Request $request){
                     $review_rating -> type_rate = 2;
                     $review_rating -> rate = $request -> rate;
                     $review_rating -> save();
+                    /*total_review*/
+                    $check_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->count();
+                    if($check_total_rate > 0){
+                        $update_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->first();
+                        $new_total_rate = $update_total_rate -> total_rate + $request -> rate;
+                        $new_total_vote = $update_total_rate -> total_vote + 1;
+                        $update_total_rate -> total_rate = $new_total_rate;
+                        $update_total_rate -> total_vote = $new_total_vote;
+                        $update_total_rate -> save();
+
+                    }else{
+                        foreach($data_business->business_cate as $id_cate){
+                            if($cate_id == $id_cate->cate_id){
+                                $rate = $request -> rate;
+                                $vote = 1;
+                            }else{
+                                $rate = 0;
+                                $vote = 0;
+                            }
+                            $total_review = new TotalRate;
+                            $total_review -> business_id = $request -> business;
+                            $total_review -> category_id = $id_cate->cate_id;
+                            $total_review -> city = $city_id;
+                            $total_review -> state = $data_business->location->IdState;
+                            $total_review -> type_rate = 2;
+                            $total_review -> total_rate = $rate;
+                            $total_review -> total_vote = $vote;
+                            $total_review -> save();
+                        }
+                    }
                 }
             }
             $info_business = Business::findOrfail($request->business);
