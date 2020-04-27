@@ -2491,7 +2491,9 @@ width: 30% !important;
 #reviewforbusiness .list-picture {
 	display: inline-block;
 }
-
+.clone {
+	display: none;
+}
 
 
 
