@@ -124,7 +124,8 @@
               				<td>
               					<a href="{{route('getEditUser',$data->id)}}"><button class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button></a>
                         <a href="{{$data -> business()->first()->permalink()}}"><button class="btn btn-warning" ><i class="fa fa-home" style="color: white;"></i></button></a>
-                         <a class="btn btn-danger del_user" data-id="{{$data->id }}" onclick="delUserFunction()"><i class="far fa-trash-alt" style="color: #fff;"></i></a>
+                        <a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="{{route('user.profile',['id'=> $data ->id])}}" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-danger del_user" data-id="{{$data->id }}" onclick="delUserFunction()"><i class="far fa-trash-alt" style="color: #fff;"></i></a>
               				</td>
               			</tr>
               			@endforeach

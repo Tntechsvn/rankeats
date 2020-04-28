@@ -185,20 +185,8 @@ class User extends Authenticatable implements MustVerifyEmail
             return $response;
         }
     }
-    public function update_user_owner($request){
-        if($request -> address){
-            if($this -> address != null){
-                $Location =  Location::findOrfail($this -> address);
-                $address = $Location->update_location($request)->id;               
-            }else{
-                $Location = new Location;
-                $address = $Location->update_location($request)->id;               
-            }
-           
-        }else{
-            $address = null;
-        }
-
+    public function update_user_owner($request){        
+        $address = null;
         if($request -> image !=null){
            $base64String = $request->image;
            $ShareController = new ShareController;
@@ -249,17 +237,46 @@ class User extends Authenticatable implements MustVerifyEmail
         }
       
         if($this -> save()) {
-            if(isset($request->type) && $request->type == 2){
-                $Location = new Location;
-                $address_res = $Location->update_location($request)->id;
+            if(isset($request->type) && $request->type == 2){               
 
                 $create_business = new Business;
                 $create_business -> name = $request -> name_business;
                 $create_business -> user_id = $this -> id;
-                $create_business -> address = $request -> address;
-                $create_business -> location_id = $address_res;
+                $create_business -> address = null;
+                $create_business -> location_id = null;
                 $create_business -> phone = $request -> phone;
                 $create_business -> save();
+                for($i= 1; $i <= $request ->number_location;$i++){
+                    $address = 'address'.$i;
+                    $city = 'city'.$i;
+                    $state  = 'state'.$i;
+                    $zipcode = 'zipcode'.$i;
+
+                    $Location_business = new Location;
+
+                    $address_business =  $request[$address].','.$request[$city].','.$request[$state];
+                    $ShareController = new ShareController; 
+                    $location = $ShareController->geocode($address_business);
+                    if($location){
+                        $Location_business -> latitude = $location[0];
+                        $Location_business -> longitude = $location[1];
+                    }
+
+                    $Location_business -> address = $request[$address];
+                    $Location_business -> state = $request[$state];
+
+                    if( $request -> country){
+                        $Location_business -> country = $request -> country;
+                    }else{
+                        $Location_business -> country = 'United States';
+                    }
+
+                    $Location_business -> code = $request[$zipcode];
+                    $Location_business -> city = $request[$city];
+                    $Location_business -> id_owned = $create_business->id;
+                    $Location_business -> save();
+                }
+               
             }
             /*sửa thành công*/
             $response =  response()->json([
