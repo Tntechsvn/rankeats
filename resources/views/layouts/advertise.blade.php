@@ -459,7 +459,6 @@
       $(this).closest('.form-group').find('input[name=state]').val(state_id);
       $(this).closest('.form-group').find('#stateList').fadeOut();
 
-
     });
 
     // $(document).on('click', '.location_name', function(e){
