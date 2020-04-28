@@ -57,7 +57,7 @@
                                              ->orderBy('review_ratings.created_at', 'desc')
                                              ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$total_review}} <i>reviews</i></span></a>
 							</div>
 						</div>					
 					</div>
@@ -109,7 +109,7 @@
 										}
 									@endphp
 								</ul>
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">#{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
@@ -228,14 +228,11 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
-				<h3 class="modal-title">Add EAT</h3>
+				{{-- <button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button> --}}
+				<h3 class="modal-title" style="text-align: center;">Add EAT</h3>
 			</div>
 			<div class="modal-body">
-				<a href="javascript:;"  style="color:#fff;" class="btn btn-primary rankerBtn">Ranker</a>
-				{{-- &nbsp;
-				<a href="javascript:;"  class="btn btn-primary" style="color:#fff;">Owner/Manager </a> --}}
-				<div class="rankerShow" style="display:none;">
+				<div class="rankerShow">
 					<form action="{{route('postCreateEatsFrontEnd')}}" method="post" data-parsley-validate>
 						@csrf
 						<div class="form-group m-t-15">
@@ -297,7 +294,7 @@
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
-				<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}">Login Here</a></p>
+				<p>Must be logged in to Add EAT, <a href="{{route('sign_in')}}" data-link="{{url()->full()}}" class="login-here">Login Here</a></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -316,7 +313,7 @@
 				<h4 class="modal-title">&nbsp;</h4>
 			</div>
 			<div class="modal-body">
-				<p>Must be logged in to vote, <a href="{{route('sign_in')}}">Login Here</a></p>
+				<p>Must be logged in to vote, <a href="{{route('sign_in')}}" data-link="{{url()->full()}}" class="login-here">Login Here</a></p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -577,6 +574,7 @@
         	});*/
         };        
     }
+
 
 </script>
 <script async defer

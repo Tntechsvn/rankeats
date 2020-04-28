@@ -210,6 +210,11 @@ $(document).on('click','.yesforvote',function(e){
 $(document).on('click','.submit_votereview',function(e){
   e.preventDefault();
   var form = $(this).closest('form');
+  var parsley = form.parsley();
+  if(parsley.isValid() != true){
+      parsley.validate();
+      return false;
+  }
   var target = $('#eatrank');
   var modal = $('#vote_review');
   var url = $('input[name=voteReviewEat_ajax]').val();
@@ -222,6 +227,7 @@ $(document).on('click','.submit_votereview',function(e){
     data: form.serialize(),
     success:function(res){
       if(res.success == true){
+          $('#eatrank').removeClass('nothasvote');
           modal.modal('hide');
           target.html(res.data);
           swal({
@@ -371,4 +377,18 @@ $(document).on('click','.submit_addeat_search', function(e){
       }
     }
   });
+});
+
+
+// login here
+
+$(document).on('click','.login-here',function(e){
+  e.preventDefault();
+  var link = $(this).data('link');
+  var login_url = $(this).attr('href');
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem('link',link);
+    window.location.href = login_url;
+  }
+  
 });
