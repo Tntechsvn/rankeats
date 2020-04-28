@@ -138,6 +138,7 @@ class UserController extends Controller
 
     /*====================================user frond-end=====================================================*/
     public function postSignUp(Request $request){
+        return $request;
         $this-> Validate($request,[
             'name' => 'required',
             'email' => 'email|unique:users,email',
