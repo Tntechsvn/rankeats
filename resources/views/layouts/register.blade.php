@@ -65,7 +65,7 @@
 						<input type="hidden" name="type" value="2"/>
 						<div class="form-group ">
 							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
-								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="" value="1">
+								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="number_location" value="1">
 								<button class="button-number-location button-number-location-plus" ><i class="fas fa-plus"></i></button>
 								<button class="button-number-location m-r-10 button-number-location-minus" ><i class="fas fa-minus"></i></button>
 							</div>
@@ -75,7 +75,7 @@
 							<div class="location-address">
 								<h4>Business Location</h4>
 								<div class="form-group">
-									<select class="form-control select2 choose-state" name="state">
+									<select class="form-control select2 choose-state" name="state1" data-parsley-required>
 											<option value=""disabled selected="selected">Select State</option>
 											@foreach($state as $data)
 											<option value="{{$data->name}}">{{$data->name}}</option>
@@ -84,18 +84,18 @@
 									<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
 								</div>
 								<div class="form-group">
-									<select class="form-control select2 choose-city" name="city" style="width: 100%;">
+									<select class="form-control select2 choose-city" name="city1" style="width: 100%;" data-parsley-required>
 										<option  value="" disabled selected >Select City</option>
 									</select>
 									<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 									
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control choose-address" name="address"  placeholder="Address" value="{{old('address')}}">
+									<input type="text" class="form-control choose-address" name="address1"  placeholder="Address" value="{{old('address')}}" data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control choose-zipcode" name="zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
+									<input type="text" class="form-control choose-zipcode" name="zipcode1" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
 								</div>
 							</div>
@@ -103,7 +103,7 @@
 						<div class="detail">
 							<h4>Business Details</h4>
 							<div class="form-group">
-								<input type="text" class="form-control " name="name_business"  placeholder="Business Name" value="{{old('name_business')}}">
+								<input type="text" class="form-control " name="name_business"  placeholder="Business Name" value="{{old('name_business')}}" data-parsley-required>
 								<span class="bg-danger color-palette">{{$errors -> first('name_business')}}</span>
 							</div>
 						</div>
@@ -111,35 +111,35 @@
 							<h4>Owner/Manager Details</h4>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}">
+									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}" data-parsley-required>
 									
 								</div>
 								<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
 							</div>
 							<div class="form-group">
 								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}">
+									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}" data-parsley-required>
 									
 								</div>
 								<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="name" placeholder="Username" value="{{old('name')}}">
+								<input type="text" class="form-control" name="name" placeholder="Username" value="{{old('name')}}" data-parsley-required>
 								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								
 							</div>
 
 							<div class="form-group">
-								<input type="text" class="form-control" name="email" placeholder="email" value="{{old('email')}}">
+								<input type="text" class="form-control" name="email" placeholder="email" value="{{old('email')}}" data-parsley-required>
 								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 								
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control " name="password"  placeholder="password" value="{{old('password')}}">
+								<input type="password" class="form-control " name="password"  placeholder="password" value="{{old('password')}}" data-parsley-required>
 								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control " name="re_password" placeholder="re password" value="">
+								<input type="password" class="form-control " name="re_password" placeholder="re password" value="" data-parsley-required>
 								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 							</div>
 
@@ -166,7 +166,7 @@
 							<div class="form-group">
 								<p style="clear: both;">Please enter the business number that can be verified online and call to confinm</p>
 								<div class="input-group"> <span class="input-group-addon"><i class="fas fa-phone-alt"></i></span>
-									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="{{old('phone')}}">
+									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="{{old('phone')}}" data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
 								</div>
 								
@@ -181,7 +181,7 @@
 					<div class="clone location-address">
 						<h4>Business Location</h4>
 						<div class="form-group">
-							<select class="form-control select2 choose-state" >
+							<select class="form-control select2 choose-state" data-parsley-required >
 									<option value=""disabled selected="selected">Select State</option>
 									@foreach($state as $data)
 									<option value="{{$data->name}}">{{$data->name}}</option>
@@ -190,18 +190,18 @@
 							<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
 						</div>
 						<div class="form-group">
-							<select class="form-control select2 choose-city"  style="width: 100%;">
+							<select class="form-control select2 choose-city"  style="width: 100%;" data-parsley-required >
 								<option  value="" disabled selected >Select City</option>
 							</select>
 							<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 							
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control choose-address" placeholder="Address" value="{{old('address')}}">
+							<input type="text" class="form-control choose-address" placeholder="Address" value="{{old('address')}}" data-parsley-required >
 							<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control choose-zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
+							<input type="text" class="form-control choose-zipcode" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required >
 							<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
 						</div>
 					</div>
@@ -293,10 +293,10 @@
 		}else{
 			var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
 			clone.find('h4').html('Business Location');
-			clone.find('.choose-zipcode').attr('name','zipcode');
-			clone.find('.choose-state').attr('name','state');
-			clone.find('.choose-city').attr('name','city');
-			clone.find('.choose-address').attr('name','address');
+			clone.find('.choose-zipcode').attr('name','zipcode1');
+			clone.find('.choose-state').attr('name','state1');
+			clone.find('.choose-city').attr('name','city1');
+			clone.find('.choose-address').attr('name','address1');
 			target.append(clone);
 		}
 		select_city();

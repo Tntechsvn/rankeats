@@ -14,6 +14,7 @@ use Hash;
 use App\Http\Controllers\ShareController;
 use App\Rules\Captcha;
 use Validator;
+use Image;
 class UserController extends Controller
 {
     /**
@@ -138,6 +139,7 @@ class UserController extends Controller
 
     /*====================================user frond-end=====================================================*/
     public function postSignUp(Request $request){
+       
         $this-> Validate($request,[
             'name' => 'required',
             'email' => 'email|unique:users,email',
@@ -154,7 +156,7 @@ class UserController extends Controller
             ]);
 
          }
-        if($request -> type == 2){
+       /* if($request -> type == 2){
             $this-> Validate($request,[
                 'address' => 'required',
                 'state' => 'required',
@@ -164,10 +166,17 @@ class UserController extends Controller
 
             ]);
 
-         }
+         }*/
+
+
         $user = new User;
         /*update user*/
-        $response = $user->update_user($request);
+        if($request -> type == 1){
+            $response = $user->update_user($request);
+        }else{
+            $response = $user->update_user_owner($request);
+        }
+        
         $data = $response->getData();
         if($data->success){
             $user ->sendEmailVerificationNotification();
@@ -256,6 +265,10 @@ class UserController extends Controller
             ]);
         }
 
+    }
+    public function test_img(){
+        $img = Image::make('http://localhost/rankeats/public/storage/uploads/img2020041607284514536300.jpeg')->fit(350,300);
+        return $img->response('jpg');
     }
    
    
