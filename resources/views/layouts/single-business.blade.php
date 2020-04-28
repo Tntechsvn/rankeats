@@ -128,7 +128,7 @@
 					    		<i class="fas fa-clock"></i>
 					    		<span class="bold">Business Opening :</span>
 					    		@php
-									$day_opening = date("Y-m-d",strtotime($info_business->day_opening))
+									$day_opening = date("m-d-Y",strtotime($info_business->day_opening))
 								@endphp
 					    		<span>{{$day_opening}}</span>
 					    	</p>

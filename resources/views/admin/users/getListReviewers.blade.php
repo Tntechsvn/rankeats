@@ -90,8 +90,8 @@
               		<thead>
               			<tr>
               				<th></th>
-              				<th>Profile Photo</th>              				
-              				<th>Username</th>
+              				<th style="text-align: left;">Profile Photo</th>              				
+              				<th style="text-align: left;">Username</th>
               				<th>Email</th>
               				<th>Created At</th>
               				<th>Manage</th>
@@ -100,7 +100,6 @@
               		<tbody>              			
               			@if(count($list_reviewers) > 0)
               			@foreach($list_reviewers as $data)
-              				    				
               			<tr>
               				<td>
               					<div class="icheck-primary">
@@ -115,12 +114,12 @@
               					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
               				</td>
               				@endif
-              				<td><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
+              				<td style="text-align: left;"><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
               				<td>{{$data -> email}}</td>              				
               				<td>{{$data -> created_at}}</td>
               				<td>
               					<a  href="{{route('getEditUser',$data->id)}}" class="btn btn-success btnEdit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></a>
-              					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
+              					<a class="btn btn-info btnInfo btn-admin" data-toggle="tooltip" data-placement="top" title="" href="{{route('user.profile',['id'=> $data ->id])}}" data-original-title="View details" aria-describedby="tooltip826906"><i class="fa fa-eye"></i></a>
                         <a class="btn btn-danger del_user" data-id="{{$data->id }}" onclick="delUserFunction()"><i class="far fa-trash-alt" style="color: #fff;"></i></a>
               				</td>
               			</tr>

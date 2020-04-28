@@ -66,6 +66,10 @@ Route::post('/send-mail-follwers', [
 	'uses' => 'MailController@sendMailFollwers'
 ]);
 
+Route::get('/test_img', [
+	'as' => 'test_img',
+	'uses' => 'UserController@test_img'
+]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',

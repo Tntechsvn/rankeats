@@ -28,10 +28,8 @@
 						<div class="imbx-detail">
 							<div class="pr-dtl">
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
-								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
-								<p>City: {{$data->location->city}}</p>
-								<p>State: {{$data->location->state}} - Zip: {{$data->location->code}}</p>
-								<p>Phone: {{$data->phone}}</p>
+								<p>{{$data->location->city}}, {{$data->location->state}} {{$data->location->code}}</p>
+								<p>{{$data->phone}}</p>
 								<ul class="star-rate">
 									@php
 										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
@@ -77,10 +75,12 @@
 							<div class="pr-dtl">
 								<span class="top-results stt" data-stt="{{$key+1}}">{{$key+1}}</span>
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}" class="business_name" data-business-name="{{$data->name}}" >{{$data->name}}</a></h4>
-								<p style="padding-right: 50px;">Address: {{$data->address}}</p>
-								<p>City: {{$data->city}}</p>
-								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p>
-								<p>Phone: {{$data->phone}}</p>
+								<p style="padding-right: 50px;">{{$data->address}}</p>
+								{{-- <p>City: {{$data->city}}</p>
+								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p> --}}
+								<p>{{$data->city}}, {{$data->state}} {{$data->location->code}}</p>
+								<p>{{$data->phone}}</p>
+
 								<input type="hidden" name="" class="latitude" data-latitude="{{$data->location->latitude}}">
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
@@ -134,8 +134,8 @@
 				<div id="map"></div>
 			</div>
 			<div>
-				<h4 style="font-size: 14px;" class="p-t-15">Is the EAT for a business you’re looking for missing?</h4>
-				<div class="underMap" style="margin-top:10px;">
+				<h4 style="font-size: 14px;" class="p-t-15 center">Is the EAT for a business you’re looking for missing?</h4>
+				<div class="underMap center" style="margin-top:10px;">
 					<a @if(Auth::check()) data-target="#eatModal" @else data-target="#loginModal-addeat" @endif data-toggle="modal" style="color:#fff;background-color: #0d59b7;width: 100px;height: 35px;" class="btn bold" >Add EAT </a>
 				</div>
 				
@@ -237,7 +237,7 @@
 						@csrf
 						<div class="form-group m-t-15">
 							<label for="eat_item">EAT</label>
-							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('eat_name')}}" data-parsley-required />
+							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('eat_name')}}" data-parsley-required autocomplete="off" />
 							<span class="text-danger">{!!$errors -> first('category_name')!!}</span>
 						</div>
 						<div class="form-group">

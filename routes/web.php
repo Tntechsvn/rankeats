@@ -160,6 +160,14 @@
 		'as' => 'show-photo',
 		'uses' => 'HomeController@show_photo'
 	]);
+	Route::post('/searchstate', [
+		'as' => 'searchstate',
+		'uses' => 'HomeController@searchstate'
+	]);
+	Route::post('/searchcity', [
+		'as' => 'searchcity',
+		'uses' => 'HomeController@searchcity'
+	]);
 	// Route::post('/ajax-pagination', [
 	// 	'as' => 'ajax.pagination',
 	// 	'uses' => 'HomeController@ajaxPagination'

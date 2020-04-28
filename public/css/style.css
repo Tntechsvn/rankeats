@@ -2497,9 +2497,15 @@ width: 30% !important;
 .fs-wrap .parsley-errors-list {
 	position: absolute;
 }
-
-
-
+.addbusiness {
+	color: #fff !important;
+	position: absolute;
+    right: 15px;
+    top: 35px;
+}
+.addbusiness:hover {
+	background-color: #0e4f9f;
+}
 
 
 /*responsive*/
