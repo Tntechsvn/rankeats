@@ -237,7 +237,7 @@
 						@csrf
 						<div class="form-group m-t-15">
 							<label for="eat_item">EAT</label>
-							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('eat_name')}}" data-parsley-required />
+							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('eat_name')}}" data-parsley-required autocomplete="off" />
 							<span class="text-danger">{!!$errors -> first('category_name')!!}</span>
 						</div>
 						<div class="form-group">

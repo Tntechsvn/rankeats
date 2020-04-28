@@ -29,6 +29,7 @@
 					<div>
 						<h3 class="title m-b-20">My Businesses</h3>
 						<div class="clear"></div>
+						<a href="javascript:;" class="btn btn-primary addbusiness">Add Business</a>
 						<form class="" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8">
 							@csrf
 							<div class="form-group">

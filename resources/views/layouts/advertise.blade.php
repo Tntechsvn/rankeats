@@ -348,18 +348,26 @@
             <input class="form-control" type="text" name="show-val" value="" readonly>
             <input class="form-control" type="hidden" name="pd_id" value="">
           </div>
+
           <div class="form-group">
+            <input type="text" class="state" autocomplete="off" value="" name="select-state" placeholder="Select State" required>
+            <div id="stateList"></div>
+            
+            <input type="hidden" name="state" id="state_searech" value="">
+          </div>
+
+{{--           <div class="form-group">
             <select class="test state"  name="state" required>
               <option value="" selected="selected">Select State</option>
               @foreach($state as $data)
                 <option value="{{$data->id}}">{{$data->name}}</option>
               @endforeach
             </select>
-          </div>
+          </div> --}}
           <div class="form-group">
-            <select class="city" name="city" required>
-                <option value="" selected="selected">Select City</option>
-            </select>
+            <input type="text" class="city" autocomplete="off" value="" name="select-city" placeholder="Select City" required>
+            <input type="hidden" name="city" id="city_searech" value="">
+            <div id="cityList"></div>
           </div>
 
           <div class="form-group">
@@ -402,33 +410,109 @@
 
 @section('script')
 <script type="text/javascript" src="js/fSelect.js"></script>
+<script>
+  $(document).ready(function(){
+
+    $('.state').keyup(function(){ 
+      $('#state_searech').val('');
+      var query = $(this).val();
+      if(query != '')
+      {
+        var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('searchstate') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+            console.log(data);
+            $('#stateList').fadeIn();  
+            $('#stateList').html(data);
+          }
+        });
+      }
+    });
+
+    $('.city').keyup(function(){ 
+      $('#city_searech').val('');
+      var query = $(this).val();
+      var state_id = $('#city_searech').val();
+      if(query != '')
+      {
+        var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('searchcity') }}",
+          method:"POST",
+          data:{query:query, _token:_token, state_id},
+          success:function(data){
+            console.log(data.data);
+            $('#cityListcityList').fadeIn();  
+            $('#cityList').html(data);
+          }
+        });
+      }
+    });
+
+    $(document).on('click','.state_name',function(){
+      var state_name = $(this).html();
+      var state_id = $(this).data('state');
+      $(this).closest('.form-group').find('input[name=select-state]').val(state_name);
+      $(this).closest('.form-group').find('input[name=state]').val(state_id);
+      $(this).closest('.form-group').find('#stateList').fadeOut();
+
+
+    });
+
+    // $(document).on('click', '.location_name', function(e){
+    //   $('#city_searech').remove();
+    //   $('#state_searech').remove();
+    //   $('#location_search').val($(this).text());  
+    //   $('#LocationList').fadeOut();
+      
+
+    //   $('#restaurant_name').val($(this).text());  
+    //   $('#emailList').fadeOut();
+    //   var arr = [];
+    //   var arr2 = [];
+
+    //   arr.push($(this).data('city'));
+    //   var selected_values = arr.join(",");
+
+    //   arr2.push($(this).data('state'));
+    //   var selected_values2 = arr2.join(",");
+
+    //   $( ".input_hidden" ).append( '<input type="hidden" name="city" id="city_searech" value="'+selected_values+'">' );
+    //   $( ".input_hidden" ).append( '<input type="hidden" name="state" id="state_searech" value="'+selected_values2+'">' );
+
+    // });
+  });
+</script>
   <script type="text/javascript">
 
-$('.state ').change(function(){
-  var val = $(this).val();
-  var form = $(this).closest('form');
-  // var val = 1;
-  form.find('select.city').html('');
-  var url = $('input[name=ajaxcitystate]').val();
-  $.ajax({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    type:'POST',
-    url: url,
-    data: {
-      id: val
-    },
-    success:function(res){
-      if(res.success == true){
-          form.find('select.city').html(res.data);
-          form.find('select.city').fSelect('reload');
-      }else{
+// $('.state ').change(function(){
+//   var val = $(this).val();
+//   var form = $(this).closest('form');
+//   // var val = 1;
+//   form.find('select.city').html('');
+//   var url = $('input[name=ajaxcitystate]').val();
+//   $.ajax({
+//     headers: {
+//       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     },
+//     type:'POST',
+//     url: url,
+//     data: {
+//       id: val
+//     },
+//     success:function(res){
+//       if(res.success == true){
+//           form.find('select.city').html(res.data);
+//           form.find('select.city').fSelect('reload');
+//       }else{
         
-      }
-    }
-  });
-});
+//       }
+//     }
+//   });
+// });
 
     $(document).ready(function(){
       
