@@ -6,7 +6,7 @@
 				<h1>Join Us</h1>
 			</div>
 			<div class="row login">
-				<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 well">
+				<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 well register-form">
 					<div class="form-group">
 						<input type="radio" id="ranker" name="type" value="ranker" {{(old('type') != 2) ? 'checked' : ''}} style="position: relative;top: 2px;" /><label for="ranker" style="margin-right: 30px"> Ranker </label>
 						<input type="radio" id="business" name="type" value="business" @if(old('type') == 2) checked @endif style="position: relative;top: 2px;" /><label for="business">Business Verification</label> 
@@ -176,35 +176,35 @@
 							<a href="{{route('index')}}" class="btn btn-custom btn-lg">Cancel</a>
 							<button type="submit" class="btn btn-custom btn-lg">Submit</button>
 						</div>
-						<div class="clone location-address">
-							<h4>Business Location</h4>
-							<div class="form-group">
-								<select class="form-control select2 choose-state" >
-										<option value=""disabled selected="selected">Select State</option>
-										@foreach($state as $data)
-										<option value="{{$data->name}}">{{$data->name}}</option>
-										@endforeach
-								</select>
-								<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
-							</div>
-							<div class="form-group">
-								<select class="form-control select2 choose-city"  style="width: 100%;">
-									<option  value="" disabled selected >Select City</option>
-								</select>
-								<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
-								
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control choose-address" placeholder="Address" value="{{old('address')}}">
-								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control choose-zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
-								<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
-							</div>
-						</div>
 					</form>
 
+					<div class="clone location-address">
+						<h4>Business Location</h4>
+						<div class="form-group">
+							<select class="form-control select2 choose-state" >
+									<option value=""disabled selected="selected">Select State</option>
+									@foreach($state as $data)
+									<option value="{{$data->name}}">{{$data->name}}</option>
+									@endforeach
+							</select>
+							<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+						</div>
+						<div class="form-group">
+							<select class="form-control select2 choose-city"  style="width: 100%;">
+								<option  value="" disabled selected >Select City</option>
+							</select>
+							<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+							
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control choose-address" placeholder="Address" value="{{old('address')}}">
+							<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control choose-zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
+							<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+						</div>
+					</div>
 
 				</div>
 			</div>
@@ -286,7 +286,7 @@
 		if(val > 1){
 			var i = 1;
 			for(i = 1; i <= val; i++){
-				var clone = form.find('.clone.location-address').clone().removeClass('clone');
+				var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
 				clone.find('h4').html('Business Location -'+i);
 				clone.find('.choose-zipcode').attr('name','zipcode'+i);
 				clone.find('.choose-state').attr('name','state'+i);
@@ -295,7 +295,7 @@
 				target.append(clone);
 			}
 		}else{
-			var clone = form.find('.clone.location-address').clone().removeClass('clone');
+			var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
 			clone.find('h4').html('Business Location');
 			clone.find('.choose-zipcode').attr('name','zipcode');
 			clone.find('.choose-state').attr('name','state');
