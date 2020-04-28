@@ -60,44 +60,42 @@
 					</form>
 
 
-					<form id="register_business" class="forms {{(old('type') == 2) ? 'active' : 'hidden'}}" action="{{route('postSignUp')}}" method="post" data-parsley-validate>
+					<form id="register_business" class="forms {{(old('type') == 2) ? 'active' : 'hidden'}}" action="{{route('postSignUp')}}" method="post">
 						@csrf
 						<input type="hidden" name="type" value="2"/>
 						<div class="form-group ">
 							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
-								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="" value="1">
+								<input class="form-control number-location" type="number" name="" value="1">
 								<button class="button-number-location button-number-location-plus" ><i class="fas fa-plus"></i></button>
 								<button class="button-number-location m-r-10 button-number-location-minus" ><i class="fas fa-minus"></i></button>
 							</div>
 							<span class="bg-danger color-palette"></span>
 						</div>
 						<div class="location">
-							<div class="location-address">
-								<h4>Business Location</h4>
-								<div class="form-group">
-									<select class="form-control select2 choose-state" name="state">
-											<option value=""disabled selected="selected">Select State</option>
-											@foreach($state as $data)
-											<option value="{{$data->name}}">{{$data->name}}</option>
-											@endforeach
-									</select>
-									<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
-								</div>
-								<div class="form-group">
-									<select class="form-control select2 choose-city" name="city" style="width: 100%;">
-										<option  value="" disabled selected >Select City</option>
-									</select>
-									<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
-									
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control choose-address" name="address"  placeholder="Address" value="{{old('address')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control choose-zipcode" name="zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
-									<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
-								</div>
+							<h4>Business Location</h4>
+							<div class="form-group">
+								<select class="form-control select2" name="state" id="name_state">
+										<option value=""disabled selected="selected">Select State</option>
+										@foreach($state as $data)
+										<option value="{{$data->name}}">{{$data->name}}</option>
+										@endforeach
+								</select>
+								<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+							</div>
+							<div class="form-group">
+								<select class="form-control select2" name="city" id="id_city" style="width: 100%;">
+									<option  value="" disabled selected >Select City</option>
+								</select>
+								<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+								
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control " name="address"  placeholder="Address" value="{{old('address')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control " name="zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
+								<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
 							</div>
 						</div>
 						<div class="detail">
@@ -172,36 +170,8 @@
 								
 							</div>
 						</div>
-						<div class="form-group" style="text-align: center;">
-							<a href="{{route('index')}}" class="btn btn-custom btn-lg">Cancel</a>
-							<button type="submit" class="btn btn-custom btn-lg">Submit</button>
-						</div>
-						<div class="clone location-address">
-							<h4>Business Location</h4>
-							<div class="form-group">
-								<select class="form-control select2 choose-state" >
-										<option value=""disabled selected="selected">Select State</option>
-										@foreach($state as $data)
-										<option value="{{$data->name}}">{{$data->name}}</option>
-										@endforeach
-								</select>
-								<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
-							</div>
-							<div class="form-group">
-								<select class="form-control select2 choose-city"  style="width: 100%;">
-									<option  value="" disabled selected >Select City</option>
-								</select>
-								<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
-								
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control choose-address" placeholder="Address" value="{{old('address')}}">
-								<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control choose-zipcode" placeholder="Zip Code" value="{{old('zipcode')}}">
-								<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
-							</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-custom btn-lg btn-block">Join</button>
 						</div>
 					</form>
 
@@ -215,26 +185,24 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-	function select_city(){
-		$(".choose-state").change(function(){
-			var name_state = $(this).val();
-			var city = $(this).closest('.location-address').find('.choose-city');
-			var _token = "{{ csrf_token() }}";
-	        $.ajax({
-	          url:"{{ route('ajaxCity') }}",
-	          method:"POST",
-	          data:{name_state:name_state, _token:_token},
-	          success:function(data){
-	            city.html(data);
-	          }
-	        });
+	$("#name_state").change(function(){
+		var name_state = $(this).val();
 
-			/*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
-				$("#id_city").html('<option value="0"  selected >Select City</option>'+data);
-			});*/				
-		});
-	}
-	select_city();
+		var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('ajaxCity') }}",
+          method:"POST",
+          data:{name_state:name_state, _token:_token},
+          success:function(data){ 
+          	console.log(data)
+            $('#id_city').html(data);
+          }
+        });
+
+		/*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
+			$("#id_city").html('<option value="0"  selected >Select City</option>'+data);
+		});*/				
+	});
 </script>
 	<script type="text/javascript">
 		
@@ -278,43 +246,41 @@
 			}
 			
 		});
-	function change_location(){
-		var form = $('#register_business');
-		var target = form.find('.location');
-		var val = form.find('.number-location').val();
-		target.html('');
-		if(val > 1){
-			var i = 1;
-			for(i = 1; i <= val; i++){
-				var clone = form.find('.clone.location-address').clone().removeClass('clone');
-				clone.find('h4').html('Business Location -'+i);
-				clone.find('.choose-zipcode').attr('name','zipcode'+i);
-				clone.find('.choose-state').attr('name','state'+i);
-				clone.find('.choose-city').attr('name','city'+i);
-				clone.find('.choose-address').attr('name','address'+i);
-				target.append(clone);
-			}
-		}else{
-			var clone = form.find('.clone.location-address').clone().removeClass('clone');
-			clone.find('h4').html('Business Location');
-			clone.find('.choose-zipcode').attr('name','zipcode');
-			clone.find('.choose-state').attr('name','state');
-			clone.find('.choose-city').attr('name','city');
-			clone.find('.choose-address').attr('name','address');
-			target.append(clone);
-		}
-		select_city();
-	}
-		$(document).on('change','.number-location',function(){
-			change_location();
-		});
-		$(document).on('click','.button-number-location-minus',function(){
-			change_location();
-		});
-		$(document).on('click','.button-number-location-plus',function(){
-			change_location();
-		});
 
 	</script>
 
+	{{--<script type="text/javascript">
+	  google.maps.event.addDomListener(window, 'load', initialize);
+	  function initialize(){
+	    var search = document.getElementById('search_rs');
+	    var autocomplete = new google.maps.places.Autocomplete(search);
+	    google.maps.event.addListener(autocomplete, 'place_changed', function(){
+	      var place = autocomplete.getPlace();
+	      if (!place.geometry) {
+	        window.alert("No details available for input: '" + place.name + "'");
+	        return;
+	      }
+	      document.getElementById('address').value = place.formatted_address;
+	      document.getElementById('longitude').value = place.geometry.location.lng();
+	      document.getElementById('latitude').value = place.geometry.location.lat();
+	      for (var i = 0; i < place.address_components.length; i++) {
+	        var addressType = place.address_components[i].types[0];
+	        switch (addressType) {
+	          case 'locality':
+	          var city = place.address_components[i].long_name;
+	          break;
+	          case 'administrative_area_level_1':
+	          var state = place.address_components[i].long_name;
+	          break;
+	          case 'country':
+	          var country = place.address_components[i].long_name;
+	          break;
+	        }
+	      }
+	      document.getElementById('city').value = city;
+	      document.getElementById('state').value = state;
+	      document.getElementById('country').value = country;     
+	    });
+	  };
+	</script>--}}
 @endsection

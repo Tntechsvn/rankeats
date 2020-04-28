@@ -168,7 +168,12 @@ class UserController extends Controller
          }
         $user = new User;
         /*update user*/
-        $response = $user->update_user($request);
+        if($request -> type == 1){
+            $response = $user->update_user($request);
+        }else{
+            $response = $user->update_user_owner($request);
+        }
+        
         $data = $response->getData();
         if($data->success){
             $user ->sendEmailVerificationNotification();
