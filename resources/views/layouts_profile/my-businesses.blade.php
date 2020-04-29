@@ -30,7 +30,7 @@
 						<h3 class="title m-b-20">My Businesses</h3>
 						<div class="clear"></div>
 						<a href="javascript:;" class="btn btn-primary addbusiness" data-toggle="modal" data-target="#addbusiness-popup">Add Business</a>
-						<form class="" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8">
+						<form class="" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8" data-parsley-validate>
 							@csrf
 							<div class="form-group">
 								<label>Business Picture</label>
@@ -92,7 +92,7 @@
 									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 								</div>
 							</div>
-							<div class="" style="display: flex;justify-content: space-between;">
+							<div class="state_city" style="display: flex;justify-content: space-between;">
 								<div class="form-group" style="width: 30%">
 								
 									<div class="input-group" style="width: 100%">
@@ -128,10 +128,14 @@
 								<div class="form-group" style="width: 30%">
 									<div class="input-group" style="width: 100%">
 										<p>Zipcode</p>
-										<input type="text" class="form-control " name="zipcode" value="{{$info_business->location->code}}">
+										<input type="text" class="form-control " name="zipcode1" value="{{$info_business->location->code}}">
 										<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
 									</div>
 								</div>
+							</div>
+
+							<div id="add-location" class="p-b-20">
+								<button class="btn btn-success addlocation">Add Location</button>
 							</div>
 							<div class="form-group">
 								<i class="fas fa-star"></i> Reviews: <a href="javascript" class="mb-review" data-toggle="modal" data-target="#review-popup">{{$reviews->count()}} reviews </a>
@@ -189,6 +193,47 @@
 							</div>
 							
 						</form>
+						<div class="clone locationedit location-address">
+							<div class="form-group">
+								<p>Address</p>
+								<div class="input-group" style="width: 100%">
+									<input type="text" class="form-control address" name="address" value="" data-parsley-require>
+									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+								</div>
+							</div>
+							<div class="state_city" style="display: flex;justify-content: space-between;">
+								<div class="form-group" style="width: 30%">
+								
+									<div class="input-group" style="width: 100%">
+										<p>State</p>
+										 	<select class="form-control state_profile choose-state"  name="state" >
+								             	 <option value="" selected="selected">Select State</option>
+								             	 @foreach($state as $data)
+								             	 <option value="{{$data->name}}">{{$data->name}}</option>
+								             	 @endforeach
+							            	</select>
+							            	<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+									</div>
+								</div>
+								<div class="form-group" style="width: 30%">
+									<div class="input-group" style="width: 100%">
+										<p>City</p>
+										 <select class="form-control city_profile choose-city" name="city" style="width: 100%;">
+							                <option value="" selected="selected">Select City</option>						               
+							            </select>
+							            <span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+									</div>
+								</div>
+								<div class="form-group" style="width: 30%">
+									<div class="input-group" style="width: 100%">
+										<p>Zipcode</p>
+										<input type="text" class="form-control zipcode_profile " name="zipcode" value="{{$info_business->location->code}}">
+										<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+									</div>
+								</div>
+							</div>
+							<a href="javascript:;" title="" class="delete_location">Delete</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -460,6 +505,30 @@
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
+function renameLocation(){
+	$('#add-location').find('.locationedit').each(function(i){
+		$(this).find('.state_profile').attr('name','state'+(i+2));
+		$(this).find('.city_profile').attr('name','state'+(i+2));
+		$(this).find('.zipcode_profile').attr('name','state'+(i+2));
+		$(this).find('.address').attr('name','address'+(i+2));
+	});
+}
+	$(document).on('click','.addlocation',function(e){
+		e.preventDefault();
+		var clone = $('#main').find('.locationedit.clone').clone().removeClass('clone');
+		$('#add-location').append(clone);
+		select_city();
+		renameLocation();
+	});
+
+	$(document).on('click','.delete_location',function(){
+		$(this).closest('.locationedit').remove();
+		select_city();
+		renameLocation();
+	});
+
+
+
 	$("#lightgalleryphoto").lightGallery();
 	$("#has-photo").lightGallery();
 	$('.datepicker').datepicker({
@@ -471,7 +540,6 @@
 
   $("#state_profile").change(function(){
     var name_state = $(this).val();
-
     var _token = "{{ csrf_token() }}";
         $.ajax({
           url:"{{ route('ajaxCity') }}",
