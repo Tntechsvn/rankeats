@@ -267,7 +267,7 @@ class UserController extends Controller
 
     }
     public function test_img(){
-        $img = Image::make('http://localhost/rankeats/public/storage/uploads/img2020041607284514536300.jpeg')->fit(350,300);
+        $img = Image::make('http://localhost/rankeats/public/storage/uploads/img2020041607284514536300.jpeg')->fit(250,180);
         return $img->response('jpg');
     }
    

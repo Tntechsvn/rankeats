@@ -13,6 +13,7 @@ use App\businesses_category;
 use App\Http\Controllers\ShareController;
 use Validator;
 use Carbon\Carbon;
+use App\Location;
 
 class BusinessController extends Controller
 {
@@ -188,6 +189,53 @@ class BusinessController extends Controller
             ], 200);
         }
     }
+    /***********************/
+    public function postCreateBusinessFrontEnd(Request $request){
+        $this-> Validate($request,[
+            'email' => 'email|unique:businesses,email',
+            
+        ]);
 
+        $update_business = new Business;
+        $update_business -> name = $request -> name;
+        $update_business -> user_id = Auth::user()->id;
+        $update_business -> email = $request -> email;
+        $update_business -> phone = $request -> phone;
+        $update_business -> website = $request -> website;
+        $update_business -> save();
+        for($i= 1; $i <= $request ->number_location;$i++){
+            $address = 'address'.$i;
+            $city = 'city'.$i;
+            $state  = 'state'.$i;
+            $zipcode = 'zipcode'.$i;
+
+            $Location_business = new Location;
+
+            $address_business =  $request[$address].','.$request[$city].','.$request[$state];
+            $ShareController = new ShareController; 
+            $location = $ShareController->geocode($address_business);
+            if($location){
+                $Location_business -> latitude = $location[0];
+                $Location_business -> longitude = $location[1];
+            }
+
+            $Location_business -> address = $request[$address];
+            $Location_business -> state = $request[$state];
+
+            if( $request -> country){
+                $Location_business -> country = $request -> country;
+            }else{
+                $Location_business -> country = 'United States';
+            }
+
+            $Location_business -> code = $request[$zipcode];
+            $Location_business -> city = $request[$city];
+            $Location_business -> id_owned = $update_business->id;
+            $Location_business -> save();
+        }
+
+        session()->put('success','Cteate Business Success');
+        return redirect()->back();
+    }
 
 }
