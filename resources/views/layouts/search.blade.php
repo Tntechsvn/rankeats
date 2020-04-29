@@ -237,7 +237,8 @@
 						@csrf
 						<div class="form-group m-t-15">
 							<label for="eat_item">EAT</label>
-							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('eat_name')}}" data-parsley-required />
+							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('category_name')}}" data-parsley-required />
+							<div id="ListEat"></div>
 							<span class="text-danger">{!!$errors -> first('category_name')!!}</span>
 						</div>
 						<div class="form-group">
@@ -580,6 +581,35 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
 </script>
+
+<script>
+  $(document).ready(function(){
+
+    $('#eat_item').keyup(function(){ 
+      var query = $(this).val();
+      if(query != '')
+      {
+        var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('fetchCategory') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+            $('#ListEat').fadeIn();  
+            $('#ListEat').html(data);
+          }
+        });
+      }
+    });
+
+    $(document).on('click', '.category_name', function(e){
+      $('#list_id').remove();
+      $('#eat_item').val($(this).text());  
+      $('#ListEat').fadeOut();
+    });
+  });
+</script>
+
 {{-- <script type="text/javascript">
 
     $(document).ready(function()
