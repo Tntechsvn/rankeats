@@ -393,7 +393,7 @@
 				<h3 class="center">ADD BUSINESS</h3>
 			</div>
 			<div class="modal-body register-form">
-				<form id="register_business" class="forms" action="" method="post" data-parsley-validate>
+				<form id="register_business" class="forms" action="{{route('postCreateBusinessFrontEnd')}}" method="post" data-parsley-validate>
 						@csrf
 						<div class="form-group ">
 							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
@@ -433,30 +433,30 @@
 							</div>
 						</div>
 						<div class="form-group">
-								<p>Name</p>
+								<p>Business Name</p>
 								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-user"></i></span>
-									<input type="text" class="form-control " value="" >
+									<input type="text" class="form-control " name="name" value="" data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
-								<p>Email</p>
+								<p>Business Email</p>
 								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-envelope"></i></span>
-									<input type="email" class="form-control " name="email" value="" >
+									<input type="email" class="form-control " name="email" value="" data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
-								<p>Phone Number</p>
+								<p>Business Phone</p>
 								<div class="input-group"><span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-phone-alt"></i></span>
-									<input type="phone" class="form-control " name="phone" value="" >
+									<input type="phone" class="form-control " name="phone" value=""  data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<p>Website</p>
 								<div class="input-group"> <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-globe-americas"></i></span>
-									<input type="text" class="form-control " name="website" value="" >
+									<input type="text" class="form-control " name="website" value=""  data-parsley-required>
 									<span class="bg-danger color-palette">{{$errors -> first('website')}}</span>
 								</div>
 							</div>

@@ -87,6 +87,11 @@ Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 		'as' => 'postEditBusiness',
 		'uses' => 'BusinessController@postEditBusiness'
 	]);
+	Route::post('/add-business', [
+		'as' => 'postCreateBusinessFrontEnd',
+		'uses' => 'BusinessController@postCreateBusinessFrontEnd'
+	]);
+
 	/*postReviewFrontEnd*/
 	Route::post('/post-review', [
 		'as' => 'postReviewFrontEnd',
