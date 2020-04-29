@@ -15,5 +15,5 @@
   
 </footer>
 <input type="hidden" name="login" value="{{route('postAjaxLogin')}}">
-<input type="hidden" name="ajaxcitystate" value="{{route('ajaxcitystate')}}">
+<input type="hidden" name="ajaxcitystate" value="{{route('ajaxCity')}}">
 

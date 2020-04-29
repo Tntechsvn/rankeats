@@ -29,7 +29,7 @@
 					<div>
 						<h3 class="title m-b-20">My Businesses</h3>
 						<div class="clear"></div>
-						<a href="javascript:;" class="btn btn-primary addbusiness">Add Business</a>
+						<a href="javascript:;" class="btn btn-primary addbusiness" data-toggle="modal" data-target="#addbusiness-popup">Add Business</a>
 						<form class="" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8">
 							@csrf
 							<div class="form-group">
@@ -134,7 +134,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<i class="fas fa-star"></i> Reviews: <a href="javascript" data-toggle="modal" data-target="#review-popup">{{$reviews->count()}} reviews </a>
+								<i class="fas fa-star"></i> Reviews: <a href="javascript" class="mb-review" data-toggle="modal" data-target="#review-popup">{{$reviews->count()}} reviews </a>
 							</div>
 							<div class="form-group">
 								<span>Time open - close</span>
@@ -230,6 +230,7 @@
 
 	</div>
 </div>
+
 <div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
 	<div class="modal-dialog" style="max-width: 920px;width: 100%;">
 
@@ -239,59 +240,75 @@
 					<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
 					<h3 class="title">Review business</h3>
 				</div>
-				<div class="modal-body" style="max-height: 800px;overflow-y: scroll;">
+				<div class="modal-body" style="min-height: 200px">
 					<div id="reviewforbusiness" class="tab-pane">
 					
+						
 						@foreach( $reviews as $data)
-						<div class="list-review m-b-20">
-							<div class="avata">
-								<img src="{{$data->user->UrlAvatarUser}}" alt="" >
-								<div class="photo-img">
-									<a href="javascript:;" class="show-photo" data-id="{{$data->user->id}}" data-name="{{$data->user->name}}"><i class="fas fa-camera-retro"></i> {{$data->user->count_photo()}} photo</a>
+							<div class="list-review m-b-20">
+								<div class="avata">
+									<img src="{{$data->user->UrlAvatarUser}}" alt="" >
+									<div class="photo-img">
+										<a href="javascript:;" class="show-photo" data-id="{{$data->user->id}}" data-name="{{$data->user->name}}"><i class="fas fa-camera-retro"></i> {{$data->user->count_photo()}} photo</a>
+										
+									</div>
 									
 								</div>
-								
-							</div>
-							<div class="info">
-								<div class="content-right p-b-20">
-									<h4><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a></h4>
-								
-									<div class="star-view clear p-b-10">
-										@for($i = 1;$i <= 5;$i++)
-										<i class="fas fa-star star-rate"></i>
-										@endfor
-										<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
-									</div>
-									<div class="review-address">
-										<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
-									</div>
+								<div class="info">
+									<div class="content-right p-b-20">
+										<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a> {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}</h4>
+									
+										<div class="star-view clear p-b-10">
+											<ul class="">
+												@php
+													$val =  (int) substr(strrchr($data->rate,'.'),1);
+													for($x=1;$x<=$data->rate;$x++) {
+														echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+													}
+													if (strpos($data->rate,'.') && $val != 0) {
+														echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+														$x++;
+													}
+													while ($x<=5) {
+														echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+														$x++;
+													}
+												@endphp
+												
+											</ul>
+											<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
+										</div>
+										{{-- <div class="review-address">
+											<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
+										</div> --}}
 
-									<p>{{$data->review->description}}</p>
-									<div class="picture-review">
-										<ul class="lightgalleryphoto" style="padding-left: 0">
-											@if($data->review->ListImageReview)
-												@foreach($data->review->ListImageReview as $val)
-													<li class="list-picture" data-responsive="" data-src="{{$val['url']}}">
-														<a href="javascript:;" class="lightbox">
-															<img width="210" height="145" src="{{$val['url']}}" class="pic" >
-														</a>       
-													</li>
-												@endforeach
-											@endif
-										</ul>
+										<p>{{$data->review->description}}</p>
+										<div class="picture-review">
+											<ul class="" style="padding-left: 0">
+												@if($data->review->ListImageReview)
+													@foreach($data->review->ListImageReview as $val)
+														<li class="list-picture" data-responsive="" data-src="{{$val['url']}}">
+															<a href="javascript:;" class="lightbox">
+																<img width="210" height="145" src="{{$val['url']}}" class="pic" >
+															</a>       
+														</li>
+													@endforeach
+												@endif
+											</ul>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 						@endforeach
 						<div class="clear"></div>
 					</div>
-					<h3 class="no-results hidden" style="text-align: center;font-size: 24px;"></h3>
+					<h3 class="no-results hidden" style="text-align: center;font-size: 24px;">Don't have review for {{Auth::user()->name}}</h3>
 				</div>
 			</div>
 
 	</div>
 </div>
+
 <div id="photo-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
 	<div class="modal-dialog" style="max-width: 700px;width: 100%;">
 
@@ -320,6 +337,124 @@
 
 	</div>
 </div>
+
+<div id="addbusiness-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+	<div class="modal-dialog" style="max-width: 500px;width: 100%;">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+				<h3 class="center">ADD BUSINESS</h3>
+			</div>
+			<div class="modal-body register-form">
+				<form id="register_business" class="forms" action="" method="post" data-parsley-validate>
+						@csrf
+						<div class="form-group ">
+							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
+								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="number_location" value="1">
+								<button class="button-number-location button-number-location-plus" ><i class="fas fa-plus"></i></button>
+								<button class="button-number-location m-r-10 button-number-location-minus" ><i class="fas fa-minus"></i></button>
+							</div>
+							<span class="bg-danger color-palette"></span>
+						</div>
+						<div class="location">
+							<div class="location-address">
+								<h4>Business Location</h4>
+								<div class="form-group">
+									<select class="form-control select2 choose-state" name="state1" data-parsley-required>
+											<option value=""disabled selected="selected">Select State</option>
+											@foreach($state as $data)
+											<option value="{{$data->name}}">{{$data->name}}</option>
+											@endforeach
+									</select>
+									<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+								</div>
+								<div class="form-group">
+									<select class="form-control select2 choose-city" name="city1" style="width: 100%;" data-parsley-required>
+										<option  value="" disabled selected >Select City</option>
+									</select>
+									<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+									
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control choose-address" name="address1"  placeholder="Address" value="{{old('address')}}" data-parsley-required>
+									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control choose-zipcode" name="zipcode1" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required>
+									<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+								<p>Name</p>
+								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-user"></i></span>
+									<input type="text" class="form-control " value="" >
+									<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<p>Email</p>
+								<div class="input-group" > <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-envelope"></i></span>
+									<input type="email" class="form-control " name="email" value="" >
+									<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<p>Phone Number</p>
+								<div class="input-group"><span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-phone-alt"></i></span>
+									<input type="phone" class="form-control " name="phone" value="" >
+									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<p>Website</p>
+								<div class="input-group"> <span class="input-group-addon" style="padding: 6px 15px;"><i class="fas fa-globe-americas"></i></span>
+									<input type="text" class="form-control " name="website" value="" >
+									<span class="bg-danger color-palette">{{$errors -> first('website')}}</span>
+								</div>
+							</div>
+						<div class="form-group" style="text-align: center;">
+							<a href="{{route('index')}}" class="btn btn-custom btn-lg">Cancel</a>
+							<button type="submit" class="btn btn-custom btn-lg">Submit</button>
+						</div>
+				</form>
+ 
+				<div class="clone location-address">
+					<h4>Business Location</h4>
+					<div class="form-group">
+						<select class="form-control select2 choose-state" data-parsley-required >
+								<option value=""disabled selected="selected">Select State</option>
+								@foreach($state as $data)
+								<option value="{{$data->name}}">{{$data->name}}</option>
+								@endforeach
+						</select>
+						<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+					</div>
+					<div class="form-group">
+						<select class="form-control select2 choose-city"  style="width: 100%;" data-parsley-required >
+							<option  value="" disabled selected >Select City</option>
+						</select>
+						<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+						
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control choose-address" placeholder="Address" value="{{old('address')}}" data-parsley-required >
+						<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control choose-zipcode" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required >
+						<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+</div>
+
 <input type="hidden" name="show-photo" value="{{route('show-photo')}}">
 @endsection
 @section('script')
@@ -355,6 +490,18 @@
 </script>
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
+		$(document).on('click','.addbusiness',function(){
+			select_city();
+		});
+
+		$(document).on('click','.mb-review',function(){
+			var noreview = $('#reviewforbusiness').find('.list-review').length;
+			console.log(noreview);
+			if(noreview < 1){
+				$('#review-popup').find('.no-results.hidden').removeClass('hidden');
+			}
+		});
+
 		$(document).ready(function(){
 
 			$('.test1').fSelect();

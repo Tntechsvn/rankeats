@@ -20,10 +20,88 @@ function before_ajax() {
     $('body').prepend('<div class="loading"><div class="spinner">\
                 <i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>\
               </div></div>');
+}
+function after_ajax() {
+  $('body').find('.loading').remove();
+}
+
+
+window.select_city = function(){
+  $(".choose-state").change(function(){
+      var name_state = $(this).val();
+      var url = $('input[name=ajaxcitystate]').val();
+      var city = $(this).closest('.location-address').find('.choose-city');
+          $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: url,
+            method: "POST",
+            data:{name_state:name_state},
+            success:function(data){
+              city.html(data);
+            }
+          });       
+    });
+}
+
+    $(document).on('click','.button-number-location-plus',function(e){
+      e.preventDefault();
+      var value = $(this).closest('form').find('.number-location').val();
+      if(value == ""){
+        $(this).closest('form').find('.number-location').val(1);
+      }else{
+        $(this).closest('form').find('.number-location').val(parseInt(value)+1);
+      }
+    });
+
+    $(document).on('click','.button-number-location-minus',function(e){
+      e.preventDefault();
+      var value = $(this).closest('form').find('.number-location').val();
+      if(value == "" || value == 1){
+        $(this).closest('form').find('.number-location').val(1);
+      }else{
+        $(this).closest('form').find('.number-location').val(parseInt(value)-1);
+      }
+      
+    });
+  function change_location(){
+    var form = $('#register_business');
+    var target = form.find('.location');
+    var val = form.find('.number-location').val();
+    target.html('');
+    if(val > 1){
+      var i = 1;
+      for(i = 1; i <= val; i++){
+        var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
+        clone.find('h4').html('Business Location -'+i);
+        clone.find('.choose-zipcode').attr('name','zipcode'+i);
+        clone.find('.choose-state').attr('name','state'+i);
+        clone.find('.choose-city').attr('name','city'+i);
+        clone.find('.choose-address').attr('name','address'+i);
+        target.append(clone);
+      }
+    }else{
+      var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
+      clone.find('h4').html('Business Location');
+      clone.find('.choose-zipcode').attr('name','zipcode1');
+      clone.find('.choose-state').attr('name','state1');
+      clone.find('.choose-city').attr('name','city1');
+      clone.find('.choose-address').attr('name','address1');
+      target.append(clone);
+    }
+    select_city();
   }
-  function after_ajax() {
-    $('body').find('.loading').remove();
-  }
+  $(document).on('change','.number-location',function(){
+    change_location();
+  });
+  $(document).on('click','.button-number-location-minus',function(){
+    change_location();
+  });
+  $(document).on('click','.button-number-location-plus',function(){
+    change_location();
+  });
+
 // sign-in
 $(document).on('click','.signin-popup',function(e){
 	e.preventDefault();
