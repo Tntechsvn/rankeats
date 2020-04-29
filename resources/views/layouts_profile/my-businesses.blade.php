@@ -550,10 +550,7 @@ function renameLocation(){
             $('#city_profile1').html(data);
           }
         });
-
-    /*$.get("tasteadmin/staff/restaurant-dish/"+ name_state,function(data){
-      $("#id_city").html('<option value="0"  selected >Select City</option>'+data);
-    });*/       
+      
   });
 </script>
 	<script type="text/javascript" src="js/fSelect.js"></script>
