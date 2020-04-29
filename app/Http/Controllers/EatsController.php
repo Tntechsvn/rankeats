@@ -13,6 +13,7 @@ use App\businesses_category;
 use App\Review;
 use App\Review_rating;
 use App\Vote;
+use App\CategoryMeta;
 use App\Http\Controllers\ShareController;
 use Validator;
 class EatsController extends Controller
@@ -56,15 +57,16 @@ class EatsController extends Controller
     }
     public function getListPendingEats(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $data_category = Category::select('categories.*')
+        $data_category = CategoryMeta::select('category_metas.*')
+        ->join('categories','categories.id','=','category_metas.category_id')
         ->where(function($query) use ($keyword){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+            $query->where('categories.category_name', 'LIKE', '%'.$keyword.'%');
         })
-        ->where('user_add','!=',1)
-        ->where('status','=',0)
+        ->where('category_metas.status','=',0)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-        $total_record = Category::where('status','=',0)->count();
+
+        $total_record = $data_category ->total();
         $count_record = count($data_category);
         if(isset($request -> page)){
             if($request -> page < 2){
@@ -82,15 +84,16 @@ class EatsController extends Controller
     }
     public function getListApprovedEats(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $data_category = Category::select('categories.*')
+        $data_category = CategoryMeta::select('category_metas.*')
+        ->join('categories','categories.id','=','category_metas.category_id')
         ->where(function($query) use ($keyword){            
-            $query->where('category_name', 'LIKE', '%'.$keyword.'%');
+            $query->where('categories.category_name', 'LIKE', '%'.$keyword.'%');
         })
-        ->where('user_add','!=',1)
-        ->where('status','=',1)
+        ->where('category_metas.status','=',1)
         ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
-        $total_record = Category::where('status','=',0)->count();
+
+        $total_record = $data_category ->total();
         $count_record = count($data_category);
         if(isset($request -> page)){
             if($request -> page < 2){
@@ -108,9 +111,51 @@ class EatsController extends Controller
     }
     /*approvedEat*/
     public function approvedEat($eat_id){
-        $update_category = Category::findorfail($eat_id);
-        $update_category -> status = 1;
-        $update_category -> save();
+       
+        $update_category_meta = CategoryMeta::findorfail($eat_id);
+        if($update_category_meta -> business_id != null){
+            $check = businesses_category::where('business_id','=',$update_category_meta->business_id)->where('cate_id','=',$update_category_meta->category_id)->first();
+            if(!$check){
+                $updte_busi_cate = new businesses_category;
+                $updte_busi_cate -> business_id = $update_category_meta -> business_id;
+                $updte_busi_cate -> cate_id = $update_category_meta -> category_id;
+                $updte_busi_cate -> save();
+            }
+        }else{
+            $business = new Business;
+            $business -> name = $update_category_meta -> business_name;
+            $business -> save();
+
+            $location_business = new Location;
+
+            $address_business = $update_category_meta -> address.','.$update_category_meta -> city.','.$update_category_meta -> state;
+
+            $ShareController = new ShareController; 
+            $location = $ShareController->geocode($address_business);
+            if($location){
+                $location_business -> latitude = $location[0];
+                $location_business -> longitude = $location[1];
+            }
+
+            $location_business -> address = $update_category_meta -> address;
+            $location_business -> state = $update_category_meta -> state;
+            
+            $location_business -> country = 'United States';
+
+            $location_business -> code = $update_category_meta -> zipcode;
+            $location_business -> city = $update_category_meta -> city;
+            $location_business -> id_owned = $business -> id;
+            $location_business -> save();
+
+            $updte_busi_cate = new businesses_category;
+            $updte_busi_cate -> business_id = $business -> id;
+            $updte_busi_cate -> cate_id = $update_category_meta -> category_id;
+            $updte_busi_cate -> save();
+
+        }
+        $update_category_meta -> status = 1;
+        $update_category_meta -> save();
+
         return redirect()->back();
 
     }
@@ -196,7 +241,7 @@ class EatsController extends Controller
         //     'zipcode' => 'required',
         // ]);
         $validator = Validator::make($request->all(), [
-            'category_name' => 'required|unique:categories,category_name',
+            'category_name' => 'required',
             'address' => 'required',
             'business_name' => 'required',
             'state' => 'required',
@@ -210,30 +255,32 @@ class EatsController extends Controller
                 ]);
             }
         }
-        /*create category*/
-        $update_category = new Category;
-        $id_category = $update_category -> update_category($request)->id;
-        /*check business*/
-        $check_business = Business::where('name','=',$request -> business_name)->count();
-        if($check_business > 0){
-            $update_business = Business::where('name','=',$request -> business_name)->first();
-            $update_business -> business_category()->sync($id_category);
-        }else{
-            /*create business*/
-            if($request -> address){               
-                $Location = new Location;
-                $location_id = $Location->update_location($request)->id;
-            }else{
-                $location_id = null;
-            }
-            $business = new Business;
-            $business -> name = $request -> business_name;
-            $business -> address = $request -> address;
-            $business -> location_id = $location_id;
-            $business -> save();
-            // business_category
-            $business->business_category()->sync($id_category);
+        $check_category = Category::where('category_name','=',$request -> category_name)->first();
+        if(!$check_category){
+            return response()->json([
+                    "state" => "error",
+                    "message" => "Sorry, The Eat does not exist in the system."
+                ]);
         }
+        /*check business*/
+        $check_business = Business::where('name','=',$request -> business_name)->join('locations','locations.id_owned','=','businesses.id')
+        ->where('locations.state','=',$request -> state)->where('locations.city','=',$request -> city)->groupBy('locations.id_owned')->get();
+        if(count($check_business) > 0){
+            /*create category*/
+            foreach($check_business as $data){
+                $check = businesses_category::where('business_id','=',$data->id_owned)->where('cate_id','=',$check_category->id)->first();
+                if(!$check){
+                    $update_category_meta = new CategoryMeta;
+                    $update_category_meta = $update_category_meta -> update_category_meta($data->id_owned,$check_category->id,$request);
+                }
+                
+            }
+            
+
+        }else{
+            $update_category_meta = new CategoryMeta;
+            $update_category_meta = $update_category_meta -> update_category_meta(null,$check_category->id,$request);
+        }        
         // return redirect()->back();
         return response()->json([
             "state" => "success",

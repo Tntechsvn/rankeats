@@ -64,7 +64,6 @@
               		<tbody>              			
               			@if(count($data_category) > 0)
               			@foreach($data_category as $data)
-              				    				
               			<tr>
               				<td>
               					<div class="icheck-primary">
@@ -72,10 +71,10 @@
               						<label for="check{{$data->id}}"></label>
               					</div>
               				</td>
-              				<td class="float-left">{{$data -> category_name}}</td>
-              				<td style="text-align: left;">@if($data->business_category()->first()){{$data->business_category()->first()->name}}@endif</td>
-              				<td>@if($data->business_category()->first()){{$data->business_category()->first()->location->state}}@endif</td>
-              				<td>@if($data->business_category()->first()){{$data->business_category()->first()->location->city}}@endif</td>
+              				<td class="float-left">{{$data ->category-> category_name}}</td>
+              				<td style="text-align: left;">{{$data -> business_name}}</td>
+              				<td>{{$data -> state}}</td>
+              				<td>{{$data -> city}}</td>
               				<td>{{$data -> created_at}}</td>
               				<td>
               					<a class="btn btn-danger del_business" data-id="{{$data->id }}" onclick="delBusinessFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>

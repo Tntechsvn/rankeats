@@ -42,8 +42,15 @@ p {
 	margin: 0;
 	padding: 0;
 }
+
+.btn:hover, .btn:focus, .btn.focus{
+	border-color: transparent;
+	outline: none;
+    outline-offset: 0;
+}
+
 .navbar-fixed-top, .navbar-fixed-bottom {
-	z-index: 999;
+	z-index: 1050;
 }
 #preview-avatar .dt-close {
 	position: relative;
@@ -2506,6 +2513,49 @@ width: 30% !important;
 .addbusiness:hover {
 	background-color: #0e4f9f;
 }
+#adver-pop .state, #adver-pop .city {
+    width: 100%;
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.icon-input {
+	padding: 6px 14px;
+    background-color: #eee;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-right: 1px solid #ccc;
+}
+.icon-input-text {
+	padding-left: 50px;
+}
+.form-group {
+	position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*responsive*/

@@ -72,10 +72,10 @@
               						<label for="check{{$data->id}}"></label>
               					</div>
               				</td>
-              				<td class="float-left">{{$data -> category_name}}</td>
-              				<td style="text-align: left;">@if($data->business_category()->first()){{$data->business_category()->first()->name}}@endif</td>
-              				<td>@if($data->business_category()->first()){{$data->business_category()->first()->location->state}}@endif</td>
-              				<td>@if($data->business_category()->first()){{$data->business_category()->first()->location->city}}@endif</td>
+              				<td class="float-left">{{$data ->category-> category_name}}</td>
+              				<td style="text-align: left;">{{$data->business_name}}</td>
+              				<td>{{$data->state}}</td>
+              				<td>{{$data->city}}</td>
               				<td>{{$data -> created_at}}</td>
               				<td>
               					<a href="{{route('approvedEat',$data->id)}}"><button class="btn btn-primary btnApprove" title="" data-original-title="Approve this eat?">Approve</button></a>

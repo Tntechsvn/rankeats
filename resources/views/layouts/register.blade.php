@@ -65,7 +65,7 @@
 						<input type="hidden" name="type" value="2"/>
 						<div class="form-group ">
 							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
-								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="number_location" value="1">
+								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="number_location" value="1" readonly>
 								<button class="button-number-location button-number-location-plus" ><i class="fas fa-plus"></i></button>
 								<button class="button-number-location m-r-10 button-number-location-minus" ><i class="fas fa-minus"></i></button>
 							</div>
@@ -215,22 +215,10 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-	function select_city(){
-		$(".choose-state").change(function(){
-			var name_state = $(this).val();
-			var city = $(this).closest('.location-address').find('.choose-city');
-			var _token = "{{ csrf_token() }}";
-	        $.ajax({
-	          url:"{{ route('ajaxCity') }}",
-	          method:"POST",
-	          data:{name_state:name_state, _token:_token},
-	          success:function(data){
-	            city.html(data);
-	          }
-	        });				
-		});
-	}
-	select_city();
+	$(document).ready(function(){
+		select_city();
+	});
+	
 </script>
 	<script type="text/javascript">
 		
@@ -254,62 +242,7 @@
 			}
 		});
 
-		$(document).on('click','.button-number-location-plus',function(e){
-			e.preventDefault();
-			var value = $(this).closest('form').find('.number-location').val();
-			if(value == ""){
-				$(this).closest('form').find('.number-location').val(1);
-			}else{
-				$(this).closest('form').find('.number-location').val(parseInt(value)+1);
-			}
-		});
 
-		$(document).on('click','.button-number-location-minus',function(e){
-			e.preventDefault();
-			var value = $(this).closest('form').find('.number-location').val();
-			if(value == "" || value == 1){
-				$(this).closest('form').find('.number-location').val(1);
-			}else{
-				$(this).closest('form').find('.number-location').val(parseInt(value)-1);
-			}
-			
-		});
-	function change_location(){
-		var form = $('#register_business');
-		var target = form.find('.location');
-		var val = form.find('.number-location').val();
-		target.html('');
-		if(val > 1){
-			var i = 1;
-			for(i = 1; i <= val; i++){
-				var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
-				clone.find('h4').html('Business Location -'+i);
-				clone.find('.choose-zipcode').attr('name','zipcode'+i);
-				clone.find('.choose-state').attr('name','state'+i);
-				clone.find('.choose-city').attr('name','city'+i);
-				clone.find('.choose-address').attr('name','address'+i);
-				target.append(clone);
-			}
-		}else{
-			var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
-			clone.find('h4').html('Business Location');
-			clone.find('.choose-zipcode').attr('name','zipcode1');
-			clone.find('.choose-state').attr('name','state1');
-			clone.find('.choose-city').attr('name','city1');
-			clone.find('.choose-address').attr('name','address1');
-			target.append(clone);
-		}
-		select_city();
-	}
-		$(document).on('change','.number-location',function(){
-			change_location();
-		});
-		$(document).on('click','.button-number-location-minus',function(){
-			change_location();
-		});
-		$(document).on('click','.button-number-location-plus',function(){
-			change_location();
-		});
 
 	</script>
 

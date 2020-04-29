@@ -1040,9 +1040,9 @@ public function reaction_review(Request $request){
         }
     }
         public function searchcity(Request $request){
-            return response()->json([
-                'data' => $request->get('state_id')
-            ]); 
+            // return response()->json([
+            //     'data' => $request->state_id
+            // ]); 
             
         if($request->get('query'))
         {
@@ -1061,8 +1061,6 @@ public function reaction_review(Request $request){
             if(count($data)>0){
                 foreach($data as $row)
                 {
-                    
-
                     $output .= '<li class="city_name form-search-val" data-city="'.$row->city_id.'">'.$row->city_name.'</li>';             
                 }
             }else{

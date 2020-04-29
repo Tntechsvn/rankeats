@@ -415,6 +415,12 @@
 
     $('.state').keyup(function(){ 
       $('#state_searech').val('');
+      $('#city_searech').val('');
+      $('input[name=select-city').val('');
+      $('#cityList').html('');
+      if($(this).val() == ""){
+        $('#stateList').fadeOut();
+      }
       var query = $(this).val();
       if(query != '')
       {
@@ -435,7 +441,7 @@
     $('.city').keyup(function(){ 
       $('#city_searech').val('');
       var query = $(this).val();
-      var state_id = $('#city_searech').val();
+      var state_id = $('#state_searech').val();
       if(query != '')
       {
         var _token = "{{ csrf_token() }}";
@@ -445,7 +451,7 @@
           data:{query:query, _token:_token, state_id},
           success:function(data){
             console.log(data.data);
-            $('#cityListcityList').fadeIn();  
+            $('#cityList').fadeIn();  
             $('#cityList').html(data);
           }
         });
@@ -460,29 +466,15 @@
       $(this).closest('.form-group').find('#stateList').fadeOut();
 
     });
+    $(document).on('click','.city_name',function(){
+      var city_name = $(this).html();
+      var city_id = $(this).data('city');
+      $(this).closest('.form-group').find('input[name=select-city]').val(city_name);
+      $(this).closest('.form-group').find('input[name=city]').val(city_id);
+      $(this).closest('.form-group').find('#cityList').fadeOut();
 
-    // $(document).on('click', '.location_name', function(e){
-    //   $('#city_searech').remove();
-    //   $('#state_searech').remove();
-    //   $('#location_search').val($(this).text());  
-    //   $('#LocationList').fadeOut();
-      
+    });
 
-    //   $('#restaurant_name').val($(this).text());  
-    //   $('#emailList').fadeOut();
-    //   var arr = [];
-    //   var arr2 = [];
-
-    //   arr.push($(this).data('city'));
-    //   var selected_values = arr.join(",");
-
-    //   arr2.push($(this).data('state'));
-    //   var selected_values2 = arr2.join(",");
-
-    //   $( ".input_hidden" ).append( '<input type="hidden" name="city" id="city_searech" value="'+selected_values+'">' );
-    //   $( ".input_hidden" ).append( '<input type="hidden" name="state" id="state_searech" value="'+selected_values2+'">' );
-
-    // });
   });
 </script>
   <script type="text/javascript">
