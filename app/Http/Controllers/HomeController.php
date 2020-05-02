@@ -277,8 +277,9 @@ public function info_management(){
  return view('layouts_profile.info-management',compact('info_business','category'));
 }
 public function advertise(){
+    $ads_active_home = Advertisement::home()->active()->take(3)->get();
     $plan_details = new PlanDetail;
-    return view('layouts.advertise', compact('plan_details'));
+    return view('layouts.advertise', compact('plan_details','ads_active_home'));
 }
 
 public function privacy_policy(){
@@ -853,7 +854,8 @@ public function reaction_review(Request $request){
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
-                                             ->get();
+                                             ->paginate(1);
+                                             // ->get();
          
     
                                            
@@ -1044,32 +1046,40 @@ public function reaction_review(Request $request){
             //     'data' => $request->state_id
             // ]); 
             
-        if($request->get('query'))
-        {
-            $keyword = $request->get('query');
+            if($request->get('query'))
+            {
+                $keyword = $request->get('query');
 
-            $data = Country::select('countries.*','cities.name as city_name','cities.id as city_id')
-            ->leftjoin('states','states.country_id','=','countries.id')            
-            ->leftjoin('cities','cities.state_id','=','states.id')
-            ->where('state_id','=',$request->get('state_id'))
-            ->where('code','=','US')
-            ->where(function($query) use ($keyword){            
-                $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
-            })->get();
+                $data = Country::select('countries.*','cities.name as city_name','cities.id as city_id')
+                ->leftjoin('states','states.country_id','=','countries.id')            
+                ->leftjoin('cities','cities.state_id','=','states.id')
+                ->where('state_id','=',$request->get('state_id'))
+                ->where('code','=','US')
+                ->where(function($query) use ($keyword){            
+                    $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
+                })->get();
 
-            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
-            if(count($data)>0){
-                foreach($data as $row)
-                {
-                    $output .= '<li class="city_name form-search-val" data-city="'.$row->city_id.'">'.$row->city_name.'</li>';             
+                $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+                if(count($data)>0){
+                    foreach($data as $row)
+                    {
+                        $output .= '<li class="city_name form-search-val" data-city="'.$row->city_id.'">'.$row->city_name.'</li>';             
+                    }
+                }else{
+                    $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
                 }
-            }else{
-                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
+                
+                $output .= '</ul>';
+                echo $output;
             }
-            
-            $output .= '</ul>';
-            echo $output;
+
+
         }
-    }
+        public function ajaxPagination(Request $request){
+            dd( $request->toArray());
+            return response()->json([
+                'data' => "hungpro"
+            ]); 
+        }
 
 }

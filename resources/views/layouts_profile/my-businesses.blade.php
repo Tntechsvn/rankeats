@@ -519,8 +519,10 @@
 	$(document).on('click','.addlocation',function(e){
 		e.preventDefault();
 		var number_location = $('#add-location').find('input[name=number_location]').val();
+
 		var clone = $('#main').find('.locationedit.clone').clone().removeClass('clone');
 		$('#add-location').append(clone);
+		
 		select_city();
 		renameLocation();
 		$('#add-location').find('input[name=number_location]').val(parseInt(number_location)+1);

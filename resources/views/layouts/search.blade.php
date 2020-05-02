@@ -275,7 +275,7 @@
 							<span class="text-danger">{!!$errors -> first('business_name')!!}</span>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary cancel_form" data-dismiss="modal">Cancel</button>
 							<button type="submit" class="btn btn-primary submit_addeat_search">Submit</button>
 						</div>
 					</form>
@@ -345,7 +345,7 @@
 
 	</div>
 </div>
-<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
+<div id="review-popup" data-id="" data-cat="{{$category_search->id ?? ''}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
 	<div class="modal-dialog" style="max-width: 850px;width: 100%;">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -403,13 +403,16 @@
 	// 	$('.lightgalleryphoto').lightGallery();
 	// }
 
+	
+
+
 	$(document).on('click','.cancelforvote',function(){
 		// e.preventDefault();
 		var form = $(this).closest('form');
 		$(this).closest('#voteModal').modal('hide');
 		form.find('.starimg').removeClass('checkstar');
 		form.find('.star-1 .starimg').addClass('checkstar');
-		form.reset();
+		form[0].reset();
 		
 	});
 	$("#add_eat_state").change(function(){
@@ -443,10 +446,7 @@
 
 	// show form add eat
 
-	$(document).on('click','.rankerBtn',function(){
-		var modal = $('#eatModal');
-		modal.find('.rankerShow').addClass('show');
-	});
+	
 
 	$(document).on('click','.noverify',function(){
 		$('#voteModal').hide();
@@ -611,35 +611,36 @@
   });
 </script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
 
     $(document).ready(function()
     {
-        $(document).on('click', '.pagination a',function(event)
+        $(document).on('click', '.review-pagination a',function(event)
         {
             event.preventDefault();
-            $(this).closest('.pagination').find('li').removeClass('active');
+            $(this).closest('.review-pagination').find('li').removeClass('active');
             $(this).closest('li').addClass('active');
             var myurl = $(this).attr('href');
             var page=$(this).attr('href').split('page=')[1];
-            var category_id = $(this).attr('href').split('category_id=')[1];
-            var business_id = $(this).attr('href').split('id=')[1];
-            console.log(page);
-            console.log(category_id);
-            console.log(business_id);
-            $.ajax(
-	        {
-	            url: '{{route('ajax.pagination')}}',
-	            type: "post",
-	            
-	        }).done(function(data){
-	            $("#reviewforbusiness").empty().html(data);
-	            location.hash = page;
-	        }).fail(function(jqXHR, ajaxOptions, thrownError){
-	              alert('Không có dữ liệu trả về');
+            var category_id = $(this).closest('#review-popup').data('cat');
+            var business_id = $(this).closest('#review-popup').data('id');
+            $.ajax({
+            	 headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+	          url:"{{ route('ajax.pagination') }}",
+	          method:"POST",
+	          data:{
+	          	category_id: category_id,
+	          	business_id: business_id,
+	          	page: page
+	          },
+	          success:function(res){
+	          	console.log(res.data);
+	          }
 	        });
         });
     });
 
-</script> --}}
+</script>
 @stop

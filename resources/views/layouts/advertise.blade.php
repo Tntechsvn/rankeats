@@ -337,7 +337,7 @@
       <input type="hidden" name="title" value="">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
+          <button type="button" class="close cancel_form" data-dismiss="modal" style="position: absolute;"><i class="fas fa-times-circle"></i></button>
           <h3>play home</h3>
         </div>
         <div class="modal-body">
@@ -371,10 +371,15 @@
           </div>
 
           <div class="form-group">
-            <input type="radio" id="adv-now" name="custom-date" value=""><label for="adv-now">Now</label>
-            <input type="radio" id="adv-date" name="custom-date" value="customdate"><label for="adv-date">Date</label>
-
-            <input class="form-control hidden datepicker" type="text" name="date_active" value="" placeholder="dd/mm/YYYY">
+            <label>Availability: </label>
+            @php
+              $ads = count($ads_active_home);
+            @endphp
+            @if($ads < 3)
+            <input style="padding-left: 12px;" class="form-control " type="text" name="date_active" value="{{date('m-d-Y')}}" placeholder="mm/dd/YYYY" readonly>
+            @else
+            <input style="padding-left: 12px;" class="form-control datepicker" type="text" name="date_active" value="" placeholder="mm/dd/YYYY">
+            @endif
           </div> 
          
 
@@ -478,53 +483,12 @@
   });
 </script>
   <script type="text/javascript">
-
-// $('.state ').change(function(){
-//   var val = $(this).val();
-//   var form = $(this).closest('form');
-//   // var val = 1;
-//   form.find('select.city').html('');
-//   var url = $('input[name=ajaxcitystate]').val();
-//   $.ajax({
-//     headers: {
-//       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     },
-//     type:'POST',
-//     url: url,
-//     data: {
-//       id: val
-//     },
-//     success:function(res){
-//       if(res.success == true){
-//           form.find('select.city').html(res.data);
-//           form.find('select.city').fSelect('reload');
-//       }else{
-        
-//       }
-//     }
-//   });
-// });
-
-    $(document).ready(function(){
-      
       $('.datepicker').datepicker({
-        format: 'dd-mm-yyyy',
-        startDate: '0d',
+        format: 'mm-dd-yyyy',
+        minDate: 0,
         autoclose: true,
         todayHighlight: true,
       });
-
-
-      $(document).on('input','#adv-date',function(){
-        $(this).closest('.form-group').find('.datepicker').removeClass('hidden');
-      });
-      $(document).on('input','#adv-now',function(){
-        $(this).closest('.form-group').find('.datepicker').addClass('hidden');
-        var date = new Date();
-        $(this).val(date);
-      });
-      
-    });
       
   </script>
   @if(session('SweetAlert'))
