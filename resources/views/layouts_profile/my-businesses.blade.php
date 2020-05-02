@@ -136,6 +136,7 @@
 
 							<div id="add-location" class="p-b-20">
 								<button class="btn btn-success addlocation">Add Location</button>
+								<input type="hidden" name="number_location" value="1">
 							</div>
 							<div class="form-group">
 								<i class="fas fa-star"></i> Reviews: <a href="javascript" class="mb-review" data-toggle="modal" data-target="#review-popup">{{$reviews->count()}} reviews </a>
@@ -505,26 +506,32 @@
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
-function renameLocation(){
-	$('#add-location').find('.locationedit').each(function(i){
-		$(this).find('.state_profile').attr('name','state'+(i+2));
-		$(this).find('.city_profile').attr('name','state'+(i+2));
-		$(this).find('.zipcode_profile').attr('name','state'+(i+2));
-		$(this).find('.address').attr('name','address'+(i+2));
-	});
-}
+
+	function renameLocation(){
+		$('#add-location').find('.locationedit').each(function(i){
+			$(this).find('.state_profile').attr('name','state'+(i+2));
+			$(this).find('.city_profile').attr('name','state'+(i+2));
+			$(this).find('.zipcode_profile').attr('name','state'+(i+2));
+			$(this).find('.address').attr('name','address'+(i+2));
+		});
+	}
+
 	$(document).on('click','.addlocation',function(e){
 		e.preventDefault();
+		var number_location = $('#add-location').find('input[name=number_location]').val();
 		var clone = $('#main').find('.locationedit.clone').clone().removeClass('clone');
 		$('#add-location').append(clone);
 		select_city();
 		renameLocation();
+		$('#add-location').find('input[name=number_location]').val(parseInt(number_location)+1);
 	});
 
 	$(document).on('click','.delete_location',function(){
 		$(this).closest('.locationedit').remove();
 		select_city();
 		renameLocation();
+		var number_location = $('#add-location').find('input[name=number_location]').val();
+		$('#add-location').find('input[name=number_location]').val(parseInt(number_location)-1);
 	});
 
 
