@@ -611,17 +611,18 @@
   });
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 
     $(document).ready(function()
     {
         $(document).on('click', '.review-pagination a',function(event)
         {
             event.preventDefault();
+            var target = $(this).closest('#review-popup');
             $(this).closest('.review-pagination').find('li').removeClass('active');
             $(this).closest('li').addClass('active');
             var myurl = $(this).attr('href');
-            var page=$(this).attr('href').split('page=')[1];
+            var page =$(this).attr('href').split('page=')[1];
             var category_id = $(this).closest('#review-popup').data('cat');
             var business_id = $(this).closest('#review-popup').data('id');
             $.ajax({
@@ -636,11 +637,11 @@
 	          	page: page
 	          },
 	          success:function(res){
-	          	console.log(res.data);
+	          	target.find('#reviewforbusiness').html(res.data);
 	          }
 	        });
         });
     });
 
-</script>
+</script> --}}
 @stop

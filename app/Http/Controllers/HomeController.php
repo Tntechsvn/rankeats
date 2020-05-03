@@ -854,8 +854,8 @@ public function reaction_review(Request $request){
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
-                                             ->paginate(1);
-                                             // ->get();
+                                             // ->paginate(1);
+                                             ->get();
          
     
                                            
@@ -1075,11 +1075,25 @@ public function reaction_review(Request $request){
 
 
         }
-        public function ajaxPagination(Request $request){
-            dd( $request->toArray());
-            return response()->json([
-                'data' => "hungpro"
-            ]); 
-        }
+        // public function ajaxPagination(Request $request){
+        //     $business = Business::find($request->business_id);
+        //     $limit = 1;
+        //     $page = $request->page;
+        //     $category_id = $request->category_id;
+        //     $offset = ($page - 1)*$limit;
+        //     $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+        //                                      ->where('type_rate','=',2)
+        //                                      ->where('category_id','=',$category_id)
+        //                                      ->whereNull('users.deleted_at')
+        //                                      ->orderBy('review_ratings.created_at', 'desc')
+        //                                      ->offset($offset)->limit($limit)->get();
+        //     $data = "";
+        //     $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        //     $data .= (string)$view;                                 
+
+        //     return response()->json([
+        //         'data' => $data
+        //     ]); 
+        // }
 
 }
