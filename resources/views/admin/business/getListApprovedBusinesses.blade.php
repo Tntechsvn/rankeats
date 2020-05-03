@@ -81,7 +81,7 @@
                       @endif
                       <td>{{$data -> name}}</td>
                       <td style="width: 15%">{{$data -> email}}</td>                     
-                      <td style="width: 20%">{{$data -> location->address}}</td>  
+                      <td style="width: 20%">@if(count($data -> locations)){{$data -> locations->first()->address}}@endif</td>  
                       <td style="width: 10%">{{$data -> created_at}}</td>
                       <td style="width: 25%">
                         <a class="btn btn-danger del_business" data-id="{{$data->id }}" onclick="delBusinessFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>

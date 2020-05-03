@@ -85,58 +85,119 @@
 									<span class="bg-danger color-palette">{{$errors -> first('day_opening')}}</span>
 								</div>
 							</div>
-							<div class="form-group">
-								<p>Address</p>
-								<div class="input-group" style="width: 100%">
-									<input type="text" class="form-control " name="address" value="{{$info_business->location->address}}">
-									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
-								</div>
+							<!-- location new -->
+							<div id="add-location">
+								@if(count($info_business->locations) == 0)
+									<div class="locationedit location-address">
+										<div class="form-group">
+											<p>Address</p>
+											<div class="input-group" style="width: 100%">
+												<input type="text" class="form-control address" name="address1" value="">
+												<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+											</div>
+										</div>
+										<div class="state_city" style="display: flex;justify-content: space-between;">
+											<div class="form-group" style="width: 30%">
+											
+												<div class="input-group" style="width: 100%">
+													<p>State</p>
+													 	<select class="form-control state_profile"  name="state1"  id="state_profile">
+											             	 <option value="" selected="selected">Select State</option>
+											             	 @foreach($state as $data)
+											             	 <option value="{{$data->name}}">{{$data->name}}</option>
+											             	 @endforeach
+										            	</select>
+										            	<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+												</div>
+											</div>
+											<div class="form-group" style="width: 30%">
+												<div class="input-group" style="width: 100%">
+													<p>City</p>
+													<select class="form-control city_profile" id="city_profile1" name="city1" style="width: 100%;">
+										                <option value="" selected="selected">Select City</option>
+										            </select>
+										            <span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+												</div>
+											</div>
+											<div class="form-group" style="width: 30%">
+												<div class="input-group" style="width: 100%">
+													<p>Zipcode</p>
+													<input type="text" class="form-control zipcode_profile" name="zipcode1" value="">
+													<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								@else
+									<?php $i = 1 ;
+										foreach($info_business->locations as $val){
+									?>
+									
+										
+										<div class="locationedit location-address">
+											<div class="form-group">
+												<p>Address</p>
+												<div class="input-group" style="width: 100%">
+													<input type="text" class="form-control address" name="address{{$i}}" value="{{$val->address}}">
+												</div>
+											</div>
+											<div class="state_city" style="display: flex;justify-content: space-between;">
+												<div class="form-group" style="width: 30%">								
+													<div class="input-group" style="width: 100%">
+														<p>State</p>
+														<select class="form-control choose-state state_profile"  name="state{{$i}}" >
+															<option value="" selected="selected">Select State</option>
+															@foreach($state as $data)
+															<option value="{{$data->name}}" 
+																@if($val->state == $data->name){{'selected'}}@endif
+																>{{$data->name}}
+															</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+												<div class="form-group" style="width: 30%">
+													<div class="input-group" style="width: 100%">
+														<p>City</p>
+														<select class="form-control choose-city city_profile" name="city{{$i}}" style="width: 100%;">
+															<option value="" selected="selected">Select City</option>
+															@if($val->city != null)
+															<option  value="{{$val->city}}" selected >{{$val->city}}</option>
+															@endif					               
+														</select>
+													</div>
+												</div>
+												<div class="form-group" style="width: 30%">
+													<div class="input-group" style="width: 100%">
+														<p>Zipcode</p>
+														<input type="text" class="form-control zipcode_profile" name="zipcode{{$i}}" value="{{$val->code}}">
+														<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+													</div>
+												</div>
+											</div>
+											@if( $i != 1)
+											<a href="javascript:;" title="" class="delete_location">Delete</a>
+											@endif	
+										</div>
+															
+									<?php
+										$i++;
+										}
+									?>
+								@endif								
 							</div>
-							<div class="state_city" style="display: flex;justify-content: space-between;">
-								<div class="form-group" style="width: 30%">
-								
-									<div class="input-group" style="width: 100%">
-										<p>State</p>
-										 	<select class="form-control"  name="state"  id="state_profile">
-								             	 <option value="" selected="selected">Select State</option>
-								             	 @foreach($state as $data)
-								             	 <option value="{{$data->name}}" 
-								             	 	@if($info_business->location_id != null)
-								             	 		@if($info_business->location->state == $data->name){{'selected'}}@endif
-								             	 	@endif"
-								             	 	>{{$data->name}}
-								             	 </option>
-								             	 @endforeach
-							            	</select>
-							            	<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
-									</div>
-								</div>
-								<div class="form-group" style="width: 30%">
-									<div class="input-group" style="width: 100%">
-										<p>City</p>
-										 <select class="form-control" id="city_profile1" name="city" style="width: 100%;">
-							                <option value="" selected="selected">Select City</option>
-							                @if($info_business->location_id != null)
-								                @if($info_business->location->city != null)
-								                <option  value="{{$info_business->location->city}}" selected >{{$info_business->location->city}}</option>
-								                @endif
-							                @endif							               
-							            </select>
-							            <span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
-									</div>
-								</div>
-								<div class="form-group" style="width: 30%">
-									<div class="input-group" style="width: 100%">
-										<p>Zipcode</p>
-										<input type="text" class="form-control " name="zipcode1" value="{{$info_business->location->code}}">
-										<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
-									</div>
-								</div>
-							</div>
-
-							<div id="add-location" class="p-b-20">
+							<div id="add-location-button" class="p-b-20">
 								<button class="btn btn-success addlocation">Add Location</button>
+								@php
+									if(count($info_business->locations) == 0){
+										$number_location = 1;
+									}else{
+										$number_location = count($info_business->locations);
+									}
+								@endphp
+								<input type="hidden" name="number_location" value="{{$number_location}}">
 							</div>
+							
 							<div class="form-group">
 								<i class="fas fa-star"></i> Reviews: <a href="javascript" class="mb-review" data-toggle="modal" data-target="#review-popup">{{$reviews->count()}} reviews </a>
 							</div>
@@ -198,7 +259,6 @@
 								<p>Address</p>
 								<div class="input-group" style="width: 100%">
 									<input type="text" class="form-control address" name="address" value="" data-parsley-require>
-									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
 								</div>
 							</div>
 							<div class="state_city" style="display: flex;justify-content: space-between;">
@@ -206,13 +266,12 @@
 								
 									<div class="input-group" style="width: 100%">
 										<p>State</p>
-										 	<select class="form-control state_profile choose-state"  name="state" >
-								             	 <option value="" selected="selected">Select State</option>
-								             	 @foreach($state as $data)
-								             	 <option value="{{$data->name}}">{{$data->name}}</option>
-								             	 @endforeach
-							            	</select>
-							            	<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+									 	<select class="form-control state_profile choose-state"  name="state" >
+							             	 <option value="" selected="selected">Select State</option>
+							             	 @foreach($state as $data)
+							             	 <option value="{{$data->name}}">{{$data->name}}</option>
+							             	 @endforeach
+						            	</select>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
@@ -221,14 +280,12 @@
 										 <select class="form-control city_profile choose-city" name="city" style="width: 100%;">
 							                <option value="" selected="selected">Select City</option>						               
 							            </select>
-							            <span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 									</div>
 								</div>
 								<div class="form-group" style="width: 30%">
 									<div class="input-group" style="width: 100%">
 										<p>Zipcode</p>
-										<input type="text" class="form-control zipcode_profile " name="zipcode" value="{{$info_business->location->code}}">
-										<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+										<input type="text" class="form-control zipcode_profile " name="zipcode" value="">
 									</div>
 								</div>
 							</div>
@@ -505,26 +562,35 @@
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
-function renameLocation(){
-	$('#add-location').find('.locationedit').each(function(i){
-		$(this).find('.state_profile').attr('name','state'+(i+2));
-		$(this).find('.city_profile').attr('name','state'+(i+2));
-		$(this).find('.zipcode_profile').attr('name','state'+(i+2));
-		$(this).find('.address').attr('name','address'+(i+2));
-	});
-}
+select_city();
+	function renameLocation(){
+		$('#add-location').find('.locationedit').each(function(i){
+			console.log(i);
+			$(this).find('.state_profile').attr('name','state'+(i+1));
+			$(this).find('.city_profile').attr('name','city'+(i+1));
+			$(this).find('.zipcode_profile').attr('name','zipcode'+(i+1));
+			$(this).find('.address').attr('name','address'+(i+1));
+		});
+	}
+
 	$(document).on('click','.addlocation',function(e){
 		e.preventDefault();
+
+		var number_location = $('#add-location-button').find('input[name=number_location]').val();
 		var clone = $('#main').find('.locationedit.clone').clone().removeClass('clone');
 		$('#add-location').append(clone);
+		
 		select_city();
 		renameLocation();
+		$('#add-location-button').find('input[name=number_location]').val(parseInt(number_location)+1);
 	});
 
 	$(document).on('click','.delete_location',function(){
 		$(this).closest('.locationedit').remove();
 		select_city();
 		renameLocation();
+		var number_location = $('#add-location-button').find('input[name=number_location]').val();
+		$('#add-location-button').find('input[name=number_location]').val(parseInt(number_location)-1);
 	});
 
 

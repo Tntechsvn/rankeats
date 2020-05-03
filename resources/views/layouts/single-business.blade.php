@@ -29,8 +29,8 @@
 						<table>
 							<thead>
 								<tr>
-									<th>{{$info_business->location->city}}</th>
-									<th>{{$info_business->location->state}}</th>
+									<th>@if(count($info_business -> locations)){{$info_business -> locations->first()->city}}@endif</th>
+									<th>@if(count($info_business -> locations)){{$info_business -> locations->first()->state}}@endif</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -48,8 +48,8 @@
 							<thead>
 								<tr>
 									<th>Eat Name</th>
-									<th>{{$info_business->location->city}}</th>
-									<th>{{$info_business->location->state}}</th>
+									<th>@if(count($info_business -> locations)){{$info_business -> locations->first()->city}}@endif</th>
+									<th>@if(count($info_business -> locations)){{$info_business -> locations->first()->state}}@endif</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -71,7 +71,7 @@
 					
 					<div class="col-lg-6 map">
 						<div id="map" style="height: 300px;"></div>
-						<div>{{$info_business->location->address}},{{$info_business->location->city}},{{$info_business->location->state}}</div>
+						<div>{{$info_business->AddressCityState}}</div>
 					</div>
 					<div class="col-lg-6 hours">
 						<div>
@@ -234,8 +234,8 @@
 										</span>
 							    	</p>
 							    	<div>
-							    		<label class="m-r-30"><i class="fas fa-city"></i> City: {{$data->business->location->city}} (12)</label>
-							    		<label><i class="fas fa-city"></i> State: {{$data->business->location->state}} (12)</label>
+							    		<label class="m-r-30"><i class="fas fa-city"></i> City: @if(count($data->business -> locations)){{$data->business->locations->first()->city}} (12)@endif</label>
+							    		<label><i class="fas fa-city"></i> State: @if(count($data->business -> locations)){{$data->business->locations->first()->state}} (12)@endif</label>
 							    	</div>
 							    	@if($data->review->ListImageReview)
 								    	@foreach($data->review->ListImageReview as $val)
@@ -739,7 +739,7 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
       
 							
-		var address_business = '{{$info_business->location->address}}'+','+'{{$info_business->location->city}}'+','+'{{$info_business->location->state}}';
+	var address_business = '@if(count($info_business -> locations)){{$info_business->locations->first()->address}}@endif'+','+'@if(count($info_business -> locations)){{$info_business->locations->first()->city}}@endif'+','+'@if(count($info_business -> locations)){{$info_business->locations->first()->state}}@endif';
       var map;
       var service;
       var infowindow;

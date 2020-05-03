@@ -28,7 +28,7 @@
 						<div class="imbx-detail">
 							<div class="pr-dtl">
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
-								<p>{{$data->location->city}}, {{$data->location->state}} {{$data->location->code}}</p>
+								<p>{{$data->locations->first()->city ?? ''}}, {{$data->locations->first()->state ?? ''}} {{$data->locations->first()->code ?? ''}}</p>
 								<p>{{$data->phone}}</p>
 								<ul class="star-rate">
 									@php
@@ -75,14 +75,13 @@
 							<div class="pr-dtl">
 								<span class="top-results stt" data-stt="{{$key+1}}">{{$key+1}}</span>
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}" class="business_name" data-business-name="{{$data->name}}" >{{$data->name}}</a></h4>
-								<p style="padding-right: 50px;">{{$data->address}}</p>
-								{{-- <p>City: {{$data->city}}</p>
-								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p> --}}
-								<p>{{$data->city}}, {{$data->state}} {{$data->location->code}}</p>
+								<p style="padding-right: 50px;">{{$data->locations->first()->address}}</p>
+								
+								<p>{{$data->locations->first()->city}}, {{$data->locations()->first()->state}} {{$data->locations->first()->code}}</p>
 								<p>{{$data->phone}}</p>
 
-								<input type="hidden" name="" class="latitude" data-latitude="{{$data->location->latitude}}">
-								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
+								<input type="hidden" name="" class="latitude" data-latitude="{{$data->locations->first()->latitude}}">
+								<input type="hidden" name="" class="longitude" data-longitude="{{$data->locations->first()->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
 								<ul class="star-rate">
 									@php
@@ -113,9 +112,9 @@
 							</div>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
-				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
+				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->locations->first()->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
+				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->locations->first()->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal-vote" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>
@@ -275,7 +274,7 @@
 							<span class="text-danger">{!!$errors -> first('business_name')!!}</span>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary cancel_form" data-dismiss="modal">Cancel</button>
 							<button type="submit" class="btn btn-primary submit_addeat_search">Submit</button>
 						</div>
 					</form>
@@ -345,7 +344,7 @@
 
 	</div>
 </div>
-<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
+<div id="review-popup" data-id="" data-cat="{{$category_search->id ?? ''}}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true" style="top: 80px;"> 
 	<div class="modal-dialog" style="max-width: 850px;width: 100%;">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -403,13 +402,16 @@
 	// 	$('.lightgalleryphoto').lightGallery();
 	// }
 
+	
+
+
 	$(document).on('click','.cancelforvote',function(){
 		// e.preventDefault();
 		var form = $(this).closest('form');
 		$(this).closest('#voteModal').modal('hide');
 		form.find('.starimg').removeClass('checkstar');
 		form.find('.star-1 .starimg').addClass('checkstar');
-		form.reset();
+		form[0].reset();
 		
 	});
 	$("#add_eat_state").change(function(){
@@ -443,10 +445,7 @@
 
 	// show form add eat
 
-	$(document).on('click','.rankerBtn',function(){
-		var modal = $('#eatModal');
-		modal.find('.rankerShow').addClass('show');
-	});
+	
 
 	$(document).on('click','.noverify',function(){
 		$('#voteModal').hide();
@@ -615,28 +614,30 @@
 
     $(document).ready(function()
     {
-        $(document).on('click', '.pagination a',function(event)
+        $(document).on('click', '.review-pagination a',function(event)
         {
             event.preventDefault();
-            $(this).closest('.pagination').find('li').removeClass('active');
+            var target = $(this).closest('#review-popup');
+            $(this).closest('.review-pagination').find('li').removeClass('active');
             $(this).closest('li').addClass('active');
             var myurl = $(this).attr('href');
-            var page=$(this).attr('href').split('page=')[1];
-            var category_id = $(this).attr('href').split('category_id=')[1];
-            var business_id = $(this).attr('href').split('id=')[1];
-            console.log(page);
-            console.log(category_id);
-            console.log(business_id);
-            $.ajax(
-	        {
-	            url: '{{route('ajax.pagination')}}',
-	            type: "post",
-	            
-	        }).done(function(data){
-	            $("#reviewforbusiness").empty().html(data);
-	            location.hash = page;
-	        }).fail(function(jqXHR, ajaxOptions, thrownError){
-	              alert('Không có dữ liệu trả về');
+            var page =$(this).attr('href').split('page=')[1];
+            var category_id = $(this).closest('#review-popup').data('cat');
+            var business_id = $(this).closest('#review-popup').data('id');
+            $.ajax({
+            	 headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+	          url:"{{ route('ajax.pagination') }}",
+	          method:"POST",
+	          data:{
+	          	category_id: category_id,
+	          	business_id: business_id,
+	          	page: page
+	          },
+	          success:function(res){
+	          	target.find('#reviewforbusiness').html(res.data);
+	          }
 	        });
         });
     });

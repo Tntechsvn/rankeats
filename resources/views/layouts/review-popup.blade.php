@@ -33,9 +33,6 @@
 					</ul>
 					<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 				</div>
-				{{-- <div class="review-address">
-					<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
-				</div> --}}
 
 				<p>{{$data->review->description}}</p>
 				<div class="picture-review">
@@ -56,6 +53,7 @@
 	</div>
 @endforeach
 
+<div class="review-pagination center">
+	{!!$reviews -> appends(request()->except('page')) -> links()!!}
+</div>
 
-
-{{-- {!!$reviews -> appends(request()->except('page')) -> links()!!} --}}

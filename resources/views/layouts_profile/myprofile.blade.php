@@ -55,7 +55,14 @@
 										</div>
 										<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
 										<div class="review-address">
-											<i class="fas fa-map-marker-alt"></i>  {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
+											@php
+												if($data->business->locations){
+													$location = $data->business->locations->first();
+												}else{
+													$location = null;
+												}
+											@endphp 
+											<i class="fas fa-map-marker-alt"></i> @if($location){{$location->address ?? ""}}@endif, @if($location){{$location->city ?? ""}}@endif, @if($location){{$location->state ?? ""}}@endif, @if($location){{$location->country ?? ""}}@endif 
 										</div>
 
 										<p>{{$data->review->description}}</p>
@@ -126,7 +133,7 @@
 											<p>{{$data->business_phone}}</p>
 											<p>{{$data->total_vote}} <i>reviews</i></p>
 										</div>
-										<p>{{$data->location->address}}</p>
+										<p>{{$data->locations->first()->address ?? ''}}</p>
 										@php
 											$str = $data->description; //Tạo chuỗi
 											$str = strip_tags($str);

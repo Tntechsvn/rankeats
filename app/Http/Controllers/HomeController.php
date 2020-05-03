@@ -277,8 +277,9 @@ public function info_management(){
  return view('layouts_profile.info-management',compact('info_business','category'));
 }
 public function advertise(){
+    $ads_active_home = Advertisement::home()->active()->take(3)->get();
     $plan_details = new PlanDetail;
-    return view('layouts.advertise', compact('plan_details'));
+    return view('layouts.advertise', compact('plan_details','ads_active_home'));
 }
 
 public function privacy_policy(){
@@ -400,7 +401,7 @@ public function ajax_bookmark(Request $request){
 public function ajax_unvoted(Request $request){
     $user = Auth::user();
     $data_business = Business::find($request->business_id);
-    $city_id = $data_business->location->IdCity;
+    $city_id = $data_business->getIdCity();
     /*delete vote business*/
     $delete_vote = Vote::select('*')
     ->where('user_id','=',$user->id)
@@ -418,7 +419,7 @@ public function vote_ajax(Request $request){
     $user = Auth::user();
     
     $data_business = Business::find($request->business);
-    $city_id = $data_business->location->IdCity;
+    $city_id = $data_business->getIdCity();
     $cate_id = $request -> category_id;
 
     /**/
@@ -433,8 +434,8 @@ public function vote_ajax(Request $request){
             $new_vote -> user_id = $user->id;
             $new_vote -> business_id = $data_business->id;
             $new_vote -> category_id = $cate_id;
-            if($data_business->location->IdState){
-                $new_vote -> state_id = $data_business->location->IdState;
+            if($data_business->getIdState()){
+                $new_vote -> state_id = $data_business->getIdState();
             }else{
                 $new_vote -> state_id = null;
             }
@@ -470,8 +471,8 @@ public function vote_ajax(Request $request){
             $new_vote -> user_id = $user->id;
             $new_vote -> business_id = $data_business->id;
             $new_vote -> category_id = $cate_id;
-            if($data_business->location->IdState){
-                $new_vote -> state_id = $data_business->location->IdState;
+            if($data_business->getIdState()){
+                $new_vote -> state_id = $data_business->getIdState();
             }else{
                 $new_vote -> state_id = null;
             }
@@ -533,7 +534,7 @@ public function voteReviewEat_ajax(Request $request){
     ->where('type_vote','=',2)
     ->first();
     $data_business = Business::find($request->business);
-    $city_id = $data_business->location->IdCity;
+    $city_id = $data_business->getIdCity();
 
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
@@ -543,8 +544,8 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
                 $new_vote -> category_id = $cate_id;
-                if($data_business->location->IdState){
-                    $new_vote -> state_id = $data_business->location->IdState;
+                if($data_business->getIdState()){
+                    $new_vote -> state_id = $data_business->getIdState();
                 }else{
                     $new_vote -> state_id = null;
                 }
@@ -616,7 +617,7 @@ public function voteReviewEat_ajax(Request $request){
                         $total_review -> business_id = $request -> business;
                         $total_review -> category_id = $id_cate->cate_id;
                         $total_review -> city = $city_id;
-                        $total_review -> state = $data_business->location->IdState;
+                        $total_review -> state = $data_business->getIdState();
                         $total_review -> type_rate = 2;
                         $total_review -> total_rate = $rate;
                         $total_review -> total_vote = $vote;
@@ -648,8 +649,8 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
                 $new_vote -> category_id = $cate_id;
-                if($data_business->location->IdState){
-                    $new_vote -> state_id = $data_business->location->IdState;
+                if($data_business->getIdState()){
+                    $new_vote -> state_id = $data_business->getIdState();
                 }else{
                     $new_vote -> state_id = null;
                 }
@@ -719,7 +720,7 @@ public function voteReviewEat_ajax(Request $request){
                             $total_review -> business_id = $request -> business;
                             $total_review -> category_id = $id_cate->cate_id;
                             $total_review -> city = $city_id;
-                            $total_review -> state = $data_business->location->IdState;
+                            $total_review -> state = $data_business->getIdState();
                             $total_review -> type_rate = 2;
                             $total_review -> total_rate = $rate;
                             $total_review -> total_vote = $vote;
@@ -853,6 +854,7 @@ public function reaction_review(Request $request){
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
+                                             // ->paginate(1);
                                              ->get();
          
     
@@ -1044,32 +1046,54 @@ public function reaction_review(Request $request){
             //     'data' => $request->state_id
             // ]); 
             
-        if($request->get('query'))
-        {
-            $keyword = $request->get('query');
+            if($request->get('query'))
+            {
+                $keyword = $request->get('query');
 
-            $data = Country::select('countries.*','cities.name as city_name','cities.id as city_id')
-            ->leftjoin('states','states.country_id','=','countries.id')            
-            ->leftjoin('cities','cities.state_id','=','states.id')
-            ->where('state_id','=',$request->get('state_id'))
-            ->where('code','=','US')
-            ->where(function($query) use ($keyword){            
-                $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
-            })->get();
+                $data = Country::select('countries.*','cities.name as city_name','cities.id as city_id')
+                ->leftjoin('states','states.country_id','=','countries.id')            
+                ->leftjoin('cities','cities.state_id','=','states.id')
+                ->where('state_id','=',$request->get('state_id'))
+                ->where('code','=','US')
+                ->where(function($query) use ($keyword){            
+                    $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
+                })->get();
 
-            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
-            if(count($data)>0){
-                foreach($data as $row)
-                {
-                    $output .= '<li class="city_name form-search-val" data-city="'.$row->city_id.'">'.$row->city_name.'</li>';             
+                $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+                if(count($data)>0){
+                    foreach($data as $row)
+                    {
+                        $output .= '<li class="city_name form-search-val" data-city="'.$row->city_id.'">'.$row->city_name.'</li>';             
+                    }
+                }else{
+                    $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
                 }
-            }else{
-                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
+                
+                $output .= '</ul>';
+                echo $output;
             }
-            
-            $output .= '</ul>';
-            echo $output;
+
+
         }
-    }
+        // public function ajaxPagination(Request $request){
+        //     $business = Business::find($request->business_id);
+        //     $limit = 1;
+        //     $page = $request->page;
+        //     $category_id = $request->category_id;
+        //     $offset = ($page - 1)*$limit;
+        //     $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+        //                                      ->where('type_rate','=',2)
+        //                                      ->where('category_id','=',$category_id)
+        //                                      ->whereNull('users.deleted_at')
+        //                                      ->orderBy('review_ratings.created_at', 'desc')
+        //                                      ->offset($offset)->limit($limit)->get();
+        //     $data = "";
+        //     $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+        //     $data .= (string)$view;                                 
+
+        //     return response()->json([
+        //         'data' => $data
+        //     ]); 
+        // }
 
 }

@@ -25,6 +25,11 @@ function after_ajax() {
   $('body').find('.loading').remove();
 }
 
+$(document).on('click','.cancel_form',function(e){
+    var form = $(this).closest('form');
+    form.find('#preview-images').html('');
+    form[0].reset();
+  });
 
 window.select_city = function(){
   $(".choose-state").change(function(){
@@ -377,6 +382,7 @@ $(document).on('click','.review-popup',function(){
     },
     success:function(res){
       target.find('.modal-header h3 span').html(name);
+      target.attr('data-id',id)
       if(res.success == true){
           after_ajax();
           target.modal('show');
