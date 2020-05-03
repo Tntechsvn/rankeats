@@ -854,7 +854,6 @@ public function reaction_review(Request $request){
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
-                                             // ->paginate(1);
                                              ->get();
          
     
