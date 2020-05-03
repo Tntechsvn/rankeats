@@ -59,7 +59,7 @@
 								<p>{{$data->business_phone}}</p>
 								<p>{{$data->total_vote}} <i>reviews</i></p>
 							</div>
-							<p>{{$data->location->address}}</p>
+							<p>{{$data->locations->first()->address ?? ''}}</p>
 							@php
 								$str = $data->description; //Tạo chuỗi
 								$str = strip_tags($str);

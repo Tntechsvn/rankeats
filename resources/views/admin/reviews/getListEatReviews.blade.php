@@ -66,8 +66,8 @@
                       <td><a href="{{route('user.profile',['id'=> $data ->user_id])}}">{{$data -> name_user}}</a></td>
                       <td>{{$data -> category_name}}</td>
                       <td><a href="{{$data -> business->permalink()}}">{{$data -> businesses_name}}</a></td>                     
-                      <td>{{$data -> business->location->state}}</td> 
-                      <td>{{$data -> business->location->city}}</td> 
+                      <td>{{$data -> business->locations->first()->state ?? ''}}</td> 
+                      <td>{{$data -> business->locations->first()->city ?? ''}}</td> 
                       <td>{{$data -> description}}</td>
                       <td>
                        <a class="btn btn-danger del_lang" data-id="{{$data->review_id }}" onclick="delLangFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>

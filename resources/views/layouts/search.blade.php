@@ -28,7 +28,7 @@
 						<div class="imbx-detail">
 							<div class="pr-dtl">
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
-								<p>{{$data->location->city}}, {{$data->location->state}} {{$data->location->code}}</p>
+								<p>{{$data->locations->first()->city ?? ''}}, {{$data->locations->first()->state ?? ''}} {{$data->locations->first()->code ?? ''}}</p>
 								<p>{{$data->phone}}</p>
 								<ul class="star-rate">
 									@php
@@ -75,14 +75,13 @@
 							<div class="pr-dtl">
 								<span class="top-results stt" data-stt="{{$key+1}}">{{$key+1}}</span>
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}" class="business_name" data-business-name="{{$data->name}}" >{{$data->name}}</a></h4>
-								<p style="padding-right: 50px;">{{$data->address}}</p>
-								{{-- <p>City: {{$data->city}}</p>
-								<p>State: {{$data->state}} - Zip: {{$data->location->code}}</p> --}}
-								<p>{{$data->city}}, {{$data->state}} {{$data->location->code}}</p>
+								<p style="padding-right: 50px;">{{$data->locations->first()->address}}</p>
+								
+								<p>{{$data->locations->first()->city}}, {{$data->locations()->first()->state}} {{$data->locations->first()->code}}</p>
 								<p>{{$data->phone}}</p>
 
-								<input type="hidden" name="" class="latitude" data-latitude="{{$data->location->latitude}}">
-								<input type="hidden" name="" class="longitude" data-longitude="{{$data->location->longitude}}">
+								<input type="hidden" name="" class="latitude" data-latitude="{{$data->locations->first()->latitude}}">
+								<input type="hidden" name="" class="longitude" data-longitude="{{$data->locations->first()->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
 								<ul class="star-rate">
 									@php
@@ -113,9 +112,9 @@
 							</div>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
-				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->location->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
+				    			<a href="javascript:;"  class="btn vote_now vote vote-{{$data->id}}-{{$data->locations->first()->IdCity}}"  data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">Vote</a>
 				    			@else
-				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->location->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
+				    			<a href="javascript:;" class="btn unvote vote vote-{{$data->id}}-{{$data->locations->first()->IdCity}}" data-id="{{$data->id}}" data-name="{{$data->name}}" data-category_id="{{$category_search->id}}">My Vote</a>
 				    			@endif
 			    			@else
 			    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal-vote" class="btn btn-warning vote" style="background-color: #f0ad4e;">Vote</a>

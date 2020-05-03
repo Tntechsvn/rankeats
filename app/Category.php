@@ -41,7 +41,11 @@ class Category extends Model
     public function getRankEatStateAttribute(){
         $business = Business::findOrfail($this->getOriginal('pivot_business_id'));
         $id_business = $business -> id;
-        $state_id = $business->location->IdState;
+        if(count($business -> locations)){
+            $state_id = $business->locations->first()->IdState;
+        }else{
+            $state_id = null;
+        }
 
         $get_all_vote_business_state = Vote::select('votes.*',  DB::raw('COUNT(votes.category_id) AS "So luong"'))
         ->where('type_vote','=',2)
@@ -63,7 +67,12 @@ class Category extends Model
     public function getRankEatCityAttribute(){
         $business = Business::findOrfail($this->getOriginal('pivot_business_id'));
         $id_business = $business -> id;
-        $city_id = $business->location->IdCity;
+        if(count($business -> locations)){
+            $city_id = $business->locations->first()->IdCity;
+        }else{
+            $city_id = null;
+        }
+        
 
         $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.category_id) AS "So luong"'))
         ->where('type_vote','=',2)

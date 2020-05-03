@@ -50,7 +50,7 @@
 										<span class="review-date" style="padding-left: 10px;">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 									</div>
 									<p><i class="fas fa-utensils"></i>{{$data->business->business_category->pluck('category_name')->implode(', ')}}</p>
-									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} </p>
+									<p><i class="fas fa-map-marker-alt"></i>{{$data->business->locations->first()->address ?? ""}}, {{$data->business->locations->first()->city ?? ""}}, {{$data->business->locations->first()->state ?? ""}}, {{$data->business->locations->first()->country ?? ""}} </p>
 									@if($data->review->ListImageReview)
 										<ul class="lightgalleryphoto col-30">
 											@foreach($data->review->ListImageReview as $val)

@@ -26,6 +26,10 @@ class Business extends Model
     public function location(){
         return $this -> belongsTo('App\Location', 'location_id', 'id');
     }
+    public function locations(){
+        return $this -> hasMany('App\Location', 'id_owned', 'id');
+    }
+
     public function review(){
         return $this -> hasMany('App\Review', 'business_id', 'id');
     }
@@ -49,7 +53,7 @@ class Business extends Model
     public function scopeJoinLocation($query)
     {
         return $query->join('locations', function($join){
-            $join->on('businesses.location_id','=','locations.id');
+            $join->on('businesses.id','=','locations.id_owned');
         });
     }
     /*join advertisements*/
@@ -168,6 +172,41 @@ class Business extends Model
         	$this -> total_vote = 0;
         }
     	if($this -> save()) {
+            /*update location*/
+            if($request -> number_location){
+                $del_location = Location::where('id_owned','=',$this->id)->delete();
+                for($i= 1; $i <= $request ->number_location;$i++){
+                    $address = 'address'.$i;
+                    $city = 'city'.$i;
+                    $state  = 'state'.$i;
+                    $zipcode = 'zipcode'.$i;
+
+                    $Location_business = new Location;
+
+                    $address_business =  $request[$address].','.$request[$city].','.$request[$state];
+                    $ShareController = new ShareController; 
+                    $location = $ShareController->geocode($address_business);
+                    if($location){
+                        $Location_business -> latitude = $location[0];
+                        $Location_business -> longitude = $location[1];
+                    }
+
+                    $Location_business -> address = $request[$address];
+                    $Location_business -> state = $request[$state];
+
+                    if( $request -> country){
+                        $Location_business -> country = $request -> country;
+                    }else{
+                        $Location_business -> country = 'United States';
+                    }
+
+                    $Location_business -> code = $request[$zipcode];
+                    $Location_business -> city = $request[$city];
+                    $Location_business -> id_owned = $this->id;
+                    $Location_business -> save();
+                }
+            }
+            /*end update location*/
     		// business_category
 			//$this->business_category()->sync($request-> category_id);
             /*update date-time*/
@@ -224,7 +263,11 @@ class Business extends Model
     /*rank business for state*/
     public function getRankBusinessStateAttribute(){
         $id_business = $this -> id;
-        $state_id = $this->location->IdState;
+        if(count($this -> locations)){
+            $state_id = $this->locations->first()->IdState;
+        }else{
+            $state_id = null;
+        }
 
         $get_all_vote_business_state = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
         ->where('state_id','=',$state_id)
@@ -243,7 +286,11 @@ class Business extends Model
     /*rank business for city*/
     public function getRankBusinessCityAttribute(){
         $id_business = $this -> id;
-        $city_id = $this->location->IdCity;
+         if(count($this -> locations)){
+            $city_id = $this->locations->first()->IdCity;
+        }else{
+            $city_id = null;
+        }
 
         $get_all_vote_business_city = Vote::select('votes.*',  DB::raw('COUNT(votes.business_id) AS "So luong"'))
         ->where('city_id','=',$city_id)
@@ -265,6 +312,28 @@ class Business extends Model
             return true;
         }else{
             return false;
+        }
+    }
+     public function getAddressCityStateAttribute(){
+        $data = $this -> locations->first();
+        if(count($this -> locations)){
+            return $data->address.','.$data->city.','.$data->state;
+        }
+       
+        return "";
+    }
+    public function getIdCity(){
+        if(count($this -> locations)){
+            return $city_id = $this->locations->first()->IdCity;
+        }else{
+            return $city_id = null;
+        }
+    }
+    public function getIdState(){
+        if(count($this -> locations)){
+            return $city_id = $this->locations->first()->IdState;
+        }else{
+            return $city_id = null;
         }
     }
 

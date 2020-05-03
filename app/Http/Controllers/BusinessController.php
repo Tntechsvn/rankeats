@@ -138,10 +138,6 @@ class BusinessController extends Controller
             'email' => 'email|unique:businesses,email,'.$business->id,
             'phone' =>'required',
             'day_opening' => 'required',
-            'address' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'zipcode' => 'required',
         ]);
         $response = $business -> update_business($request,$user);
         $data = $response->getData();
