@@ -400,7 +400,7 @@ public function ajax_bookmark(Request $request){
 public function ajax_unvoted(Request $request){
     $user = Auth::user();
     $data_business = Business::find($request->business_id);
-    $city_id = $data_business->location->IdCity;
+    $city_id = $data_business->getIdCity();
     /*delete vote business*/
     $delete_vote = Vote::select('*')
     ->where('user_id','=',$user->id)
@@ -418,7 +418,7 @@ public function vote_ajax(Request $request){
     $user = Auth::user();
     
     $data_business = Business::find($request->business);
-    $city_id = $data_business->location->IdCity;
+    $city_id = $data_business->getIdCity();
     $cate_id = $request -> category_id;
 
     /**/
@@ -433,8 +433,8 @@ public function vote_ajax(Request $request){
             $new_vote -> user_id = $user->id;
             $new_vote -> business_id = $data_business->id;
             $new_vote -> category_id = $cate_id;
-            if($data_business->location->IdState){
-                $new_vote -> state_id = $data_business->location->IdState;
+            if($data_business->getIdState()){
+                $new_vote -> state_id = $data_business->getIdState();
             }else{
                 $new_vote -> state_id = null;
             }
@@ -470,8 +470,8 @@ public function vote_ajax(Request $request){
             $new_vote -> user_id = $user->id;
             $new_vote -> business_id = $data_business->id;
             $new_vote -> category_id = $cate_id;
-            if($data_business->location->IdState){
-                $new_vote -> state_id = $data_business->location->IdState;
+            if($data_business->getIdState()){
+                $new_vote -> state_id = $data_business->getIdState();
             }else{
                 $new_vote -> state_id = null;
             }
@@ -533,7 +533,7 @@ public function voteReviewEat_ajax(Request $request){
     ->where('type_vote','=',2)
     ->first();
     $data_business = Business::find($request->business);
-    $city_id = $data_business->location->IdCity;
+    $city_id = $data_business->getIdCity();
 
         $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
@@ -543,8 +543,8 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
                 $new_vote -> category_id = $cate_id;
-                if($data_business->location->IdState){
-                    $new_vote -> state_id = $data_business->location->IdState;
+                if($data_business->getIdState()){
+                    $new_vote -> state_id = $data_business->getIdState();
                 }else{
                     $new_vote -> state_id = null;
                 }
@@ -616,7 +616,7 @@ public function voteReviewEat_ajax(Request $request){
                         $total_review -> business_id = $request -> business;
                         $total_review -> category_id = $id_cate->cate_id;
                         $total_review -> city = $city_id;
-                        $total_review -> state = $data_business->location->IdState;
+                        $total_review -> state = $data_business->getIdState();
                         $total_review -> type_rate = 2;
                         $total_review -> total_rate = $rate;
                         $total_review -> total_vote = $vote;
@@ -648,8 +648,8 @@ public function voteReviewEat_ajax(Request $request){
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
                 $new_vote -> category_id = $cate_id;
-                if($data_business->location->IdState){
-                    $new_vote -> state_id = $data_business->location->IdState;
+                if($data_business->getIdState()){
+                    $new_vote -> state_id = $data_business->getIdState();
                 }else{
                     $new_vote -> state_id = null;
                 }
@@ -719,7 +719,7 @@ public function voteReviewEat_ajax(Request $request){
                             $total_review -> business_id = $request -> business;
                             $total_review -> category_id = $id_cate->cate_id;
                             $total_review -> city = $city_id;
-                            $total_review -> state = $data_business->location->IdState;
+                            $total_review -> state = $data_business->getIdState();
                             $total_review -> type_rate = 2;
                             $total_review -> total_rate = $rate;
                             $total_review -> total_vote = $vote;

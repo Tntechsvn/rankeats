@@ -135,7 +135,14 @@ class ReviewsController extends Controller
         $response = $reviews_business -> update_review($request,$user_id);
         $data = $response->getData();
         $data_business = Business::find($request->business_id);
-        $city_id = $data_business->location->IdCity;
+
+        if(count($data_business -> locations)){
+            $city_id = $data_business->locations->first()->IdCity;
+            $state_id = $data_business->locations->first()->IdState;
+        }else{
+            $city_id = null;
+        }
+        //$city_id = $data_business->location->IdCity;
 
         /*create review eat*/
         if($request -> category_id){
@@ -195,7 +202,7 @@ class ReviewsController extends Controller
                         $total_review -> business_id = $request -> business_id;
                         $total_review -> category_id = $id_cate->cate_id;
                         $total_review -> city = $city_id;
-                        $total_review -> state = $data_business->location->IdState;
+                        $total_review -> state = $state_id;
                         $total_review -> type_rate = 2;
                         $total_review -> total_rate = $rate;
                         $total_review -> total_vote = $vote;
