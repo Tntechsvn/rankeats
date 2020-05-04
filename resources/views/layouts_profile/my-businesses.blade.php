@@ -358,7 +358,7 @@
 								</div>
 								<div class="info">
 									<div class="content-right p-b-20">
-										<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a> {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}</h4>
+										<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a> {{$data->business->locations->first()->city ?? ""}}, {{$data->business->locations->first()->state ?? ""}}</h4>
 									
 										<div class="star-view clear p-b-10">
 											<ul class="">

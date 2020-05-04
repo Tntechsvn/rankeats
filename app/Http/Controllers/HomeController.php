@@ -314,7 +314,7 @@ public function bookmark(){
 
 public function my_eat(){
     $user = Auth::user();
-    $info_business = Auth::user()->business()->first();
+    $info_business = Auth::user()->business()->get();
     return view('layouts_profile.my-eat',compact('info_business','user'));
 }
 /*create_advertise*/
