@@ -354,7 +354,7 @@
 	<div class="modal-content">
 	  <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" style="position: absolute;"><i class="far fa-times-circle"></i></button>
-		<h3 class="modal-title bold">EAT Rank / Reviews</h3>
+		<h3 class="modal-title bold center">EAT Rank / Reviews</h3>
 	  </div>
 	  <div class="modal-body">
 		<form class="" action="" method="post" data-parsley-validate>
@@ -362,27 +362,33 @@
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="form-group">
 				Choose eat
-				<select class="test choose_dish" multiple="multiple"  name="Category_type[]" data-parsley-required>
+				<select class="test choose_dish" multiple="multiple" disabled="disabled" name="Category_type[]" data-parsley-required>
 					<optgroup>
 						@foreach($info_business->business_category as $menu)
-							<option value="{{$menu->id}}">{{$menu->category_name}}</option>
+							<option value="{{$menu->id}}" data-name="{{$menu->category_name}}">{{$menu->category_name}}</option>
 						@endforeach
 					</optgroup>
 				</select>
 				<span class="errors e-dish"></span>
 			</div>
-			<div class="tap-pane">
-				<ul class="nav nav-tabs" style="border-bottom: none;">
-					<li><a href="#vote" data-toggle="tab" class="btn active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a></li>
-					<li><a href="#write" data-toggle="tab" class="btn write-tab"><i class="fas fa-star"></i> Write Reviews</a></li>
-				</ul>
-			</div>
-			<div class="tab-content" style="overflow: unset;">
-			    <div class="tab-pane active" id="vote">
-			    	<p>Which area(s) dose "business name" have the best "Eat item"?</p>
+			<div class="" style="overflow: unset;">
+				{{-- @if(Auth::check())
+					@php
+					$hidden = "hidden";
+					$w_hide = "";
+	    				if(Auth::user()->check_vote_eat($info_business->id)){
+	    					$hidden = "";
+	    					$w_hide = "hidden";
+	    				}
+
+	    			@endphp
+    			@endif --}}
+			    <div class="active {{-- {{$hidden}} --}}" id="vote">
+		    		<a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a>
+			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	
 			    	<div class="form-group">
-			    		State
+			    		<label>State</label>
 		    			<select class="test state"  name="state" data-parsley-required>
 			             	 <option value="" selected="selected">Select State</option>
 			              	@foreach($state as $data)
@@ -392,7 +398,7 @@
 		            	<span class="errors e-state"></span>
 			    	</div>
 			    	<div class="form-group">
-			    		City
+			    		<label>City</label>
 		    			<select class="city test" name="city" data-parsley-required>
 			                <option value="" selected="selected">Select City</option>
 			            </select>
@@ -402,11 +408,13 @@
 			    	<div>
 				    	<button class="btn btn-primary done-vote" type="submit">Done</button>
 				    </div>
+			    	
 
 				</div>
-			    <div class="tab-pane" id="write">
+			    <div class="{{-- {{$w_hide}} --}}" id="write">
+			    	<a href="javascript:;" class="btn btn-primary active write-tab"><i style="color: #fff" class="fas fa-star"></i> Write Reviews</a>
 			    	<div class="popup-star" style="text-align: center;">
-						<label class="customstar star-1">							
+						<label class="customstar star-1"> 							
 							<input type="radio" name="rate" value="1" checked="checked">
 							<span class="starimg checkstar" ></span>
 						</label>
@@ -441,11 +449,11 @@
 						</label>
 					</div>
 					<div class="form-group reviewBox">
-						<textarea class="form-control" placeholder="Write Your Review" name="description" style="height: 150px;" data-parsley-required></textarea>
+						<textarea class="form-control" placeholder="Enter Your Review" name="description" style="height: 150px;" data-parsley-required></textarea>
 					</div>
 
 				    <div>
-				    	<button class=" btn btn-default" data-dismiss="modal">Cancel</button>
+				    	<button class=" btn btn-default cancel_form_review" >Cancel</button>
 				    	<button class="btn btn-primary submit_votereview" type="submit" name="submit">Submit</button>
 				    </div>
 				</div>
@@ -597,12 +605,13 @@
 	<script type="text/javascript">
 
 		$('.test').fSelect();
+
 		$('.state ').change(function(){
 		  var val = $(this).val();
 		  var form = $(this).closest('form');
 		  // var val = 1;
 		  console.log(val);
-		  form.find('select.city').html('');
+		  
 		  var url = $('input[name=ajaxcitystate]').val();
 		  $.ajax({
 		    headers: {
@@ -614,11 +623,13 @@
 		      name_state: val
 		    },
 		    success:function(res){
+
 		          form.find('select.city').html(res);
-		          form.find('select.city').fSelect('reload');
+		          form.find('select.city').fSelect('destroy').fSelect('create');
 		    }
 		  });
 		});
+
 		$(document).on('click','.cancelforvote',function(){
 		// e.preventDefault();
 			var form = $(this).closest('form');
@@ -682,21 +693,49 @@
 				var choose_state = form.find('.state').val();
 				var choose_city = form.find('.city').val();
 				if(choose_dish == null){
-					form.find('.e-dish').html("error");
+					form.find('.e-dish').html("* This field is required");
 					return false;
 				}
 				if(choose_state == ""){
-					form.find('.e-state').html("error");
+					form.find('.e-state').html("* This field is required");
 					return false;
 				}
 				if(choose_city == ""){
-					form.find('.e-city').html("error");
+					form.find('.e-city').html("* This field is required");
 					return false;
 				}
-				form.find('.vote-tab').removeClass('active');
-				form.find('#vote').removeClass('active');
-				form.find('.write-tab').addClass('active');
-				form.find('#write').addClass('active');
+				var url = "{{route('voteReviewEat_ajax')}}";
+				var id_business = form.find('input[name=business]').val();
+				$.ajax({
+					headers: {
+			          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			        },
+			        type:'POST',
+			        url: url,
+			        data: {
+			        	Category_type: choose_dish,
+			        	business: id_business
+			        },
+
+			        success:function(res){
+			        	if(res.success == true){
+			        		if(res.book==true){
+			        			$this.find('.fa-bookmark').attr('data-prefix','fas');
+			        		}else{
+			        			$this.find('.fa-bookmark').attr('data-prefix','far');
+			        		}
+			        	}else{
+			        		swal({
+					          title: res.message,
+					          timer: 2000
+					        });
+			        	}
+			        }
+				});
+				form.find('#vote').removeClass('active').addClass('hidden');
+				form.find('#write').addClass('active').removeClass('hidden');
+				form.find('.choose_dish').fSelect('destroy').fSelect('create');
+				form.find('.choose_dish').prop('disabled','disabled');
 			});
 
 
@@ -831,5 +870,69 @@
 			$('#vote_review').modal('show');
 			$('.test').fSelect();
 		});
+
+		$(document).on('change','.choose_dish',function(e){
+			var selected=[];
+			$(this).find(":selected").each(function(){
+			     selected[$(this).val()]=$(this).text()+", ";
+		    });
+			$('#show_eat_choosed').html(selected);
+		});
+
+		// $(document).on('click','.cancel_form_review',function(e){
+		// 	e.preventDefault();
+		// 	var form = $(this).closest('form');
+		// 	form.find('.test').fSelect('destroy').fSelect('create');
+		// 	form[0].reset();
+		// });
+
+
+		$(document).on('click','.submit_votereview',function(e){
+		  e.preventDefault();
+		  var form = $(this).closest('form');
+		  // var parsley = form.parsley();
+		  // if(parsley.isValid() != true){
+		  //     parsley.validate();
+		  //     return false;
+		  // }
+		  var target = $('#eatrank');
+		  var modal = $('#vote_review');
+		  var url = "{{route('ReviewEat_ajax')}}";
+		  var business = form.find('input[name=business]').val();
+		  var Category_type = form.find('.choose_dish').val();
+		  var description = form.find('textarea[name=description]').val();
+		  var image = form.find('input[name=image]').val();
+		  var rate = form.find('input[name=rate]').val();
+		  $.ajax({
+		    headers: {
+		      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    },
+		    type:'POST',
+		    url: url,
+		    data: {
+		    	business: business,
+		    	Category_type: Category_type,
+		    	description: description,
+		    	image: image,
+		    	rate: rate
+		    },
+		    success:function(res){
+		      if(res.success == true){
+		          $('#eatrank').removeClass('nothasvote');
+		          modal.modal('hide');
+		          target.html(res.data);
+		          swal({
+		            title: res.message,
+		            timer: 2000
+		          });
+		      }else{
+		        swal({
+		          title: res.message,
+		          timer: 2000
+		        });
+		      }
+		    }
+		  });
+		})
 	</script>
 @stop

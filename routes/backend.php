@@ -48,6 +48,10 @@ Route::post('/ajaxCity', [
 	'as' => 'ajaxCity',
 	'uses' => 'HomeController@ajaxCity'
 ]);
+Route::post('/review-eats', [
+	'as' => 'ReviewEat_ajax',
+	'uses' => 'HomeController@ReviewEat_ajax'
+]);
 Route::post('/vote-review-eats', [
 	'as' => 'voteReviewEat_ajax',
 	'uses' => 'HomeController@voteReviewEat_ajax'

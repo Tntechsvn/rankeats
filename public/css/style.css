@@ -2535,7 +2535,10 @@ width: 30% !important;
 	position: relative;
 }
 
-
+.errors {
+	font-size: 11px;
+	color: red;
+}
 
 
 
