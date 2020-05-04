@@ -44,8 +44,8 @@
 								<tr>
 									<td><a href="{{$data->business->permalink()}}">{{$data->business->name ?? ''}}</a></td>
 									<td>{{$data->created_at}}</td>
-									<td>{{$data->business->location->city ?? ''}}</td>
-									<td>{{$data->business->location->state ?? ''}}</td>
+									<td>{{$data->business->locations->first()->city ?? ''}}</td>
+									<td>{{$data->business->locations->first()->state ?? ''}}</td>
 									<td width="10%">{{$data->business->RankBusinessCity ?? ''}}</td>
 									<td width="10%">{{$data->business->RankBusinessState ?? ''}}</td>
 								</tr>

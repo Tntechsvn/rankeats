@@ -121,6 +121,9 @@ class HomeController extends Controller{
             $text_city_state = $state_search;
         }
         $category_search = Category::where('category_name','=',$keyword)->first();
+        if(!$category_search){
+            return redirect()->back();
+        }
 
         /*fix search*/
         $data_business_sponsored =  Business::select('categories.category_name','categories.status','businesses_categories.business_id','businesses.*','advertisements.status as status_adv','states.name as name_state','cities.name as name_city','advertisements.deleted_at as adv_deleted_at','advertisements.active_date','advertisements.active_date','advertisements.expiration_date', DB::raw(' total_rates.total_rate/total_rates.total_vote as total_rate_eat '))
