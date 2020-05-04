@@ -127,6 +127,10 @@ Route::post('/delete-eat-business', [
 	'uses' => 'BusinessController@deleteEatBusiness'
 ]);
 
+Route::post('/ajaxEatBusiness', [
+	'as' => 'ajaxEatBusiness',
+	'uses' => 'HomeController@ajaxEatBusiness'
+]);
 /*end Knight*/
 /***************end front end******************/
 

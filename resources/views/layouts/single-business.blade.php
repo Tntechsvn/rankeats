@@ -386,7 +386,7 @@
 		    			<select class="test state"  name="state" data-parsley-required>
 			             	 <option value="" selected="selected">Select State</option>
 			              	@foreach($state as $data)
-		                	<option value="{{$data->id}}">{{$data->name}}</option>
+		                	<option value="{{$data->name}}">{{$data->name}}</option>
 			              	@endforeach
 		            	</select>
 		            	<span class="errors e-state"></span>
@@ -601,6 +601,7 @@
 		  var val = $(this).val();
 		  var form = $(this).closest('form');
 		  // var val = 1;
+		  console.log(val);
 		  form.find('select.city').html('');
 		  var url = $('input[name=ajaxcitystate]').val();
 		  $.ajax({
@@ -610,15 +611,11 @@
 		    type:'POST',
 		    url: url,
 		    data: {
-		      id: val
+		      name_state: val
 		    },
 		    success:function(res){
-		      if(res.success == true){
-		          form.find('select.city').html(res.data);
+		          form.find('select.city').html(res);
 		          form.find('select.city').fSelect('reload');
-		      }else{
-		        
-		      }
 		    }
 		  });
 		});

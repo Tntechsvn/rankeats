@@ -1,11 +1,7 @@
 @extends('layouts_home.master')
 @section('content')
 
-@php 
-	$reviews = $info_business->Review_Business_Rating()->join('users','users.id','=','review__business__ratings.user_id')
-										       ->where('type_rate','=',1)
-										       ->whereNull('users.deleted_at')->get();
-@endphp
+
 <div id="main">
 	<div class="container profile-header">
 		<div class="profile-header-inner">
@@ -333,7 +329,7 @@
 	</div>
 </div>
 
-<div id="review-popup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
+<div id="review-popup" data-id="{{$info_business->id}}" data-cat="" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="popup" aria-hidden="true"> 
 	<div class="modal-dialog" style="max-width: 920px;width: 100%;">
 
 		<!-- Modal content-->
@@ -358,7 +354,7 @@
 								</div>
 								<div class="info">
 									<div class="content-right p-b-20">
-										<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a> {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}</h4>
+										<h4 class="p-b-10"><a href="{{route('user.profile',$data->user->id)}}" class="">{{$data->user->name ?? ""}}</a> {{$data->business->locations->first()->city ?? ""}}, {{$data->business->locations->first()->state ?? ""}}</h4>
 									
 										<div class="star-view clear p-b-10">
 											<ul class="">
@@ -380,9 +376,6 @@
 											</ul>
 											<span class="review-date">{{date('m-d-Y', strtotime($data->created_at))}}</span>
 										</div>
-										{{-- <div class="review-address">
-											<i class="fas fa-map-marker-alt"></i> {{$data->business->location->address ?? ""}}, {{$data->business->location->city ?? ""}}, {{$data->business->location->state ?? ""}}, {{$data->business->location->country ?? ""}} 
-										</div> --}}
 
 										<p>{{$data->review->description}}</p>
 										<div class="picture-review">
@@ -402,6 +395,10 @@
 								</div>
 							</div>
 						@endforeach
+
+						<div class="review-pagination center">
+							{!!$reviews ->appends(request()->except('page')) -> links()!!}
+						</div>
 						<div class="clear"></div>
 					</div>
 					<h3 class="no-results hidden" style="text-align: center;font-size: 24px;">Don't have review for {{Auth::user()->name}}</h3>
@@ -518,7 +515,7 @@
 								</div>
 							</div>
 						<div class="form-group" style="text-align: center;">
-							<a href="{{route('index')}}" class="btn btn-custom btn-lg">Cancel</a>
+							<a href="javascript:;" class="btn btn-custom btn-lg cancel_form" data-dismiss="modal">Cancel</a>
 							<button type="submit" class="btn btn-custom btn-lg">Submit</button>
 						</div>
 				</form>
@@ -562,7 +559,42 @@
 @section('script')
 <script src="lightbox/js/lightgallery-all.min.js"></script>
 <script type="text/javascript">
-select_city();
+
+    $(document).ready(function()
+    {
+        $(document).on('click', '.review-pagination a',function(event)
+        {
+            event.preventDefault();
+            var target = $(this).closest('#review-popup');
+            $(this).closest('.review-pagination').find('li').removeClass('active');
+            $(this).closest('li').addClass('active');
+            var myurl = $(this).attr('href');
+            var page =$(this).attr('href').split('page=')[1];
+            var category_id = $(this).closest('#review-popup').data('cat');
+            var business_id = $(this).closest('#review-popup').data('id');
+            $.ajax({
+            	 headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+	          url:"{{ route('ajax.pagination') }}",
+	          method:"POST",
+	          data:{
+	          	category_id: category_id,
+	          	business_id: business_id,
+	          	page: page
+	          },
+	          success:function(res){
+	          	target.find('#reviewforbusiness').html(res.data);
+	          }
+	        });
+        });
+    });
+
+</script>
+<script type="text/javascript">
+
+
+	select_city();
 	function renameLocation(){
 		$('#add-location').find('.locationedit').each(function(i){
 			console.log(i);
