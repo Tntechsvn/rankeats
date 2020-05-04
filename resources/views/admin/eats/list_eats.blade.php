@@ -1,7 +1,10 @@
 @extends('adminlte::page')
 
 @section('title', 'Rankeats')
-
+@section('adminlte_css')
+<link rel="stylesheet" href="{{asset('lightbox/lightgallery.css')}}">
+<link href ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel = "stylesheet" crossorigin="anonymous">
+@stop
 @section('content_header')
     <h1>Eats</h1>
     <p>Manage your website business eats</p>
@@ -121,10 +124,18 @@
               					</div>
               				</td>
               				<td><a href="{{route('getEditEats',$data->id)}}">{{$data -> category_name}}</a></td>
-              				<img src="" alt="">
-              				
               				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject">
+                        <div id = "gallery">
+                          <div class = "row text-center">
+                            <div class = "col-md-4">
+                              <a href = "{{asset('').'storage/'.$data->url_img}}"  data-toggle = "lightbox" data-gallery="gallery">
+                                <img src = "{{asset('').'storage/'.$data->url_img}}" class= "imggallery" width="100">
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
               				@else
               				<td class="mailbox-subject">
               					<img src="" style="width: 100px;">
@@ -158,6 +169,15 @@
     </section>
 @stop
 @section('adminlte_js')
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js" crossorigin="anonymous"></script>
+<!-- Ekko Lightbox -->
+<script src="{{asset('lightbox/lightgallery.min.js')}}"></script>
+<script>
+  $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+    $(this).ekkoLightbox();
+  });
+</script>
 <script>
 	$(function () {
     	 //Enable check and uncheck all functionality

@@ -15,6 +15,7 @@ use App\Http\Controllers\ShareController;
 use App\Rules\Captcha;
 use Validator;
 use Image;
+use Log;
 class UserController extends Controller
 {
     /**
@@ -266,10 +267,49 @@ class UserController extends Controller
         }
 
     }
-    public function test_img(){
-        $img = Image::make('http://localhost/rankeats/public/storage/uploads/img2020041607284514536300.jpeg')->fit(250,180);
-        return $img->response('jpg');
-    }
-   
+    public function update_city(){
+        /*$img = Image::make('http://localhost/rankeats/public/storage/uploads/img2020041607284514536300.jpeg')->fit(250,180);
+        return $img->response('jpg');*/
+        //Log::info('thay đổi status: '.' quá 20 phút thời gian chờ duyệt order'.$update_stt ->id);
+        /*$list_city = ('Alexander City
+Andalusia
+Anniston
+Athens
+Atmore
+Auburn
+Bessemer
+Birmingham');
+$str = explode(',',str_replace(PHP_EOL, ',', $list_city));*/
+        $opts = [
+            "http" => [
+                "method" => "GET",
+                "header" => "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJ0dWFuaHVuZ2s3Y0BnbWFpbC5jb20iLCJhcGlfdG9rZW4iOiJiNnYwZkpCQ2pxcnp2Z05WT3V1Z2FlRTl2WlVTNkFJNWtvNUxGRkNoT05EZms1a1NwRkw1UTJvRVFvWEE3cHpDTzBBIn0sImV4cCI6MTU4ODc0ODE4Mn0.t3PucCxYm0SKD0PH6AL2qMSFkrKLWTYitGXFoVtZNu4\r\n"
+                ."Accept: application/json"
+            ]
+        ];
+        /*-------------------*/
+        $Country = Country::where('code','=','US')->first();
+        $state =  $Country->states()->get();
+        foreach ($state as $value) {
+            $key = $value->name;
+
+            $context = stream_context_create($opts);
+            $url = "https://www.universal-tutorial.com/api/cities/{$key}";
+            $json = file_get_contents($url, true, $context);
+            $json_data = json_decode($json, true);
+            return $json_data;
+
+            foreach ($json_data as $val) {
+                $new_city = new City;
+                $new_city -> name = $val['city_name'];
+                $new_city -> state_id = $value->id;
+                $new_city -> save();
+            }
+            
+        }
+        return ":>";
+
+        
+    }     
    
 }
