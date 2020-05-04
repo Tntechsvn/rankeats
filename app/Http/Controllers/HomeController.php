@@ -235,6 +235,23 @@ class HomeController extends Controller{
     }
 
 }
+/*ajaxEatBusiness*/
+public function ajaxEatBusiness(Request $request){
+    $info_business = Business::find($request -> business_id);
+    $category = Category::where('status','=',1)->get();
+
+    $output = '<option value="" disabled selected >Select Eat</option>';
+    $selected = '';
+    if($info_business){
+        $list_busi_cate = $info_business->business_category->pluck('id')->toArray();
+        foreach ($category as $data_cate){
+            $selected = (in_array($data_cate -> id, $list_busi_cate)) ? 'selected' : '';
+            $output .= '<option value="'.$data_cate->id.'" '.$selected.' >'.$data_cate->category_name.'</option>';
+        }
+        return $output;
+    }
+    
+}
 public function sign_up(){
     $Country = Country::where('code','=','US')->first();
     $state =  $Country->states()->get();
