@@ -152,9 +152,9 @@
 
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
+		$('.test').fSelect();
 		$(document).ready(function(){
 			$('#addeat').find('form').parsley();
-			$('.test').fSelect();
 		});
 	</script>
 	<script type="text/javascript">
@@ -168,8 +168,8 @@
           data:{business_id:business_id,_token:_token},
           success:function(data){ 
           	console.log(data)
-            $('#category_type').html(data);
-            $('#category_type').fSelect('reload');
+           	$('#category_type').html(data);
+            $('#category_type').fSelect('destroy').fSelect('create');
           }
         });				
 	});
