@@ -249,8 +249,7 @@ public function ajaxEatBusiness(Request $request){
             $output .= '<option value="'.$data_cate->id.'" '.$selected.' >'.$data_cate->category_name.'</option>';
         }
         return $output;
-    }
-    
+    } 
 }
 public function sign_up(){
     $Country = Country::where('code','=','US')->first();
