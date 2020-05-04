@@ -53,7 +53,7 @@
 	</div>
 @endforeach
 
-{{-- <div class="review-pagination center">
-	{!!$reviews -> appends(request()->except('page')) -> links()!!}
-</div> --}}
+<div class="review-pagination center">
+	{!!$reviews ->appends(request()->except('page')) -> links()!!}
+</div>
 
