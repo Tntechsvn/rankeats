@@ -24,35 +24,49 @@
 						<h3 class="title m-b-20">My EATS</h3>
 						<a href="javascript:;" class="addeat" data-toggle="modal" data-target="#addeat">ADD EATS</a>
 						<div class="clear"></div>
+						@foreach($info_business as $business)
 						<table class="m-t-15 table-full" style="width: 100%;">
 							<thead class="head-table">
 								<tr>
 									<td width="15%">EAT</td>
-									<td width="15%">Review</td>
-									<td width="40%">Email</td>
+									<td width="10%">Review</td>
+									<td width="10%">Business</td>
+									<td width="35%">Email</td>
 									<td width="20%" colspan="2">
 										<div style="width: 100%;line-height: 30px;border-bottom: 1px solid #e1e1e1;">Rank</div>
-										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$info_business->location->city ?? ''}}</div>
-										<div style="width: 50%;float: left;line-height: 30px;">{{$info_business->location->state ?? ''}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;border-right: 1px solid #e1e1e1;">{{$business->locations->first()->city ?? ''}}</div>
+										<div style="width: 50%;float: left;line-height: 30px;">{{$business->locations->first()->state ?? ''}}</div>
 									</td>
 									<td width="10%">Action</td>
 								</tr>
 							</thead>
 							<tbody class="content-table">
-								@if($info_business)								
-								@foreach($info_business->business_category as $val)
+								@if(count($business->business_category) > 0)
+									@foreach($business->business_category as $val)
+										<tr>
+											<td>{{$val->category_name}}</td>
+											<td>{{$val->review_rating()->where('id_rate_from','=',$business->id)->count()}}</td>
+											<td>{{$business->name}}</td>
+											<td>{{$business->email}}</td>
+											<td>{{$val->RankEatState}}</td>
+											<td>{{$val->RankEatCity}}</td>									
+											<td><a class=" del_lang" data-id="{{$val->id }}" data-business="{{$business->id}}" onclick="delLangFunction()"><i class="fas fa-trash"></i></a></td>
+										</tr>
+									@endforeach
+								@else
 								<tr>
-									<td>{{$val->category_name}}</td>
-									<td>{{$val->review_rating()->where('id_rate_from','=',$info_business->id)->count()}}</td>
-									<td>{{$info_business->email}}</td>
-									<td>{{$val->RankEatState}}</td>
-									<td>{{$val->RankEatCity}}</td>									
-									<td><a class=" del_lang" data-id="{{$val->id }}" data-business="{{$info_business->id}}" onclick="delLangFunction()"><i class="fas fa-trash"></i></a></td>
+									<td>No eat</td>
+									<td></td>
+									<td>{{$business->name}}</td>
+									<td>{{$business->email}}</td>
+									<td></td>
+									<td></td>
+									<td></td>
 								</tr>
-								@endforeach
 								@endif
 							</tbody>
 						</table>
+						@endforeach
 					</div>
 				</div>
 			</div>
@@ -78,7 +92,9 @@
 				<div class="form-group">
 					Select Business
 		            <select class="test" name="business" data-parsley-required>
-	                	<option value="{{$info_business->id ?? ''}}" selected="selected" >{{$info_business->name ?? 'Select Business'}}</option>
+		            	@foreach($info_business as $business)
+	                	<option value="{{$business->id ?? ''}}" selected="selected" >{{$business->name ?? 'Select Business'}}</option>
+	                	@endforeach
 		            </select>
 	          	</div>
 				<div class="form-group">
@@ -86,12 +102,12 @@
 		            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required>
 		            	@foreach($category as $data_cate)
 		            		<option value="{{$data_cate->id}}"
-		            			@if($info_business)
+		            			{{--@if($info_business)
 		            			@foreach($info_business->business_category as $val)
 		            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
 
 	            				@endforeach
-	            				@endif
+	            				@endif--}}
 							>{{$data_cate->category_name}}</option>
 
 		            	@endforeach
