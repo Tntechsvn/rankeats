@@ -213,26 +213,26 @@ class HomeController extends Controller{
     public function ajaxCity(Request $request){
        if($request->get('name_state'))
        {
-        $name_state = $request->get('name_state');
-        $state = State::select('states.*','countries.code')
-        ->join('countries','countries.id','=','states.country_id')
-        ->where('code','=','US')
-        ->where('states.name','=',$name_state)->first();
-        $data = $state->cities()->get();
+            $name_state = $request->get('name_state');
+            $state = State::select('states.*','countries.code')
+            ->join('countries','countries.id','=','states.country_id')
+            ->where('code','=','US')
+            ->where('states.name','=',$name_state)->first();
+            $data = $state->cities()->get();
 
 
-        $output = '<option value="" disabled selected >Select City</option>';
-        if(count($data)>0){
-            foreach($data as $row)
-            {
-                $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
+            $output = '<option value="" disabled selected >Select City</option>';
+            if(count($data)>0){
+                foreach($data as $row)
+                {
+                    $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
+                }
             }
+            echo $output;
+        }else{
+            $output = '<option value="" disabled selected >Select City</option>';
+            echo $output;
         }
-        echo $output;
-    }else{
-        $output = '<option value="" disabled selected >Select City</option>';
-        echo $output;
-    }
 
 }
 public function sign_up(){
@@ -782,7 +782,12 @@ public function my_businesses(Request $request){
     $check =  $new ->checkListMyBusiness($request->business_id);
     if($check){
         $info_business = Business::findOrfail($request->business_id);
-        return view('layouts_profile.my-businesses',compact('info_business','user'));
+        $reviews = $info_business->Review_Business_Rating()->join('users','users.id','=','review__business__ratings.user_id')
+                                               ->where('type_rate','=',1)
+                                               ->whereNull('users.deleted_at')
+                                               ->paginate(Myconst::PAGINATE_ADMIN);
+
+        return view('layouts_profile.my-businesses',compact('info_business','user','reviews'));
     }else{
         session()->put('error','You do not own this business');
         return redirect()->back();
@@ -854,7 +859,7 @@ public function reaction_review(Request $request){
                                              ->where('category_id','=',$category_id)
                                              ->whereNull('users.deleted_at')
                                              ->orderBy('review_ratings.created_at', 'desc')
-                                             ->get();
+                                             ->paginate(Myconst::PAGINATE_ADMIN);
          
     
                                            
@@ -1074,25 +1079,35 @@ public function reaction_review(Request $request){
 
 
         }
-        // public function ajaxPagination(Request $request){
-        //     $business = Business::find($request->business_id);
-        //     $limit = 1;
-        //     $page = $request->page;
-        //     $category_id = $request->category_id;
-        //     $offset = ($page - 1)*$limit;
-        //     $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
-        //                                      ->where('type_rate','=',2)
-        //                                      ->where('category_id','=',$category_id)
-        //                                      ->whereNull('users.deleted_at')
-        //                                      ->orderBy('review_ratings.created_at', 'desc')
-        //                                      ->offset($offset)->limit($limit)->get();
-        //     $data = "";
-        //     $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
-        //     $data .= (string)$view;                                 
+        public function ajaxPagination(Request $request){
+            $business = Business::find($request->business_id);
+            $limit =Myconst::PAGINATE_ADMIN;
+            $page = $request->page;
+            $category_id = $request->category_id;
+            $offset = ($page - 1)*$limit;
+            if($category_id == null){
+                $reviews = $business->Review_Business_Rating()->join('users','users.id','=','review__business__ratings.user_id')
+                                               ->where('type_rate','=',1)
+                                               ->whereNull('users.deleted_at')
+                                               ->offset($offset)->limit($limit)
+                                               ->paginate($limit);
+            }else{
+                $reviews = $business->review_rating()->join('users','users.id','=','review_ratings.user_id')
+                                             ->where('type_rate','=',2)
+                                             ->where('category_id','=',$category_id)
+                                             ->whereNull('users.deleted_at')
+                                             ->orderBy('review_ratings.created_at', 'desc')
+                                             ->offset($offset)->limit($limit)
+                                             ->paginate($limit);
+            }
+            
+            $data = "";
+            $view = View::make('layouts.review-popup', ['reviews' => $reviews]);
+            $data .= (string)$view;                                 
 
-        //     return response()->json([
-        //         'data' => $data
-        //     ]); 
-        // }
+            return response()->json([
+                'data' => $data
+            ]); 
+        }
 
 }

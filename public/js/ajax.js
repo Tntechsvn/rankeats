@@ -382,7 +382,7 @@ $(document).on('click','.review-popup',function(){
     },
     success:function(res){
       target.find('.modal-header h3 span').html(name);
-      target.attr('data-id',id)
+      target.attr('data-id',id);
       if(res.success == true){
           after_ajax();
           target.modal('show');
