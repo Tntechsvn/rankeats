@@ -91,26 +91,16 @@
 				@csrf
 				<div class="form-group">
 					Select Business
-		            <select class="test" name="business" data-parsley-required>
+		            <select class="test" name="business" data-parsley-required id="business">
+		            	<option value="" selected="selected" >select business</option>
 		            	@foreach($info_business as $business)
-	                	<option value="{{$business->id ?? ''}}" selected="selected" >{{$business->name ?? 'Select Business'}}</option>
+	                	<option value="{{$business->id ?? ''}}"  >{{$business->name ?? 'Select Business'}}</option>
 	                	@endforeach
 		            </select>
 	          	</div>
 				<div class="form-group">
 					Select eats
-		            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required>
-		            	@foreach($category as $data_cate)
-		            		<option value="{{$data_cate->id}}"
-		            			{{--@if($info_business)
-		            			@foreach($info_business->business_category as $val)
-		            				@if($val-> id == $data_cate-> id){{'selected'}}@endif
-
-	            				@endforeach
-	            				@endif--}}
-							>{{$data_cate->category_name}}</option>
-
-		            	@endforeach
+		            <select class="test" required multiple="multiple"  name="category_type[]" data-parsley-required id="category_type">
 		            </select>
 	          	</div>
 		  	</div>
@@ -166,5 +156,22 @@
 			$('#addeat').find('form').parsley();
 			$('.test').fSelect();
 		});
+	</script>
+	<script type="text/javascript">
+		$("#business").change(function(){
+		var business_id = $(this).val();
+
+		var _token = "{{ csrf_token() }}";
+        $.ajax({
+          url:"{{ route('ajaxEatBusiness') }}",
+          method:"POST",
+          data:{business_id:business_id,_token:_token},
+          success:function(data){ 
+          	console.log(data)
+            $('#category_type').html(data);
+            $('#category_type').fSelect('reload');
+          }
+        });				
+	});
 	</script>
 @stop
