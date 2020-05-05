@@ -273,9 +273,7 @@ class EatsController extends Controller
                     $update_category_meta = new CategoryMeta;
                     $update_category_meta = $update_category_meta -> update_category_meta($data->id_owned,$check_category->id,$request);
                 }
-                
-            }
-            
+            }           
 
         }else{
             $update_category_meta = new CategoryMeta;

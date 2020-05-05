@@ -290,11 +290,11 @@
 <!-- Ekko Lightbox -->
 <script src="{{asset('lightbox/lightgallery.min.js')}}"></script>
 <script>
-		$(document).on("click", '[data-toggle="lightbox"]', function(event) {
-		  event.preventDefault();
-		  $(this).ekkoLightbox();
-		});
-	</script>
+	$(document).on("click", '[data-toggle="lightbox"]', function(event) {
+			event.preventDefault();
+		$(this).ekkoLightbox();
+	});
+</script>
 <script>
 	function approveFunction() {
     var r = confirm("You want to approve advertisements?");
