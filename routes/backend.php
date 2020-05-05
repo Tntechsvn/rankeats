@@ -48,6 +48,10 @@ Route::post('/ajaxCity', [
 	'as' => 'ajaxCity',
 	'uses' => 'HomeController@ajaxCity'
 ]);
+Route::post('/review-eats', [
+	'as' => 'ReviewEat_ajax',
+	'uses' => 'HomeController@ReviewEat_ajax'
+]);
 Route::post('/vote-review-eats', [
 	'as' => 'voteReviewEat_ajax',
 	'uses' => 'HomeController@voteReviewEat_ajax'
@@ -66,9 +70,9 @@ Route::post('/send-mail-follwers', [
 	'uses' => 'MailController@sendMailFollwers'
 ]);
 
-Route::get('/test_img', [
-	'as' => 'test_img',
-	'uses' => 'UserController@test_img'
+Route::get('/update_city', [
+	'as' => 'update_city',
+	'uses' => 'UserController@update_city'
 ]);
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [

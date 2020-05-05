@@ -11,14 +11,14 @@
 	<td>{{$ad->plan_detail->pd_days}} days</td>
 	<td>
 		<div id = "gallery">
-		<div class = "row text-center">
-			<div class = "col-md-4">
-				<a href = "{{$ad->image_url}}"  data-toggle = "lightbox" data-gallery="gallery">
-					<img src = "{{$ad->image_url}}" class= "imggallery" width="60">
-				</a>
+			<div class = "row text-center">
+				<div class = "col-md-4">
+					<a href = "{{$ad->image_url}}"  data-toggle = "lightbox" data-gallery="gallery">
+						<img src = "{{$ad->image_url}}" class= "imggallery" width="60">
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
 	</td>
 	<td>
 		@if($ad->checkStatus() > 3)

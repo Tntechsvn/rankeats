@@ -103,6 +103,9 @@
   $(document).ready(function(){
 
     $('#location_items').keyup(function(){ 
+      if($(this).val() == ""){
+        $('#categoryList').fadeOut();
+      }
       var query = $(this).val();
       if(query != '')
       {
@@ -130,6 +133,9 @@
   $(document).ready(function(){
 
     $('#location_search').keyup(function(){ 
+      if($(this).val() == ""){
+        $('#LocationList').fadeOut();
+      }
       $('#city_searech').val('');
       $('#state_searech').val('');
       var query = $(this).val();

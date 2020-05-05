@@ -42,7 +42,7 @@ class HomeController extends Controller{
 
     public function home(){
         $ads_active_home = Advertisement::home()->active()->take(3)->get();
-        $category = Category::where('status','=',1)->take(9)->get();
+        $category = Category::where('status','=',1)->take(6)->get();
         return view('layouts.index',compact('category', 'ads_active_home'));
     }
     public function fetchCategory(Request $request){
@@ -224,11 +224,13 @@ class HomeController extends Controller{
             $data = $state->cities()->get();
 
 
-            $output = '<option value="" disabled selected >Select City</option>';
+            $output = '';
+            $selected = "";
             if(count($data)>0){
-                foreach($data as $row)
+                foreach($data as $key => $row)
                 {
-                    $output .= '<option value="'.$row->name.'" >'.$row->name.'</option>';             
+                    ($key == 0) ? $selected ="selected" : $selected="";
+                    $output .= '<option '.$selected.' value="'.$row->name.'" >'.$row->name.'</option>';             
                 }
             }
             echo $output;
@@ -534,9 +536,9 @@ public function vote_ajax(Request $request){
 }
 /*knight*/
 public function voteReviewEat_ajax(Request $request){
-     $ShareController = new ShareController;
-     $description = $ShareController->badWordFilter($request -> description);
-     if($description){
+    $ShareController = new ShareController;
+    $description = $ShareController->badWordFilter($request -> description);
+    if($description){
         return response()->json([
             'success' => false,
             'data' => $description,
@@ -579,6 +581,238 @@ public function voteReviewEat_ajax(Request $request){
                 /*vote = 1 vote cho business bằng 2 vote cho eat*/
                 $new_vote -> type_vote = 2;
                 $new_vote -> save();
+                /*reviews eats*/
+                 /*img review eat*/
+                // if($request -> image !=null){
+                //     foreach($request -> image as $img){
+                //         $base64String = $img;
+                //         $ShareController = new ShareController;
+                //         $media = new Media;
+                //         $media -> type_media = 'image';
+                //         $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+                //         $media -> id_user = $user_id;
+                //         /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+                //         $media -> type = 2;
+                //         $media -> save();
+                //         $arr_image_gallery[] = $media -> id;
+                //     }
+                // }else{
+                //     $arr_image_gallery[] = null;
+                // }
+                // $new_review = new Review;
+                // $new_review -> user_id = $user_id;
+                // $new_review -> business_id = $request -> business;
+                // $new_review -> description = $request -> description;
+                // $new_review -> list_id_image = $arr_image_gallery;
+
+                // if($new_review -> save()){
+                //     /*update review rating*/
+                //     $review_rating = new Review_rating;
+                //     $review_rating -> user_id = $user_id;
+                //     $review_rating -> review_id = $new_review -> id;
+                //     $review_rating -> id_rate_from = $new_review -> business_id;
+                //     $review_rating -> category_id = $cate_id;
+                //     $review_rating -> type_rate = 2;
+                //     $review_rating -> rate = $request -> rate;
+                //     $review_rating -> save();
+                //     /*total_review*/
+                //     $check_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->count();
+                //     if($check_total_rate > 0){
+                //         $update_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->first();
+                //         $new_total_rate = $update_total_rate -> total_rate + $request -> rate;
+                //         $new_total_vote = $update_total_rate -> total_vote + 1;
+                //         $update_total_rate -> total_rate = $new_total_rate;
+                //         $update_total_rate -> total_vote = $new_total_vote;
+                //         $update_total_rate -> save();
+
+                //     }else{
+                //        foreach($data_business->business_cate as $id_cate){
+                //         if($cate_id == $id_cate->cate_id){
+                //             $rate = $request -> rate;
+                //             $vote = 1;
+                //         }else{
+                //             $rate = 0;
+                //             $vote = 0;
+                //         }
+                //         $total_review = new TotalRate;
+                //         $total_review -> business_id = $request -> business;
+                //         $total_review -> category_id = $id_cate->cate_id;
+                //         $total_review -> city = $city_id;
+                //         $total_review -> state = $data_business->getIdState();
+                //         $total_review -> type_rate = 2;
+                //         $total_review -> total_rate = $rate;
+                //         $total_review -> total_vote = $vote;
+                //         $total_review -> save();
+                //     }
+                //     }
+                    
+
+
+                // }
+            }
+                   
+            // $info_business = Business::findOrfail($request->business);
+            // $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+            // $data = "";
+            // $view = View::make('layouts.ajax_list_review', ['list_review_eats' => $list_review_eats]);
+            // $data .= (string) $view;
+            $message = 'You have voted and successfully evaluated';
+            // return redirect()->back();
+            return response()->json([
+                'success' => true,
+                // 'data' => $data,
+                'message' =>  $message
+            ]);
+
+        }else{
+            foreach($Category_type as $cate_id){
+                $new_vote = new Vote;
+                $new_vote -> user_id = $user->id;
+                $new_vote -> business_id = $data_business->id;
+                $new_vote -> category_id = $cate_id;
+                if($data_business->getIdState()){
+                    $new_vote -> state_id = $data_business->getIdState();
+                }else{
+                    $new_vote -> state_id = null;
+                }
+               
+                if($city_id){
+                    $new_vote -> city_id = $city_id;
+                }else{
+                    $new_vote -> city_id = null;
+                }
+
+                /*vote = 1 vote cho business bằng 2 vote cho eat*/
+                $new_vote -> type_vote = 2;
+                $new_vote -> save();
+                /*reviews eats*/
+            //     if($request -> image !=null){
+            //         foreach($request -> image as $img){
+            //             $base64String = $img;
+            //             $ShareController = new ShareController;
+            //             $media = new Media;
+            //             $media -> type_media = 'image';
+            //             $media -> url =  $ShareController->saveImgReviewBase64($base64String, 'uploads');
+            //             $media -> id_user = $user_id;
+            //             /*type = 2 ảnh review của món, type = 1 ảnh review của business*/
+            //             $media -> type = 2;
+            //             $media -> save();
+            //             $arr_image_gallery[] = $media -> id;
+            //         }
+            //     }else{
+            //         $arr_image_gallery[] = null;
+            //     }
+            //     $new_review = new Review;
+            //     $new_review -> user_id = $user_id;
+            //     $new_review -> business_id = $request -> business;                
+            //     $new_review -> description = $request -> description;
+            //     $new_review -> list_id_image = $arr_image_gallery;
+
+            //     if($new_review -> save()){
+            //         /*update review rating*/
+            //         $review_rating = new Review_rating;
+            //         $review_rating -> user_id = $user_id;
+            //         $review_rating -> review_id = $new_review -> id;
+            //         $review_rating -> id_rate_from = $new_review -> business_id;
+            //         $review_rating -> category_id = $cate_id;
+            //         $review_rating -> type_rate = 2;
+            //         $review_rating -> rate = $request -> rate;
+            //         $review_rating -> save();
+            //         /*total_review*/
+            //         $check_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->count();
+            //         if($check_total_rate > 0){
+            //             $update_total_rate = TotalRate::where('business_id','=',$new_review -> business_id)->where('category_id','=',$cate_id)->first();
+            //             $new_total_rate = $update_total_rate -> total_rate + $request -> rate;
+            //             $new_total_vote = $update_total_rate -> total_vote + 1;
+            //             $update_total_rate -> total_rate = $new_total_rate;
+            //             $update_total_rate -> total_vote = $new_total_vote;
+            //             $update_total_rate -> save();
+
+            //         }else{
+            //             foreach($data_business->business_cate as $id_cate){
+            //                 if($cate_id == $id_cate->cate_id){
+            //                     $rate = $request -> rate;
+            //                     $vote = 1;
+            //                 }else{
+            //                     $rate = 0;
+            //                     $vote = 0;
+            //                 }
+            //                 $total_review = new TotalRate;
+            //                 $total_review -> business_id = $request -> business;
+            //                 $total_review -> category_id = $id_cate->cate_id;
+            //                 $total_review -> city = $city_id;
+            //                 $total_review -> state = $data_business->getIdState();
+            //                 $total_review -> type_rate = 2;
+            //                 $total_review -> total_rate = $rate;
+            //                 $total_review -> total_vote = $vote;
+            //                 $total_review -> save();
+            //             }
+            //         }
+            //     }
+            }
+            // $info_business = Business::findOrfail($request->business);
+            // $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
+            // $data = "";
+            // $view = View::make('layouts.ajax_list_review', ['list_review_eats' => $list_review_eats]);
+            // $data .= (string) $view;
+            $message = 'You have voted and successfully evaluated';
+            // return redirect()->back();
+            return response()->json([
+                'success' => true,
+                // 'data' => $data,
+                'message' =>  $message
+            ]);
+        }
+
+}
+public function ReviewEat_ajax(Request $request){
+    dd($request->toArray());
+    $ShareController = new ShareController;
+    $description = $ShareController->badWordFilter($request -> description);
+    if($description){
+        return response()->json([
+            'success' => false,
+            'data' => $description,
+            'message' => 'Please correct the words '.$description,
+        ]);
+    }
+
+    $Category_type = $request -> Category_type;
+    // dd($Category_type);
+    $user = Auth::user();
+    $user_id = $user->id;
+    $vote = Vote::select('*')
+    ->where('user_id','=',$user->id)
+    ->where('business_id','=',$request->business)
+    ->where('type_vote','=',2)
+    ->first();
+    $data_business = Business::find($request->business);
+    $city_id = $data_business->getIdCity();
+
+        $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+        if($check_vote_city ){
+            // $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
+            foreach($Category_type as $cate_id){
+                // $new_vote = new Vote;
+                // $new_vote -> user_id = $user->id;
+                // $new_vote -> business_id = $data_business->id;
+                // $new_vote -> category_id = $cate_id;
+                // if($data_business->getIdState()){
+                //     $new_vote -> state_id = $data_business->getIdState();
+                // }else{
+                //     $new_vote -> state_id = null;
+                // }
+               
+                // if($city_id){
+                //     $new_vote -> city_id = $city_id;
+                // }else{
+                //     $new_vote -> city_id = null;
+                // }
+                
+
+                // /*vote = 1 vote cho business bằng 2 vote cho eat*/
+                // $new_vote -> type_vote = 2;
+                // $new_vote -> save();
                 /*reviews eats*/
                  /*img review eat*/
                 if($request -> image !=null){
@@ -664,27 +898,27 @@ public function voteReviewEat_ajax(Request $request){
 
         }else{
             foreach($Category_type as $cate_id){
-                $new_vote = new Vote;
-                $new_vote -> user_id = $user->id;
-                $new_vote -> business_id = $data_business->id;
-                $new_vote -> category_id = $cate_id;
-                if($data_business->getIdState()){
-                    $new_vote -> state_id = $data_business->getIdState();
-                }else{
-                    $new_vote -> state_id = null;
-                }
+                // $new_vote = new Vote;
+                // $new_vote -> user_id = $user->id;
+                // $new_vote -> business_id = $data_business->id;
+                // $new_vote -> category_id = $cate_id;
+                // if($data_business->getIdState()){
+                //     $new_vote -> state_id = $data_business->getIdState();
+                // }else{
+                //     $new_vote -> state_id = null;
+                // }
                
-                if($city_id){
-                    $new_vote -> city_id = $city_id;
-                }else{
-                    $new_vote -> city_id = null;
-                }
+                // if($city_id){
+                //     $new_vote -> city_id = $city_id;
+                // }else{
+                //     $new_vote -> city_id = null;
+                // }
 
-                /*vote = 1 vote cho business bằng 2 vote cho eat*/
-                $new_vote -> type_vote = 2;
-                $new_vote -> save();
+                // /*vote = 1 vote cho business bằng 2 vote cho eat*/
+                // $new_vote -> type_vote = 2;
+                // $new_vote -> save();
                 /*reviews eats*/
-                 if($request -> image !=null){
+                if($request -> image !=null){
                     foreach($request -> image as $img){
                         $base64String = $img;
                         $ShareController = new ShareController;
@@ -761,10 +995,9 @@ public function voteReviewEat_ajax(Request $request){
                 'message' =>  $message
             ]);
         }
-        
-
 
 }
+
 public function getRankBusiness(){
     $id_business = 1;
     $data_business = Business::find($id_business);
@@ -818,8 +1051,6 @@ public function ajaxcitystate(Request $request){
     // dd($state_id);
     $citys = City::select('cities.*')
     ->where('state_id','=',$state_id)->get();
-    // dd($city);
-    // $data = $state->cities()->get();
 
     $output = '<option value="" selected >Select City</option>';
     if(count($citys)>0){
