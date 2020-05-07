@@ -110,14 +110,13 @@
 						<div class="owner-manager">
 							<h4>Owner/Manager Details</h4>
 							<div class="form-group">
-								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+								<div class="icon-group"> <span class="icon-form input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}" data-parsley-required>
-									
 								</div>
 								<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
 							</div>
 							<div class="form-group">
-								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+								<div class="icon-group"> <span class="icon-form input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}" data-parsley-required>
 									
 								</div>
@@ -165,11 +164,10 @@
 							</div>
 							<div class="form-group">
 								<p style="clear: both;">Please enter the business number that can be verified online and call to confinm</p>
-								<div class="input-group"> <span class="input-group-addon"><i class="fas fa-phone-alt"></i></span>
+								<div class="icon-group"> <span class="icon-form input-group-addon"><i class="fas fa-phone-alt"></i></span>
 									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="{{old('phone')}}" data-parsley-required>
-									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
 								</div>
-								
+								<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
 							</div>
 						</div>
 						<div class="form-group" style="text-align: center;">

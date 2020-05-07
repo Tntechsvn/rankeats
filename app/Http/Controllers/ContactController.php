@@ -59,11 +59,11 @@ class ContactController extends Controller
         $new_contact = new Contact;
         $response = $new_contact->update_contact($request);
         if($response){
-            session()->put('success','Your request has been sent to the system');
-            return redirect()->back();
+            // session()->put('success','Your request has been sent to the system');
+            return redirect()->back()->with('SweetAlert','Your request has been sent to the system');
         }else{
-            session()->put('error','Error! An error occurred. Please try again later');
-            return redirect()->back();
+            // session()->put('error','Error! An error occurred. Please try again later');
+            return redirect()->back()->with('SweetAlert','Error! An error occurred. Please try again later');
         }
     }
     
