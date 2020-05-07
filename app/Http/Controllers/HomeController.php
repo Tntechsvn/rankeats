@@ -826,6 +826,7 @@ public function ReviewEat_ajax(Request $request){
                 /*reviews eats*/
                  /*img review eat*/
                 if($request -> image !=null){
+                    $arr_image_gallery = null;
                     foreach($request -> image as $img){
                         $base64String = $img;
                         $ShareController = new ShareController;
@@ -869,23 +870,23 @@ public function ReviewEat_ajax(Request $request){
 
                     }else{
                        foreach($data_business->business_cate as $id_cate){
-                        if($cate_id == $id_cate->cate_id){
-                            $rate = $request -> rate;
-                            $vote = 1;
-                        }else{
-                            $rate = 0;
-                            $vote = 0;
+                            if($cate_id == $id_cate->cate_id){
+                                $rate = $request -> rate;
+                                $vote = 1;
+                            }else{
+                                $rate = 0;
+                                $vote = 0;
+                            }
+                            $total_review = new TotalRate;
+                            $total_review -> business_id = $request -> business;
+                            $total_review -> category_id = $id_cate->cate_id;
+                            $total_review -> city = $city_id;
+                            $total_review -> state = $data_business->getIdState();
+                            $total_review -> type_rate = 2;
+                            $total_review -> total_rate = $rate;
+                            $total_review -> total_vote = $vote;
+                            $total_review -> save();
                         }
-                        $total_review = new TotalRate;
-                        $total_review -> business_id = $request -> business;
-                        $total_review -> category_id = $id_cate->cate_id;
-                        $total_review -> city = $city_id;
-                        $total_review -> state = $data_business->getIdState();
-                        $total_review -> type_rate = 2;
-                        $total_review -> total_rate = $rate;
-                        $total_review -> total_vote = $vote;
-                        $total_review -> save();
-                    }
                     }
                     
 
