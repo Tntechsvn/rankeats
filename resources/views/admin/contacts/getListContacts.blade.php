@@ -3,11 +3,11 @@
 @section('title', 'Rankeats')
 
 @section('content_header')
-    <h1>CMS</h1>
-    <p>Manage your CMS</p>
+    <h1>Contacts</h1>
+    <p>Manage your contacts</p>
     <div class="card-header">    	
     	<div class="card-tools">
-    		<form action="{{route('getListPage')}}" method="get">
+    		<form action="{{route('getListContacts')}}" method="get">
 	    		<div class="input-group input-group-sm" style="width: 150px;">
 	    				<input type="text" name="keyword" id="keyword" value="@if($keyword){{$keyword}}@endif" class="form-control float-right" placeholder="Search">
 	    				<div class="input-group-append">
@@ -46,22 +46,22 @@
               	<table class="table table-hover ">
               		<thead>
               			<tr>
-              				<th>Page Title</th>              				
-              				<th style="text-align: left;">Ordinarily</th>
-              				<th>Created At</th>
+              				<th>Name User Contacts</th>              				
+              				<th style="text-align: left;">Email</th>
+              				<th style="text-align: left;">Subject</th>
+              				<th style="text-align: left;">Message</th>
               				<th>Manage</th>
               			</tr>
               		</thead>
               		<tbody>              			
-              			@if(count($data_pages) > 0)
-              			@foreach($data_pages as $data)
+              			@if(count($data_contacts) > 0)
+              			@foreach($data_contacts as $data)
               			<tr>
-              				<td><a href="{{route('getEditPage',$data->slug)}}">{{$data -> page_title}}</a></td>
-              				<td>{{$data-> ordinarily}}</td>
-              				<td>{{$data -> created_at}}</td>
-              				<td>
-              					<button class="btn btn-danger del_page" onclick="deletePageFunction()" data-id="{{$data->id}}"><i class="far fa-trash-alt"></i> Delete</button>
-              				</td>
+              				<td>{{$data -> name_user_contact}}</td>
+              				<td style="text-align: left;">{{$data-> email}}</td>
+              				<td style="text-align: left;">{{$data-> subject}}</td>
+              				<td style="text-align: left;">{{$data -> message}}</td>
+              				<td></td>
               			</tr>
               			@endforeach
               			@else
@@ -78,7 +78,7 @@
             <!-- /.card-body -->
               <div class="card-header">
                 <div class="card-tools">                	
-                	{!!$data_pages -> appends(request()->except('page')) -> links()!!}
+                	{!!$data_contacts -> appends(request()->except('page')) -> links()!!}
                 </div>
               </div>
           </div>
