@@ -2539,8 +2539,11 @@ width: 30% !important;
 	font-size: 11px;
 	color: red;
 }
-
-
+#categoryList, #LocationList {
+	position: absolute;
+    top: 45px;
+    width: 100%;
+}
 
 
 
