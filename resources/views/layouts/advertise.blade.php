@@ -441,6 +441,8 @@
           }
         });
       }
+    }).focusout(function(){
+      $('#stateList').fadeOut(); 
     });
 
     $('.city').keyup(function(){ 
@@ -461,8 +463,9 @@
           }
         });
       }
+    }).focusout(function(){
+      $('#cityList').fadeOut(); 
     });
-
     $(document).on('click','.state_name',function(){
       var state_name = $(this).html();
       var state_id = $(this).data('state');

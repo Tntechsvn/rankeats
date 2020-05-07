@@ -339,10 +339,6 @@
 			</div>
 			
 		</div>
-
-
-
-		
 	</div>
 </div>
 
@@ -372,6 +368,10 @@
 				<span class="errors e-dish"></span>
 			</div>
 			<div class="" style="overflow: unset;">
+				@php
+					$hidden = "";
+					$w_hide = "";
+				@endphp
 				@if(Auth::check())
 					@php
 					$hidden = "hidden";
