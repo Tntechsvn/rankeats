@@ -120,6 +120,8 @@
           }
         });
       }
+    }).focusout(function(){
+      $('#categoryList').fadeOut(); 
     });
 
     $(document).on('click', '.category_name', function(e){
@@ -152,6 +154,8 @@
           }
         });
       }
+    }).focusout(function(){
+      $('#LocationList').fadeOut(); 
     });
 
     $(document).on('click', '.location_name', function(e){
