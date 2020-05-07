@@ -239,7 +239,7 @@
 							    	</div>
 							    	@if($data->review->ListImageReview)
 								    	@foreach($data->review->ListImageReview as $val)
-								    	<img src="{{$val['url']}}" width="210px" height="145px;">
+								    	<img src="{{$val['url']}}" style="object-fit: cover;" width="210px" height="145px;">
 								    	@endforeach
 							    	@endif
 
@@ -914,20 +914,23 @@
 			    url: url,
 			    data: form.serialize(),
 			    success:function(res){
-			      if(res.success == true){
-			          $('#eatrank').removeClass('nothasvote');
-			          modal.modal('hide');
-			          target.html(res.data);
-			          swal({
-			            title: res.message,
-			            timer: 2000
-			          });
-			      }else{
-			        swal({
-			          title: res.message,
-			          timer: 2000
-			        });
-			      }
+			      	if(res.success == true){
+			      		form[0].reset();
+			      		form.find('#previews-eat').html('');
+			      		form.find('.choose_dish').fSelect('destroy').fSelect('create');
+			          	$('#eatrank').removeClass('nothasvote');
+			          	modal.modal('hide');
+			          	target.html(res.data);
+			          	swal({
+				            title: res.message,
+				            timer: 2000
+			          	});
+			      	}else{
+				        swal({
+				          title: res.message,
+				          timer: 2000
+				        });
+			      	}
 			    }
 		  	});
 		})

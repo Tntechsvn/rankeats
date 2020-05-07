@@ -110,20 +110,21 @@ window.select_city = function(){
 // sign-in
 $(document).on('click','.signin-popup',function(e){
 	e.preventDefault();
+  var form = $(this).closest('form');
 	var parsley = $(this).closest('form').parsley();
 	if(parsley.isValid() != true){
         parsley.validate();
         return false;
     }
   if (grecaptcha === undefined) {
-    swal('Recaptcha not defined');
+    form.find('.e-capcha').html('Recaptcha not defined');
     return; 
   }
 
   var response = grecaptcha.getResponse();
 
   if (!response) {
-    swal('Coud not get recaptcha response'); 
+    form.find('.e-capcha').html('Coud not get recaptcha response');
     return; 
   }
 	var email = $(this).closest('form').find('input[name=email]').val();
@@ -145,7 +146,11 @@ $(document).on('click','.signin-popup',function(e){
         		swal(res.message);
         		window.location.reload();
         	}else{
-        		swal(res.message);
+            grecaptcha.reset();
+            swal({
+                title: res.message,
+                timer: 2000
+            });
         	}
         }
 	});
