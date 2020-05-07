@@ -766,7 +766,6 @@ public function voteReviewEat_ajax(Request $request){
 
 }
 public function ReviewEat_ajax(Request $request){
-    dd($request->toArray());
     $ShareController = new ShareController;
     $description = $ShareController->badWordFilter($request -> description);
     if($description){
@@ -778,7 +777,6 @@ public function ReviewEat_ajax(Request $request){
     }
 
     $Category_type = $request -> Category_type;
-    // dd($Category_type);
     $user = Auth::user();
     $user_id = $user->id;
     $vote = Vote::select('*')
@@ -918,6 +916,7 @@ public function ReviewEat_ajax(Request $request){
                 // $new_vote -> type_vote = 2;
                 // $new_vote -> save();
                 /*reviews eats*/
+                dd($request -> image);
                 if($request -> image !=null){
                     foreach($request -> image as $img){
                         $base64String = $img;
