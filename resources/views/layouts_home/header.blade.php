@@ -59,6 +59,7 @@
                           <div class="form-group">
                             <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
                             <span class="bg-danger color-palette">{{$errors -> first('g-recaptcha-response')}}</span>
+                            <span class="e-capcha bg-danger"></span>
                           </div>
                           <div class="checkbox">
                             <label>

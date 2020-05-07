@@ -4,13 +4,13 @@
 			<div class="input_dish">
 				<input autocomplete="off" required type="text" class="form-control input-lg location_items" id="location_items" name="keyword" placeholder="Steak, Pizza, Salmon…." value="@if(isset($keyword)){{$keyword}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
-				<div id="categoryList"></div>
+				<div id="categoryList" class="scroll_search"></div>
 			</div>
 
 			<div class="input_state">
 				<input autocomplete="off"  type="text" class="form-control input-lg location_items" id="location_search" placeholder="City or State" value="@if(isset($text_city_state)){{$text_city_state}}@endif">
 				<!-- <input type="hidden"  name="city" value="all" id="city"> -->				
-				<div id="LocationList"></div>
+				<div id="LocationList" class="scroll_search"></div>
 				<div class="input_hidden">
 					<input type="hidden" name="city" id="city_searech" value="@if(isset($city)){{$city}}@endif">
       				<input type="hidden" name="state" id="state_searech" value="@if(isset($state_search)){{$state_search}}@endif">
