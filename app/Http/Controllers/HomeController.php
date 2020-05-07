@@ -79,7 +79,7 @@ class HomeController extends Controller{
             ->where('code','=','US')
             ->where(function($query) use ($keyword){            
                 $query->where('cities.name','LIKE', '%'.$keyword.'%')->orwhere('states.name', 'LIKE', '%'.$keyword.'%');
-            })->take(20)->get();
+            })->take(50)->get();
             /*$data = Category::select('categories.*')
             ->where('category_name', 'LIKE', "%{$query}%")
             ->where('status','=',1)
