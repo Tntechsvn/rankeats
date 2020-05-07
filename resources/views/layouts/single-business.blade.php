@@ -362,17 +362,17 @@
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="form-group">
 				Choose eat
-				<select class="test choose_dish" multiple="multiple" disabled="disabled" name="Category_type[]" data-parsley-required>
+				<select class="test choose_dish" multiple="multiple" name="Category_type[]" data-parsley-required>
 					<optgroup>
 						@foreach($info_business->business_category as $menu)
-							<option value="{{$menu->id}}" data-name="{{$menu->category_name}}">{{$menu->category_name}}</option>
+							<option value="{{$menu->id}}">{{$menu->category_name}}</option>
 						@endforeach
 					</optgroup>
 				</select>
 				<span class="errors e-dish"></span>
 			</div>
 			<div class="" style="overflow: unset;">
-				{{-- @if(Auth::check())
+				@if(Auth::check())
 					@php
 					$hidden = "hidden";
 					$w_hide = "";
@@ -382,8 +382,8 @@
 	    				}
 
 	    			@endphp
-    			@endif --}}
-			    <div class="active {{-- {{$hidden}} --}}" id="vote">
+    			@endif
+			    <div class="active {{$hidden}}" id="vote">
 		    		<a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a>
 			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	
@@ -411,7 +411,7 @@
 			    	
 
 				</div>
-			    <div class="{{-- {{$w_hide}} --}}" id="write">
+			    <div class="{{$w_hide}}" id="write">
 			    	<a href="javascript:;" class="btn btn-primary active write-tab"><i style="color: #fff" class="fas fa-star"></i> Write Reviews</a>
 			    	<div class="popup-star" style="text-align: center;">
 						<label class="customstar star-1"> 							
@@ -450,6 +450,7 @@
 					</div>
 					<div class="form-group reviewBox">
 						<textarea class="form-control" placeholder="Enter Your Review" name="description" style="height: 150px;" data-parsley-required></textarea>
+						<span class="errors e-des"></span>
 					</div>
 
 				    <div>
@@ -719,11 +720,10 @@
 
 			        success:function(res){
 			        	if(res.success == true){
-			        		if(res.book==true){
-			        			$this.find('.fa-bookmark').attr('data-prefix','fas');
-			        		}else{
-			        			$this.find('.fa-bookmark').attr('data-prefix','far');
-			        		}
+			        		swal({
+					          title: res.message,
+					          timer: 2000
+					        });
 			        	}else{
 			        		swal({
 					          title: res.message,
@@ -735,7 +735,6 @@
 				form.find('#vote').removeClass('active').addClass('hidden');
 				form.find('#write').addClass('active').removeClass('hidden');
 				form.find('.choose_dish').fSelect('destroy').fSelect('create');
-				form.find('.choose_dish').prop('disabled','disabled');
 			});
 
 
@@ -879,12 +878,7 @@
 			$('#show_eat_choosed').html(selected);
 		});
 
-		// $(document).on('click','.cancel_form_review',function(e){
-		// 	e.preventDefault();
-		// 	var form = $(this).closest('form');
-		// 	form.find('.test').fSelect('destroy').fSelect('create');
-		// 	form[0].reset();
-		// });
+
 
 
 		$(document).on('click','.submit_votereview',function(e){
@@ -900,39 +894,42 @@
 		  var url = "{{route('ReviewEat_ajax')}}";
 		  var business = form.find('input[name=business]').val();
 		  var Category_type = form.find('.choose_dish').val();
+		  if(Category_type == null){
+		  	form.find('.e-dish').html("* This field is required");
+			return false;
+		  }
 		  var description = form.find('textarea[name=description]').val();
-		  var image = form.find('input[name=image]').val();
-		  var rate = form.find('input[name=rate]').val();
-		  $.ajax({
-		    headers: {
-		      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		    },
-		    type:'POST',
-		    url: url,
-		    data: {
-		    	business: business,
-		    	Category_type: Category_type,
-		    	description: description,
-		    	image: image,
-		    	rate: rate
-		    },
-		    success:function(res){
-		      if(res.success == true){
-		          $('#eatrank').removeClass('nothasvote');
-		          modal.modal('hide');
-		          target.html(res.data);
-		          swal({
-		            title: res.message,
-		            timer: 2000
-		          });
-		      }else{
-		        swal({
-		          title: res.message,
-		          timer: 2000
-		        });
-		      }
-		    }
-		  });
+		  console.log(description);
+		  if(description == ""){
+		  	form.find('.e-des').html("* This field is required");
+			return false;
+		  }
+		  var image = form.find('#previews-eat input').val();
+		  var rate = form.find('input[name=rate]:checked').val();
+		  	$.ajax({
+			    headers: {
+			      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    },
+			    type:'POST',
+			    url: url,
+			    data: form.serialize(),
+			    success:function(res){
+			      if(res.success == true){
+			          $('#eatrank').removeClass('nothasvote');
+			          modal.modal('hide');
+			          target.html(res.data);
+			          swal({
+			            title: res.message,
+			            timer: 2000
+			          });
+			      }else{
+			        swal({
+			          title: res.message,
+			          timer: 2000
+			        });
+			      }
+			    }
+		  	});
 		})
 	</script>
 @stop
