@@ -54,8 +54,10 @@
 		</div>
 	</div>
 @endforeach	
-
-{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
+<div style="text-align: center;">
+	{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
+</div>
 <div class="p-t-15" style="text-align: right;">
-	<a href="javascript:;" class="btn vote unvote" style="color: #fff;">My Vote</a>
+	{{-- <a href="javascript:;" class="btn vote unvote" style="color: #fff;">My Vote</a> --}}
+	<a href="javascript:;" data-toggle="modal" data-target="#voteModal" class="btn btn-primary" style="color: #fff;">Write Review</a>
 </div>

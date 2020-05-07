@@ -2,6 +2,9 @@
 @section('content')
 
 <div id="main">
+	<div class="banner" style="background-image: url('images/promo.jpg');">
+		<img src="images/promo.jpg" alt="" class="fade">
+	</div>
 	<div class="container">
 		<div class="col-md-8">
 			<div class="single recent">

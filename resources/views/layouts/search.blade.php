@@ -642,5 +642,37 @@
         });
     });
 
+
+    // review search page
+
+$(document).on('click','.yesforvote',function(e){
+  e.preventDefault();
+  var url = $('input[name=postReviewFrontEnd]').val();
+  var form = $(this).closest('form');
+  var target = $('#businessreview');
+  var modal = $(this).closest('#voteModal');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: form.serialize(),
+    success:function(res){
+      if(res.success == true){
+          modal.modal('hide');
+          target.html(res.data);
+          swal({
+            title: res.message,
+            timer: 2000
+          });
+          window.location.reload();
+      }else{
+        modal.find('.e-lang').html("*"+res.message);
+      }
+    }
+  });
+});
+
 </script>
 @stop
