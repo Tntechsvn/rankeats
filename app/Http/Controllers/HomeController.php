@@ -79,12 +79,26 @@ class HomeController extends Controller{
             ->where('code','=','US')
             ->where(function($query) use ($keyword){            
                 $query->where('cities.name','LIKE', '%'.$keyword.'%')->orwhere('states.name', 'LIKE', '%'.$keyword.'%');
-            })->get();
+            })->take(20)->get();
             /*$data = Category::select('categories.*')
             ->where('category_name', 'LIKE', "%{$query}%")
             ->where('status','=',1)
             ->get();*/
+            $data_state = Country::select('countries.*','states.name as state_name')
+            ->leftjoin('states','states.country_id','=','countries.id')
+            ->where('code','=','US')
+            ->where(function($query) use ($keyword){            
+                $query->where('states.name', 'LIKE', '%'.$keyword.'%');
+            })->take(20)->get();
+
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            if(count($data_state)>0){
+                foreach($data_state as $row_state)
+                {
+                    $output .= '<li class="location_name form-search-val" data-city="" data-state="'.$row_state->state_name.'">'.$row_state->state_name.'</li>';
+                }
+            }
+
             if(count($data)>0){
                 foreach($data as $row)
                 {
@@ -94,12 +108,13 @@ class HomeController extends Controller{
                         $text = $row->city_name;
                     }
 
-                    $output .= '<li class="location_name form-search-val" data-city="" data-state="'.$row->state_name.'">'.$row->state_name.'</li>'.'<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
+                    $output .= '<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
                 }
-            }else{
-                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
             }
-            
+            if(count($data) == 0 && count($data_state) == 0){
+
+                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';
+            }
             $output .= '</ul>';
             echo $output;
         }
@@ -995,18 +1010,52 @@ public function ReviewEat_ajax(Request $request){
 }
 
 public function getRankBusiness(){
-    $id_business = 1;
-    $data_business = Business::find($id_business);
-    $state_id = $data_business->location->IdState;
+    $keyword = 'new ad';
 
-   foreach($data_business->business_category as $val){
-    return $val->RankEatCity;
-    /*echo '<tr>
-    <td>'.$val->category_name.'</td>
-    <td>'.$val->RankEatState.'</td>
-    <td>'.$val->RankEatCity.'</td>
-    </tr></br>';*/
-   }
+            $data = Country::select('countries.*','states.name as state_name','cities.name as city_name')
+            ->leftjoin('states','states.country_id','=','countries.id')
+            ->leftjoin('cities','cities.state_id','=','states.id')
+            ->where('code','=','US')
+            ->where(function($query) use ($keyword){            
+                $query->where('cities.name','LIKE', '%'.$keyword.'%')->orwhere('states.name', 'LIKE', '%'.$keyword.'%');
+            })->take(20)->get();
+            /*$data = Category::select('categories.*')
+            ->where('category_name', 'LIKE', "%{$query}%")
+            ->where('status','=',1)
+            ->get();*/
+            $data_state = Country::select('countries.*','states.name as state_name')
+            ->leftjoin('states','states.country_id','=','countries.id')
+            ->where('code','=','US')
+            ->where(function($query) use ($keyword){            
+                $query->where('states.name', 'LIKE', '%'.$keyword.'%');
+            })->take(20)->get();
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            if(count($data_state)>0){
+                foreach($data_state as $row_state)
+                {
+                    $output .= '<li class="location_name form-search-val" data-city="" data-state="'.$row_state->state_name.'">'.$row_state->state_name.'</li>';
+                }
+            }
+
+            if(count($data)>0){
+                foreach($data as $row)
+                {
+                    if($row->city_name){
+                        $text = $row->city_name.', '.$row->state_name;
+                    }else{
+                        $text = $row->city_name;
+                    }
+
+                    $output .= '<li class="location_name form-search-val" data-city="'.$row->city_name.'" data-state="'.$row->state_name.'">'.$text.'</li>';             
+                }
+            }
+            if(count($data) == 0 && count($data_state) == 0){
+
+                $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';
+            }
+            $output .= '</ul>';
+            echo $output;
                                     
                                 
 }
