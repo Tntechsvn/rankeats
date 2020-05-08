@@ -8,7 +8,7 @@ use App\Myconst;
 use App\Contact;
 use App\Rules\Captcha;
 
-class getListContacts extends Controller
+class ContactController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -19,17 +19,18 @@ class getListContacts extends Controller
     {
         $this->middleware('auth');
     }*/
-    public function getListContacts(Request $request){
+     public function getListContacts(Request $request){
         $keyword = $request -> keyword ? $request -> keyword : '';
-        $data_pages = Page::select('pages.*')
+
+        $data_contacts = Contact::select('contacts.*')
         ->where(function($query) use ($keyword){            
-            $query->where('page_title', 'LIKE', '%'.$keyword.'%');
+            $query->where('name_user_contact', 'LIKE', '%'.$keyword.'%');
         })
-        ->orderBy('ordinarily', 'asc')
+        ->orderBy('created_at', 'desc')
         ->paginate(Myconst::PAGINATE_ADMIN);
 
-        $total_record =  Page::count();
-        $count_record = count($data_pages);
+        $total_record =  $data_contacts->total();
+        $count_record = count($data_contacts);
         if(isset($request -> page)){
             if($request -> page < 2){
                 $start = 1;             
@@ -43,7 +44,7 @@ class getListContacts extends Controller
             $record = $count_record;
         }
 
-        return view('admin.pages.getListPage', compact('start', 'record', 'total_record','data_pages','keyword'));
+        return view('admin.contacts.getListContacts', compact('start', 'record', 'total_record','data_contacts','keyword'));
 
     }
     public function createContact(Request $request){

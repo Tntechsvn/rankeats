@@ -376,7 +376,7 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 		Route::prefix("contacts")->group(function(){
 			Route::get('/', [
 				'as' => 'getListContacts',
-				'uses' => 'getListContacts@getListContacts'
+				'uses' => 'ContactController@getListContacts'
 			]);
 		});
 
