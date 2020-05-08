@@ -21,7 +21,7 @@
     	<div>
     		@if($data->review->ListImageReview)
 		    	@foreach($data->review->ListImageReview as $val)
-		    	<img src="{{$val['url']}}" width="210px" height="145px;">
+		    	<img src="{{$val['url']}}" style="object-fit: cover;" width="210px" height="145px;">
 		    	@endforeach
 	    	@endif
     	</div>

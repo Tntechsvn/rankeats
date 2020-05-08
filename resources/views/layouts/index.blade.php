@@ -113,9 +113,11 @@
                   <input type="hidden" name="state" id="state_searech_cate" value="@if(isset($state_search)){{$state_search}}@endif">
                 </div>
               <div class="form-group">
-                <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;width: 340px;" placeholder="City or State">
+                <div style="position: relative;float: left;">
+                    <input type="text" class="form-control location_search" id="location_search_cate" style="border-radius: 0px;width: 340px;" placeholder="City or State">
+                    <div id="LocationListcate" class="scroll_search" style="top: 32px;"></div>
+                </div>
                 <button type="submit" class="btn btn-custom" style="border-radius: 0px;">Search Results</button>
-                <div id="LocationListcate"></div>
               </div>
             </form>
           </div>
@@ -135,13 +137,17 @@
       var modal = $('#myModal');
       modal.find('input[name=keyword]').val(search_name);
       modal.find('.search-name').html(search_name);
-      modal.show();
+      modal.modal('show');
     });
   </script>
   <script>
   $(document).ready(function(){
 
     $('#location_search_cate').keyup(function(){ 
+      var val = $(this).val();
+      if(val == ""){
+        $('#LocationListcate').fadeOut(); 
+      }
       $('#city_searech_cate').val('');
       $('#state_searech_cate').val('');
       var query = $(this).val();
@@ -158,6 +164,8 @@
           }
         });
       }
+    }).focusout(function(){
+      $('#LocationListcate').fadeOut();  
     });
 
     $(document).on('click', '.location_name', function(e){
