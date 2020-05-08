@@ -74,6 +74,12 @@ Route::get('/update_city', [
 	'as' => 'update_city',
 	'uses' => 'UserController@update_city'
 ]);
+/*contact us*/
+Route::post('/create-contact', [
+	'as' => 'createContact',
+	'uses' => 'ContactController@createContact'
+]);
+/*end contact us*/
 Route::prefix("/")->middleware(['frontendLogin'])->group(function(){
 	Route::post('/edit-infor-user', [
 		'as' => 'postEditUserFrondEnd',
@@ -367,6 +373,13 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 			]);
 		
 		});
+		Route::prefix("contacts")->group(function(){
+			Route::get('/', [
+				'as' => 'getListContacts',
+				'uses' => 'getListContacts@getListContacts'
+			]);
+		});
+
 		
 		Route::post('/delete-adv', [
 				'as' => 'deleteAdv',

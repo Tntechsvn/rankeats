@@ -304,6 +304,12 @@ return [
             'route'  => 'getListLanguageReviews',
            
         ],
+        [
+            'text'    => 'Contacts',
+            'icon'    => 'fas fa-fw fa fa-file',
+            'route'  => 'getListContacts',
+           
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
