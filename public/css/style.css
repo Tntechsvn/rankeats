@@ -2549,10 +2549,21 @@ width: 30% !important;
 	overflow-y: scroll;
 }
 
+.icon-form {
+	position: absolute;
+    left: 0;
+    top: 0;
+    width: 38px;
+    height: 34px;
+    border-right: 1px solid #ccc;
+}
 
-
-
-
+.icon-group {
+	position: relative;
+}
+.icon-group input {
+	padding-left: 45px;
+}
 
 
 

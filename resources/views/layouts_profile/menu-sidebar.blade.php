@@ -41,7 +41,7 @@
 			<a class="dropdown"  href="javascript:;"><i class="fas fa-plus-circle"></i>My Business<span class="caret" style="float: right;margin-top: 8px;"></span></a>
 			<ul class="nav menudropdown">
 				@foreach(Auth::user()->business as $val_business)
-					<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>$val_business->id])}}"><i class="fas fa-caret-right"></i>{{$val_business->name}}</a></li>
+					<li class="{{ (Route::currentRouteNamed('my_businesses') && Route::current()->parameters['business_id'] == $val_business->id  ) ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>$val_business->id])}}"><i class="fas fa-caret-right"></i>{{$val_business->name}}</a></li>
 				@endforeach
 				{{--<li class="{{ Route::currentRouteNamed('my_businesses') ? 'active' : '' }}"><a class="" href="{{route('my_businesses',['business_id'=>Auth::user()->business()->first()->id])}}"><i class="fas fa-caret-right"></i>{{Auth::user()->business()->first()->name}}</a></li>--}}
 

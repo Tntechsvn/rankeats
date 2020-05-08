@@ -23,7 +23,7 @@
 			<div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 content-search content-right-profile">
 				<div class="tab-content" style="margin-right: -15px;">
 					<div>
-						<h3 class="title m-b-20">My Businesses</h3>
+						<h3 class="title m-b-20">{{$info_business->name}}</h3>
 						<div class="clear"></div>
 						<a href="javascript:;" class="btn btn-primary addbusiness" data-toggle="modal" data-target="#addbusiness-popup">Add Business</a>
 						<form class="" action="{{route('postEditBusiness',['id_business'=>$info_business->id])}}" method="post" accept-charset="utf-8" data-parsley-validate>

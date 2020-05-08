@@ -198,22 +198,25 @@
 				    				</div>
 				    			</div>
 								@endforeach	
-								{!!$list_reviews -> appends(request()->except('page')) -> links()!!}							
+								<div style="text-align: center;">
+									{!!$list_reviews -> appends(request()->except('page')) -> links()!!}
+								</div>						
 				    		@endif
 				    		<div style="text-align: right;">
-				    			{{-- @if(Auth::check())
-					    			@if(Auth::user()->check_vote($info_business->id,null))
+				    			@if(Auth::check())
+					    			{{-- @if(Auth::user()->check_vote($info_business->id,null))
 							    		<a style="color: #fff;" href="javascript:;" class="btn vote vote_now" data-toggle="modal" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}">Vote</a>
 							    	@else
 							    		<a  href="javascript:;"  class="btn unvote vote" style="color: #fff;" data-id="{{$info_business->id}}" data-name="{{$info_business->name}}" >My vote</a>
-							    	@endif
+							    	@endif --}}
+							    	<a href="javascript:;" data-toggle="modal" data-target="#voteModal" class="btn btn-primary" style="color: #fff;">Write Review</a>
 						    	@else
 
-				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a>
-				    			@endif --}}
-						    		<a href="javascript:;" data-toggle="modal" data-target="#voteModal" class="btn btn-primary" style="color: #fff;">Write Review</a>
+				    				{{-- <a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-warning" style="color: #fff;">Vote</a> --}}
+				    				<a href="javascript:;" data-toggle="modal" data-target="#loginModal" class="btn btn-primary" style="color: #fff;">Write Review</a>
+				    			@endif
+						    		
 						    	</div>
-				    		
 
 				    		<!-- end Knight modan review-->
 					    </div>
@@ -934,5 +937,35 @@
 			    }
 		  	});
 		})
+// review business
+
+$(document).on('click','.yesforvote',function(e){
+  e.preventDefault();
+  var url = $('input[name=postReviewFrontEnd]').val();
+  var form = $(this).closest('form');
+  var target = $('#businessreview');
+  var modal = $(this).closest('#voteModal');
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type:'POST',
+    url: url,
+    data: form.serialize(),
+    success:function(res){
+      if(res.success == true){
+          modal.modal('hide');
+          console.log(res.data);
+          target.html(res.data);
+          swal({
+            title: res.message,
+            timer: 2000
+          });
+      }else{
+        modal.find('.e-lang').html("*"+res.message);
+      }
+    }
+  });
+});
 	</script>
 @stop
