@@ -24,6 +24,9 @@ class Advertisement extends Model
 	public function plan_detail(){
 		return $this -> belongsTo('App\PlanDetail', 'plan_detail_id', 'id');
 	}
+	public function payment(){
+		return $this -> belongsTo('App\Payment', 'id', 'adv_id');
+	}
 
 	public function state(){
 		return $this -> belongsTo('App\State');

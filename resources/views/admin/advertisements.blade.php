@@ -31,16 +31,18 @@
 	                	<div class="tab-pane fade active show" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="ads_pending">
 	                		<h3>Pending Pay to Home</h3>
 						    <div class="panel-body panel-full">
-						    	<table class="table table-bordered" id="table">
+						    	<table class="table table-bordered" id="table" style="text-align: left;">
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
-						    				<th>City</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="width: 20%;">Transaction Deails</th>
+						    				<th>Package</th>
+						    				<th style="width: 8%;">Payment Gross</th>
+						    				<!-- <th>City</th>
 						    				<th>State</th>
-						    				<th>Duration</th>
+						    				<th>Duration</th> -->
 						    				<th>Pic</th>
 						    				<th>Status</th>
 						    				<th>Manage</th>
@@ -62,12 +64,14 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
-						    				<th>City</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="width: 20%;">Transaction Deails</th>
+						    				<th>Package</th>
+						    				<th style="width: 8%;">Payment Gross</th>
+						    				<!-- <th>City</th>
 						    				<th>State</th>
-						    				<th>Duration</th>
+						    				<th>Duration</th> -->
 						    				<th>Pic</th>
 						    				<th>Status</th>
 						    				<th>Manage</th>
@@ -89,12 +93,14 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
-						    				<th>City</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="width: 20%;">Transaction Deails</th>
+						    				<th>Package</th>
+						    				<th style="width: 8%;">Payment Gross</th>
+						    				<!-- <th>City</th>
 						    				<th>State</th>
-						    				<th>Duration</th>
+						    				<th>Duration</th> -->
 						    				<th>Pic</th>
 						    				<th>Status</th>
 						    				<th>Manage</th>
@@ -118,20 +124,18 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
-						    				<th>City</th>
-						    				<th>State</th>
-						    				<th>Duration</th>
+						    				<th style="text-align: left;">Transaction Date</th>
+						    				<th style="text-align: left;">Expiration Date</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="text-align: left;">Status</th>
 						    				<th>Pic</th>
-						    				<th>Status</th>
 						    				<th>Manage</th>
 						    			</tr>
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_active_home as $ad)
-						    			    @include('admin.content-ad', [$ad])
+						    			    @include('admin.content-adv.active_pay_to_home', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -145,20 +149,22 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
+						    				<th style="text-align: left;">Transaction Date</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="text-align: left;">Eat</th>
+						    				<th>Status</th>
 						    				<th>City</th>
 						    				<th>State</th>
 						    				<th>Duration</th>
-						    				<th>Pic</th>
-						    				<th>Status</th>
+						    				<th>Expiration</th>						    				
+						    				<th>Pic</th>						    				
 						    				<th>Manage</th>
 						    			</tr>
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_active_search as $ad)
-						    			    @include('admin.content-ad', [$ad])
+						    			    @include('admin.content-adv.active_pay_to_search', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -172,20 +178,22 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
+						    				<th style="text-align: left;">Transaction Date</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="text-align: left;">Eat</th>
+						    				<th>Status</th>
 						    				<th>City</th>
 						    				<th>State</th>
 						    				<th>Duration</th>
-						    				<th>Pic</th>
-						    				<th>Status</th>
+						    				<th>Expiration</th>						    				
+						    				<th>Pic</th>						    				
 						    				<th>Manage</th>
 						    			</tr>
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_active_feature as $ad)
-						    			    @include('admin.content-ad', [$ad])
+						    			    @include('admin.content-adv.active_pay_to_search', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -201,20 +209,22 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
+						    				<th style="text-align: left;">Transaction Date</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="text-align: left;">Eat</th>
+						    				<th>Status</th>
 						    				<th>City</th>
 						    				<th>State</th>
 						    				<th>Duration</th>
-						    				<th>Pic</th>
-						    				<th>Status</th>
+						    				<th>Expiration</th>						    				
+						    				<th>Pic</th>						    				
 						    				<th>Manage</th>
 						    			</tr>
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_expired_home as $ad)
-						    			    @include('admin.content-ad', [$ad])
+						    			    @include('admin.content-adv.active_pay_to_search', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -228,20 +238,22 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
+						    				<th style="text-align: left;">Transaction Date</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="text-align: left;">Eat</th>
+						    				<th>Status</th>
 						    				<th>City</th>
 						    				<th>State</th>
 						    				<th>Duration</th>
-						    				<th>Pic</th>
-						    				<th>Status</th>
+						    				<th>Expiration</th>						    				
+						    				<th>Pic</th>						    				
 						    				<th>Manage</th>
 						    			</tr>
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_expired_search as $ad)
-						    			    @include('admin.content-ad', [$ad])
+						    			    @include('admin.content-adv.active_pay_to_search', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>
@@ -255,20 +267,22 @@
 						    		<thead>
 						    			<tr>
 						    				<th>#</th>
-						    				<th>Transaction Date</th>
-						    				<th>User</th>
-						    				<th>Business Name</th>
+						    				<th style="text-align: left;">Transaction Date</th>
+						    				<th style="text-align: left;">Customer Name</th>
+						    				<th style="text-align: left;">Business Name</th>
+						    				<th style="text-align: left;">Eat</th>
+						    				<th>Status</th>
 						    				<th>City</th>
 						    				<th>State</th>
 						    				<th>Duration</th>
-						    				<th>Pic</th>
-						    				<th>Status</th>
+						    				<th>Expiration</th>						    				
+						    				<th>Pic</th>						    				
 						    				<th>Manage</th>
 						    			</tr>
 						    		</thead>
 						    		<tbody id="show-content">
 						    			@foreach ($ads_expired_feature as $ad)
-						    			    @include('admin.content-ad', [$ad])
+						    			    @include('admin.content-adv.active_pay_to_search', [$ad])
 						    			@endforeach
 						    		</tbody>
 						    	</table>

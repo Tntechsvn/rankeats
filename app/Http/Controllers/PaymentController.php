@@ -216,7 +216,8 @@ class PaymentController extends Controller
                 'transaction_id' => $payment->getId(),
                 'payment_amount' => $payment->transactions[0]->amount->total,
                 'payment_status' => $payment->getState(),
-                'invoice_id' => $payment->transactions[0]->invoice_number
+                'invoice_id' => $payment->transactions[0]->invoice_number,
+                'adv_id' => $ad_id
             ];
             $this->model_payment->addNew($data);
             
