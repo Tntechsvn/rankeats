@@ -273,6 +273,8 @@ public function ajaxEatBusiness(Request $request){
 public function sign_up(){
     $Country = Country::where('code','=','US')->first();
     $state =  $Country->states()->get();
+    /*$list_old_city = $state->where('name','=','Alabama')->first()->cities;
+    return $list_old_city;*/
     return view('layouts.register',compact('state'));
 }
 public function sign_in(){

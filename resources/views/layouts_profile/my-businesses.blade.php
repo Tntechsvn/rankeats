@@ -72,7 +72,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<p>Add Business Opening</p>
+								<p>Business Opening</p>
 								@php
 									$date = date("Y-m-d",strtotime($info_business->day_opening))
 								@endphp
