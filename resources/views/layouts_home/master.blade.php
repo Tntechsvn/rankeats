@@ -27,6 +27,7 @@
 
 <link href="lightbox/css/lightgallery.css" rel="stylesheet">
 <link href="lightbox/css/custom-style-lightbox.css" rel="stylesheet">
+<link href="css/flexslider.css" rel="stylesheet">
 {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
 
 <!-- jQuery library -->
