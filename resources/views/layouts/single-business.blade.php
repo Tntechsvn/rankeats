@@ -117,7 +117,7 @@
 					    	<p>
 					    		<i class="fas fa-user"></i>
 					    		<span class="bold">Owner / Manager :</span>
-					    		<span class="bold" style="color: #0073bb">{{$info_business->name}}</span>
+					    		<span class="bold" style="color: #0073bb"><a href="{{route('user.profile',$info_business->user->id)}}">{{$info_business->user->name ?? ""}}</a></span>
 					    	</p>
 					    	<p>
 					    		<i class="fas fa-phone-alt"></i>
@@ -361,13 +361,22 @@
 			<input type="hidden" name="business" value="{{$info_business->id}}">
 			<div class="form-group">
 				Choose eat
-				<select class="test choose_dish" multiple="multiple" name="Category_type[]" data-parsley-required>
+				{{-- <select class="test choose_dish" multiple="multiple" name="Category_type[]" data-parsley-required>
 					<optgroup>
 						@foreach($info_business->business_category as $menu)
 							<option value="{{$menu->id}}">{{$menu->category_name}}</option>
 						@endforeach
 					</optgroup>
-				</select>
+				</select> --}}
+				<input type="text" class="form-control eat_item" value="" data-parsley-required />
+				<input type="hidden" name="Category_type[]" id="eat_item"  value=""/>
+				<div id="ListEat" class="scroll_search d-none" style="top:30px;">
+					<ul class="dropdown-menu" style="display:block;width:100%;">
+						@foreach($info_business->business_category as $menu)
+							<li class="eat_name form-search-val" data-id="{{$menu->id}}">{{$menu->category_name}}</li>
+						@endforeach
+					</ul>
+				</div>
 				<span class="errors e-dish"></span>
 			</div>
 			<div class="" style="overflow: unset;">
@@ -387,7 +396,7 @@
 	    			@endphp
     			@endif
 			    <div class="active {{$hidden}}" id="vote">
-		    		<a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a>
+		    		{{-- <a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a> --}}
 			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	
 			    	<div class="form-group">
@@ -607,6 +616,22 @@
 	<script src="lightbox/js/lightgallery-all.min.js"></script>
 	<script type="text/javascript" src="js/fSelect.js"></script>
 	<script type="text/javascript">
+		$('.eat_item').focusin(function(){
+			$('#ListEat').fadeIn();
+		}).focusout(function(){
+			$('#ListEat').fadeOut();
+		});
+
+		$(document).on('click','.eat_name',function(){
+			var name = $(this).text();
+			console.log(name);
+			var id = $(this).data('id');
+			$("#eat_item").val('');
+			$("#eat_item").val(id);
+			$(this).closest('form').find('.eat_item').val('');
+			$(this).closest('form').find('.eat_item').val(name);
+			$('#ListEat').fadeOut();
+		});
 
 		$('.test').fSelect();
 
