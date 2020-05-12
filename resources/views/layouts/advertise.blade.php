@@ -378,7 +378,8 @@
             @if($ads < 3)
             <input style="padding-left: 12px;" class="form-control " type="text" name="date_active" value="{{date('m-d-Y')}}" placeholder="mm/dd/YYYY" readonly>
             @else
-            <input style="padding-left: 12px;" class="form-control datepicker" type="text" name="date_active" value="" placeholder="mm/dd/YYYY">
+            {{--<input style="padding-left: 12px;" class="form-control datepicker" type="text" name="date_active" value="" placeholder="mm/dd/YYYY">--}}
+            <input style="padding-left: 12px;" class="form-control " type="text" name="date_active" value="{{date('m-d-Y',strtotime($ads_active_home->first()->expiration_date))}}" placeholder="mm/dd/YYYY" readonly>
             @endif
           </div> 
          

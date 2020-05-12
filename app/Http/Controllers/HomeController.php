@@ -37,7 +37,9 @@ class HomeController extends Controller{
         $this->user = Auth::user();
         $category = Category::where('status','=',1)->get();
         $all_page = Page::all();
-        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user,'state'=>$state]);
+        $ads_active_home = Advertisement::home()->active()->take(3)->get();
+
+        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user,'state'=>$state,'ads_active_home'=>$ads_active_home]);
     }
 
     public function home(){
@@ -310,7 +312,8 @@ public function info_management(){
  return view('layouts_profile.info-management',compact('info_business','category'));
 }
 public function advertise(){
-    $ads_active_home = Advertisement::home()->active()->take(3)->get();
+    $ads_active_home = Advertisement::home()->active()->take(3)->orderBy('expiration_date','asc')->get();
+    //return $ads_active_home->first();
     $plan_details = new PlanDetail;
     return view('layouts.advertise', compact('plan_details','ads_active_home'));
 }
