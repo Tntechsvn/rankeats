@@ -1325,7 +1325,7 @@ public function reaction_review(Request $request){
             ->where('category_name', 'LIKE', "%{$query}%")
             ->where('status','=',1)
             ->get();*/
-            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            $output = '<ul class="dropdown-menu" style="display:block;width:100%;">';
             if(count($data)>0){
                 foreach($data as $row)
                 {
@@ -1342,9 +1342,6 @@ public function reaction_review(Request $request){
         }
     }
         public function searchcity(Request $request){
-            // return response()->json([
-            //     'data' => $request->state_id
-            // ]); 
             
             if($request->get('query'))
             {
@@ -1359,7 +1356,30 @@ public function reaction_review(Request $request){
                     $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
                 })->get();
 
-                $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+                $output = '<ul class="dropdown-menu" style="display:block;width:100%;">';
+                if(count($data)>0){
+                    foreach($data as $row)
+                    {
+                        $output .= '<li class="city_name form-search-val" data-city="'.$row->city_id.'">'.$row->city_name.'</li>';             
+                    }
+                }else{
+                    $output .= '<li><a>'."Do Not Exist In The System".'</a></li>';   
+                }
+                
+                $output .= '</ul>';
+                echo $output;
+            }else{
+                $keyword = $request->get('query');
+                $data = Country::select('countries.*','cities.name as city_name','cities.id as city_id')
+                ->leftjoin('states','states.country_id','=','countries.id')            
+                ->leftjoin('cities','cities.state_id','=','states.id')
+                ->where('state_id','=',$request->get('state_id'))
+                ->where('code','=','US')
+                ->where(function($query) use ($keyword){            
+                    $query->where('cities.name', 'LIKE', '%'.$keyword.'%');
+                })->get();
+
+                $output = '<ul class="dropdown-menu" style="display:block;width:100%;">';
                 if(count($data)>0){
                     foreach($data as $row)
                     {

@@ -2533,6 +2533,7 @@ width: 30% !important;
 }
 .form-group {
 	position: relative;
+	clear: both;
 }
 
 .errors {
@@ -2565,7 +2566,12 @@ width: 30% !important;
 	padding-left: 45px;
 }
 
+#stateList .dropdown-menu,
+#cityList .dropdown-menu {
+	max-height: 300px;
+	overflow-y: scroll;
 
+}
 
 
 

@@ -1,21 +1,14 @@
 <tr>
 	@php
-		$date = date("d-m-Y",strtotime($ad->payment->created_at));
+		$date_ad_paid  = date("d-m-Y",strtotime($ad->payment->created_at));
+		$expiration_date = date("d-m-Y",strtotime($ad->expiration_date));
 	@endphp
 	<td>{{$ad->id}}</td>
-	<td style="text-align: left;">{{$ad->business->user->name}}</td>	
+	<td style="text-align: left;">{{$date_ad_paid}}</td>
+	<td style="text-align: left;">{{$expiration_date}}</td>
+	<td style="text-align: left;">{{$ad->business->user->name}}</td>
 	<td style="text-align: left;">{{$ad->business->name}}</td>
-	<td>
-		<b>Transaction ID:</b> <br>{{$ad->payment->transaction_id}}<br>
-		<b>Transaction Date:</b> <br>{{$date}}<br>
-		<b>Payment Method:</b><br>Paypal
-	</td>
-	<td>
-		<strong>Requested:</strong><br>{{$ad->plan_detail->payment_plan->name}}<br>
-		<strong>Status:</strong><br>{{$ad->payment->payment_status}}
-	 </td>
-
-	<td>{{$ad->payment->payment_amount}} $</td>
+	<td>Active</td>
 	<td>
 		<div id = "gallery">
 			<div class = "row text-center">
@@ -27,15 +20,7 @@
 			</div>
 		</div>
 	</td>
-	<td>
-		@if($ad->checkStatus() > 3)
-			<span class="bg-danger ">FULL</span>
-		@elseif($ad->checkStatus() < 3)
-			<span class="bg-success ">OPEN</span>
-		@else
-			<span class="bg-warning ">PENDING</span>
-		@endif
-	</td>
+	
 	<td>
 		<a class="btn btn-danger del_lang" data-id="{{$ad->id }}" onclick="delLangFunction()"><i class="fas fa-times" style="color: #fff;"></i></a>
 		@if($ad->status == 1)

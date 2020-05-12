@@ -464,11 +464,31 @@
     }).focusout(function(){
       // $('#cityList').fadeOut(); 
     });
+
+
+
+
+
     $(document).on('click','.state_name',function(e){
       var state_id = $(this).data('state');
       $(this).closest('.form-group').find('input[name=select-state]').val($(this).text());;
       $(this).closest('.form-group').find('input[name=state]').val(state_id);
       $(this).closest('.form-group').find('#stateList').fadeOut();
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type:'POST',
+        url: "{{ route('searchcity') }}",
+        data: {
+          state_id:state_id,
+          query: null
+        },
+        success:function(res){
+          $('#cityList').fadeIn(); 
+          $('#cityList').html(res); 
+        }
+      });
 
     });
     $(document).on('click','.city_name',function(){

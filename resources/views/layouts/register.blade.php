@@ -16,31 +16,31 @@
 						<input type="hidden" name="type" value="1"/>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-								<input type="text" class="form-control" name="firstname" placeholder="First Name" value="{{old('firstname')}}">
+								<input type="text" class="form-control" name="firstname" placeholder="First Name" value="{{old('firstname')}}" autocomplete="nope">
 							</div>
 							<span class="bg-danger color-palette error-firstname">{{$errors -> first('firstname')}}</span>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-								<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}">
+								<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}" autocomplete="nope">
 							</div>
 							<span class="bg-danger color-palette error-lastname">{{$errors -> first('lastname')}}</span>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-								<input type="text" class="form-control " name="name"  placeholder="Username" value="{{old('name')}}">
+								<input type="text" class="form-control " name="name"  placeholder="Username" value="{{old('name')}}" autocomplete="nope">
 							</div>
 								<span class="bg-danger color-palette error-name">{{$errors -> first('name')}}</span>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon">@</span>
-								<input type="email" class="form-control " name="email" placeholder="Email" value="{{old('email')}}">
+								<input type="email" class="form-control " name="email" placeholder="Email" value="{{old('email')}}" autocomplete="nope">
 							</div>
 								<span class="bg-danger color-palette error-email">{{$errors -> first('email')}}</span>
 						</div>
 						<div class="form-group">
 							<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-								<input type="password" class="form-control " name="password"  placeholder="Password">
+								<input type="password" class="form-control " name="password"  placeholder="Password" autocomplete="nope">
 							</div>
 								<span class="bg-danger color-palette error-password">{{$errors -> first('password')}}</span>
 						</div>
@@ -65,80 +65,108 @@
 						<input type="hidden" name="type" value="2"/>
 						<div class="form-group ">
 							<div class="input-group"> <span class="input-group-addon"><i class="fas fa-location-arrow"></i></span>
-								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="number_location" value="1" readonly>
+								<input class="form-control number-location" data-parsley-min="1" min="1" data-parsley-required  type="number" name="number_location" value="{{(old('number_location')) ?? 1}}" readonly>
 								<button class="button-number-location button-number-location-plus" ><i class="fas fa-plus"></i></button>
 								<button class="button-number-location m-r-10 button-number-location-minus" ><i class="fas fa-minus"></i></button>
 							</div>
 							<span class="bg-danger color-palette"></span>
 						</div>
-						<div class="location">
-							<div class="location-address">
-								<h4>Business Location</h4>
-								<div class="form-group">
-									<select class="form-control select2 choose-state" name="state1" data-parsley-required>
-											<option value=""disabled selected="selected">Select State</option>
-											@foreach($state as $data)
-											<option value="{{$data->name}}">{{$data->name}}</option>
-											@endforeach
-									</select>
-									<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
-								</div>
-								<div class="form-group">
-									<select class="form-control select2 choose-city" name="city1" style="width: 100%;" data-parsley-required>
-										<option  value="" disabled selected >Select City</option>
-									</select>
-									<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
-									
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control choose-address" name="address1"  placeholder="Address" value="{{old('address')}}" data-parsley-required>
-									<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control choose-zipcode" name="zipcode1" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required>
-									<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+						
+							<div class="location">
+								<div class="location-address">
+									@if((old('number_location')))
+										@for($i=1; $i<=old('number_location');$i++)
+											<h4>Business Location</h4>
+											<div class="form-group">
+												<select class="form-control select2 choose-state" name="state{{$i}}" data-parsley-required>
+													<option value=""disabled selected="selected">Select State</option>
+													@foreach($state as $data)
+													<option value="{{$data->name}}">{{$data->name}}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="form-group">
+												<select class="form-control select2 choose-city" name="city{{$i}}" style="width: 100%;" data-parsley-required>
+													<option  value="" disabled selected >Select City</option>
+												</select>
+
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control choose-address" name="address{{$i}}"  placeholder="Address" value="{{old('address'.$i)}}" data-parsley-required autocomplete="nope">
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control choose-zipcode" name="zipcode{{$i}}" placeholder="Zip Code" value="{{old('zipcode'.$i)}}" data-parsley-required autocomplete="nope">
+											</div>
+										@endfor
+									@else							
+										<h4>Business Location</h4>
+										<div class="form-group">
+											<select class="form-control select2 choose-state" name="state1" data-parsley-required>
+												<option value=""disabled selected="selected">Select State</option>
+												@foreach($state as $data)
+												<option value="{{$data->name}}">{{$data->name}}</option>
+												@endforeach
+											</select>
+											<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+										</div>
+										<div class="form-group">
+											<select class="form-control select2 choose-city" name="city1" style="width: 100%;" data-parsley-required>
+												<option  value="" disabled selected >Select City</option>
+											</select>
+											<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control choose-address" name="address1"  placeholder="Address" value="{{old('address')}}" data-parsley-required autocomplete="nope">
+											<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control choose-zipcode" name="zipcode1" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required autocomplete="nope">
+											<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+										</div>								
+									@endif
 								</div>
 							</div>
-						</div>
+											
+						
 						<div class="detail">
 							<h4>Business Details</h4>
 							<div class="form-group">
-								<input type="text" class="form-control " name="name_business"  placeholder="Business Name" value="{{old('name_business')}}" data-parsley-required>
+								<input type="text" class="form-control " name="name_business"  placeholder="Business Name" value="{{old('name_business')}}" data-parsley-required autocomplete="nope">
 								<span class="bg-danger color-palette">{{$errors -> first('name_business')}}</span>
 							</div>
 						</div>
 						<div class="owner-manager">
 							<h4>Owner/Manager Details</h4>
 							<div class="form-group">
-								<div class="icon-group"> <span class="icon-form input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}" data-parsley-required>
+
+								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+									<input type="text" class="form-control" name="firstname"  placeholder="First Name" value="{{old('firstname')}}" data-parsley-required autocomplete="nope">
 								</div>
 								<span class="bg-danger color-palette">{{$errors -> first('firstname')}}</span>
 							</div>
 							<div class="form-group">
-								<div class="icon-group"> <span class="icon-form input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}" data-parsley-required>
-									
+
+								<div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+									<input type="text" class="form-control" name="lastname"  placeholder="Last Name" value="{{old('lastname')}}" data-parsley-required autocomplete="nope">
 								</div>
 								<span class="bg-danger color-palette">{{$errors -> first('lastname')}}</span>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="name" placeholder="Username" value="{{old('name')}}" data-parsley-required>
+								<input type="text" class="form-control" name="name" placeholder="Username" value="{{old('name')}}" data-parsley-required autocomplete="nope">
 								<span class="bg-danger color-palette">{{$errors -> first('name')}}</span>
-								
 							</div>
 
 							<div class="form-group">
-								<input type="text" class="form-control" name="email" placeholder="email" value="{{old('email')}}" data-parsley-required>
-								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>
-								
+								<input type="text" class="form-control" name="email" placeholder="email" value="{{old('email')}}" data-parsley-required autocomplete="nope">
+								<span class="bg-danger color-palette">{{$errors -> first('email')}}</span>								
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control " name="password"  placeholder="password" value="{{old('password')}}" data-parsley-required>
+								<input type="password" class="form-control " name="password"  placeholder="password" value="{{old('password')}}" data-parsley-required autocomplete="nope">
 								<span class="bg-danger color-palette">{{$errors -> first('password')}}</span>
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control " name="re_password" placeholder="re password" value="" data-parsley-required>
+								<input type="password" class="form-control " name="re_password" placeholder="re password" value="{{old('password')}}" data-parsley-required>
 								<span class="bg-danger color-palette">{{$errors -> first('re_password')}}</span>
 							</div>
 
@@ -159,15 +187,16 @@
 							</div>
 							<div class="form-group other-choose hidden">
 								<div class="">
-									<input type="text" class="form-control" name="other_choose" placeholder="Enter Other" value="{{old('other_choose')}}">
+									<input type="text" class="form-control" name="other_choose" placeholder="Enter Other" value="{{old('other_choose')}}" autocomplete="nope">
 								</div>
 							</div>
 							<div class="form-group">
 								<p style="clear: both;">Please enter the business number that can be verified online and call to confinm</p>
-								<div class="icon-group"> <span class="icon-form input-group-addon"><i class="fas fa-phone-alt"></i></span>
-									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="{{old('phone')}}" data-parsley-required>
-								</div>
-								<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
+
+								<div class="input-group"> <span class="input-group-addon"><i class="fas fa-phone-alt"></i></span>
+									<input type="text" class="form-control" name="phone"  placeholder="Business Phone" value="{{old('phone')}}" data-parsley-required autocomplete="nope">
+									<span class="bg-danger color-palette">{{$errors -> first('phone')}}</span>
+								</div>	
 							</div>
 						</div>
 						<div class="form-group" style="text-align: center;">
@@ -175,7 +204,6 @@
 							<button type="submit" class="btn btn-custom btn-lg">Submit</button>
 						</div>
 					</form>
-
 					<div class="clone location-address">
 						<h4>Business Location</h4>
 						<div class="form-group">
