@@ -49,6 +49,15 @@ window.select_city = function(){
           });       
     });
 }
+     function change_name_location(){
+      $('#location_register').find('.location-address').each(function(i){
+        $(this).find('h4').html('Business Location -'+(i+1));
+        $(this).find('.choose-zipcode').attr('name','zipcode'+(i+1));
+        $(this).find('.choose-state').attr('name','state'+(i+1));
+        $(this).find('.choose-city').attr('name','city'+(i+1));
+        $(this).find('.choose-address').attr('name','address'+(i+1));
+      });
+    }
 
     $(document).on('click','.button-number-location-plus',function(e){
       e.preventDefault();
@@ -58,6 +67,14 @@ window.select_city = function(){
       }else{
         $(this).closest('form').find('.number-location').val(parseInt(value)+1);
       }
+      var form = $('#register_business');
+      var target = form.find('.location');
+      var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
+      
+      target.append(clone);
+      change_name_location();
+      select_city();
+
     });
 
     $(document).on('click','.button-number-location-minus',function(e){
@@ -65,47 +82,48 @@ window.select_city = function(){
       var value = $(this).closest('form').find('.number-location').val();
       if(value == "" || value == 1){
         $(this).closest('form').find('.number-location').val(1);
+        return false;
       }else{
         $(this).closest('form').find('.number-location').val(parseInt(value)-1);
       }
-      
+      $('#location_register').find('.location-address:last-child').remove();
     });
-  function change_location(){
-    var form = $('#register_business');
-    var target = form.find('.location');
-    var val = form.find('.number-location').val();
-    target.html('');
-    if(val > 1){
-      var i = 1;
-      for(i = 1; i <= val; i++){
-        var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
-        clone.find('h4').html('Business Location -'+i);
-        clone.find('.choose-zipcode').attr('name','zipcode'+i);
-        clone.find('.choose-state').attr('name','state'+i);
-        clone.find('.choose-city').attr('name','city'+i);
-        clone.find('.choose-address').attr('name','address'+i);
-        target.append(clone);
-      }
-    }else{
-      var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
-      clone.find('h4').html('Business Location');
-      clone.find('.choose-zipcode').attr('name','zipcode1');
-      clone.find('.choose-state').attr('name','state1');
-      clone.find('.choose-city').attr('name','city1');
-      clone.find('.choose-address').attr('name','address1');
-      target.append(clone);
-    }
-    select_city();
-  }
-  $(document).on('change','.number-location',function(){
-    change_location();
-  });
-  $(document).on('click','.button-number-location-minus',function(){
-    change_location();
-  });
-  $(document).on('click','.button-number-location-plus',function(){
-    change_location();
-  });
+  // function change_location(){
+  //   var form = $('#register_business');
+  //   var target = form.find('.location');
+  //   var val = form.find('.number-location').val();
+  //   target.html('');
+  //   if(val > 1){
+  //     var i = 1;
+  //     for(i = 1; i <= val; i++){
+  //       var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
+  //       clone.find('h4').html('Business Location -'+i);
+  //       clone.find('.choose-zipcode').attr('name','zipcode'+i);
+  //       clone.find('.choose-state').attr('name','state'+i);
+  //       clone.find('.choose-city').attr('name','city'+i);
+  //       clone.find('.choose-address').attr('name','address'+i);
+  //       target.append(clone);
+  //     }
+  //   }else{
+  //     var clone = form.closest('.register-form').find('.clone.location-address').clone().removeClass('clone');
+  //     clone.find('h4').html('Business Location');
+  //     clone.find('.choose-zipcode').attr('name','zipcode1');
+  //     clone.find('.choose-state').attr('name','state1');
+  //     clone.find('.choose-city').attr('name','city1');
+  //     clone.find('.choose-address').attr('name','address1');
+  //     target.append(clone);
+  //   }
+  //   select_city();
+  // }
+  // $(document).on('change','.number-location',function(){
+  //   change_location();
+  // });
+
+ 
+  // $(document).on('click','.button-number-location-minus',function(){
+  //   change_location();
+  // });
+
 
 // sign-in
 $(document).on('click','.signin-popup',function(e){
