@@ -435,14 +435,13 @@
           method:"POST",
           data:{query:query, _token:_token},
           success:function(data){
-            console.log(data);
             $('#stateList').fadeIn();  
             $('#stateList').html(data);
           }
         });
       }
     }).focusout(function(){
-      $('#stateList').fadeOut(); 
+      // $('#stateList').fadeOut(); 
     });
 
     $('.city').keyup(function(){ 
@@ -457,19 +456,17 @@
           method:"POST",
           data:{query:query, _token:_token, state_id},
           success:function(data){
-            console.log(data.data);
             $('#cityList').fadeIn();  
             $('#cityList').html(data);
           }
         });
       }
     }).focusout(function(){
-      $('#cityList').fadeOut(); 
+      // $('#cityList').fadeOut(); 
     });
-    $(document).on('click','.state_name',function(){
-      var state_name = $(this).html();
+    $(document).on('click','.state_name',function(e){
       var state_id = $(this).data('state');
-      $(this).closest('.form-group').find('input[name=select-state]').val(state_name);
+      $(this).closest('.form-group').find('input[name=select-state]').val($(this).text());;
       $(this).closest('.form-group').find('input[name=state]').val(state_id);
       $(this).closest('.form-group').find('#stateList').fadeOut();
 
