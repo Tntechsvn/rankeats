@@ -75,21 +75,27 @@
 							<div class="location">
 								<div class="location-address">
 									@if((old('number_location')))
-										@for($i=1; $i<=old('number_location');$i++)
+										@for($i=1; $i<=old('number_location');$i++)	
+										@php
+											$state_old = 'state'.$i;
+										@endphp									
 											<h4>Business Location</h4>
 											<div class="form-group">
 												<select class="form-control select2 choose-state" name="state{{$i}}" data-parsley-required>
 													<option value=""disabled selected="selected">Select State</option>
 													@foreach($state as $data)
-													<option value="{{$data->name}}">{{$data->name}}</option>
+													<option value="{{$data->name}}" {{(old($state_old) == $data->name) ? 'selected' : ''}}>{{$data->name}}</option>
 													@endforeach
 												</select>
 											</div>
 											<div class="form-group">
 												<select class="form-control select2 choose-city" name="city{{$i}}" style="width: 100%;" data-parsley-required>
-													<option  value="" disabled selected >Select City</option>
+													@if(old('city'.$i))
+														<option  value="{{old('city'.$i)}}" disabled selected >{{old('city'.$i)}}</option>
+													@else
+														<option  value="" disabled selected >Select City</option>
+													@endif
 												</select>
-
 											</div>
 											<div class="form-group">
 												<input type="text" class="form-control choose-address" name="address{{$i}}"  placeholder="Address" value="{{old('address'.$i)}}" data-parsley-required autocomplete="nope">
