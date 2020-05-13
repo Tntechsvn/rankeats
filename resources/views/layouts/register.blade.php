@@ -72,7 +72,7 @@
 							<span class="bg-danger color-palette"></span>
 						</div>
 						
-							<div class="location">
+							<div class="location" id="location_register">
 								<div class="location-address">
 									@if((old('number_location')))
 										@for($i=1; $i<=old('number_location');$i++)	
