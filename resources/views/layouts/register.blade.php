@@ -73,65 +73,72 @@
 						</div>
 						
 							<div class="location" id="location_register">
-								<div class="location-address">
+								
 									@if((old('number_location')))
 										@for($i=1; $i<=old('number_location');$i++)	
-										@php
-											$state_old = 'state'.$i;
-										@endphp									
-											<h4>Business Location</h4>
-											<div class="form-group">
-												<select class="form-control select2 choose-state" name="state{{$i}}" data-parsley-required>
-													<option value=""disabled selected="selected">Select State</option>
-													@foreach($state as $data)
-													<option value="{{$data->name}}" {{(old($state_old) == $data->name) ? 'selected' : ''}}>{{$data->name}}</option>
-													@endforeach
-												</select>
-											</div>
-											<div class="form-group">
-												<select class="form-control select2 choose-city" name="city{{$i}}" style="width: 100%;" data-parsley-required>
-													@if(old('city'.$i))
-														<option  value="{{old('city'.$i)}}" disabled selected >{{old('city'.$i)}}</option>
-													@else
-														<option  value="" disabled selected >Select City</option>
-													@endif
-												</select>
-											</div>
-											<div class="form-group">
-												<input type="text" class="form-control choose-address" name="address{{$i}}"  placeholder="Address" value="{{old('address'.$i)}}" data-parsley-required autocomplete="nope">
-											</div>
-											<div class="form-group">
-												<input type="text" class="form-control choose-zipcode" name="zipcode{{$i}}" placeholder="Zip Code" value="{{old('zipcode'.$i)}}" data-parsley-required autocomplete="nope">
+											@php
+												$state_old = 'state'.$i;
+												$list_old_city = $state->where('name','=',old($state_old))->first()->cities;
+											@endphp	
+											<div class="location-address">								
+												<h4>Business Location -{{$i}}</h4>
+												<div class="form-group">
+													<select class="form-control select2 choose-state" name="state{{$i}}" data-parsley-required>
+														<option value=""disabled selected="selected">Select State</option>
+														@foreach($state as $data)
+														<option value="{{$data->name}}" {{(old($state_old) == $data->name) ? 'selected' : ''}}>{{$data->name}}</option>
+														@endforeach
+													</select>
+												</div>
+												<div class="form-group">
+													<select class="form-control select2 choose-city" name="city{{$i}}" style="width: 100%;" data-parsley-required>
+														@if(old('city'.$i))															
+															@foreach($list_old_city as $val_city)
+																<option  value="{{$val_city->name}}"  {{(old('city'.$i) == $val_city->name) ? 'selected' : ''}} >{{$val_city->name}}</option>
+															@endforeach
+														@else
+															<option  value="" disabled selected >Select City</option>
+														@endif
+													</select>
+												</div>
+												<div class="form-group">
+													<input type="text" class="form-control choose-address" name="address{{$i}}"  placeholder="Address" value="{{old('address'.$i)}}" data-parsley-required autocomplete="nope">
+												</div>
+												<div class="form-group">
+													<input type="text" class="form-control choose-zipcode" name="zipcode{{$i}}" placeholder="Zip Code" value="{{old('zipcode'.$i)}}" data-parsley-required autocomplete="nope">
+												</div>
 											</div>
 										@endfor
-									@else							
-										<h4>Business Location</h4>
-										<div class="form-group">
-											<select class="form-control select2 choose-state" name="state1" data-parsley-required>
-												<option value=""disabled selected="selected">Select State</option>
-												@foreach($state as $data)
-												<option value="{{$data->name}}">{{$data->name}}</option>
-												@endforeach
-											</select>
-											<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
-										</div>
-										<div class="form-group">
-											<select class="form-control select2 choose-city" name="city1" style="width: 100%;" data-parsley-required>
-												<option  value="" disabled selected >Select City</option>
-											</select>
-											<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
+									@else	
+										<div class="location-address">						
+											<h4>Business Location -1</h4>
+											<div class="form-group">
+												<select class="form-control select2 choose-state" name="state1" data-parsley-required>
+													<option value=""disabled selected="selected">Select State</option>
+													@foreach($state as $data)
+													<option value="{{$data->name}}">{{$data->name}}</option>
+													@endforeach
+												</select>
+												<span class="bg-danger color-palette">{{$errors -> first('state')}}</span>
+											</div>
+											<div class="form-group">
+												<select class="form-control select2 choose-city" name="city1" style="width: 100%;" data-parsley-required>
+													<option  value="" disabled selected >Select City</option>
+												</select>
+												<span class="bg-danger color-palette">{{$errors -> first('city')}}</span>
 
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control choose-address" name="address1"  placeholder="Address" value="{{old('address')}}" data-parsley-required autocomplete="nope">
-											<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control choose-zipcode" name="zipcode1" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required autocomplete="nope">
-											<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
-										</div>								
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control choose-address" name="address1"  placeholder="Address" value="{{old('address')}}" data-parsley-required autocomplete="nope">
+												<span class="bg-danger color-palette">{{$errors -> first('address')}}</span>
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control choose-zipcode" name="zipcode1" placeholder="Zip Code" value="{{old('zipcode')}}" data-parsley-required autocomplete="nope">
+												<span class="bg-danger color-palette">{{$errors -> first('zipcode')}}</span>
+											</div>	
+
+										</div>							
 									@endif
-								</div>
 							</div>
 											
 						
