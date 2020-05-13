@@ -351,7 +351,7 @@
 
           <div class="form-group">
             <input type="text" class="state" autocomplete="off" value="" name="select-state" placeholder="Select State" required>
-            <div id="stateList"></div>
+            <div id="stateList" class="scroll_search"></div>
             
             <input type="hidden" name="state" id="state_searech" value="">
           </div>
@@ -367,7 +367,7 @@
           <div class="form-group">
             <input type="text" class="city" autocomplete="off" value="" name="select-city" placeholder="Select City" required>
             <input type="hidden" name="city" id="city_searech" value="">
-            <div id="cityList"></div>
+            <div id="cityList" class="scroll_search"></div>
           </div>
 
           <div class="form-group">
@@ -378,7 +378,8 @@
             @if($ads < 3)
             <input style="padding-left: 12px;" class="form-control " type="text" name="date_active" value="{{date('m-d-Y')}}" placeholder="mm/dd/YYYY" readonly>
             @else
-            <input style="padding-left: 12px;" class="form-control datepicker" type="text" name="date_active" value="" placeholder="mm/dd/YYYY">
+            {{--<input style="padding-left: 12px;" class="form-control datepicker" type="text" name="date_active" value="" placeholder="mm/dd/YYYY">--}}
+            <input style="padding-left: 12px;" class="form-control " type="text" name="date_active" value="{{date('m-d-Y',strtotime($ads_active_home->first()->expiration_date))}}" placeholder="mm/dd/YYYY" readonly>
             @endif
           </div> 
          
@@ -435,7 +436,6 @@
           method:"POST",
           data:{query:query, _token:_token},
           success:function(data){
-            console.log(data);
             $('#stateList').fadeIn();  
             $('#stateList').html(data);
           }
@@ -457,7 +457,6 @@
           method:"POST",
           data:{query:query, _token:_token, state_id},
           success:function(data){
-            console.log(data.data);
             $('#cityList').fadeIn();  
             $('#cityList').html(data);
           }
@@ -466,12 +465,31 @@
     }).focusout(function(){
       $('#cityList').fadeOut(); 
     });
-    $(document).on('click','.state_name',function(){
-      var state_name = $(this).html();
+
+
+
+
+
+    $(document).on('click','.state_name',function(e){
       var state_id = $(this).data('state');
-      $(this).closest('.form-group').find('input[name=select-state]').val(state_name);
+      $(this).closest('.form-group').find('input[name=select-state]').val($(this).text());;
       $(this).closest('.form-group').find('input[name=state]').val(state_id);
       $(this).closest('.form-group').find('#stateList').fadeOut();
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type:'POST',
+        url: "{{ route('searchcity') }}",
+        data: {
+          state_id:state_id,
+          query: null
+        },
+        success:function(res){
+          $('#cityList').fadeIn(); 
+          $('#cityList').html(res); 
+        }
+      });
 
     });
     $(document).on('click','.city_name',function(){

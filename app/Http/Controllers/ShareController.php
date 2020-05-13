@@ -70,7 +70,7 @@ class ShareController extends Controller
      // function to geocode address, it will return false if unable to geocode address
     public function geocode($address = null){
         
-        $key = "AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE";
+        $key = "AIzaSyDFcWBzDgQB3BwTypguTAGeptF1cnQ1lHQ";
 
         // url encode the address
         $address = urlencode($address);

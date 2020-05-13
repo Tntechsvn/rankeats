@@ -30,23 +30,27 @@
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<p>{{$data->locations->first()->city ?? ''}}, {{$data->locations->first()->state ?? ''}} {{$data->locations->first()->code ?? ''}}</p>
 								<p>{{$data->phone}}</p>
-								<ul class="star-rate">
+								@if($data->total_rate_eat != 0)
+								<ul class="star-rate" style="padding-right: 10px;">
 									@php
 										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
-										for($x=1;$x<=$data->total_rate_eat;$x++) {
-											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
-										}
-										if (strpos($data->total_rate_eat,'.') && $val != 0) {
-											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
-											$x++;
-										}
-										while ($x<=5) {
-											echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
-											$x++;
-										}
+										
+											for($x=1;$x<=$data->total_rate_eat;$x++) {
+												echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+											}
+											if (strpos($data->total_rate_eat,'.') && $val != 0) {
+												echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+												$x++;
+											}
+											while ($x<=5) {
+												echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+												$x++;
+											}
+										
 									@endphp
 									
 								</ul>
+								@endif
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
                                              ->where('type_rate','=',2)
@@ -55,7 +59,7 @@
                                              ->orderBy('review_ratings.created_at', 'desc')
                                              ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$total_review}} <i>reviews</i></span></a>
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
 							</div>
 						</div>					
 					</div>
@@ -83,32 +87,36 @@
 								<input type="hidden" name="" class="latitude" data-latitude="{{$data->locations->first()->latitude}}">
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->locations->first()->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
-								<ul class="star-rate">
+								@if($data->total_rate_eat != 0)
+								<ul class="star-rate" style="padding-right: 10px;">
 									@php
+										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
+										
+											for($x=1;$x<=$data->total_rate_eat;$x++) {
+												echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
+											}
+											if (strpos($data->total_rate_eat,'.') && $val != 0) {
+												echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
+												$x++;
+											}
+											while ($x<=5) {
+												echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
+												$x++;
+											}
+										
+									@endphp
+									
+								</ul>
+								@endif
+								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
 									->where('type_rate','=',2)
 									->where('category_id','=',$category_search->id)
 									->whereNull('users.deleted_at')
 									->orderBy('review_ratings.created_at', 'desc')
 									->count();
-									
-									
-
-										$val =  (int) substr(strrchr($data-> total_rate_eat,'.'),1);
-										for($x=1;$x<=$data-> total_rate_eat;$x++) {
-											echo '<li><i class="fas fa-star star-icon " aria-hidden="true"></i></li>';
-										}
-										if (strpos($data-> total_rate_eat,'.') && $val != 0) {
-											echo '<li><i class="fas fa-star-half-alt star-icon " aria-hidden="true"></i></li>';
-											$x++;
-										}
-										while ($x<=5) {
-											echo '<li><i class="far fa-star star-icon " aria-hidden="true"></i></li>';
-											$x++;
-										}
-									@endphp
-								</ul>
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;padding-left: 10px;">{{$total_review}} <i>reviews</i></span></a>
+								@endphp
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
 							</div>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
@@ -238,7 +246,7 @@
 							<label for="eat_item">EAT</label>
 
 							<input type="text" class="form-control input-lg" name="category_name" id="eat_item" placeholder="Item" value="{{old('category_name')}}" data-parsley-required />
-							<div id="ListEat"></div>
+							<div id="ListEat" class="scroll_search"></div>
 							<span class="text-danger">{!!$errors -> first('category_name')!!}</span>
 						</div>
 						<div class="form-group">
@@ -579,7 +587,7 @@
 
 </script>
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAIK0i2mitUaJvprxOUeROA4GXeBpw7wE&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFcWBzDgQB3BwTypguTAGeptF1cnQ1lHQ&callback=initMap">
 </script>
 
 <script>

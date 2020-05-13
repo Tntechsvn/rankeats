@@ -42,6 +42,12 @@ p {
 	margin: 0;
 	padding: 0;
 }
+[placeholder]:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
+.d-none {
+	display: none;
+}
 
 .btn:hover, .btn:focus, .btn.focus{
 	border-color: transparent;
@@ -156,17 +162,45 @@ p {
 }
 .promo {
 	height: 400px;
-	background: url(../images/default.jpg) no-repeat;
+	/*background: url(../images/default.jpg) no-repeat;*/
 	margin: 0;
 	border-bottom: 3px solid #D4D4D4;
 	background-size: cover;
 	background-position: center;
+	position: relative;
+}
+.promo .flexslider {
+	border: none;
+}
+.promo .flexslider li {
+	position: relative;
+	text-align: center;
+}
+.promo .flex-direction-nav {
+	display: none;
+}
+.promo .flex-control-nav {
+	display: none;
+}
+.promo .flexslider li h1 {
+    position: absolute;
+    z-index: 999;
+    top: 170px;
+    left: 0;
+    right: 0;
+    font-size: 35px;
+    color: #fff;
 }
 .front-search {
 	width: 100%;
 	margin: 0 auto;
 	padding: 50px 0;
 	text-align: center;
+	position: absolute;
+    bottom: 30px;
+}
+.front-search form {
+	position: relative;
 }
 .front-search h1 {
 	text-align: center;
@@ -201,6 +235,7 @@ p {
 	background-color: #0d59b7;
 	border-color: #0e4f9f;
 	color: #FFFFFF;
+	z-index: 999;
 }
 .btn-custom:link, .btn-custom:visited, .btn-custom:active, .btn-custom:disabled {
 	background-color: #0d59b7;
@@ -2533,6 +2568,7 @@ width: 30% !important;
 }
 .form-group {
 	position: relative;
+	clear: both;
 }
 
 .errors {
@@ -2543,12 +2579,16 @@ width: 30% !important;
 	position: absolute;
     top: 45px;
     width: 100%;
+    z-index: 999;
 }
 .scroll_search .dropdown-menu {
 	max-height: 400px;
 	overflow-y: scroll;
 }
-
+#ListEat .dropdown-menu {
+	width: 100%;
+    top: 25px;
+}
 .icon-form {
 	position: absolute;
     left: 0;
@@ -2565,9 +2605,24 @@ width: 30% !important;
 	padding-left: 45px;
 }
 
+#stateList .dropdown-menu,
+#cityList .dropdown-menu {
+	max-height: 300px;
+	overflow-y: scroll;
 
+}
 
-
+.flex-caption {
+  width: 96%;
+  padding: 2%;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+  font-size: 14px;
+  line-height: 18px;
+}
 
 
 

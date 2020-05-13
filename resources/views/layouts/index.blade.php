@@ -4,7 +4,26 @@
   
 
 <div class="promo">
-  <div class="container">
+      <div class="front-search">
+        @include('layouts.form-search')
+      </div>
+  <div class="flexslider">
+    <ul class="slides">
+      <li>
+        <img src="images/default.jpg"  style="width: 100%;object-fit: cover;height: 400px;" />
+        <h1>Find The Best, Eat The Best</h1>
+      </li>
+      @if(count($ads_active_home))
+          @foreach($ads_active_home as $ad)
+            <li>
+              <img src="{{$ad->image_url ?? "images/oyster.png"}}"  style="width: 100%;object-fit: cover;height: 400px;" alt="">
+              <h1>{{$ad->business->name}}</h1>
+            </li>
+        @endforeach
+      @endif
+    </ul>
+  </div>
+  {{-- <div class="container">
     <div class="front-search">
       
       <div class="banner-image">
@@ -23,9 +42,11 @@
       </div>
       @include('layouts.form-search')
     </div>
-  </div>
-</div>
+  </div> --}}
 
+
+    
+</div>
 <!-- for map div -->
 <div class="container-fluid col-top map-business">
   <div class="container">
@@ -131,6 +152,8 @@
 @endsection
 
 @section('script')
+
+<script type="text/javascript" src="js/jquery.flexslider.js"></script>
   <script type="text/javascript">
     $(document).on('click','.featuredeats',function(){
       var search_name = $(this).find('input[name=category_name]').val();
@@ -142,6 +165,13 @@
   </script>
   <script>
   $(document).ready(function(){
+
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide"
+  });
+});
+
 
     $('#location_search_cate').keyup(function(){ 
       var val = $(this).val();

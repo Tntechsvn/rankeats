@@ -24,6 +24,9 @@ class Advertisement extends Model
 	public function plan_detail(){
 		return $this -> belongsTo('App\PlanDetail', 'plan_detail_id', 'id');
 	}
+	public function payment(){
+		return $this -> belongsTo('App\Payment', 'id', 'adv_id');
+	}
 
 	public function state(){
 		return $this -> belongsTo('App\State');
@@ -38,8 +41,8 @@ class Advertisement extends Model
 			$business_id = Auth::user()->business()->first();
 			if($business_id){
 				$pd_days = PlanDetail::findOrfail($plan_detail_id)->pd_days;
-				$date_active = ($date == null) ? Carbon::now() : Carbon::createFromFormat('d-m-Y H:i:s',  $date. "00:00:00");
-				$expiration_date = ($date == null) ? Carbon::now() : Carbon::createFromFormat('d-m-Y H:i:s',  $date. "00:00:00");
+				$date_active = ($date == null) ? Carbon::now() : Carbon::createFromFormat('m-d-Y H:i:s',  $date. "00:00:00");
+				$expiration_date = ($date == null) ? Carbon::now() : Carbon::createFromFormat('m-d-Y H:i:s',  $date. "00:00:00");
 				$expiration_date = $expiration_date->addDays($pd_days);
 
 				$this -> business_id = $business_id->id;
