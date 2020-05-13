@@ -351,7 +351,7 @@
 
           <div class="form-group">
             <input type="text" class="state" autocomplete="off" value="" name="select-state" placeholder="Select State" required>
-            <div id="stateList"></div>
+            <div id="stateList" class="scroll_search"></div>
             
             <input type="hidden" name="state" id="state_searech" value="">
           </div>
@@ -367,7 +367,7 @@
           <div class="form-group">
             <input type="text" class="city" autocomplete="off" value="" name="select-city" placeholder="Select City" required>
             <input type="hidden" name="city" id="city_searech" value="">
-            <div id="cityList"></div>
+            <div id="cityList" class="scroll_search"></div>
           </div>
 
           <div class="form-group">
@@ -442,7 +442,7 @@
         });
       }
     }).focusout(function(){
-      // $('#stateList').fadeOut(); 
+      $('#stateList').fadeOut(); 
     });
 
     $('.city').keyup(function(){ 
@@ -463,7 +463,7 @@
         });
       }
     }).focusout(function(){
-      // $('#cityList').fadeOut(); 
+      $('#cityList').fadeOut(); 
     });
 
 
