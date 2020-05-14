@@ -350,7 +350,7 @@
           </div>
 
           <div class="form-group">
-            <input type="text" class="state" autocomplete="off" value="" name="select-state" placeholder="Select State" required>
+            <input type="text" class="state" autocomplete="node" value="" name="select-state" placeholder="Select State" required>
             <div id="stateList" class="scroll_search"></div>
             
             <input type="hidden" name="state" id="state_searech" value="">
@@ -365,7 +365,7 @@
             </select>
           </div> --}}
           <div class="form-group">
-            <input type="text" class="city" autocomplete="off" value="" name="select-city" placeholder="Select City" required>
+            <input type="text" class="city" autocomplete="node" value="" name="select-city" placeholder="Select City" required>
             <input type="hidden" name="city" id="city_searech" value="">
             <div id="cityList" class="scroll_search"></div>
           </div>
