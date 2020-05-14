@@ -117,7 +117,7 @@
 					    	<p>
 					    		<i class="fas fa-user"></i>
 					    		<span class="bold">Owner / Manager :</span>
-					    		<span class="bold" style="color: #0073bb"><a href="{{route('user.profile',$info_business->user->id)}}">{{$info_business->user->name ?? ""}}</a></span>
+					    		<span class="bold" style="color: #0073bb"><a href="{{$info_business->user->permalink()}}">{{$info_business->user->name ?? ""}}</a></span>
 					    	</p>
 					    	<p>
 					    		<i class="fas fa-phone-alt"></i>
@@ -144,7 +144,7 @@
 				    				<p>
 							    		<i class="fas fa-user"></i>
 							    		<span class="bold">Name :</span>
-							    		<span class="bold" style="color: #0073bb">{{$data->user->name ?? ""}}</span>
+							    		<a href="{{$data->user->permalink()}}"><span class="bold" style="color: #0073bb">{{$data->user->name ?? ""}}</span></a>
 							    	</p>
 							    	@if($data->review->ListImageReview)
 								    	<ul class="lightgalleryphoto">
@@ -368,7 +368,7 @@
 						@endforeach
 					</optgroup>
 				</select> --}}
-				<input type="text" class="form-control eat_item" value="" data-parsley-required />
+				<input type="text" class="form-control eat_item" value="" data-parsley-required placeholder="Choose Eat" />
 				<input type="hidden" name="Category_type[]" id="eat_item"  value=""/>
 				<div id="ListEat" class="scroll_search d-none" style="top:30px;">
 					<ul class="dropdown-menu" style="display:block;width:100%;">
@@ -395,7 +395,7 @@
 
 	    			@endphp
     			@endif
-			    <div class="active {{$hidden}}" id="vote">
+			    <div class="active {{-- {{$hidden}} --}}" id="vote">
 		    		{{-- <a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a> --}}
 			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	
@@ -423,7 +423,7 @@
 			    	
 
 				</div>
-			    <div class="{{$w_hide}}" id="write">
+			    <div class="{{-- {{$w_hide}} --}}" id="write">
 			    	<a href="javascript:;" class="btn btn-primary active write-tab"><i style="color: #fff" class="fas fa-star"></i> Write Reviews</a>
 			    	<div class="popup-star" style="text-align: center;">
 						<label class="customstar star-1"> 							
@@ -631,6 +631,15 @@
 			$(this).closest('form').find('.eat_item').val('');
 			$(this).closest('form').find('.eat_item').val(name);
 			$('#ListEat').fadeOut();
+		});
+
+		$('.cancel_form_review').on('click',function(e){
+			e.preventDefault();
+			var form = $(this).closest('form');
+			form[0].reset();
+			form.find('.starimg').removeClass('checkstar');
+			form.find('.popup-star .customstar:first .starimg').addClass('checkstar');
+			$('#vote_review').modal('hide');
 		});
 
 		$('.test').fSelect();
