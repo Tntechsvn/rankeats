@@ -10,14 +10,18 @@
   <div class="flexslider">
     <ul class="slides">
       <li>
-        <img src="images/default.jpg"  style="width: 100%;object-fit: cover;height: 400px;" />
-        <h1>Find The Best, Eat The Best</h1>
+        <a href="javascript:;" title="">
+          <img src="images/default.jpg"  style="width: 100%;object-fit: cover;height: 400px;" />
+          <h1>Find The Best, Eat The Best</h1>
+        </a>
       </li>
       @if(count($ads_active_home))
           @foreach($ads_active_home as $ad)
             <li>
-              <img src="{{$ad->image_url ?? "images/oyster.png"}}"  style="width: 100%;object-fit: cover;height: 400px;" alt="">
-              <h1>{{$ad->business->name}}</h1>
+              <a href="{{$ad->business->permalink()}}" title="" >
+                <img src="{{$ad->image_url ?? "images/oyster.png"}}"  style="width: 100%;object-fit: cover;height: 400px;" alt="">
+                <h1>{{$ad->business->name}}</h1>
+              </a>
             </li>
         @endforeach
       @endif

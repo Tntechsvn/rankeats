@@ -47,8 +47,17 @@ p {
 }
 .d-none {
 	display: none;
+} 
+.promo .flexslider a::after {
+	content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: 0.3;
 }
-
 .btn:hover, .btn:focus, .btn.focus{
 	border-color: transparent;
 	outline: none;

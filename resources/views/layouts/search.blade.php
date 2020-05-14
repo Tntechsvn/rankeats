@@ -608,6 +608,8 @@
           }
         });
       }
+    }).focusout(function(){
+    	$('#ListEat').fadeOut();
     });
 
     $(document).on('click', '.category_name', function(e){

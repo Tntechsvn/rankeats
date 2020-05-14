@@ -91,7 +91,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function count_photo(){
         return Media::where('id_user',$this->id )->where('type',2)->count(); 
     }
-
+    public function permalink(){
+        return route('user.profile',$this->id);
+    }
 
 
 
