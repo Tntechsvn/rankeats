@@ -424,6 +424,7 @@
 		$(this).closest('#voteModal').modal('hide');
 		form.find('.starimg').removeClass('checkstar');
 		form.find('.star-1 .starimg').addClass('checkstar');
+		form.find('.e-lang').html('');
 		form[0].reset();
 		
 	});

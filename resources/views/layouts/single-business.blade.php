@@ -368,7 +368,7 @@
 						@endforeach
 					</optgroup>
 				</select> --}}
-				<input type="text" class="form-control eat_item" value="" data-parsley-required placeholder="Choose Eat" />
+				<input type="text" class="form-control eat_item" value="" name="showeat" readonly placeholder="Choose Eat" />
 				<input type="hidden" name="Category_type[]" id="eat_item"  value=""/>
 				<div id="ListEat" class="scroll_search d-none" style="top:30px;">
 					<ul class="dropdown-menu" style="display:block;width:100%;">
@@ -624,12 +624,11 @@
 
 		$(document).on('click','.eat_name',function(){
 			var name = $(this).text();
-			console.log(name);
 			var id = $(this).data('id');
 			$("#eat_item").val('');
 			$("#eat_item").val(id);
 			$(this).closest('form').find('.eat_item').val('');
-			$(this).closest('form').find('.eat_item').val(name);
+			$(this).closest('form').find('input.eat_item').val(name);
 			$('#ListEat').fadeOut();
 		});
 
@@ -674,7 +673,8 @@
 			$(this).closest('#voteModal').modal('hide');
 			form.find('.starimg').removeClass('checkstar');
 			form.find('.star-1 .starimg').addClass('checkstar');
-			form.reset();
+			form.find('.e-lang').html('');
+			form[0].reset();
 			
 		});
 		$(document).ready(function(){
@@ -930,7 +930,7 @@
 		  var modal = $('#vote_review');
 		  var url = "{{route('ReviewEat_ajax')}}";
 		  var business = form.find('input[name=business]').val();
-		  var Category_type = form.find('.choose_dish').val();
+		  var Category_type = form.find('.eat_item').val();
 		  if(Category_type == null){
 		  	form.find('.e-dish').html("* This field is required");
 			return false;
@@ -963,6 +963,7 @@
 				            timer: 2000
 			          	});
 			      	}else{
+			      		form.find('.e-des').html(res.message);
 				        swal({
 				          title: res.message,
 				          timer: 2000
@@ -989,7 +990,10 @@ $(document).on('click','.yesforvote',function(e){
     success:function(res){
       if(res.success == true){
           modal.modal('hide');
-          console.log(res.data);
+          form[0].reset();
+          form.find('.e-lang').html('');
+          form.find('.starimg').removeClass('checkstar');
+          form.find('.star-1 .starimg').addClass('checkstar');
           target.html(res.data);
           swal({
             title: res.message,
