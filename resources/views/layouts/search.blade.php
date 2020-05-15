@@ -59,7 +59,10 @@
                                              ->orderBy('review_ratings.created_at', 'desc')
                                              ->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+								@if($total_review > 0)
+									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+								@endif
+
 							</div>
 						</div>					
 					</div>
@@ -116,7 +119,9 @@
 									->orderBy('review_ratings.created_at', 'desc')
 									->count();
 								@endphp
-								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+								@if($total_review > 0)
+									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+								@endif
 							</div>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))
@@ -419,6 +424,7 @@
 		$(this).closest('#voteModal').modal('hide');
 		form.find('.starimg').removeClass('checkstar');
 		form.find('.star-1 .starimg').addClass('checkstar');
+		form.find('.e-lang').html('');
 		form[0].reset();
 		
 	});

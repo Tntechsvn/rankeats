@@ -1619,7 +1619,7 @@ span.select2{
 
 /* ranket css-start */
 .imbx {display: inline-block;vertical-align: top;width: 20%;margin: 13px 0 0 0;}
-.imbx-detail {display: inline-block; position: relative; width: 79%;}
+.imbx-detail {display: inline-block; width: 79%;}
 .pr-dtl h4 {margin: 12px 0 5px 0;padding: 0;color: #0073bb;font-weight: 700;}
 .pr-dtl ul {padding: 0;margin: 0 0 9px 0;display: inline-block;/* vertical-align: middle; */}
 .pr-dtl ul li {display: inline-block;vertical-align: middle;}
@@ -1653,6 +1653,7 @@ a.btn.btn-warning.vote_now {
     padding: 5px 15px;
     border-radius: 5px;
 	margin-bottom:10px;
+	position: relative;
 }
 #imagePreview {
     width: 180px;
@@ -2372,7 +2373,7 @@ width: 30% !important;
     text-align: center;
     vertical-align: middle;
     position: absolute;
-    right: -10px;
+    right: 10px;
     top: 10px;
     padding: 7px 0;
     line-height: 20px;
@@ -2383,7 +2384,7 @@ width: 30% !important;
 .results-all .vote {
 	margin: 0 10px;
     position: absolute;
-    right: -20px;
+    right: 0px;
     bottom: 10px;
     width: 100px;
 }
