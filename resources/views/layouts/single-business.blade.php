@@ -395,7 +395,7 @@
 
 	    			@endphp
     			@endif
-			    <div class="active {{-- {{$hidden}} --}}" id="vote">
+			    <div class="active {{$hidden}}" id="vote">
 		    		{{-- <a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a> --}}
 			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	<div class="form-group">
@@ -431,7 +431,7 @@
 			    	
 
 				</div>
-			    <div class="{{-- {{$w_hide}} --}}" id="write">
+			    <div class="{{$w_hide}}" id="write">
 			    	<a href="javascript:;" class="btn btn-primary active write-tab"><i style="color: #fff" class="fas fa-star"></i> Write Reviews</a>
 			    	<div class="popup-star" style="text-align: center;">
 						<label class="customstar star-1"> 							
