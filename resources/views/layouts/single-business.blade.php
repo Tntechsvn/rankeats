@@ -395,35 +395,43 @@
 
 	    			@endphp
     			@endif
-			    <div class="active {{$hidden}}" id="vote">
+			    <div class="active {{-- {{$hidden}} --}}" id="vote">
 		    		{{-- <a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a> --}}
 			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
-			    	
 			    	<div class="form-group">
+			    		<label for="state-checkbox" class="btn btn-primary state-checkbox">State</label>
+			    		<input type="checkbox" id="state-checkbox" class="hidden" name="state_checkbox" value="1">
+		    			{{-- <button class="btn btn-primary">State</button> --}}
+		    			<label for="city-checkbox" class="btn btn-primary city-checkbox">City</label>
+		    			<input type="checkbox" id="city-checkbox" class="hidden" name="city_checkbox" value="2">
+			    	</div>
+			    	<div class="form-group hidden form-city form-state">
 			    		<label>State</label>
-		    			<select class="test state"  name="state" data-parsley-required>
+		    			{{-- <select class="test state"  name="state" data-parsley-required>
 			             	 <option value="" selected="selected">Select State</option>
 			              	@foreach($state as $data)
 		                	<option value="{{$data->name}}">{{$data->name}}</option>
 			              	@endforeach
-		            	</select>
+		            	</select> --}}
+		            	<input class="form-control" type="text" name="state" readonly value="{{$info_business -> locations->first()->state}}">
 		            	<span class="errors e-state"></span>
 			    	</div>
-			    	<div class="form-group">
+			    	<div class="form-group hidden form-city">
 			    		<label>City</label>
-		    			<select class="city test" name="city" data-parsley-required>
+		    			{{-- <select class="city test" name="city" data-parsley-required>
 			                <option value="" selected="selected">Select City</option>
-			            </select>
+			            </select> --}}
+			            <input type="text" class="form-control" name="city" readonly value="{{$info_business -> locations->first()->city}}">
 			            <span class="errors e-city"></span>
 			    	</div>
 			    	
 			    	<div>
-				    	<button class="btn btn-primary done-vote" type="submit">Done</button>
+				    	<button class="btn btn-primary done-vote hidden" type="submit">Done</button>
 				    </div>
 			    	
 
 				</div>
-			    <div class="{{$w_hide}}" id="write">
+			    <div class="{{-- {{$w_hide}} --}}" id="write">
 			    	<a href="javascript:;" class="btn btn-primary active write-tab"><i style="color: #fff" class="fas fa-star"></i> Write Reviews</a>
 			    	<div class="popup-star" style="text-align: center;">
 						<label class="customstar star-1"> 							
@@ -730,18 +738,28 @@
 				var choose_dish = form.find('.choose_dish').val();
 				var choose_state = form.find('.state').val();
 				var choose_city = form.find('.city').val();
+				var check_state = form.find('#state-checkbox').is(':checked');
+				var state = "";
+				if(check_state == true){
+					state = form.find('#state-checkbox').val();
+				}
+				var check_city = form.find('#city-checkbox').is(':checked');
+				var city = "";
+				if(check_state == true){
+					city = form.find('#city-checkbox').val();
+				}
 				if(choose_dish == null){
 					form.find('.e-dish').html("* This field is required");
 					return false;
 				}
-				if(choose_state == ""){
-					form.find('.e-state').html("* This field is required");
-					return false;
-				}
-				if(choose_city == ""){
-					form.find('.e-city').html("* This field is required");
-					return false;
-				}
+				// if(choose_state == ""){
+				// 	form.find('.e-state').html("* This field is required");
+				// 	return false;
+				// }
+				// if(choose_city == ""){
+				// 	form.find('.e-city').html("* This field is required");
+				// 	return false;
+				// }
 				var url = "{{route('voteReviewEat_ajax')}}";
 				var id_business = form.find('input[name=business]').val();
 				$.ajax({
@@ -752,7 +770,9 @@
 			        url: url,
 			        data: {
 			        	Category_type: choose_dish,
-			        	business: id_business
+			        	business: id_business,
+			        	state_checkbox: state,
+			        	city_checkbox: city
 			        },
 
 			        success:function(res){
@@ -1004,6 +1024,38 @@ $(document).on('click','.yesforvote',function(e){
       }
     }
   });
+});
+
+$('#city-checkbox').click(function(){
+	$('#state-checkbox').prop('checked', this.checked);
+	var check_city = $(this).is(':checked');
+	if(check_city){
+		$(this).closest('form').find('.form-city').removeClass('hidden');
+		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-primary').addClass('btn-success');
+		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-primary').addClass('btn-success');
+		$(this).closest('form').find('.done-vote').removeClass('hidden');
+	}else{
+		$(this).closest('form').find('.form-city').addClass('hidden');
+		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$(this).closest('form').find('.done-vote').addClass('hidden');
+	}
+});
+
+$('#state-checkbox').click(function(){
+	var check_state = $(this).is(':checked');
+	if(check_state){
+		$(this).closest('form').find('.form-state').removeClass('hidden');
+		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-primary').addClass('btn-success');
+		$(this).closest('form').find('.done-vote').removeClass('hidden');
+	}else{
+		$(this).closest('form').find('.form-state').addClass('hidden');
+		$(this).closest('form').find('.form-city').addClass('hidden');
+		$(this).closest('.form-group').find('#city-checkbox').prop('checked', this.checked);
+		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$(this).closest('form').find('.done-vote').addClass('hidden');
+	}
 });
 	</script>
 @stop
