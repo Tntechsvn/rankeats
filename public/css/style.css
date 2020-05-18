@@ -2407,6 +2407,7 @@ width: 30% !important;
     margin-top: 10px;
     color: #000;
     font-weight: bold;
+    outline: none;
 }
 .funny button:hover {
 	color: #fff;
@@ -2634,7 +2635,9 @@ width: 30% !important;
   line-height: 18px;
 }
 
-
+.navbar-nav a.dropdown-toggle:hover {
+	color: #eee !important;
+}
 
 
 
@@ -2857,7 +2860,7 @@ width: 30% !important;
 	.user-menu .dropdown-menu a {
 		padding: 5px 0;
 	}
-
+	
 	.menu-desktop.abc{
 		left: 15px;
 	}
