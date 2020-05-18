@@ -13,7 +13,7 @@
             @if(Auth::user())
               <li class="dropdown user user-menu">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">{{Auth::user()->name}}</span>
+                  <span class="hidden-xs">{{Auth::user()->name}}</span> <i class="fas fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="user-header">

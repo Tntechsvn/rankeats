@@ -397,7 +397,7 @@
     			@endif
 			    <div class="active {{$hidden}}" id="vote">
 		    		{{-- <a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a> --}}
-			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
+			    	<p style="padding:10px 0;">Which area(s) does "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	<div class="form-group">
 			    		<label for="state-checkbox" class="btn btn-primary state-checkbox">State</label>
 			    		<input type="checkbox" id="state-checkbox" class="hidden" name="state_checkbox" value="1">
@@ -405,7 +405,7 @@
 		    			<label for="city-checkbox" class="btn btn-primary city-checkbox">City</label>
 		    			<input type="checkbox" id="city-checkbox" class="hidden" name="city_checkbox" value="2">
 			    	</div>
-			    	<div class="form-group hidden form-city form-state">
+			    	<div class="form-group hidden  form-state">
 			    		<label>State</label>
 		    			{{-- <select class="test state"  name="state" data-parsley-required>
 			             	 <option value="" selected="selected">Select State</option>
@@ -1031,14 +1031,14 @@ $('#city-checkbox').click(function(){
 	var check_city = $(this).is(':checked');
 	if(check_city){
 		$(this).closest('form').find('.form-city').removeClass('hidden');
+		$(this).closest('form').find('.form-state').removeClass('hidden');
 		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-primary').addClass('btn-success');
 		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-primary').addClass('btn-success');
 		$(this).closest('form').find('.done-vote').removeClass('hidden');
 	}else{
 		$(this).closest('form').find('.form-city').addClass('hidden');
-		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$('#state-checkbox').prop('checked', true);
 		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-success').addClass('btn-primary');
-		$(this).closest('form').find('.done-vote').addClass('hidden');
 	}
 });
 
@@ -1049,12 +1049,10 @@ $('#state-checkbox').click(function(){
 		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-primary').addClass('btn-success');
 		$(this).closest('form').find('.done-vote').removeClass('hidden');
 	}else{
-		$(this).closest('form').find('.form-state').addClass('hidden');
+		$(this).prop('checked', true);
 		$(this).closest('form').find('.form-city').addClass('hidden');
-		$(this).closest('.form-group').find('#city-checkbox').prop('checked', this.checked);
-		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$(this).closest('.form-group').find('#city-checkbox').prop('checked', false);
 		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-success').addClass('btn-primary');
-		$(this).closest('form').find('.done-vote').addClass('hidden');
 	}
 });
 	</script>
