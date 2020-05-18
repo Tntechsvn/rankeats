@@ -735,7 +735,7 @@
 			$(document).on('click','.done-vote',function(e){
 				e.preventDefault();
 				var form = $(this).closest('form');
-				var choose_dish = form.find('.choose_dish').val();
+				var choose_dish = form.find('.eat_item').val();
 				var choose_state = form.find('.state').val();
 				var choose_city = form.find('.city').val();
 				var check_state = form.find('#state-checkbox').is(':checked');
