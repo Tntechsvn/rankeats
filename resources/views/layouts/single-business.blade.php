@@ -105,10 +105,20 @@
 					
 					<p>{{$info_business->description}}</p>
 					<div class="tap-pane">
+						@php 
+					    	$novote = "";
+					    	$noreview = "";
+					    	if(Auth::check() && Auth::user()->check_vote_eat($info_business->id)){
+					    		$novote = "novote";
+					    	}
+					    	if(Auth::check() && $list_review_eats->total() == 0){
+					    		$noreview = "noreview";
+					    	}
+					    @endphp
 						<ul class="nav nav-tabs" style="border-bottom: none;">
 						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info-circle"></i> Business Info</a></li>
 						    <li><a href="#businessreview" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Business Reviews</a></li>
-						    <li><a href="#eatrank" data-toggle="tab" class="btn first-vote"><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
+						    <li><a href="#eatrank" id="menu_eatrank" data-toggle="tab" data-id="{{Auth::user()->id ?? ''}}" class="btn first-vote" data-vote="{{$novote}}" data-review="{{ $noreview }}"><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
 						    <li><a href="#picture" data-toggle="tab" class="btn "><i class="fas fa-images"></i> Picture</a></li>
 						  </ul>
 					</div>
@@ -220,7 +230,8 @@
 
 				    		<!-- end Knight modan review-->
 					    </div>
-					    <div class="tab-pane {{ ($list_review_eats->total() == 0) ? "nothasvote" : ""}}" id="eatrank">
+					    
+					    <div class="tab-pane" id="eatrank">
 					    	@if($list_review_eats->total() >0)
 				    			@foreach($list_review_eats as $data)
 				    			<div class="list-review">
@@ -735,6 +746,7 @@
 			$(document).on('click','.done-vote',function(e){
 				e.preventDefault();
 				var form = $(this).closest('form');
+				var dishshow = form.find('input[name=showeat]').val();
 				var choose_dish = form.find('#eat_item').val();
 				var choose_state = form.find('.state').val();
 				var choose_city = form.find('.city').val();
@@ -748,18 +760,12 @@
 				if(check_city == true){
 					city = form.find('#city-checkbox').val();
 				}
-				if(choose_dish == null){
+				if(dishshow == ""){
 					form.find('.e-dish').html("* This field is required");
 					return false;
+				}else{
+					form.find('.e-dish').html("");
 				}
-				// if(choose_state == ""){
-				// 	form.find('.e-state').html("* This field is required");
-				// 	return false;
-				// }
-				// if(choose_city == ""){
-				// 	form.find('.e-city').html("* This field is required");
-				// 	return false;
-				// }
 				var url = "{{route('voteReviewEat_ajax')}}";
 				var id_business = form.find('input[name=business]').val();
 				$.ajax({
@@ -781,6 +787,10 @@
 					          title: res.message,
 					          timer: 2000
 					        });
+					        form.find('#vote').removeClass('active').addClass('hidden');
+							form.find('#write').addClass('active').removeClass('hidden');
+							form.find('.choose_dish').fSelect('destroy').fSelect('create');
+							$('#menu_eatrank').attr('data-vote','hasvote');
 			        	}else{
 			        		swal({
 					          title: res.message,
@@ -789,9 +799,7 @@
 			        	}
 			        }
 				});
-				form.find('#vote').removeClass('active').addClass('hidden');
-				form.find('#write').addClass('active').removeClass('hidden');
-				form.find('.choose_dish').fSelect('destroy').fSelect('create');
+				
 			});
 
 
@@ -912,10 +920,13 @@
 	</script>
 	<script type="text/javascript">
 		$(document).on('click','.first-vote', function(){
-			var novote = $(this).closest('.description').find('.nothasvote ');
-			console.log(novote);
-			if(novote.length == 1){
-				$('#first-vote').modal('show');
+			var vote = $(this).data('vote');
+			var review = $(this).data('review');
+			var user = $(this).data('id');
+			if(user){
+				if(vote== "novote" && review == "noreview" ){
+					$('#first-vote').modal('show');
+				}
 			}
 			
 		});
