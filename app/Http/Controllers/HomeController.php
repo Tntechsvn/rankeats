@@ -575,16 +575,20 @@ public function voteReviewEat_ajax(Request $request){
     ->where('type_vote','=',2)
     ->first();
     $data_business = Business::find($request->business);
-    $city_id = $data_business->getIdCity();
+    if($request -> city_checkbox){
+        $city_id = $data_business->getIdCity();
+    }else{
+        $city_id = null;
+    }
+    
 
-        $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->first();
+        $check_vote_city = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('state_id','=',$data_business->getIdState())->where('city_id','=',$city_id)->first();
         if($check_vote_city ){
-            $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('city_id','=',$city_id)->delete();
-            foreach($Category_type as $cate_id){
+            $delete = Vote::where('user_id','=',$user->id)->where('type_vote','=',2)->where('state_id','=',$data_business->getIdState())->where('city_id','=',$city_id)->delete();
                 $new_vote = new Vote;
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
-                $new_vote -> category_id = $cate_id;
+                $new_vote -> category_id = $Category_type;
                 if($data_business->getIdState()){
                     $new_vote -> state_id = $data_business->getIdState();
                 }else{
@@ -669,7 +673,6 @@ public function voteReviewEat_ajax(Request $request){
 
 
                 // }
-            }
                    
             // $info_business = Business::findOrfail($request->business);
             // $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
@@ -685,11 +688,10 @@ public function voteReviewEat_ajax(Request $request){
             ]);
 
         }else{
-            foreach($Category_type as $cate_id){
                 $new_vote = new Vote;
                 $new_vote -> user_id = $user->id;
                 $new_vote -> business_id = $data_business->id;
-                $new_vote -> category_id = $cate_id;
+                $new_vote -> category_id = $Category_type;
                 if($data_business->getIdState()){
                     $new_vote -> state_id = $data_business->getIdState();
                 }else{
@@ -769,7 +771,6 @@ public function voteReviewEat_ajax(Request $request){
             //             }
             //         }
             //     }
-            }
             // $info_business = Business::findOrfail($request->business);
             // $list_review_eats = $info_business->review_rating()->where('type_rate','=',2)->paginate(Myconst::PAGINATE_ADMIN);
             // $data = "";
@@ -937,7 +938,6 @@ public function ReviewEat_ajax(Request $request){
                 // $new_vote -> type_vote = 2;
                 // $new_vote -> save();
                 /*reviews eats*/
-                dd($request -> image);
                 if($request -> image !=null){
                     foreach($request -> image as $img){
                         $base64String = $img;
