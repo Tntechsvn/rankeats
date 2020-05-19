@@ -10,6 +10,7 @@ use Arr;
 use Str;
 use Config;
 use File;
+use Validator;
 
 class PlanController extends Controller
 {
@@ -54,6 +55,16 @@ class PlanController extends Controller
         return view('admin.payment_plans.getPaymentSetting', compact('c'));
     }
     public function postPaymentSetting(Request $request){
+        $this-> Validate($request,[
+            'client_id' => 'required',
+            'secret' => 'required',           
+        ],
+        [
+            'client_id.required'=>'The client id field is required',
+            'secret.required'=>'The secret field is required',
+            
+        ]);
+
         if($request ->mode){
              $mode = 'sandbox';
         }else{
