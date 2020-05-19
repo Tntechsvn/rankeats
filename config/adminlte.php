@@ -274,6 +274,10 @@ return [
             'icon'    => 'fas fa-fw fa-credit-card',
             'submenu' => [
                 [
+                    'text' => 'Payment Setting',
+                    'route'  => 'getPaymentSetting',
+                ],
+                [
                     'text' => 'Payment Plans',
                     'route'  => 'getListPlanDetail',
                 ],

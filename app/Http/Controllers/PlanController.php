@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Myconst;
 use App\PlanDetail;
+use Arr;
+use Str;
+use Config;
+use File;
 
 class PlanController extends Controller
 {
@@ -43,6 +47,30 @@ class PlanController extends Controller
     }
     public function payment_plan_advertisement(Request $request){
         return $req;
+    }
+    public function getPaymentSetting(){
+        $c = Config::get('paypal');
+        $c = json_decode(json_encode($c));
+        return view('admin.payment_plans.getPaymentSetting', compact('c'));
+    }
+    public function postPaymentSetting(Request $request){
+        if($request ->mode){
+             $mode = 'sandbox';
+        }else{
+             $mode = 'live';
+        }
+        $c = Config::get('paypal');
+        $c['client_id'] = $request -> client_id;
+        $c['secret'] = $request -> secret;
+        $c['settings']['mode'] = $mode;
+        $c['settings']['log.FileName'] = storage_path() . '/logs/paypal.log';
+
+
+        $arr = (array)$c;
+        $data = var_export($arr, 1);
+        if(File::put(base_path() . '/config/paypal.php', "<?php\n return $data ;")) {
+            return redirect()->back();
+        }
     }
     
 }

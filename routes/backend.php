@@ -269,6 +269,14 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'as' => 'postPaymentPlan',
 				'uses' => 'PlanController@postPaymentPlan'
 			]);
+			Route::get('/payment-setting', [
+				'as' => 'getPaymentSetting',
+				'uses' => 'PlanController@getPaymentSetting'
+			]);
+			Route::post('/payment-setting', [
+				'as' => 'postPaymentSetting',
+				'uses' => 'PlanController@postPaymentSetting'
+			]);
 		});
 		/*cms*/
 		Route::prefix("pages")->group(function(){
