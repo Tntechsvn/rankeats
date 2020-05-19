@@ -31,14 +31,17 @@
 								<div class="form-group">
 									<label for="inputPPemail">Paypal Client Id</label>
 									<div class="input-group">
-										<input type="text" id="inputPPemail" name="client_id" class="form-control" placeholder="Your PayPal email address (this is the account where the payments will go to)" value="{{$c->client_id}}">
+										<input type="text" id="inputPPemail" name="client_id" class="form-control" placeholder="Your Paypal Client Id" value="{{$c->client_id}}">
 									</div>
+									<span class="text-danger">{{$errors -> first('client_id')}}</span>
 								</div>
+
 								<div class="form-group">
 									<label for="inputPPemail">Paypal Secret</label>
 									<div class="input-group">
-										<input type="text" id="inputPPemail" name="secret" class="form-control" placeholder="Your PayPal email address (this is the account where the payments will go to)" value="{{{$c->secret}}}">
+										<input type="text" id="inputPPemail" name="secret" class="form-control" placeholder="Your Paypal Secre" value="{{{$c->secret}}}">
 									</div>
+									<span class="text-danger">{{$errors -> first('secret')}}</span>
 								</div>
 								<div class="form-group">
 									<label for="inputCCode">Currency Code</label>
