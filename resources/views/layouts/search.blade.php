@@ -30,7 +30,7 @@
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<p>{{$data->locations->first()->city ?? ''}}, {{$data->locations->first()->state ?? ''}} {{$data->locations->first()->code ?? ''}}</p>
 								<p>{{$data->phone}}</p>
-								@if($data->total_rate_eat != 0)
+								{{-- @if($data->total_rate_eat != 0)
 								<ul class="star-rate" style="padding-right: 10px;">
 									@php
 										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
@@ -50,7 +50,7 @@
 									@endphp
 									
 								</ul>
-								@endif
+								@endif --}}
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
                                              ->where('type_rate','=',2)
@@ -60,7 +60,7 @@
                                              ->count();
 								@endphp
 								@if($total_review > 0)
-									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;"><i>reviews</i></span></a>
 								@endif
 
 							</div>
@@ -90,7 +90,7 @@
 								<input type="hidden" name="" class="latitude" data-latitude="{{$data->locations->first()->latitude}}">
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->locations->first()->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
-								@if($data->total_rate_eat != 0)
+								{{-- @if($data->total_rate_eat != 0)
 								<ul class="star-rate" style="padding-right: 10px;">
 									@php
 										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
@@ -110,7 +110,7 @@
 									@endphp
 									
 								</ul>
-								@endif
+								@endif --}}
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
 									->where('type_rate','=',2)
@@ -120,7 +120,7 @@
 									->count();
 								@endphp
 								@if($total_review > 0)
-									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;"><i>reviews</i></span></a>
 								@endif
 							</div>
 							@if(Auth::check())
