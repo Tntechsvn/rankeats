@@ -88,7 +88,7 @@
 
 								<input type="hidden" name="" class="latitude" data-latitude="{{$data->locations->first()->latitude}}">
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->locations->first()->longitude}}">
-								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
+								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'public/img_location/'.'no-number.png'}}">
 								{{-- @if($data->total_rate_eat != 0)
 								<ul class="star-rate" style="padding-right: 10px;">
 									@php
