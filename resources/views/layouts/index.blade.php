@@ -11,7 +11,7 @@
     <ul class="slides">
       <li>
         <a href="javascript:;" title="">
-          <img src="images/default.jpg"  style="width: 100%;object-fit: cover;height: 400px;" />
+          <img src="{{asset('public/images/default.jpg')}}"  style="width: 100%;object-fit: cover;height: 400px;" />
           <h1>Find The Best, Eat The Best</h1>
         </a>
       </li>
@@ -19,7 +19,7 @@
           @foreach($ads_active_home as $ad)
             <li>
               <a href="{{$ad->business->permalink()}}" title="" >
-                <img src="{{$ad->image_url ?? "images/oyster.png"}}"  style="width: 100%;object-fit: cover;height: 400px;" alt="">
+                <img src="{{$ad->image_url ?? asset('public/images/oyster.png')}}"  style="width: 100%;object-fit: cover;height: 400px;" alt="">
                 <h1>{{$ad->business->name}}</h1>
               </a>
             </li>
@@ -59,7 +59,7 @@
     </div>
     <div class="col-md-6 text-center">
       <div class="map_img">
-        <img src="images/map.jpg" alt="MAP IMAGE" class="details_image">
+        <img src="{{asset('public/images/map.jpg')}}" alt="MAP IMAGE" class="details_image">
       </div>
     </div>
   </div>
@@ -70,7 +70,7 @@
     <div class="container">
         <div class="col-md-6 text-center">
             <div class="map_img">
-              <img src="images/business.png" alt="MAP IMAGE" class="details_image">
+              <img src="{{asset('public/images/business.png')}}" alt="MAP IMAGE" class="details_image">
             </div>
           </div>
       <div class="col-md-6 text-center">
@@ -115,7 +115,7 @@
     <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4 col-box wow fadeInUp animated featuredeats" style="visibility: visible; animation-name: fadeInUp;" >
       <div class="grid" data-toggle="modal"> 
         <a class="over-label" data-id="14" href="javascript:;" >{{$data->category_name}}</a> 
-        <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'storage/'.$data->url_img}}@else{{'images/default.jpg'}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
+        <a><img class="img-responsive" src="@if($data->url_img != null){{asset('').'public/storage/'.$data->url_img}}@else{{asset('public/images/default.jpg')}}@endif" width="500" height="300" alt="{{$data->category_name}}"> </a>
         <input type="hidden" name="category_name"  value="{{$data->category_name}}" />
 
       </div>
@@ -157,7 +157,7 @@
 
 @section('script')
 
-<script type="text/javascript" src="js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="{{asset('public/js/jquery.flexslider.js')}}"></script>
   <script type="text/javascript">
     $(document).on('click','.featuredeats',function(){
       var search_name = $(this).find('input[name=category_name]').val();

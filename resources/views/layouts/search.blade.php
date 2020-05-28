@@ -2,8 +2,8 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
-		<img src="images/promo.jpg" alt="" class="fade">
+	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : asset('public/images/promo.jpg') }}');">
+		<img src="{{asset('public/images/promo.jpg')}}" alt="" class="fade">
 
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inform-results">
 			<h1>Search Results For "{{ (isset($keyword)) ? $keyword : 'All Eats'}}"</h1>
@@ -390,7 +390,7 @@
 		    		</ul>
 				</div>
 				<div class="no-photo hidden">
-					<img src="images/no-photo.png" alt="">
+					<img src="{{asset('public/images/no-photo.png')}}" alt="">
 					<p class="bold">Don't have image review</p>
 				</div>
 				
@@ -409,7 +409,7 @@
 @endsection
 
 @section('script')
-<script src="lightbox/js/lightgallery-all.min.js"></script>
+<script src="{{asset('public/lightbox/js/lightgallery-all.min.js')}}"></script>
 <script type="text/javascript">
 	// $(document).ready(function){
 	// 	$('.lightgalleryphoto').lightGallery();

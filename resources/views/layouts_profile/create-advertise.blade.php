@@ -4,7 +4,7 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if($user->url_avatar != null){{asset('').'public/storage/'.$user->url_avatar}}@else{{asset('public/images/avatar.jpg')}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
 			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
@@ -27,7 +27,7 @@
 					<div class="col-lg-12 m-b-20">
 						<div class="col-lg-3">
 							<div class="img">
-								<img src="images/pizza.jpg" alt="" style="width: 100%">
+								<img src="{{asset('public/images/pizza.jpg')}}" alt="" style="width: 100%">
 							</div>
 						</div>
 						<div class="col-lg-9">
@@ -76,7 +76,7 @@
 						<p>Please provide a picture of your EATS a your business</p>
 						<label for="check-paypal">
 							<input id="check-paypal" type="radio" name="paypal" value="" required>
-							<img src="images/paypal.png" alt="" width="100px">
+							<img src="{{asset('public/images/paypal.png')}}" alt="" width="100px">
 						</label>
 						
 					</div>

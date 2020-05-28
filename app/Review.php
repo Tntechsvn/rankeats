@@ -85,7 +85,7 @@ class Review extends Model
 			foreach ($lst_id_gallery as $value) {
 				$data_img_gallery = Media::find($value);
 				if($data_img_gallery !=null){
-					$item['url']= asset('').'storage/'.$data_img_gallery -> url;
+					$item['url']= asset('').'public/storage/'.$data_img_gallery -> url;
 					$item['id']= $data_img_gallery -> id;
 					$list_id_gallery[] = $item;
 				}else{

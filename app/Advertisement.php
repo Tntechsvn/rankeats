@@ -130,7 +130,7 @@ class Advertisement extends Model
 
 	public function getImageUrlAttribute() {
 		if($this->image)
-			return asset('storage').'/'.$this->image;
+			return asset('public/storage').'/'.$this->image;
 	}
 	public function checkStatus(){
 		return $this->Active()->count();

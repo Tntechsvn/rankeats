@@ -4,7 +4,7 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="@if($user->url_avatar != null){{asset('').'storage/'.$user->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{$user->name}}"></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if($user->url_avatar != null){{asset('').'public/storage/'.$user->url_avatar}}@else{{asset('public/images/avatar.jpg')}}@endif" class="img-circle" width="200" height="200" alt="{{$user->name}}"></div>
 			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{$user->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
