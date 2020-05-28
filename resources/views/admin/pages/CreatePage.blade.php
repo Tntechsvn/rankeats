@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('adminlte_css')
-<link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.css')}}">
+<link rel="stylesheet" href="{{asset('public/vendor/summernote/summernote-bs4.css')}}">
 @stop
 @section('title', 'Rankeats')
 
@@ -65,7 +65,7 @@
 <!-- /.content-wrapper -->
 @stop
 @section('adminlte_js')
-<script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
+<script src="{{asset('public/vendor/summernote/summernote-bs4.min.js')}}"></script>
 <!-- Page Script -->
 <script>
 	$(function () {

@@ -2,7 +2,7 @@
 
 @section('title', 'Rankeats')
 @section('adminlte_css')
-<link rel="stylesheet" href="{{asset('lightbox/lightgallery.css')}}">
+<link rel="stylesheet" href="{{asset('public/lightbox/css/lightgallery.css')}}">
 <link href ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel = "stylesheet" crossorigin="anonymous">
 @stop
 
@@ -302,7 +302,7 @@
 @section('adminlte_js')
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js" crossorigin="anonymous"></script>
 <!-- Ekko Lightbox -->
-<script src="{{asset('lightbox/lightgallery.min.js')}}"></script>
+<script src="{{asset('public/lightbox/js/lightgallery.min.js')}}"></script>
 <script>
 	$(document).on("click", '[data-toggle="lightbox"]', function(event) {
 			event.preventDefault();

@@ -108,10 +108,10 @@
               					</div>
               				</td>
               				@if($data->url_avatar != null)	              				
-              				<td class="mailbox-subject"><img src="{{asset('').'storage/'.$data->url_avatar}}" style="width: 100px;"></td>
+              				<td class="mailbox-subject"><img src="{{asset('').'public/storage/'.$data->url_avatar}}" style="width: 100px;"></td>
               				@else
               				<td class="mailbox-subject">
-              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
+              					<img src="{{asset('').'public/vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 100px;">
               				</td>
               				@endif
               				<td style="text-align: left;"><a href="{{route('getEditUser',$data->id)}}">{{$data -> name}}</a></td>
