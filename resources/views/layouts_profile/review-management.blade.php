@@ -55,7 +55,7 @@
 </div>
 @endsection
 @section('script')
-	<script type="text/javascript" src="js/fSelect.js"></script>
+	<script type="text/javascript" src="{{asset('public/js/fSelect.js')}}"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('.test').fSelect();

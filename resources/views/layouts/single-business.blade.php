@@ -2,8 +2,8 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner" style="background-image: url('images/promo.jpg');">
-		<img src="images/promo.jpg" alt="" class="fade">
+	<div class="banner" style="background-image: url('{{asset('public/images/promo.jpg')}}')">
+		<img src="{{asset('public/images/promo.jpg')}}" alt="" class="fade">
 	</div>
 	<div class="container" style="background-color: #fff;">
 		<div class="inner-content p-b-20" >
@@ -105,10 +105,20 @@
 					
 					<p>{{$info_business->description}}</p>
 					<div class="tap-pane">
+						@php 
+					    	$novote = "";
+					    	$noreview = "";
+					    	if(Auth::check() && Auth::user()->check_vote_eat($info_business->id)){
+					    		$novote = "novote";
+					    	}
+					    	if(Auth::check() && $list_review_eats->total() == 0){
+					    		$noreview = "noreview";
+					    	}
+					    @endphp
 						<ul class="nav nav-tabs" style="border-bottom: none;">
 						    <li><a href="#businessinfo" data-toggle="tab" class="btn active"><i class="fas fa-info-circle"></i> Business Info</a></li>
 						    <li><a href="#businessreview" data-toggle="tab" class="btn "><i class="fas fa-star"></i> Business Reviews</a></li>
-						    <li><a href="#eatrank" data-toggle="tab" class="btn first-vote"><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
+						    <li><a href="#eatrank" id="menu_eatrank" data-toggle="tab" data-id="{{Auth::user()->id ?? ''}}" class="btn first-vote" data-vote="{{$novote}}" data-review="{{ $noreview }}"><i class="fas fa-star"></i> Eat Ranks/Review</a></li>
 						    <li><a href="#picture" data-toggle="tab" class="btn "><i class="fas fa-images"></i> Picture</a></li>
 						  </ul>
 					</div>
@@ -185,15 +195,15 @@
 				    			<div class="funny funny-{{$data->review->id}}">
 
 				    				<div class="hungry">
-				    					<img src="images/hungry.png" alt="">
+				    					<img src="{{asset('public/images/hungry.png')}}" alt="">
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 1) active @endif" data-type="1" data-review="{{$data->review->id}}">Hungry</button>
 				    				</div>
 				    				<div class="useful">
-				    					<img src="images/useful.png" alt="">
+				    					<img src="{{asset('public/images/useful.png')}}" alt="">
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 2) active @endif" data-type="2" data-review="{{$data->review->id}}">Useful</button>
 				    				</div>
 				    				<div class="cool">
-				    					<img src="images/cool.png" alt="">
+				    					<img src="{{asset('public/images/cool.png')}}" alt="">
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 3) active @endif" data-type="3" data-review="{{$data->review->id}}">Cool</button>
 				    				</div>
 				    			</div>
@@ -220,7 +230,8 @@
 
 				    		<!-- end Knight modan review-->
 					    </div>
-					    <div class="tab-pane {{ ($list_review_eats->total() == 0) ? "nothasvote" : ""}}" id="eatrank">
+					    
+					    <div class="tab-pane" id="eatrank">
 					    	@if($list_review_eats->total() >0)
 				    			@foreach($list_review_eats as $data)
 				    			<div class="list-review">
@@ -285,52 +296,52 @@
 					    	<div class="">
 					    		<ul id="lightgalleryphoto">
 					    			
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
 					    		</ul>
@@ -395,9 +406,9 @@
 
 	    			@endphp
     			@endif
-			    <div class="active {{-- {{$hidden}} --}}" id="vote">
+			    <div class="active {{$hidden}}" id="vote">
 		    		{{-- <a href="javascript:;" class="btn btn-primary active vote-tab"><i class="fas fa-thumbs-up"></i> Vote</a> --}}
-			    	<p style="padding:10px 0;">Which area(s) dose "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
+			    	<p style="padding:10px 0;">Which area(s) does "{{$info_business->name}}" have the best "<span id="show_eat_choosed">Eat item</span>"?</p>
 			    	<div class="form-group">
 			    		<label for="state-checkbox" class="btn btn-primary state-checkbox">State</label>
 			    		<input type="checkbox" id="state-checkbox" class="hidden" name="state_checkbox" value="1">
@@ -405,7 +416,7 @@
 		    			<label for="city-checkbox" class="btn btn-primary city-checkbox">City</label>
 		    			<input type="checkbox" id="city-checkbox" class="hidden" name="city_checkbox" value="2">
 			    	</div>
-			    	<div class="form-group hidden form-city form-state">
+			    	<div class="form-group hidden  form-state">
 			    		<label>State</label>
 		    			{{-- <select class="test state"  name="state" data-parsley-required>
 			             	 <option value="" selected="selected">Select State</option>
@@ -431,7 +442,7 @@
 			    	
 
 				</div>
-			    <div class="{{-- {{$w_hide}} --}}" id="write">
+			    <div class="{{$w_hide}}" id="write">
 			    	<a href="javascript:;" class="btn btn-primary active write-tab"><i style="color: #fff" class="fas fa-star"></i> Write Reviews</a>
 			    	<div class="popup-star" style="text-align: center;">
 						<label class="customstar star-1"> 							
@@ -621,8 +632,8 @@
 
 @section('script')
 	<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
-	<script src="lightbox/js/lightgallery-all.min.js"></script>
-	<script type="text/javascript" src="js/fSelect.js"></script>
+	<script src="{{asset('public/lightbox/js/lightgallery-all.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('public/js/fSelect.js')}}"></script>
 	<script type="text/javascript">
 		$('.eat_item').focusin(function(){
 			$('#ListEat').fadeIn();
@@ -735,6 +746,7 @@
 			$(document).on('click','.done-vote',function(e){
 				e.preventDefault();
 				var form = $(this).closest('form');
+				var dishshow = form.find('input[name=showeat]').val();
 				var choose_dish = form.find('#eat_item').val();
 				var choose_state = form.find('.state').val();
 				var choose_city = form.find('.city').val();
@@ -748,18 +760,12 @@
 				if(check_city == true){
 					city = form.find('#city-checkbox').val();
 				}
-				if(choose_dish == null){
+				if(dishshow == ""){
 					form.find('.e-dish').html("* This field is required");
 					return false;
+				}else{
+					form.find('.e-dish').html("");
 				}
-				// if(choose_state == ""){
-				// 	form.find('.e-state').html("* This field is required");
-				// 	return false;
-				// }
-				// if(choose_city == ""){
-				// 	form.find('.e-city').html("* This field is required");
-				// 	return false;
-				// }
 				var url = "{{route('voteReviewEat_ajax')}}";
 				var id_business = form.find('input[name=business]').val();
 				$.ajax({
@@ -781,6 +787,10 @@
 					          title: res.message,
 					          timer: 2000
 					        });
+					        form.find('#vote').removeClass('active').addClass('hidden');
+							form.find('#write').addClass('active').removeClass('hidden');
+							form.find('.choose_dish').fSelect('destroy').fSelect('create');
+							$('#menu_eatrank').attr('data-vote','hasvote');
 			        	}else{
 			        		swal({
 					          title: res.message,
@@ -789,9 +799,7 @@
 			        	}
 			        }
 				});
-				form.find('#vote').removeClass('active').addClass('hidden');
-				form.find('#write').addClass('active').removeClass('hidden');
-				form.find('.choose_dish').fSelect('destroy').fSelect('create');
+				
 			});
 
 
@@ -912,10 +920,13 @@
 	</script>
 	<script type="text/javascript">
 		$(document).on('click','.first-vote', function(){
-			var novote = $(this).closest('.description').find('.nothasvote ');
-			console.log(novote);
-			if(novote.length == 1){
-				$('#first-vote').modal('show');
+			var vote = $(this).data('vote');
+			var review = $(this).data('review');
+			var user = $(this).data('id');
+			if(user){
+				if(vote== "novote" && review == "noreview" ){
+					$('#first-vote').modal('show');
+				}
 			}
 			
 		});
@@ -1031,14 +1042,14 @@ $('#city-checkbox').click(function(){
 	var check_city = $(this).is(':checked');
 	if(check_city){
 		$(this).closest('form').find('.form-city').removeClass('hidden');
+		$(this).closest('form').find('.form-state').removeClass('hidden');
 		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-primary').addClass('btn-success');
 		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-primary').addClass('btn-success');
 		$(this).closest('form').find('.done-vote').removeClass('hidden');
 	}else{
 		$(this).closest('form').find('.form-city').addClass('hidden');
-		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$('#state-checkbox').prop('checked', true);
 		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-success').addClass('btn-primary');
-		$(this).closest('form').find('.done-vote').addClass('hidden');
 	}
 });
 
@@ -1049,12 +1060,10 @@ $('#state-checkbox').click(function(){
 		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-primary').addClass('btn-success');
 		$(this).closest('form').find('.done-vote').removeClass('hidden');
 	}else{
-		$(this).closest('form').find('.form-state').addClass('hidden');
+		$(this).prop('checked', true);
 		$(this).closest('form').find('.form-city').addClass('hidden');
-		$(this).closest('.form-group').find('#city-checkbox').prop('checked', this.checked);
-		$(this).closest('.form-group').find('.state-checkbox').removeClass('btn-success').addClass('btn-primary');
+		$(this).closest('.form-group').find('#city-checkbox').prop('checked', false);
 		$(this).closest('.form-group').find('.city-checkbox').removeClass('btn-success').addClass('btn-primary');
-		$(this).closest('form').find('.done-vote').addClass('hidden');
 	}
 });
 	</script>

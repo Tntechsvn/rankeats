@@ -2,8 +2,8 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : 'images/promo.jpg' }}');">
-		<img src="images/promo.jpg" alt="" class="fade">
+	<div class="banner banner-inner" style="background-image: url('{{($category_search) ? $category_search->UrlImgCategory : asset('public/images/promo.jpg') }}');">
+		<img src="{{asset('public/images/promo.jpg')}}" alt="" class="fade">
 
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inform-results">
 			<h1>Search Results For "{{ (isset($keyword)) ? $keyword : 'All Eats'}}"</h1>
@@ -30,7 +30,7 @@
 								<h4 style="font-size: 18px;"><a href="{{$data->permalink()}}">{{$data->name}}</a></h4>
 								<p>{{$data->locations->first()->city ?? ''}}, {{$data->locations->first()->state ?? ''}} {{$data->locations->first()->code ?? ''}}</p>
 								<p>{{$data->phone}}</p>
-								@if($data->total_rate_eat != 0)
+								{{-- @if($data->total_rate_eat != 0)
 								<ul class="star-rate" style="padding-right: 10px;">
 									@php
 										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
@@ -50,7 +50,7 @@
 									@endphp
 									
 								</ul>
-								@endif
+								@endif --}}
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
                                              ->where('type_rate','=',2)
@@ -60,7 +60,7 @@
                                              ->count();
 								@endphp
 								@if($total_review > 0)
-									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;"><i>reviews</i></span></a>
 								@endif
 
 							</div>
@@ -90,7 +90,7 @@
 								<input type="hidden" name="" class="latitude" data-latitude="{{$data->locations->first()->latitude}}">
 								<input type="hidden" name="" class="longitude" data-longitude="{{$data->locations->first()->longitude}}">
 								<input type="hidden" name="" class="img_stt" data-img-stt="{{asset('').'img_location/'.'no-number.png'}}">
-								@if($data->total_rate_eat != 0)
+								{{-- @if($data->total_rate_eat != 0)
 								<ul class="star-rate" style="padding-right: 10px;">
 									@php
 										$val =  (int) substr(strrchr($data->total_rate_eat,'.'),1);
@@ -110,7 +110,7 @@
 									@endphp
 									
 								</ul>
-								@endif
+								@endif --}}
 								@php
 									$total_review = $data->review_rating()->join('users','users.id','=','review_ratings.user_id')
 									->where('type_rate','=',2)
@@ -120,7 +120,7 @@
 									->count();
 								@endphp
 								@if($total_review > 0)
-									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;"><i>reviews</i></span></a>
 								@endif
 							</div>
 							@if(Auth::check())
@@ -390,7 +390,7 @@
 		    		</ul>
 				</div>
 				<div class="no-photo hidden">
-					<img src="images/no-photo.png" alt="">
+					<img src="{{asset('public/images/no-photo.png')}}" alt="">
 					<p class="bold">Don't have image review</p>
 				</div>
 				
@@ -409,7 +409,7 @@
 @endsection
 
 @section('script')
-<script src="lightbox/js/lightgallery-all.min.js"></script>
+<script src="{{asset('public/lightbox/js/lightgallery-all.min.js')}}"></script>
 <script type="text/javascript">
 	// $(document).ready(function){
 	// 	$('.lightgalleryphoto').lightGallery();

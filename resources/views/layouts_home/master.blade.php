@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Rank Eats</title>
-<base href="{{asset('/public/')}}">
+<base href="{{asset('')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -12,27 +12,27 @@
 
 <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
 
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="css/all.css" rel="stylesheet" type="text/css">
-<link href="css/fSelect.css" rel="stylesheet" type="text/css">
-<link href="css/sweetalert.css" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/bootstrap.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/all.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/fSelect.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/sweetalert.css')}}" rel="stylesheet" type="text/css">
 
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<link href="css/jquery.timepicker.min.css" rel="stylesheet" type="text/css">
-<link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
-<link href="css/default.css" rel="stylesheet" type="text/css">
-<link href="css/parsley.css" rel="stylesheet" type="text/css">
-<link href="css/animate.css" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/style.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/jquery.timepicker.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/default.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/parsley.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('public/css/animate.css')}}" rel="stylesheet" type="text/css">
 
-<link href="lightbox/css/lightgallery.css" rel="stylesheet">
-<link href="lightbox/css/custom-style-lightbox.css" rel="stylesheet">
-<link href="css/flexslider.css" rel="stylesheet">
+<link href="{{asset('public/lightbox/css/lightgallery.css')}}" rel="stylesheet">
+<link href="{{asset('public/lightbox/css/custom-style-lightbox.css')}}" rel="stylesheet">
+<link href="{{asset('public/css/flexslider.css')}}" rel="stylesheet">
 {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
 
 <!-- jQuery library -->
 
-<script src="js/jquery-2.1.3.min.js"></script>
+<script src="{{asset('public/js/jquery-2.1.3.min.js')}}"></script>
 
 
 
@@ -57,13 +57,13 @@
 
 {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>  --}}
 {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{asset('public/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
 
-<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
-<script src="js/parsley.min.js"></script> 
-<script src="lightbox/js/lightgallery-all.min.js"></script>
-<script type="text/javascript" src="js/sweetalert.min.js"></script>   
+<script type="text/javascript" src="{{asset('public/js/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('public/js/jquery.timepicker.min.js')}}"></script>
+<script src="{{asset('public/js/parsley.min.js')}}"></script> 
+<script src="{{asset('public/lightbox/js/lightgallery-all.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('public/js/sweetalert.min.js')}}"></script>   
 {{-- <script src="js/wow.min.js"></script>  --}}
 {{-- <script src="js/jquery.raty.js"></script> --}}
 {{-- <script src="js/jquery.form.js"></script> --}}
@@ -72,8 +72,8 @@
 {{-- <script src="js/flippy.origin.js"></script> --}}
  
 {{-- <script src="js/flippy.home.js"></script> --}}
-<script src="js/all.js"></script>
-<script src="js/ajax.js"></script>
+<script src="{{asset('public/js/all.js')}}"></script>
+<script src="{{asset('public/js/ajax.js')}}"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 <!-- <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script> -->
  

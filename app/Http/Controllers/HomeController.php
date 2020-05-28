@@ -938,7 +938,6 @@ public function ReviewEat_ajax(Request $request){
                 // $new_vote -> type_vote = 2;
                 // $new_vote -> save();
                 /*reviews eats*/
-                dd($request -> image);
                 if($request -> image !=null){
                     foreach($request -> image as $img){
                         $base64String = $img;
