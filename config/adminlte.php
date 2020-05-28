@@ -314,6 +314,12 @@ return [
             'route'  => 'getListContacts',
            
         ],
+        [
+            'text'    => 'Setting Key Map',
+            'icon'    => 'fas fa-fw fa fa-file',
+            'route'  => 'getMapSetting',
+           
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
