@@ -59,9 +59,8 @@
                                              ->orderBy('review_ratings.created_at', 'desc')
                                              ->count();
 								@endphp
-								@if($total_review > 0)
-									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;"><i>reviews</i></span></a>
-								@endif
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+								
 
 							</div>
 						</div>					
@@ -119,9 +118,8 @@
 									->orderBy('review_ratings.created_at', 'desc')
 									->count();
 								@endphp
-								@if($total_review > 0)
-									<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;"><i>reviews</i></span></a>
-								@endif
+								<a href="javascript:;" class="review-popup" data-id="{{$data->id}}" data-category-search="{{$category_search->id}}" data-name="{{$data->name}}"><span style="display: inline-block;line-height: 20px;">{{$total_review}} <i>reviews</i></span></a>
+								
 							</div>
 							@if(Auth::check())
 				    			@if(Auth::user()->check_vote($data->business_id,$category_search->id))

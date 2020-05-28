@@ -7,7 +7,7 @@
     'mode' => 'sandbox',
     'http.ConnectionTimeOut' => 1000,
     'log.LogEnabled' => true,
-    'log.FileName' => 'E:\\xampp7.3\\htdocs\\rankeats\\storage/logs/paypal.log',
+    'log.FileName' => '/home/easyfood/alpha/rankeats/storage/logs/paypal.log',
     'log.LogLevel' => 'FINE',
   ),
 ) ;
