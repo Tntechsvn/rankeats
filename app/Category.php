@@ -32,9 +32,9 @@ class Category extends Model
     }
     public function getUrlImgCategoryAttribute(){
         if($this->url_img != null){
-            return asset('').'storage/'.$this->url_img;
+            return asset('').'public/storage/'.$this->url_img;
         }else{
-            return 'images/promo.jpg';
+            return 'public/images/promo.jpg';
         }
     }
     /*rank business for state*/

@@ -2,8 +2,8 @@
 @section('content')
 
 <div id="main" class="">
-	<div class="banner" style="background-image: url('images/promo.jpg');">
-		<img src="images/promo.jpg" alt="" class="fade">
+	<div class="banner" style="background-image: url('{{asset('public/images/promo.jpg')}}')">
+		<img src="{{asset('public/images/promo.jpg')}}" alt="" class="fade">
 	</div>
 	<div class="container" style="background-color: #fff;">
 		<div class="inner-content p-b-20" >
@@ -195,15 +195,15 @@
 				    			<div class="funny funny-{{$data->review->id}}">
 
 				    				<div class="hungry">
-				    					<img src="images/hungry.png" alt="">
+				    					<img src="{{asset('public/images/hungry.png')}}" alt="">
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 1) active @endif" data-type="1" data-review="{{$data->review->id}}">Hungry</button>
 				    				</div>
 				    				<div class="useful">
-				    					<img src="images/useful.png" alt="">
+				    					<img src="{{asset('public/images/useful.png')}}" alt="">
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 2) active @endif" data-type="2" data-review="{{$data->review->id}}">Useful</button>
 				    				</div>
 				    				<div class="cool">
-				    					<img src="images/cool.png" alt="">
+				    					<img src="{{asset('public/images/cool.png')}}" alt="">
 				    					<button class="funnyy @if($data->review->is_reacted() && $data->review->is_reacted_type() == 3) active @endif" data-type="3" data-review="{{$data->review->id}}">Cool</button>
 				    				</div>
 				    			</div>
@@ -296,52 +296,52 @@
 					    	<div class="">
 					    		<ul id="lightgalleryphoto">
 					    			
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
-					    			<li class="" data-responsive="" data-src="images/pizza.jpg">
-	                                    <a href="images/pizza.jpg" class="lightbox">
+					    			<li class="" data-responsive="" data-src="{{asset('public/images/pizza.jpg')}}">
+	                                    <a href="{{asset('public/images/pizza.jpg')}}" class="lightbox">
 	                                        
-	                                        <img width="210" height="145" src="images/pizza.jpg" class="pic" >
+	                                        <img width="210" height="145" src="{{asset('public/images/pizza.jpg')}}" class="pic" >
 	                                    </a>       
 	                                </li>
 					    		</ul>
@@ -632,8 +632,8 @@
 
 @section('script')
 	<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
-	<script src="lightbox/js/lightgallery-all.min.js"></script>
-	<script type="text/javascript" src="js/fSelect.js"></script>
+	<script src="{{asset('public/lightbox/js/lightgallery-all.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('public/js/fSelect.js')}}"></script>
 	<script type="text/javascript">
 		$('.eat_item').focusin(function(){
 			$('#ListEat').fadeIn();
@@ -882,7 +882,7 @@
         });
       }
     </script>
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFcWBzDgQB3BwTypguTAGeptF1cnQ1lHQ&libraries=places&callback=initMap" async defer></script>
+ <script src="{{'https://maps.googleapis.com/maps/api/js?key='.$keymap.'&libraries=places&callback=initMap'}}" async defer></script>
 
  	<script type="text/javascript">
 		$(document).ready(function() {

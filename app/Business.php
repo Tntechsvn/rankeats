@@ -248,9 +248,9 @@ class Business extends Model
     }
     public function getUrlAvatarBusinessAttribute(){
         if($this->url_img != null){
-            return asset('').'storage/'.$this->url_img;
+            return asset('').'public/storage/'.$this->url_img;
         }else{
-            return 'images/avatar.jpg';//'images/map_main.png'
+            return 'public/images/avatar.jpg';//'images/map_main.png'
         }
     }
      public function getRateBusinessAttribute(){

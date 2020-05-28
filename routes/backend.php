@@ -278,6 +278,17 @@ Route::prefix("/")->middleware(['verified','adminLogin'])->group(function(){
 				'uses' => 'PlanController@postPaymentSetting'
 			]);
 		});
+		Route::prefix("map-setting")->group(function(){
+			
+			Route::get('/map-setting', [
+				'as' => 'getMapSetting',
+				'uses' => 'MapController@getMapSetting'
+			]);
+			Route::post('/map-setting', [
+				'as' => 'postMapSetting',
+				'uses' => 'MapController@postMapSetting'
+			]);
+		});
 		/*cms*/
 		Route::prefix("pages")->group(function(){
 			Route::get('/', [

@@ -311,9 +311,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function getUrlAvatarUserAttribute(){
         if($this->url_avatar != null){
-            return asset('').'storage/'.$this->url_avatar;
+            return asset('').'public/storage/'.$this->url_avatar;
         }else{
-            return 'images/avatar.jpg';
+            return 'public/images/avatar.jpg';
         }
     }
      public function check_vote($business_id,$category_id){

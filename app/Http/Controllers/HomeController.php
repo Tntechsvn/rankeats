@@ -39,7 +39,10 @@ class HomeController extends Controller{
         $all_page = Page::all();
         $ads_active_home = Advertisement::home()->active()->take(3)->get();
 
-        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user,'state'=>$state,'ads_active_home'=>$ads_active_home]);
+        $c = \Config::get('keymap');
+        $keymap = $c['keymap'];
+
+        view()->share(['category'=>$category,'all_page'=>$all_page,'user'=> $this->user,'state'=>$state,'ads_active_home'=>$ads_active_home,'keymap'=>$keymap]);
     }
 
     public function home(){

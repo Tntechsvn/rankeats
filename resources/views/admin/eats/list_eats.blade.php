@@ -2,7 +2,7 @@
 
 @section('title', 'Rankeats')
 @section('adminlte_css')
-<link rel="stylesheet" href="{{asset('lightbox/lightgallery.css')}}">
+<link rel="stylesheet" href="{{asset('public/lightbox/css/lightgallery.css')}}">
 <link href ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel = "stylesheet" crossorigin="anonymous">
 @stop
 @section('content_header')
@@ -129,8 +129,8 @@
                         <div id = "gallery">
                           <div class = "row text-center">
                             <div class = "col-md-4">
-                              <a href = "{{asset('').'storage/'.$data->url_img}}"  data-toggle = "lightbox" data-gallery="gallery">
-                                <img src = "{{asset('').'storage/'.$data->url_img}}" class= "imggallery" width="100">
+                              <a href = "{{asset('').'public/storage/'.$data->url_img}}"  data-toggle = "lightbox" data-gallery="gallery">
+                                <img src = "{{asset('').'public/storage/'.$data->url_img}}" class= "imggallery" width="100">
                               </a>
                             </div>
                           </div>
@@ -171,7 +171,7 @@
 @section('adminlte_js')
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js" crossorigin="anonymous"></script>
 <!-- Ekko Lightbox -->
-<script src="{{asset('lightbox/lightgallery.min.js')}}"></script>
+<script src="{{asset('public/lightbox/js/lightgallery.min.js')}}"></script>
 <script>
   $(document).on("click", '[data-toggle="lightbox"]', function(event) {
       event.preventDefault();

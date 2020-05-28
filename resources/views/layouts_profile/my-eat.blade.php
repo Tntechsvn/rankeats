@@ -4,7 +4,7 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if($user->url_avatar != null){{asset('').'public/storage/'.$user->url_avatar}}@else{{asset('public/images/avatar.jpg')}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
 			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
@@ -150,7 +150,7 @@
   }
 </script>
 
-	<script type="text/javascript" src="js/fSelect.js"></script>
+	<script type="text/javascript" src="{{asset('public/js/fSelect.js')}}"></script>
 	<script type="text/javascript">
 		$('.test').fSelect();
 		$(document).ready(function(){
@@ -166,8 +166,7 @@
           url:"{{ route('ajaxEatBusiness') }}",
           method:"POST",
           data:{business_id:business_id,_token:_token},
-          success:function(data){ 
-          	console.log(data)
+          success:function(data){
            	$('#category_type').html(data);
             $('#category_type').fSelect('destroy').fSelect('create');
           }

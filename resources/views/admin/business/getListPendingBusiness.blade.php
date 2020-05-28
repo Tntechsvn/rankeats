@@ -73,10 +73,10 @@
               					</div>
               				</td>
               				@if($data->url_img != null)	              				
-              				<td class="mailbox-subject"style="width: 7%"><img src="{{asset('').'storage/'.$data->url_img}}" style="width: 45px;"></td>
+              				<td class="mailbox-subject"style="width: 7%"><img src="{{asset('').'public/storage/'.$data->url_img}}" style="width: 45px;"></td>
               				@else
               				<td class="mailbox-subject" style="width: 7%">
-              					<img src="{{asset('').'vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 45px;">
+              					<img src="{{asset('').'public/vendor/adminlte/dist/img/AdminLTELogo.png'}}" style="width: 45px;">
               				</td>
               				@endif
               				<td>{{$data -> name}}</td>

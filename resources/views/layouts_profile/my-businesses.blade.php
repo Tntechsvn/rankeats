@@ -6,7 +6,7 @@
 	<div class="container profile-header">
 		<div class="profile-header-inner">
 
-			<div class="col-md-3 profile-pic-lg"><img src="@if(Auth::user()->url_avatar != null){{asset('').'storage/'.Auth::user()->url_avatar}}@else{{'images/avatar.jpg'}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
+			<div class="col-md-3 profile-pic-lg"><img src="@if($user->url_avatar != null){{asset('').'public/storage/'.$user->url_avatar}}@else{{asset('public/images/avatar.jpg')}}@endif" class="img-circle" width="200" height="200" alt="{{Auth::user()->name}}"></div>
 			<div class="col-md-8 profile-info"><div class="profile-info-inner"><h1>{{Auth::user()->name}}</h1> <p>0 Reviews</p></div></div>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 								<div class="form-group"  style="text-align: center;">
 									<div  class="dt-imgs">
 										<div class="dt-close" style="position:relative;">
-											<div id="previews" class="preview-img" style="width: 250px;position: relative;">@if($info_business ->url_img != null)<img class='thumb' src="{{asset('').'storage/'.$info_business ->url_img}}" style='width:100%;'><div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>@endif</div>
+											<div id="previews" class="preview-img" style="width: 250px;position: relative;">@if($info_business ->url_img != null)<img class='thumb' src="{{asset('').'public/storage/'.$info_business ->url_img}}" style='width:100%;'><div class="deletetimg tsm"><i class="fas fa-times-circle"></i></div>@endif</div>
 										</div>
 									</div>
 								</div>
@@ -424,7 +424,7 @@
 		    		</ul>
 				</div>
 				<div class="no-photo hidden">
-					<img src="images/no-photo.png" alt="">
+					<img src="{{asset('public/images/no-photo.png')}}" alt="">
 					<p class="bold">Don't have image review</p>
 				</div>
 				
@@ -557,7 +557,7 @@
 <input type="hidden" name="show-photo" value="{{route('show-photo')}}">
 @endsection
 @section('script')
-<script src="lightbox/js/lightgallery-all.min.js"></script>
+<script src="{{asset('public/lightbox/js/lightgallery-all.min.js')}}"></script>
 <script type="text/javascript">
 
     $(document).ready(function()
@@ -651,7 +651,7 @@
       
   });
 </script>
-	<script type="text/javascript" src="js/fSelect.js"></script>
+	<script type="text/javascript" src="{{asset('public/js/fSelect.js')}}"></script>
 	<script type="text/javascript">
 		$(document).on('click','.addbusiness',function(){
 			select_city();

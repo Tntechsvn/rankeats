@@ -82,8 +82,8 @@ class ShareController extends Controller
     }
      // function to geocode address, it will return false if unable to geocode address
     public function geocode($address = null){
-        
-        $key = "AIzaSyDFcWBzDgQB3BwTypguTAGeptF1cnQ1lHQ";
+        $c = \Config::get('keymap');
+        $key = $c['keymap'];
 
         // url encode the address
         $address = urlencode($address);

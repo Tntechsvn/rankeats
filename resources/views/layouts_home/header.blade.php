@@ -4,7 +4,7 @@
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header" >
         <button type="button" class="button-menu navbar-toggle collapsed" data-toggle="collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        <a class="navbar-brand" href="{{route('index')}}"><img src="images/logo.png" class="logo" alt="Rank Eats"></a> </div>
+        <a class="navbar-brand" href="{{route('index')}}"><img src="{{asset('public/images/logo.png')}}" class="logo" alt="Rank Eats"></a> </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class=" navbar-collapse menu-desktop" id="bs-example-navbar-collapse-1">
